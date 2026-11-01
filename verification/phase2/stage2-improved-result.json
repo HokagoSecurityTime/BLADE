@@ -1,0 +1,28 @@
+[
+  {
+    "case": "Redis pub/sub enforce update",
+    "passed": true,
+    "elapsed_sec": 0.09299999987706542
+  },
+  {
+    "case": "Redis pub/sub rollback and approval",
+    "passed": true
+  },
+  {
+    "case": "Redis killed: memory fallback",
+    "status": 200,
+    "verdict": "OBSERVE",
+    "would_block": true,
+    "passed": true
+  },
+  {
+    "case": "Redis killed: admin polling fallback",
+    "status": 403,
+    "passed": true
+  },
+  {
+    "case": "Redis restarted: requests recover",
+    "status": 200,
+    "passed": true
+  }
+]

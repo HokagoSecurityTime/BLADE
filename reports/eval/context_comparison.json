@@ -1,0 +1,5190 @@
+{
+  "before": {
+    "recorded": 253,
+    "missing_trace": 0,
+    "raw": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.3511450381679389,
+          "recall": 0.71875,
+          "f1": 0.47179487179487184,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.45454545454545453,
+          "recall": 0.10204081632653061,
+          "f1": 0.16666666666666669,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.3333333333333333,
+          "recall": 0.1875,
+          "f1": 0.24000000000000005,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 46,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 9,
+          "owner_or_admin": 1,
+          "manual_review_required": 8
+        },
+        "role_required": {
+          "public": 30,
+          "role_required": 5,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 7,
+          "owner_or_admin": 1,
+          "manual_review_required": 6
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 53,
+          "role_required": 6,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 21,
+          "owner_or_admin": 2,
+          "manual_review_required": 29
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "manual_review_required": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        }
+      },
+      "macro_f1": 0.12549450549450553,
+      "manual_ratio": 0.16996047430830039,
+      "mean_inference_ms": 1793.3826782591568,
+      "errors": {
+        "invalid_model_output_schema": 5
+      },
+      "erd_context": {
+        "missing": 211,
+        "available": 42
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 212,
+        "parsed_current_handler": 37,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "final": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.4098360655737705,
+          "recall": 0.390625,
+          "f1": 0.4,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.4,
+          "recall": 0.08163265306122448,
+          "f1": 0.13559322033898302,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.14285714285714285,
+          "recall": 0.05357142857142857,
+          "f1": 0.0779220779220779,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.007194244604316547,
+          "recall": 0.14285714285714285,
+          "f1": 0.0136986301369863,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 25,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 33
+        },
+        "role_required": {
+          "public": 19,
+          "role_required": 4,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 20
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 16,
+          "role_required": 6,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 83
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 2
+        },
+        "manual_review_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 1
+        }
+      },
+      "macro_f1": 0.08960198977114962,
+      "manual_ratio": 0.549407114624506,
+      "mean_inference_ms": 1793.3826782591568,
+      "errors": {
+        "invalid_model_output_schema": 5
+      },
+      "erd_context": {
+        "missing": 211,
+        "available": 42
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 212,
+        "parsed_current_handler": 37,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "invalid_raw_labels": 0,
+    "changed": 96,
+    "correct_to_wrong": 37,
+    "wrong_to_correct": 1,
+    "validation_events": {
+      "Caller-attribute/public policy conflicts with object lookup": 2,
+      "confidence_below_0.7": 112,
+      "Missing or unknown object parameter/owner lookup": 7,
+      "Unknown lookup table or id column": 13,
+      "json_or_schema_invalid": 5
+    },
+    "parsed": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.41935483870967744,
+          "recall": 0.40625,
+          "f1": 0.4126984126984127,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.45454545454545453,
+          "recall": 0.10204081632653061,
+          "f1": 0.16666666666666669,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.27586206896551724,
+          "recall": 0.14285714285714285,
+          "f1": 0.18823529411764706,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.008547008547008548,
+          "recall": 0.14285714285714285,
+          "f1": 0.016129032258064516,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 26,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 9,
+          "owner_or_admin": 1,
+          "manual_review_required": 28
+        },
+        "role_required": {
+          "public": 19,
+          "role_required": 5,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 7,
+          "owner_or_admin": 1,
+          "manual_review_required": 17
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 16,
+          "role_required": 6,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 16,
+          "owner_or_admin": 2,
+          "manual_review_required": 71
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "manual_review_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 1
+        }
+      },
+      "macro_f1": 0.11196134367725584,
+      "manual_ratio": 0.4624505928853755,
+      "mean_inference_ms": 1793.3826782591568,
+      "errors": {
+        "invalid_model_output_schema": 5
+      },
+      "erd_context": {
+        "missing": 211,
+        "available": 42
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 212,
+        "parsed_current_handler": 37,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "lost_correct_reasons": {
+      "Caller-attribute/public policy conflicts with object lookup": 2,
+      "Missing or unknown object parameter/owner lookup": 5,
+      "confidence_below_0.7": 20,
+      "Unknown lookup table or id column": 5,
+      "json_or_schema_invalid": 5
+    },
+    "manual_origins": {
+      "converted": 96,
+      "model_manual": 43
+    }
+  },
+  "after": {
+    "recorded": 253,
+    "missing_trace": 0,
+    "raw": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.3739130434782609,
+          "recall": 0.671875,
+          "f1": 0.4804469273743016,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.8461538461538461,
+          "recall": 0.22448979591836735,
+          "f1": 0.3548387096774194,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.5151515151515151,
+          "recall": 0.45535714285714285,
+          "f1": 0.48341232227488157,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 43,
+          "role_required": 1,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 14,
+          "owner_or_admin": 1,
+          "manual_review_required": 5
+        },
+        "role_required": {
+          "public": 27,
+          "role_required": 11,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 1,
+          "manual_review_required": 2
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 43,
+          "role_required": 1,
+          "membership_required": 2,
+          "tenant_match": 0,
+          "owner_match": 51,
+          "owner_or_admin": 1,
+          "manual_review_required": 14
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "manual_review_required": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        }
+      },
+      "macro_f1": 0.18838542276094322,
+      "manual_ratio": 0.08300395256916997,
+      "mean_inference_ms": 1805.924477076145,
+      "errors": {
+        "invalid_model_output_schema": 3
+      },
+      "erd_context": {
+        "available": 247,
+        "missing": 6
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 139,
+        "parsed_current_handler": 110,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "final": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.4915254237288136,
+          "recall": 0.453125,
+          "f1": 0.4715447154471545,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.8333333333333334,
+          "recall": 0.20408163265306123,
+          "f1": 0.3278688524590165,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.3918918918918919,
+          "recall": 0.25892857142857145,
+          "f1": 0.31182795698924737,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 29,
+          "role_required": 1,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 11,
+          "owner_or_admin": 1,
+          "manual_review_required": 22
+        },
+        "role_required": {
+          "public": 14,
+          "role_required": 10,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 1,
+          "manual_review_required": 16
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 15,
+          "role_required": 1,
+          "membership_required": 2,
+          "tenant_match": 0,
+          "owner_match": 29,
+          "owner_or_admin": 0,
+          "manual_review_required": 65
+        },
+        "owner_or_admin": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 1
+        },
+        "manual_review_required": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        }
+      },
+      "macro_f1": 0.15874878927077404,
+      "manual_ratio": 0.41106719367588934,
+      "mean_inference_ms": 1805.924477076145,
+      "errors": {
+        "invalid_model_output_schema": 3
+      },
+      "erd_context": {
+        "available": 247,
+        "missing": 6
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 139,
+        "parsed_current_handler": 110,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "invalid_raw_labels": 0,
+    "changed": 83,
+    "correct_to_wrong": 37,
+    "wrong_to_correct": 0,
+    "validation_events": {
+      "Caller-attribute/public policy conflicts with object lookup": 8,
+      "Missing or unknown object parameter/owner lookup": 21,
+      "confidence_below_0.7": 69,
+      "Cannot identify ownership column in ERD": 1,
+      "Unknown lookup table or id column": 1,
+      "json_or_schema_invalid": 3
+    },
+    "parsed": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.45454545454545453,
+          "recall": 0.46875,
+          "f1": 0.4615384615384615,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.8461538461538461,
+          "recall": 0.22448979591836735,
+          "f1": 0.3548387096774194,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.5,
+          "recall": 0.42857142857142855,
+          "f1": 0.4615384615384615,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 30,
+          "role_required": 1,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 14,
+          "owner_or_admin": 1,
+          "manual_review_required": 18
+        },
+        "role_required": {
+          "public": 18,
+          "role_required": 11,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 1,
+          "manual_review_required": 11
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 17,
+          "role_required": 1,
+          "membership_required": 2,
+          "tenant_match": 0,
+          "owner_match": 48,
+          "owner_or_admin": 1,
+          "manual_review_required": 43
+        },
+        "owner_or_admin": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 1
+        },
+        "manual_review_required": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        }
+      },
+      "macro_f1": 0.1825593761077632,
+      "manual_ratio": 0.2885375494071146,
+      "mean_inference_ms": 1805.924477076145,
+      "errors": {
+        "invalid_model_output_schema": 3
+      },
+      "erd_context": {
+        "available": 247,
+        "missing": 6
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 139,
+        "parsed_current_handler": 110,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "lost_correct_reasons": {
+      "Caller-attribute/public policy conflicts with object lookup": 2,
+      "Missing or unknown object parameter/owner lookup": 18,
+      "confidence_below_0.7": 13,
+      "Cannot identify ownership column in ERD": 1,
+      "json_or_schema_invalid": 3
+    },
+    "manual_origins": {
+      "converted": 83,
+      "model_manual": 21
+    }
+  },
+  "rows": [
+    {
+      "id": "b98a2ab3b50a679bfa16",
+      "service": "VAmPI",
+      "expected": "role_required",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "a3b2d062cdb1162b5997",
+      "service": "VAmPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "4af8a0694ed2e327e0db",
+      "service": "VAmPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "759eb32d69ab1820e44d",
+      "service": "VAmPI",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "f40e37d667e9313cbb3e",
+      "service": "VAmPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "e0a91b1fbd877d1fd12c",
+      "service": "VAmPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "c47f96241d6d7fc93158",
+      "service": "VAmPI",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "ff8c5eda79000fa6687f",
+      "service": "VAmPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "7f3a2148b6be2455ba76",
+      "service": "VAmPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "8a8d61e2f627c4a1102e",
+      "service": "VAmPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "b3906a959a0b669047ba",
+      "service": "VAmPI",
+      "expected": "owner_match",
+      "raw_before": "owner_or_admin",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [
+        "Cannot identify ownership column in ERD"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "217a26a0ed334f7297d0",
+      "service": "VAmPI",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "2463648df20db46705c1",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "owner_or_admin",
+      "raw_after": "owner_or_admin",
+      "final_before": "manual_review_required",
+      "final_after": "owner_or_admin",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "aae57acca0e9317e81c1",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "149fc53d41cf49d52bb9",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "9a7d3d59efab53f32063",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": true
+    },
+    {
+      "id": "887fef961a2a2394c816",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "acdc8447219278841824",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "d93acb187b6c273464f0",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "d0afe4b052514b189dfa",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "5928631c56d36ced026a",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c3203410c4072686beaa",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "240a92b7ee284506eb3f",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "15af38ebe8faf15c930f",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "860383f68102b772bb99",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "6bca6097b26cf226f405",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "cdd3d3e140b0b509bcd3",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "a0f5f54a6d4c22bb18e7",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "af6e2ae1b29132ee1d77",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "d42ed128370ce4d3ce71",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7a19e5a3a9eb0d5947f3",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "c085f5d6b9f87dd6d4a1",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "cd33a23103c412ea5651",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": true
+    },
+    {
+      "id": "324601a8dc9e9ea969bb",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Unknown lookup table or id column"
+      ],
+      "same_prompt": true
+    },
+    {
+      "id": "0797f5bb072770d50159",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": true
+    },
+    {
+      "id": "3dc50d2c3650a204001d",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": true
+    },
+    {
+      "id": "d72193f9a1b7d79700d0",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bc1dce3621c7da44ddfe",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "58e3df2930d0ce4c3175",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "875c33706a68c4c9a61a",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "61f662463e13765b9478",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "be8b11cdbabe4486aeda",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "7e3f8c20d798e8b34143",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "bb532c95786f45e07314",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "769288e3cd1d5d4c117d",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "dcc8f1be82d40ee3d5cf",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "public",
+      "final_before": "role_required",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "abbb3b1e9239779e76f2",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c917e3e10dce94cc245c",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "fc9dac901542ca88d688",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "public",
+      "final_before": "role_required",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "5a72ac6384c12b441687",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "312256166232634f8b1b",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "4de2f44349d88f3d6b3a",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "97abea85e395e6649df4",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "2c0c5b01954059e821bf",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "d8c5cf5eb0bfbd488219",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "public",
+      "final_before": "role_required",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "580f801a0d75c34f1331",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "role_required",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "0aa2fbdb066b3d771316",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "d553cdd9276767f1b1bc",
+      "service": "crAPI",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "manual_review_required",
+      "final_after": "role_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "6224f0ab777c554bb796",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "956a6feb1b1f65eb5a9a",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0f7dacc4c4c5dc50ad69",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "e878000888f7f413f8b0",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "79d4449bddc16ef5992f",
+      "service": "crAPI",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0b0918598294090d14c3",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "fed0409de548b760d467",
+      "service": "crAPI",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "267af32d80a0676db11d",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "df4bec349a3613906e39",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "839cbd23124f4c9278ad",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "f39152044579211bc61a",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "cffea7522dac244d677f",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "8f823c91369626ba6d9f",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7881b143ae63fc60a35e",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "d03dd5bb033fde20a6b9",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "48784a817ce60824dbc1",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "cc7aabb324d891f2d312",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "a786e652a128f7d49fcb",
+      "service": "juice-shop",
+      "expected": "owner_or_admin",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "939ca4cd3f9e9e8b27df",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bb8c80531d0fc1d9caed",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7cf042f2cfd8f56045a3",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "5861cf111a0a131186d5",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "13b3024516b002a3d17d",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "6c0c7e81f4263be705bd",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "9c760e36b50d4ee7a2d9",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7ff76e2ecef4c5c31665",
+      "service": "juice-shop",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "447fc0aa6c34613756ff",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "be9b12fb6e4c31c1d823",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "f01502b9ee6e82ca7e9e",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bc7fd5ac27c130eb1670",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "ed50adacf184ba6ddcba",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "76f7d58a66bcc80fa70e",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "286fba309233af2275a4",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c199be4494217f7a301b",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0a3ece0464909469b61e",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "3e5864573bebca5a8458",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c64b7f4c9538c700b710",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "3adb00c6de54a6331736",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7364a223f5e100dd73b2",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "4014be5658e0ee17ea1e",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "e502084b4f925dbf28e4",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "905507d01b81ba5eb1f0",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "e574b8ba6eacb5d7c83c",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "16f4b2d20c0ba89ed279",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "bbaf2ce2f276bd2f4679",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "4033e696c5dc2d5b3aa2",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "af9828d3c503f11fb3fe",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "39034afdb110cdb9defc",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "063fa7598db37c095700",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "ed9b8680702e673060d4",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "1b6a93b2cd2fddfc5d01",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0cd1ae74896420dd9abe",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "9400cf3c01d33fe952da",
+      "service": "juice-shop",
+      "expected": "manual_review_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "179edeb6b4389d232d5d",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "f0ca27ba6aba3b33b9d2",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "3f60ffc8151aba598d58",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "public",
+      "final_before": "role_required",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "4ee6439b95fb9a2c4bb8",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "membership_required",
+      "final_before": "manual_review_required",
+      "final_after": "membership_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "812cccd2e9c35add2146",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "cd10794910422bd9dcf8",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "eb5692e50c0e12db6ca9",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "9416b7189d811cbb7daa",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "membership_required",
+      "raw_after": "public",
+      "final_before": "membership_required",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "745151104eb860a9e9ec",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "eef733c4cdf73432c9bc",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "2787243a5db7dfb178b4",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c88cdff9970205a15244",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "cb7b63f3b0b2e2e8e967",
+      "service": "juice-shop",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "b99ce3da978a18ab2017",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7b6e2731e933a52a9070",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "a15c48c2351014fde76c",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "20048ada164e23252369",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c1eb8e1b4c0183b6c75b",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "4e0c68cd981acbfe4a95",
+      "service": "juice-shop",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "383ff20e485d08b7aab2",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "fbe864fbd2d924117550",
+      "service": "juice-shop",
+      "expected": "role_required",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "6c5807ef29707164f73b",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "314ffc8290ffcff7031e",
+      "service": "juice-shop",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "dc4019dd63bac3b0e405",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "fad2ffd19dad19055370",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "43e7d3752b50b3dfdd1b",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "2168150bddc48ce3a0c8",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "public",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "5cb15a9c2cc08fcaa9f2",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "public",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "a1be3b47f9420231f409",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "af52b958d71fa4458e1e",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "ae718aeadf0285be8850",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "public",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "95a588720a50160e0c3e",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "2289e5bc9d8ead4e8818",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "d2d3003f1edf061ec6ed",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "public",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "6c897f7eae36dd117c6b",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "c3b2f10f95579d73a8b3",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "0e1637db083f68e499d4",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "public",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "4eb2737b7dc7b31720fe",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "role_required",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "90b7d387b719e9937263",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "81ad27320942026fa518",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "5b4104eb0ef8a0531dbd",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c31d0a5bb5c879e094f3",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Caller-attribute/public policy conflicts with object lookup"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bcfa59eea899fc11ba4f",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "32447425974cf6f24467",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "3fb5f18e981183405c13",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "f98a05bef6af6ac52df9",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "4dc92bf6452cc6671184",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "e8437c5320794a594af6",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "c250b480c9ec5ee55617",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "json_or_schema_invalid"
+      ],
+      "events_after": [
+        "json_or_schema_invalid"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "bbfd5bfc671dc4af42c5",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "json_or_schema_invalid"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "fd938e89d9362deb8656",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "json_or_schema_invalid"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "9a4f29e70cdc281a0357",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "0f5b4d569c99d8d9c870",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "b92cea1a3f110420ee85",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "b036005643c333b5e7ae",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "owner_or_admin",
+      "raw_after": "owner_or_admin",
+      "final_before": "manual_review_required",
+      "final_after": "owner_or_admin",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "eed3687a2d41f8658232",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "5e6b124fedb6105ffbd0",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "a843efb3b237cbef2026",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "0293603d276a2bdbefe0",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "8854d7bfa8e6100efee9",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bf900bef2d12400d0880",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "28fa5fab6338ef186954",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "json_or_schema_invalid"
+      ],
+      "events_after": [
+        "json_or_schema_invalid"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "7ab0a0779b998f445f3c",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "json_or_schema_invalid"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "2f8f43be0ee49cc83b1e",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "json_or_schema_invalid"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "93b3678d43a24b94f1c3",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "1e7e10e8d4827df5e28a",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "64fd25809d678710b6f3",
+      "service": "Pixi",
+      "expected": "role_required",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "role_required",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "01df9f46f6e721fa4cb0",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "ab9da003ee3dbde8e544",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "a3f4eb9a86fa08f2ad71",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "680ac46b983584d4552d",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "25fd1086a6999340c575",
+      "service": "Pixi",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "bf2d1601b02281b85536",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "membership_required",
+      "final_before": "manual_review_required",
+      "final_after": "membership_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7292860512c06eed2ffd",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_or_admin",
+      "raw_after": "owner_or_admin",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "6309b77a47e9b994f9fe",
+      "service": "Pixi",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "a15a54f7818a6cf25d98",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Unknown lookup table or id column"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "963209fb55865d6f2acf",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "c4993c51f6be6657d771",
+      "service": "DVWS-node",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "role_required",
+      "final_before": "manual_review_required",
+      "final_after": "role_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "06ba24e97fdcb059ad92",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "ffe188e6f24418c23676",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "be2ff7c9ec46320a97af",
+      "service": "DVWS-node",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "d0ab15d66e0643031f91",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "owner_match",
+      "final_before": "manual_review_required",
+      "final_after": "owner_match",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "91d2105d144e1805a5b2",
+      "service": "DVWS-node",
+      "expected": "role_required",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "7093260288fd7266a210",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "role_required",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "50730915ce2378191bee",
+      "service": "DVWS-node",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "f8fd9992a61819c2c4af",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "Missing or unknown object parameter/owner lookup"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "4d8caf213fb70649fc0f",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0a8fb9b5c84b26b19826",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "0f7af84126bd72a56bd5",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "a40f8db8b12527fda084",
+      "service": "DVWS-node",
+      "expected": "role_required",
+      "raw_before": "role_required",
+      "raw_after": "role_required",
+      "final_before": "role_required",
+      "final_after": "role_required",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "3f37f7f30c7bc18f180a",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "208819689993254cc920",
+      "service": "DVWS-node",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "60c95e757a6b732073ae",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "e48aca1abec6c374bfa1",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "29a91ef41063c0221266",
+      "service": "DVWS-node",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "public",
+      "final_after": "manual_review_required",
+      "events_before": [],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "26c60d2fb9155d63f00c",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "public",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "2e45bdad0431b35cfbf5",
+      "service": "DVWS-node",
+      "expected": "public",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "90e39b6520bac57f8f52",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "role_required",
+      "raw_after": "public",
+      "final_before": "role_required",
+      "final_after": "public",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": false
+    },
+    {
+      "id": "1d45c0e2ac7bb00728b3",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "public",
+      "raw_after": "public",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "a4f0cd98076a7ed61adf",
+      "service": "DVWS-node",
+      "expected": "owner_match",
+      "raw_before": "manual_review_required",
+      "raw_after": "manual_review_required",
+      "final_before": "manual_review_required",
+      "final_after": "manual_review_required",
+      "events_before": [
+        "confidence_below_0.7"
+      ],
+      "events_after": [
+        "confidence_below_0.7"
+      ],
+      "same_prompt": false
+    },
+    {
+      "id": "quill_blog_catalogue_0",
+      "service": "quill_blog",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_catalogue_1",
+      "service": "quill_blog",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_drafts_0",
+      "service": "quill_blog",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_drafts_1",
+      "service": "quill_blog",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_shared_0",
+      "service": "quill_blog",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_shared_1",
+      "service": "quill_blog",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_workspace_0",
+      "service": "quill_blog",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_workspace_1",
+      "service": "quill_blog",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_audit_0",
+      "service": "quill_blog",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_audit_1",
+      "service": "quill_blog",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_subscription_0",
+      "service": "quill_blog",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_subscription_1",
+      "service": "quill_blog",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_disputed_0",
+      "service": "quill_blog",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "quill_blog_disputed_1",
+      "service": "quill_blog",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_catalogue_0",
+      "service": "folio_wiki",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_catalogue_1",
+      "service": "folio_wiki",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_drafts_0",
+      "service": "folio_wiki",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_drafts_1",
+      "service": "folio_wiki",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_shared_0",
+      "service": "folio_wiki",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_shared_1",
+      "service": "folio_wiki",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_workspace_0",
+      "service": "folio_wiki",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_workspace_1",
+      "service": "folio_wiki",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_audit_0",
+      "service": "folio_wiki",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_audit_1",
+      "service": "folio_wiki",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_subscription_0",
+      "service": "folio_wiki",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_subscription_1",
+      "service": "folio_wiki",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_disputed_0",
+      "service": "folio_wiki",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "folio_wiki_disputed_1",
+      "service": "folio_wiki",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_catalogue_0",
+      "service": "beacon_iot",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_catalogue_1",
+      "service": "beacon_iot",
+      "expected": "public",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_drafts_0",
+      "service": "beacon_iot",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_drafts_1",
+      "service": "beacon_iot",
+      "expected": "owner_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_shared_0",
+      "service": "beacon_iot",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_shared_1",
+      "service": "beacon_iot",
+      "expected": "owner_or_admin",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_workspace_0",
+      "service": "beacon_iot",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_workspace_1",
+      "service": "beacon_iot",
+      "expected": "tenant_match",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_audit_0",
+      "service": "beacon_iot",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_audit_1",
+      "service": "beacon_iot",
+      "expected": "role_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_subscription_0",
+      "service": "beacon_iot",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_subscription_1",
+      "service": "beacon_iot",
+      "expected": "membership_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_disputed_0",
+      "service": "beacon_iot",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    },
+    {
+      "id": "beacon_iot_disputed_1",
+      "service": "beacon_iot",
+      "expected": "manual_review_required",
+      "raw_before": "owner_match",
+      "raw_after": "owner_match",
+      "final_before": "owner_match",
+      "final_after": "owner_match",
+      "events_before": [],
+      "events_after": [],
+      "same_prompt": true
+    }
+  ],
+  "same_prompt_count": 48,
+  "same_prompt_final_changed": 2,
+  "provenance": {
+    "before": {
+      "configuration": "a",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "rag": true,
+      "controller": true,
+      "prompt_version": "v2.0",
+      "prompt_sha256": "c3c774e3907207a3b4e10d6800078ce9c5c604b39cb7b5be884e1c8d8ba7d3e4",
+      "test_sha256": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+      "runner_sha256": "c3b3ea8b1efc2c68a46ab801cc5b2eaea1899299d75c207d64558e4f878865ad",
+      "corpus_sha256": "0f28fc32da23453caa21be98e6e16d88ef72ef535b3641b1e7ff110130c1c7ee",
+      "corpus_counts": {
+        "idiom": 6
+      },
+      "embedding_model": "intfloat/multilingual-e5-small",
+      "total": 253,
+      "recording_version": 1,
+      "input_overlay_sha256": null,
+      "state": "complete",
+      "updated_at": "2026-10-20T00:57:13.391208+00:00",
+      "metrics": {
+        "completed": 253,
+        "per_label": {
+          "public": {
+            "precision": 0.4098360655737705,
+            "recall": 0.390625,
+            "f1": 0.4,
+            "support": 64
+          },
+          "role_required": {
+            "precision": 0.4,
+            "recall": 0.08163265306122448,
+            "f1": 0.13559322033898302,
+            "support": 49
+          },
+          "membership_required": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 6
+          },
+          "tenant_match": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 6
+          },
+          "owner_match": {
+            "precision": 0.14285714285714285,
+            "recall": 0.05357142857142857,
+            "f1": 0.0779220779220779,
+            "support": 112
+          },
+          "owner_or_admin": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 9
+          },
+          "manual_review_required": {
+            "precision": 0.007194244604316547,
+            "recall": 0.14285714285714285,
+            "f1": 0.0136986301369863,
+            "support": 7
+          }
+        },
+        "confusion_matrix": {
+          "public": {
+            "public": 25,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 33
+          },
+          "role_required": {
+            "public": 19,
+            "role_required": 4,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 20
+          },
+          "membership_required": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 0
+          },
+          "tenant_match": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 0
+          },
+          "owner_match": {
+            "public": 16,
+            "role_required": 6,
+            "membership_required": 1,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 83
+          },
+          "owner_or_admin": {
+            "public": 1,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 2
+          },
+          "manual_review_required": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 1
+          }
+        },
+        "macro_f1": 0.08960198977114962,
+        "manual_ratio": 0.549407114624506,
+        "mean_inference_ms": 1793.3826782591568,
+        "errors": {
+          "invalid_model_output_schema": 5
+        },
+        "erd_context": {
+          "missing": 211,
+          "available": 42
+        },
+        "controller_status": {
+          "source_present_but_runtime_handler_unmapped": 212,
+          "parsed_current_handler": 37,
+          "source_unavailable": 4
+        },
+        "rag_nonempty": 253
+      },
+      "diagnostic_metrics": {
+        "recorded": 253,
+        "missing_trace": 0,
+        "raw": {
+          "completed": 253,
+          "per_label": {
+            "public": {
+              "precision": 0.3511450381679389,
+              "recall": 0.71875,
+              "f1": 0.47179487179487184,
+              "support": 64
+            },
+            "role_required": {
+              "precision": 0.45454545454545453,
+              "recall": 0.10204081632653061,
+              "f1": 0.16666666666666669,
+              "support": 49
+            },
+            "membership_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "tenant_match": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "owner_match": {
+              "precision": 0.3333333333333333,
+              "recall": 0.1875,
+              "f1": 0.24000000000000005,
+              "support": 112
+            },
+            "owner_or_admin": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 9
+            },
+            "manual_review_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 7
+            }
+          },
+          "confusion_matrix": {
+            "public": {
+              "public": 46,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 9,
+              "owner_or_admin": 1,
+              "manual_review_required": 8
+            },
+            "role_required": {
+              "public": 30,
+              "role_required": 5,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 7,
+              "owner_or_admin": 1,
+              "manual_review_required": 6
+            },
+            "membership_required": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "tenant_match": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "owner_match": {
+              "public": 53,
+              "role_required": 6,
+              "membership_required": 1,
+              "tenant_match": 0,
+              "owner_match": 21,
+              "owner_or_admin": 2,
+              "manual_review_required": 29
+            },
+            "owner_or_admin": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 8,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "manual_review_required": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            }
+          },
+          "macro_f1": 0.12549450549450553,
+          "manual_ratio": 0.16996047430830039,
+          "mean_inference_ms": 1793.3826782591568,
+          "errors": {
+            "invalid_model_output_schema": 5
+          },
+          "erd_context": {
+            "missing": 211,
+            "available": 42
+          },
+          "controller_status": {
+            "source_present_but_runtime_handler_unmapped": 212,
+            "parsed_current_handler": 37,
+            "source_unavailable": 4
+          },
+          "rag_nonempty": 253
+        },
+        "final": {
+          "completed": 253,
+          "per_label": {
+            "public": {
+              "precision": 0.4098360655737705,
+              "recall": 0.390625,
+              "f1": 0.4,
+              "support": 64
+            },
+            "role_required": {
+              "precision": 0.4,
+              "recall": 0.08163265306122448,
+              "f1": 0.13559322033898302,
+              "support": 49
+            },
+            "membership_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "tenant_match": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "owner_match": {
+              "precision": 0.14285714285714285,
+              "recall": 0.05357142857142857,
+              "f1": 0.0779220779220779,
+              "support": 112
+            },
+            "owner_or_admin": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 9
+            },
+            "manual_review_required": {
+              "precision": 0.007194244604316547,
+              "recall": 0.14285714285714285,
+              "f1": 0.0136986301369863,
+              "support": 7
+            }
+          },
+          "confusion_matrix": {
+            "public": {
+              "public": 25,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 33
+            },
+            "role_required": {
+              "public": 19,
+              "role_required": 4,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 20
+            },
+            "membership_required": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "tenant_match": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "owner_match": {
+              "public": 16,
+              "role_required": 6,
+              "membership_required": 1,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 83
+            },
+            "owner_or_admin": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 2
+            },
+            "manual_review_required": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 1
+            }
+          },
+          "macro_f1": 0.08960198977114962,
+          "manual_ratio": 0.549407114624506,
+          "mean_inference_ms": 1793.3826782591568,
+          "errors": {
+            "invalid_model_output_schema": 5
+          },
+          "erd_context": {
+            "missing": 211,
+            "available": 42
+          },
+          "controller_status": {
+            "source_present_but_runtime_handler_unmapped": 212,
+            "parsed_current_handler": 37,
+            "source_unavailable": 4
+          },
+          "rag_nonempty": 253
+        },
+        "invalid_raw_labels": 0,
+        "changed": 96,
+        "correct_to_wrong": 37,
+        "wrong_to_correct": 1,
+        "validation_events": {
+          "Caller-attribute/public policy conflicts with object lookup": 2,
+          "confidence_below_0.7": 112,
+          "Missing or unknown object parameter/owner lookup": 7,
+          "Unknown lookup table or id column": 13,
+          "json_or_schema_invalid": 5
+        }
+      }
+    },
+    "after": {
+      "configuration": "a",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "rag": true,
+      "controller": true,
+      "prompt_version": "v2.0",
+      "prompt_sha256": "c3c774e3907207a3b4e10d6800078ce9c5c604b39cb7b5be884e1c8d8ba7d3e4",
+      "test_sha256": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+      "runner_sha256": "c3b3ea8b1efc2c68a46ab801cc5b2eaea1899299d75c207d64558e4f878865ad",
+      "corpus_sha256": "0f28fc32da23453caa21be98e6e16d88ef72ef535b3641b1e7ff110130c1c7ee",
+      "corpus_counts": {
+        "idiom": 6
+      },
+      "embedding_model": "intfloat/multilingual-e5-small",
+      "total": 253,
+      "recording_version": 1,
+      "input_overlay_sha256": "507154e104bd602b0e97ec00920f0cf152986d6e162ff5b845fd15d1d1e93c4f",
+      "state": "complete",
+      "updated_at": "2026-10-20T01:05:53.888529+00:00",
+      "metrics": {
+        "completed": 253,
+        "per_label": {
+          "public": {
+            "precision": 0.4915254237288136,
+            "recall": 0.453125,
+            "f1": 0.4715447154471545,
+            "support": 64
+          },
+          "role_required": {
+            "precision": 0.8333333333333334,
+            "recall": 0.20408163265306123,
+            "f1": 0.3278688524590165,
+            "support": 49
+          },
+          "membership_required": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 6
+          },
+          "tenant_match": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 6
+          },
+          "owner_match": {
+            "precision": 0.3918918918918919,
+            "recall": 0.25892857142857145,
+            "f1": 0.31182795698924737,
+            "support": 112
+          },
+          "owner_or_admin": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 9
+          },
+          "manual_review_required": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 7
+          }
+        },
+        "confusion_matrix": {
+          "public": {
+            "public": 29,
+            "role_required": 1,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 11,
+            "owner_or_admin": 1,
+            "manual_review_required": 22
+          },
+          "role_required": {
+            "public": 14,
+            "role_required": 10,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 8,
+            "owner_or_admin": 1,
+            "manual_review_required": 16
+          },
+          "membership_required": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 0
+          },
+          "tenant_match": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 0
+          },
+          "owner_match": {
+            "public": 15,
+            "role_required": 1,
+            "membership_required": 2,
+            "tenant_match": 0,
+            "owner_match": 29,
+            "owner_or_admin": 0,
+            "manual_review_required": 65
+          },
+          "owner_or_admin": {
+            "public": 0,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 8,
+            "owner_or_admin": 0,
+            "manual_review_required": 1
+          },
+          "manual_review_required": {
+            "public": 1,
+            "role_required": 0,
+            "membership_required": 0,
+            "tenant_match": 0,
+            "owner_match": 6,
+            "owner_or_admin": 0,
+            "manual_review_required": 0
+          }
+        },
+        "macro_f1": 0.15874878927077404,
+        "manual_ratio": 0.41106719367588934,
+        "mean_inference_ms": 1805.924477076145,
+        "errors": {
+          "invalid_model_output_schema": 3
+        },
+        "erd_context": {
+          "available": 247,
+          "missing": 6
+        },
+        "controller_status": {
+          "source_present_but_runtime_handler_unmapped": 139,
+          "parsed_current_handler": 110,
+          "source_unavailable": 4
+        },
+        "rag_nonempty": 253
+      },
+      "diagnostic_metrics": {
+        "recorded": 253,
+        "missing_trace": 0,
+        "raw": {
+          "completed": 253,
+          "per_label": {
+            "public": {
+              "precision": 0.3739130434782609,
+              "recall": 0.671875,
+              "f1": 0.4804469273743016,
+              "support": 64
+            },
+            "role_required": {
+              "precision": 0.8461538461538461,
+              "recall": 0.22448979591836735,
+              "f1": 0.3548387096774194,
+              "support": 49
+            },
+            "membership_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "tenant_match": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "owner_match": {
+              "precision": 0.5151515151515151,
+              "recall": 0.45535714285714285,
+              "f1": 0.48341232227488157,
+              "support": 112
+            },
+            "owner_or_admin": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 9
+            },
+            "manual_review_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 7
+            }
+          },
+          "confusion_matrix": {
+            "public": {
+              "public": 43,
+              "role_required": 1,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 14,
+              "owner_or_admin": 1,
+              "manual_review_required": 5
+            },
+            "role_required": {
+              "public": 27,
+              "role_required": 11,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 8,
+              "owner_or_admin": 1,
+              "manual_review_required": 2
+            },
+            "membership_required": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "tenant_match": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "owner_match": {
+              "public": 43,
+              "role_required": 1,
+              "membership_required": 2,
+              "tenant_match": 0,
+              "owner_match": 51,
+              "owner_or_admin": 1,
+              "manual_review_required": 14
+            },
+            "owner_or_admin": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 8,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "manual_review_required": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            }
+          },
+          "macro_f1": 0.18838542276094322,
+          "manual_ratio": 0.08300395256916997,
+          "mean_inference_ms": 1805.924477076145,
+          "errors": {
+            "invalid_model_output_schema": 3
+          },
+          "erd_context": {
+            "available": 247,
+            "missing": 6
+          },
+          "controller_status": {
+            "source_present_but_runtime_handler_unmapped": 139,
+            "parsed_current_handler": 110,
+            "source_unavailable": 4
+          },
+          "rag_nonempty": 253
+        },
+        "final": {
+          "completed": 253,
+          "per_label": {
+            "public": {
+              "precision": 0.4915254237288136,
+              "recall": 0.453125,
+              "f1": 0.4715447154471545,
+              "support": 64
+            },
+            "role_required": {
+              "precision": 0.8333333333333334,
+              "recall": 0.20408163265306123,
+              "f1": 0.3278688524590165,
+              "support": 49
+            },
+            "membership_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "tenant_match": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6
+            },
+            "owner_match": {
+              "precision": 0.3918918918918919,
+              "recall": 0.25892857142857145,
+              "f1": 0.31182795698924737,
+              "support": 112
+            },
+            "owner_or_admin": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 9
+            },
+            "manual_review_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 7
+            }
+          },
+          "confusion_matrix": {
+            "public": {
+              "public": 29,
+              "role_required": 1,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 11,
+              "owner_or_admin": 1,
+              "manual_review_required": 22
+            },
+            "role_required": {
+              "public": 14,
+              "role_required": 10,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 8,
+              "owner_or_admin": 1,
+              "manual_review_required": 16
+            },
+            "membership_required": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "tenant_match": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            },
+            "owner_match": {
+              "public": 15,
+              "role_required": 1,
+              "membership_required": 2,
+              "tenant_match": 0,
+              "owner_match": 29,
+              "owner_or_admin": 0,
+              "manual_review_required": 65
+            },
+            "owner_or_admin": {
+              "public": 0,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 8,
+              "owner_or_admin": 0,
+              "manual_review_required": 1
+            },
+            "manual_review_required": {
+              "public": 1,
+              "role_required": 0,
+              "membership_required": 0,
+              "tenant_match": 0,
+              "owner_match": 6,
+              "owner_or_admin": 0,
+              "manual_review_required": 0
+            }
+          },
+          "macro_f1": 0.15874878927077404,
+          "manual_ratio": 0.41106719367588934,
+          "mean_inference_ms": 1805.924477076145,
+          "errors": {
+            "invalid_model_output_schema": 3
+          },
+          "erd_context": {
+            "available": 247,
+            "missing": 6
+          },
+          "controller_status": {
+            "source_present_but_runtime_handler_unmapped": 139,
+            "parsed_current_handler": 110,
+            "source_unavailable": 4
+          },
+          "rag_nonempty": 253
+        },
+        "invalid_raw_labels": 0,
+        "changed": 83,
+        "correct_to_wrong": 37,
+        "wrong_to_correct": 0,
+        "validation_events": {
+          "Caller-attribute/public policy conflicts with object lookup": 8,
+          "Missing or unknown object parameter/owner lookup": 21,
+          "confidence_below_0.7": 69,
+          "Cannot identify ownership column in ERD": 1,
+          "Unknown lookup table or id column": 1,
+          "json_or_schema_invalid": 3
+        }
+      }
+    }
+  }
+}

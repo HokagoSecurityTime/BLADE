@@ -1,0 +1,2028 @@
+[
+  {
+    "id": "items.read_items",
+    "reference_label": null,
+    "reference_status": "unresolved",
+    "intended_policy": {
+      "explicit_text": "Retrieve items.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "collection row filtering by owner OR superuser; endpoint-wide scalar policy unresolved",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 13,
+        "end": 45,
+        "code": "@router.get(\"/\", response_model=ItemsPublic)\ndef read_items(\n    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100\n) -> Any:\n    \"\"\"\n    Retrieve items.\n    \"\"\"\n\n    if current_user.is_superuser:\n        count_statement = select(func.count()).select_from(Item)\n        count = session.exec(count_statement).one()\n        statement = (\n            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)\n        )\n        items = session.exec(statement).all()\n    else:\n        count_statement = (\n            select(func.count())\n            .select_from(Item)\n            .where(Item.owner_id == current_user.id)\n        )\n        count = session.exec(count_statement).one()\n        statement = (\n            select(Item)\n            .where(Item.owner_id == current_user.id)\n            .order_by(col(Item.created_at).desc())\n            .offset(skip)\n            .limit(limit)\n        )\n        items = session.exec(statement).all()\n\n    items_public = [ItemPublic.model_validate(item) for item in items]\n    return ItemsPublic(data=items_public, count=count)",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 97,
+        "end": 100,
+        "code": "class ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 103,
+        "end": 105,
+        "code": "class ItemsPublic(SQLModel):\n    data: list[ItemPublic]\n    count: int",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_items.py",
+        "sha256": "be711def80eb52caeb1f2b0d9a933e294ea4f2f798ae2dc8924fb41fdda5528a",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "items.read_item",
+    "reference_label": "owner_or_admin",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Get item by ID.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "403 unless superuser OR Item.owner_id equals current_user.id",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 48,
+        "end": 58,
+        "code": "@router.get(\"/{id}\", response_model=ItemPublic)\ndef read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\n    \"\"\"\n    Get item by ID.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    return item",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 97,
+        "end": 100,
+        "code": "class ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_items.py",
+        "sha256": "be711def80eb52caeb1f2b0d9a933e294ea4f2f798ae2dc8924fb41fdda5528a",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "items.create_item",
+    "reference_label": null,
+    "reference_status": "unresolved",
+    "intended_policy": {
+      "explicit_text": "Create new item.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "creator binding; no existing object access check",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 61,
+        "end": 72,
+        "code": "@router.post(\"/\", response_model=ItemPublic)\ndef create_item(\n    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate\n) -> Any:\n    \"\"\"\n    Create new item.\n    \"\"\"\n    item = Item.model_validate(item_in, update={\"owner_id\": current_user.id})\n    session.add(item)\n    session.commit()\n    session.refresh(item)\n    return item",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 76,
+        "end": 77,
+        "code": "class ItemCreate(ItemBase):\n    pass",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 97,
+        "end": 100,
+        "code": "class ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_items.py",
+        "sha256": "be711def80eb52caeb1f2b0d9a933e294ea4f2f798ae2dc8924fb41fdda5528a",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "items.update_item",
+    "reference_label": "owner_or_admin",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Update an item.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "403 unless superuser OR Item.owner_id equals current_user.id",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 75,
+        "end": 96,
+        "code": "@router.put(\"/{id}\", response_model=ItemPublic)\ndef update_item(\n    *,\n    session: SessionDep,\n    current_user: CurrentUser,\n    id: uuid.UUID,\n    item_in: ItemUpdate,\n) -> Any:\n    \"\"\"\n    Update an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    update_dict = item_in.model_dump(exclude_unset=True)\n    item.sqlmodel_update(update_dict)\n    session.add(item)\n    session.commit()\n    session.refresh(item)\n    return item",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 97,
+        "end": 100,
+        "code": "class ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 81,
+        "end": 83,
+        "code": "class ItemUpdate(SQLModel):\n    title: str | None = Field(default=None, min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_items.py",
+        "sha256": "be711def80eb52caeb1f2b0d9a933e294ea4f2f798ae2dc8924fb41fdda5528a",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "items.delete_item",
+    "reference_label": "owner_or_admin",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Delete an item.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "403 unless superuser OR Item.owner_id equals current_user.id",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 99,
+        "end": 113,
+        "code": "@router.delete(\"/{id}\")\ndef delete_item(\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    session.delete(item)\n    session.commit()\n    return Message(message=\"Item deleted successfully\")",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_items.py",
+        "sha256": "be711def80eb52caeb1f2b0d9a933e294ea4f2f798ae2dc8924fb41fdda5528a",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "login.login_access_token",
+    "reference_label": "public",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "OAuth2 compatible token login, get an access token for future requests",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "authentication entry, credential validation is not preexisting session authorization",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 23,
+        "end": 42,
+        "code": "@router.post(\"/login/access-token\")\ndef login_access_token(\n    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]\n) -> Token:\n    \"\"\"\n    OAuth2 compatible token login, get an access token for future requests\n    \"\"\"\n    user = crud.authenticate(\n        session=session, email=form_data.username, password=form_data.password\n    )\n    if not user:\n        raise HTTPException(status_code=400, detail=\"Incorrect email or password\")\n    elif not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)\n    return Token(\n        access_token=security.create_access_token(\n            user.id, expires_delta=access_token_expires\n        )\n    )",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 114,
+        "end": 116,
+        "code": "class Token(SQLModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_login.py",
+        "sha256": "8f34b92a572406ce10a8cf8595736ee8aea5c84268be123a4a84498074228b8c",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "login.test_token",
+    "reference_label": "owner_match",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Test access token",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "returns current authenticated user only",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 45,
+        "end": 50,
+        "code": "@router.post(\"/login/test-token\", response_model=UserPublic)\ndef test_token(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Test access token\n    \"\"\"\n    return current_user",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_login.py",
+        "sha256": "8f34b92a572406ce10a8cf8595736ee8aea5c84268be123a4a84498074228b8c",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "login.recover_password",
+    "reference_label": "public",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Password Recovery",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "unauthenticated recovery initiation; same generic response",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 53,
+        "end": 74,
+        "code": "@router.post(\"/password-recovery/{email}\")\ndef recover_password(email: str, session: SessionDep) -> Message:\n    \"\"\"\n    Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    # Always return the same response to prevent email enumeration attacks\n    # Only send email if user actually exists\n    if user:\n        password_reset_token = generate_password_reset_token(email=email)\n        email_data = generate_reset_password_email(\n            email_to=user.email, email=email, token=password_reset_token\n        )\n        send_email(\n            email_to=user.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return Message(\n        message=\"If that email is registered, we sent a password recovery link\"\n    )",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 34,
+        "end": 39,
+        "code": "def get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 34,
+        "end": 38,
+        "code": "def send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 70,
+        "end": 86,
+        "code": "def generate_reset_password_email(email_to: str, email: str, token: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Password recovery for user {email}\"\n    link = f\"{settings.FRONTEND_HOST}/reset-password?token={token}\"\n    html_content = render_email_template(\n        template_name=\"reset_password.html\",\n        context={\n            \"project_name\": settings.PROJECT_NAME,\n            \"username\": email,\n            \"email\": email_to,\n            \"valid_hours\": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,\n            \"link\": link,\n        },\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 105,
+        "end": 117,
+        "code": "def generate_password_reset_token(email: str) -> str:\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\n    now = datetime.now(UTC)\n    expires = now + delta\n    exp = expires.timestamp()\n    encoded_jwt = jwt.encode(\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\n        settings.SECRET_KEY,\n        algorithm=security.ALGORITHM,\n    )\n    return encoded_jwt\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 25,
+        "end": 33,
+        "code": "def render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_login.py",
+        "sha256": "8f34b92a572406ce10a8cf8595736ee8aea5c84268be123a4a84498074228b8c",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "login.reset_password",
+    "reference_label": null,
+    "reference_status": "unresolved",
+    "intended_policy": {
+      "explicit_text": "Reset password",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "reset token capability bound to email; mapping into six policies unresolved",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 77,
+        "end": 97,
+        "code": "@router.post(\"/reset-password/\")\ndef reset_password(session: SessionDep, body: NewPassword) -> Message:\n    \"\"\"\n    Reset password\n    \"\"\"\n    email = verify_password_reset_token(token=body.token)\n    if not email:\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    user = crud.get_user_by_email(session=session, email=email)\n    if not user:\n        # Don't reveal that the user doesn't exist - use same error as invalid token\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    elif not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    user_in_update = UserUpdate(password=body.new_password)\n    crud.update_user(\n        session=session,\n        db_user=user,\n        user_in=user_in_update,\n    )\n    return Message(message=\"Password updated successfully\")",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 20,
+        "end": 33,
+        "code": "def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:\n    user_data = user_in.model_dump(exclude_unset=True)\n    extra_data = {}\n    if \"password\" in user_data:\n        password = user_data[\"password\"]\n        hashed_password = get_password_hash(password)\n        extra_data[\"hashed_password\"] = hashed_password\n    db_user.sqlmodel_update(user_data, update=extra_data)\n    session.add(db_user)\n    session.commit()\n    session.refresh(db_user)\n    return db_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 34,
+        "end": 39,
+        "code": "def get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 118,
+        "end": 125,
+        "code": "def verify_password_reset_token(token: str) -> str | None:\n    try:\n        decoded_token = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        return str(decoded_token[\"sub\"])\n    except InvalidTokenError:\n        return None",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/core/security.py",
+        "start": 35,
+        "end": 36,
+        "code": "def get_password_hash(password: str) -> str:\n    return password_hash.hash(password)",
+        "sha256": "adb90882929ab33c238e2e9fa81b03fa0364c1a8cce0e9e70b98c68c321f468f"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 124,
+        "end": 126,
+        "code": "class NewPassword(SQLModel):\n    token: str\n    new_password: str = Field(min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 32,
+        "end": 37,
+        "code": "class UserUpdate(SQLModel):\n    email: EmailStr | None = Field(default=None, max_length=255)\n    is_active: bool | None = None\n    is_superuser: bool | None = None\n    full_name: str | None = Field(default=None, max_length=255)\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_login.py",
+        "sha256": "8f34b92a572406ce10a8cf8595736ee8aea5c84268be123a4a84498074228b8c",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "login.recover_password_html_content",
+    "reference_label": "role_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "HTML Content for Password Recovery",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "route dependency get_current_active_superuser",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 100,
+        "end": 123,
+        "code": "@router.post(\n    \"/password-recovery-html-content/{email}\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_class=HTMLResponse,\n)\ndef recover_password_html_content(email: str, session: SessionDep) -> Any:\n    \"\"\"\n    HTML Content for Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    if not user:\n        raise HTTPException(\n            status_code=404,\n            detail=\"The user with this username does not exist in the system.\",\n        )\n    password_reset_token = generate_password_reset_token(email=email)\n    email_data = generate_reset_password_email(\n        email_to=user.email, email=email, token=password_reset_token\n    )\n\n    return HTMLResponse(\n        content=email_data.html_content, headers={\"subject:\": email_data.subject}\n    )",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 34,
+        "end": 39,
+        "code": "def get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 70,
+        "end": 86,
+        "code": "def generate_reset_password_email(email_to: str, email: str, token: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Password recovery for user {email}\"\n    link = f\"{settings.FRONTEND_HOST}/reset-password?token={token}\"\n    html_content = render_email_template(\n        template_name=\"reset_password.html\",\n        context={\n            \"project_name\": settings.PROJECT_NAME,\n            \"username\": email,\n            \"email\": email_to,\n            \"valid_hours\": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,\n            \"link\": link,\n        },\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 105,
+        "end": 117,
+        "code": "def generate_password_reset_token(email: str) -> str:\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\n    now = datetime.now(UTC)\n    expires = now + delta\n    exp = expires.timestamp()\n    encoded_jwt = jwt.encode(\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\n        settings.SECRET_KEY,\n        algorithm=security.ALGORITHM,\n    )\n    return encoded_jwt\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 25,
+        "end": 33,
+        "code": "def render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_login.py",
+        "sha256": "8f34b92a572406ce10a8cf8595736ee8aea5c84268be123a4a84498074228b8c",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "private.create_user",
+    "reference_label": null,
+    "reference_status": "unresolved",
+    "intended_policy": {
+      "explicit_text": "Create a new user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "development-only registration; intended deployment policy not established",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/private.py",
+        "start": 23,
+        "end": 38,
+        "code": "@router.post(\"/users/\", response_model=UserPublic)\ndef create_user(user_in: PrivateUserCreate, session: SessionDep) -> Any:\n    \"\"\"\n    Create a new user.\n    \"\"\"\n\n    user = User(\n        email=user_in.email,\n        full_name=user_in.full_name,\n        hashed_password=get_password_hash(user_in.password),\n    )\n\n    session.add(user)\n    session.commit()\n\n    return user",
+        "sha256": "f5df74cc276f0d8d83337922fb8e05e69ecbc885d466d90d2e3de54ba5e4c8f4"
+      },
+      {
+        "file": "backend/app/core/security.py",
+        "start": 35,
+        "end": 36,
+        "code": "def get_password_hash(password: str) -> str:\n    return password_hash.hash(password)",
+        "sha256": "adb90882929ab33c238e2e9fa81b03fa0364c1a8cce0e9e70b98c68c321f468f"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_private.py",
+        "sha256": "50b1d6d285a86c878b2501f8af68ce862dfb16dfccb7a4ab25b6c04143e40aa9",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": true
+  },
+  {
+    "id": "users.read_users",
+    "reference_label": "role_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Retrieve users.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "route dependency get_current_active_superuser",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 32,
+        "end": 51,
+        "code": "@router.get(\n    \"/\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_model=UsersPublic,\n)\ndef read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:\n    \"\"\"\n    Retrieve users.\n    \"\"\"\n\n    count_statement = select(func.count()).select_from(User)\n    count = session.exec(count_statement).one()\n\n    statement = (\n        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)\n    )\n    users = session.exec(statement).all()\n\n    users_public = [UserPublic.model_validate(user) for user in users]\n    return UsersPublic(data=users_public, count=count)",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 64,
+        "end": 66,
+        "code": "class UsersPublic(SQLModel):\n    data: list[UserPublic]\n    count: int",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.create_user",
+    "reference_label": "role_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Create new user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "route dependency get_current_active_superuser",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 54,
+        "end": 78,
+        "code": "@router.post(\n    \"/\", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic\n)\ndef create_user(*, session: SessionDep, user_in: UserCreate) -> Any:\n    \"\"\"\n    Create new user.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system.\",\n        )\n\n    user = crud.create_user(session=session, user_create=user_in)\n    if settings.emails_enabled and user_in.email:\n        email_data = generate_new_account_email(\n            email_to=user_in.email, username=user_in.email, password=user_in.password\n        )\n        send_email(\n            email_to=user_in.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 10,
+        "end": 19,
+        "code": "def create_user(*, session: Session, user_create: UserCreate) -> User:\n    db_obj = User.model_validate(\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\n    )\n    session.add(db_obj)\n    session.commit()\n    session.refresh(db_obj)\n    return db_obj\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 34,
+        "end": 39,
+        "code": "def get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 34,
+        "end": 38,
+        "code": "def send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 87,
+        "end": 88,
+        "code": "def generate_new_account_email(\n    email_to: str, username: str, password: str",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/core/security.py",
+        "start": 35,
+        "end": 36,
+        "code": "def get_password_hash(password: str) -> str:\n    return password_hash.hash(password)",
+        "sha256": "adb90882929ab33c238e2e9fa81b03fa0364c1a8cce0e9e70b98c68c321f468f"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 21,
+        "end": 22,
+        "code": "class UserCreate(UserBase):\n    password: str = Field(min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.update_user_me",
+    "reference_label": "owner_match",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Update own user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "mutates authenticated current_user; own user docstring",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 81,
+        "end": 100,
+        "code": "@router.patch(\"/me\", response_model=UserPublic)\ndef update_user_me(\n    *, session: SessionDep, user_in: UserUpdateMe, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Update own user.\n    \"\"\"\n\n    if user_in.email:\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\n        if existing_user and existing_user.id != current_user.id:\n            raise HTTPException(\n                status_code=409, detail=\"User with this email already exists\"\n            )\n    user_data = user_in.model_dump(exclude_unset=True)\n    current_user.sqlmodel_update(user_data)\n    session.add(current_user)\n    session.commit()\n    session.refresh(current_user)\n    return current_user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 40,
+        "end": 42,
+        "code": "class UserUpdateMe(SQLModel):\n    full_name: str | None = Field(default=None, max_length=255)\n    email: EmailStr | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.update_password_me",
+    "reference_label": "owner_match",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Update own password.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "own password; old password verification is reauthentication",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 103,
+        "end": 121,
+        "code": "@router.patch(\"/me/password\", response_model=Message)\ndef update_password_me(\n    *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Update own password.\n    \"\"\"\n    verified, _ = verify_password(body.current_password, current_user.hashed_password)\n    if not verified:\n        raise HTTPException(status_code=400, detail=\"Incorrect password\")\n    if body.current_password == body.new_password:\n        raise HTTPException(\n            status_code=400, detail=\"New password cannot be the same as the current one\"\n        )\n    hashed_password = get_password_hash(body.new_password)\n    current_user.hashed_password = hashed_password\n    session.add(current_user)\n    session.commit()\n    return Message(message=\"Password updated successfully\")",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 45,
+        "end": 47,
+        "code": "class UpdatePassword(SQLModel):\n    current_password: str = Field(min_length=8, max_length=128)\n    new_password: str = Field(min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.read_user_me",
+    "reference_label": "owner_match",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Get current user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "returns authenticated current_user",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 124,
+        "end": 129,
+        "code": "@router.get(\"/me\", response_model=UserPublic)\ndef read_user_me(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Get current user.\n    \"\"\"\n    return current_user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.delete_user_me",
+    "reference_label": "manual_review_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Delete own user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "self binding AND NOT superuser; independent negative-role restriction",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 132,
+        "end": 143,
+        "code": "@router.delete(\"/me\", response_model=Message)\ndef delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\n    \"\"\"\n    Delete own user.\n    \"\"\"\n    if current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    session.delete(current_user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.register_user",
+    "reference_label": "public",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Create new user without the need to be logged in.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "explicit docstring without login; registration is authentication entry",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 146,
+        "end": 159,
+        "code": "@router.post(\"/signup\", response_model=UserPublic)\ndef register_user(session: SessionDep, user_in: UserRegister) -> Any:\n    \"\"\"\n    Create new user without the need to be logged in.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system\",\n        )\n    user_create = UserCreate.model_validate(user_in)\n    user = crud.create_user(session=session, user_create=user_create)\n    return user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 10,
+        "end": 19,
+        "code": "def create_user(*, session: Session, user_create: UserCreate) -> User:\n    db_obj = User.model_validate(\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\n    )\n    session.add(db_obj)\n    session.commit()\n    session.refresh(db_obj)\n    return db_obj\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/crud.py",
+        "start": 34,
+        "end": 39,
+        "code": "def get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n",
+        "sha256": "f69d79e858ee22cee7792494b0df0370afaed20439ed16bbf6f70767926254d1"
+      },
+      {
+        "file": "backend/app/core/security.py",
+        "start": 35,
+        "end": 36,
+        "code": "def get_password_hash(password: str) -> str:\n    return password_hash.hash(password)",
+        "sha256": "adb90882929ab33c238e2e9fa81b03fa0364c1a8cce0e9e70b98c68c321f468f"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 21,
+        "end": 22,
+        "code": "class UserCreate(UserBase):\n    password: str = Field(min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 25,
+        "end": 28,
+        "code": "class UserRegister(SQLModel):\n    email: EmailStr = Field(max_length=255)\n    password: str = Field(min_length=8, max_length=128)\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.read_user_by_id",
+    "reference_label": "owner_or_admin",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Get a specific user by id.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "same user early return, otherwise superuser required",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 162,
+        "end": 179,
+        "code": "@router.get(\"/{user_id}\", response_model=UserPublic)\ndef read_user_by_id(\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Get a specific user by id.\n    \"\"\"\n    user = session.get(User, user_id)\n    if user == current_user:\n        return user\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403,\n            detail=\"The user doesn't have enough privileges\",\n        )\n    if user is None:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    return user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.update_user",
+    "reference_label": "role_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Update a user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "route dependency get_current_active_superuser",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 182,
+        "end": 211,
+        "code": "@router.patch(\n    \"/{user_id}\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_model=UserPublic,\n)\ndef update_user(\n    *,\n    session: SessionDep,\n    user_id: uuid.UUID,\n    user_in: UserUpdate,\n) -> Any:\n    \"\"\"\n    Update a user.\n    \"\"\"\n\n    db_user = session.get(User, user_id)\n    if not db_user:\n        raise HTTPException(\n            status_code=404,\n            detail=\"The user with this id does not exist in the system\",\n        )\n    if user_in.email:\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\n        if existing_user and existing_user.id != user_id:\n            raise HTTPException(\n                status_code=409, detail=\"User with this email already exists\"\n            )\n\n    db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)\n    return db_user",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 59,
+        "end": 61,
+        "code": "class UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 32,
+        "end": 37,
+        "code": "class UserUpdate(SQLModel):\n    email: EmailStr | None = Field(default=None, max_length=255)\n    is_active: bool | None = None\n    is_superuser: bool | None = None\n    full_name: str | None = Field(default=None, max_length=255)\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "users.delete_user",
+    "reference_label": "manual_review_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Delete a user.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "superuser AND target user differs from caller",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 214,
+        "end": 232,
+        "code": "@router.delete(\"/{user_id}\", dependencies=[Depends(get_current_active_superuser)])\ndef delete_user(\n    session: SessionDep, current_user: CurrentUser, user_id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete a user.\n    \"\"\"\n    user = session.get(User, user_id)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if user == current_user:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    statement = delete(Item).where(col(Item.owner_id) == user_id)\n    session.exec(statement)\n    session.delete(user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 87,
+        "end": 93,
+        "code": "class Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 70,
+        "end": 72,
+        "code": "class ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [
+      {
+        "file": "backend/tests/api/routes/test_users.py",
+        "sha256": "20676b10b47c74505cca440ec00fd21d5d4b376f46190de2ec7c8194f579f1e8",
+        "execution": "not run; static source evidence"
+      }
+    ],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "utils.test_email",
+    "reference_label": "role_required",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "Test emails.",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "route dependency get_current_active_superuser",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/utils.py",
+        "start": 11,
+        "end": 26,
+        "code": "@router.post(\n    \"/test-email/\",\n    dependencies=[Depends(get_current_active_superuser)],\n    status_code=201,\n)\ndef test_email(email_to: EmailStr) -> Message:\n    \"\"\"\n    Test emails.\n    \"\"\"\n    email_data = generate_test_email(email_to=email_to)\n    send_email(\n        email_to=email_to,\n        subject=email_data.subject,\n        html_content=email_data.html_content,\n    )\n    return Message(message=\"Test email sent\")",
+        "sha256": "5e77b59fab0bfcb1cef581938dcc8a47afb7518664a497763d4c50711898e925"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 27,
+        "end": 27,
+        "code": "TokenDep = Annotated[str, Depends(reusable_oauth2)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 49,
+        "end": 49,
+        "code": "CurrentUser = Annotated[User, Depends(get_current_user)]",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 34,
+        "end": 38,
+        "code": "def send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 60,
+        "end": 69,
+        "code": "def generate_test_email(email_to: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Test email\"\n    html_content = render_email_template(\n        template_name=\"test_email.html\",\n        context={\"project_name\": settings.PROJECT_NAME, \"email\": email_to},\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/utils.py",
+        "start": 25,
+        "end": 33,
+        "code": "def render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n",
+        "sha256": "61fbc8476b1c1247b80e2220d28f89e33370434e2eb172f325ed0a6643e433b3"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 109,
+        "end": 110,
+        "code": "class Message(SQLModel):\n    message: str",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 120,
+        "end": 121,
+        "code": "class TokenPayload(SQLModel):\n    sub: str | None = None",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 51,
+        "end": 55,
+        "code": "class User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      },
+      {
+        "file": "backend/app/models.py",
+        "start": 13,
+        "end": 17,
+        "code": "class UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "sha256": "4696396c84832a50ca9d60337c2b6ba24e961f2ee5b5e660d8081fb929ebf459"
+      }
+    ],
+    "test_refs": [],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  },
+  {
+    "id": "utils.health_check",
+    "reference_label": "public",
+    "reference_status": "agent_source_review",
+    "intended_policy": {
+      "explicit_text": "",
+      "label": null,
+      "status": "docstring_only_not_independent_policy_spec"
+    },
+    "implemented_check": "unconditional True; no route auth dependency",
+    "code_refs": [
+      {
+        "file": "backend/app/api/routes/utils.py",
+        "start": 29,
+        "end": 31,
+        "code": "@router.get(\"/health-check/\")\nasync def health_check() -> bool:\n    return True",
+        "sha256": "5e77b59fab0bfcb1cef581938dcc8a47afb7518664a497763d4c50711898e925"
+      }
+    ],
+    "test_refs": [],
+    "evidence_gaps": [
+      "No deployed end-to-end DB/JWT test",
+      "No independently human-confirmed intended policy"
+    ],
+    "development_only": false
+  }
+]

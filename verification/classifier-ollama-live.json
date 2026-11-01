@@ -1,0 +1,132 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "correct": 6,
+  "total": 7,
+  "results": [
+    {
+      "method": "GET",
+      "path": "/public/health",
+      "expected": "public",
+      "match": true,
+      "result": {
+        "label": "public",
+        "confidence": 1.0,
+        "evidence": "Health check endpoint is explicitly unrestricted.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/orders/{orderId}",
+      "expected": "owner_match",
+      "match": true,
+      "result": {
+        "label": "owner_match",
+        "confidence": 1.0,
+        "evidence": "Order retrieval requires matching user_id.",
+        "object_param": "orderId",
+        "owner_lookup": {
+          "table": "orders",
+          "id_col": "id",
+          "owner_col": "user_id",
+          "tenant_col": null
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/orders/{orderId}",
+      "expected": "owner_match",
+      "match": true,
+      "result": {
+        "label": "owner_match",
+        "confidence": 1.0,
+        "evidence": "Order deletion requires ownership of the order.",
+        "object_param": "orderId",
+        "owner_lookup": {
+          "table": "orders",
+          "id_col": "id",
+          "owner_col": "user_id",
+          "tenant_col": null
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/users/{userId}",
+      "expected": "owner_or_admin",
+      "match": false,
+      "result": {
+        "label": "manual_review_required",
+        "confidence": 0.0,
+        "evidence": "Cannot identify ownership column in ERD",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/admin/reports",
+      "expected": "role_required",
+      "match": true,
+      "result": {
+        "label": "role_required",
+        "confidence": 1.0,
+        "evidence": "Access requires a specific role as indicated by the endpoint path /admin/reports.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [
+          "admin"
+        ],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/orgs/{orgId}/docs",
+      "expected": "tenant_match",
+      "match": true,
+      "result": {
+        "label": "tenant_match",
+        "confidence": 0.9,
+        "evidence": "Requested org must match caller tenant.",
+        "object_param": "orgId",
+        "owner_lookup": {
+          "table": "orgs",
+          "id_col": "id",
+          "owner_col": null,
+          "tenant_col": "id"
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/premium/content",
+      "expected": "membership_required",
+      "match": true,
+      "result": {
+        "label": "membership_required",
+        "confidence": 0.8,
+        "evidence": "Access restricted to users with 'premium' membership.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": [
+          "premium"
+        ]
+      }
+    }
+  ]
+}

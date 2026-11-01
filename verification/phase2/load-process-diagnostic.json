@@ -1,0 +1,67 @@
+{
+  "duration_sec": 5.0,
+  "redis_url": "redis://127.0.0.1:16382/8",
+  "process_isolation": true,
+  "results": [
+    {
+      "phase": 1,
+      "concurrency": 50,
+      "cache": "cold",
+      "requests": 2686,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 87.30709971860051,
+      "p95_ms": 129.83250012621284,
+      "p99_ms": 259.96460020542145,
+      "elapsed_sec": 5.06546219997108,
+      "throughput_rps": 530.2576337486706,
+      "detections_expected": 2686,
+      "detections_recorded": 563
+    },
+    {
+      "phase": 2,
+      "concurrency": 50,
+      "cache": "cold",
+      "requests": 2146,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 108.4608999080956,
+      "p95_ms": 188.3841003291309,
+      "p99_ms": 244.79359993711114,
+      "elapsed_sec": 5.054741600062698,
+      "throughput_rps": 424.55187026244454,
+      "detections_expected": 2146,
+      "detections_recorded": 2146
+    },
+    {
+      "phase": 1,
+      "concurrency": 50,
+      "cache": "warm",
+      "requests": 4543,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 51.78670026361942,
+      "p95_ms": 83.69500003755093,
+      "p99_ms": 104.63729966431856,
+      "elapsed_sec": 5.025367499794811,
+      "throughput_rps": 904.013487607721,
+      "detections_expected": 4544,
+      "detections_recorded": 520
+    },
+    {
+      "phase": 2,
+      "concurrency": 50,
+      "cache": "warm",
+      "requests": 2960,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 81.09059976413846,
+      "p95_ms": 121.26960000023246,
+      "p99_ms": 190.6627002172172,
+      "elapsed_sec": 5.066960500087589,
+      "throughput_rps": 584.1766479033796,
+      "detections_expected": 2961,
+      "detections_recorded": 2961
+    }
+  ]
+}

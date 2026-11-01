@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS orgs (
+    id TEXT PRIMARY KEY
+);
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    org_id TEXT NOT NULL REFERENCES orgs(id),
+    role TEXT NOT NULL,
+    membership TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id)
+);

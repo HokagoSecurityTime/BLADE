@@ -1,0 +1,8 @@
+{
+  "observe_requests": 20,
+  "proposal_count": 1,
+  "label": "manual_review_required",
+  "expected": "owner_or_admin",
+  "original_unchanged": true,
+  "passed": false
+}

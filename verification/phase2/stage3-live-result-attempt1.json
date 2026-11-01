@@ -1,0 +1,9 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "elapsed_sec": 336.85899999993853,
+  "count": 7,
+  "expected": "owner_or_admin",
+  "actual": "role_required",
+  "passed": false
+}

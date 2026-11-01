@@ -1,0 +1,17 @@
+{
+  "calls": 2027,
+  "system_prompt_tokens": 2393,
+  "input_tokens_total": 5381503,
+  "input_tokens_mean_payload": 261.9,
+  "output_tokens_assumed": 263510,
+  "usd_no_cache": 0.9653,
+  "usd_if_system_prefix_cached": 0.6017,
+  "evidence_correction_retries": "up to +1 call per record when evidence_fields invalid",
+  "pricing_usd_per_million": {
+    "input": 0.15,
+    "cached_input": 0.075,
+    "output": 0.6
+  },
+  "prompt_sha256": "d2dc8377c28830c7dfdefe297c63a0ff1623eb5036d1e3ae3c31b38e2dea2fc5",
+  "input_sha256": "ed6e2b2d36f0edc57ceb8878e0e2b67bf8b7a5f7a57a11499aba132bb56dd0f5"
+}

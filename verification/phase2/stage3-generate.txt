@@ -1,0 +1,365 @@
+POST http://127.0.0.1:58913/generate
+Headers({'host': '127.0.0.1:58913', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'content-length': '9956', 'content-type': 'multipart/form-data; boundary=8188ca82f0e80fef7aa5a3b665cd4812'})
+
+--8188ca82f0e80fef7aa5a3b665cd4812
+Content-Disposition: form-data; name="oas"; filename="openapi.json"
+Content-Type: application/json
+
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BLADE vulnerable demo",
+    "description": "Intentionally performs no authentication or authorization checks.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/public/health": {
+      "get": {
+        "summary": "Health",
+        "description": "Intended policy: public",
+        "operationId": "health_public_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Public Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "summary": "Get Order",
+        "description": "Intended policy: owner_match; orders.user_id",
+        "operationId": "get_order_orders__orderId__get",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Orderid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Order Orders  Orderid  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Order",
+        "description": "Intended policy: owner_match; orders.user_id",
+        "operationId": "delete_order_orders__orderId__delete",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Orderid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Delete Order Orders  Orderid  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get User",
+        "description": "Intended policy: owner_or_admin; users.id",
+        "operationId": "get_user_users__userId__get",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Userid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get User Users  Userid  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reports": {
+      "get": {
+        "summary": "Reports",
+        "description": "Intended policy: role_required; roles: [admin]",
+        "operationId": "reports_admin_reports_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Reports Admin Reports Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/docs": {
+      "get": {
+        "summary": "Org Docs",
+        "description": "Intended policy: tenant_match; orgs.id",
+        "operationId": "org_docs_orgs__orgId__docs_get",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Orgid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Org Docs Orgs  Orgid  Docs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/premium/content": {
+      "get": {
+        "summary": "Premium Content",
+        "description": "Intended policy: membership_required; allowed_membership: [premium]",
+        "operationId": "premium_content_premium_content_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Premium Content Premium Content Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
+
+--8188ca82f0e80fef7aa5a3b665cd4812
+Content-Disposition: form-data; name="erd"; filename="schema.sql"
+Content-Type: application/octet-stream
+
+CREATE TABLE IF NOT EXISTS orgs (
+    id TEXT PRIMARY KEY
+);
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    org_id TEXT NOT NULL REFERENCES orgs(id),
+    role TEXT NOT NULL,
+    membership TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id)
+);
+
+--8188ca82f0e80fef7aa5a3b665cd4812
+Content-Disposition: form-data; name="controller"; filename="fastapi_auth.py"
+Content-Type: text/x-python
+
+"""Static-analysis fixture; never imported as a live backend."""
+from fastapi import FastAPI, Depends, HTTPException
+
+app = FastAPI()
+
+
+@app.get('/users/{userId}')
+def get_user(userId: str, current_user=Depends(get_current_user)):
+    if 'admin' in current_user.roles:
+        return db.get_user(userId)
+    if current_user.id != userId:
+        raise HTTPException(status_code=403)
+    return db.get_user(userId)
+
+
+@app.get('/orgs/{orgId}/docs')
+def documents(orgId: str, current_user=Depends(get_current_user)):
+    if current_user.tenant_id == orgId:
+        return db.docs(orgId)
+    raise HTTPException(403)
+
+
+@app.get('/orders/{orderId}')
+def order(orderId: str, current_user=Depends(get_current_user)):
+    return db.query(Order).filter(Order.user_id == current_user.id).first()
+
+--8188ca82f0e80fef7aa5a3b665cd4812--
+
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:05:28 GMT', 'server': 'uvicorn', 'content-length': '3071', 'content-type': 'application/json'})
+
+[{"id":"pol_public_health_get","endpoint":{"method":"GET","path":"/public/health"},"label":"public","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"The endpoint is a health/liveness probe and does not require authentication.","status":"PENDING","created_at":"2026-10-08T05:06:01.358080Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Order belongs to the user who created it.","status":"PENDING","created_at":"2026-10-08T05:06:34.449261Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_orders_delete_by_orderId","endpoint":{"method":"DELETE","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Order belongs to the user who created it.","status":"PENDING","created_at":"2026-10-08T05:07:02.130609Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_users_get_by_userId","endpoint":{"method":"GET","path":"/users/{userId}"},"label":"manual_review_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":0.0,"evidence":"Cannot identify ownership column in ERD","status":"PENDING","created_at":"2026-10-08T05:07:40.544960Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_admin_reports_get","endpoint":{"method":"GET","path":"/admin/reports"},"label":"role_required","params":{"object_param":null,"owner_lookup":null,"roles":["admin"],"allowed_membership":[]},"confidence":1.0,"evidence":"The endpoint is accessible only to administrators.","status":"PENDING","created_at":"2026-10-08T05:08:01.953057Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_orgs_docs_get_by_orgId","endpoint":{"method":"GET","path":"/orgs/{orgId}/docs"},"label":"tenant_match","params":{"object_param":"orgId","owner_lookup":{"table":"orgs","id_col":"id","owner_col":null,"tenant_col":"id"},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Caller must match the tenant of the requested organization.","status":"PENDING","created_at":"2026-10-08T05:08:37.592824Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_premium_content_get","endpoint":{"method":"GET","path":"/premium/content"},"label":"membership_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":["premium"]},"confidence":0.9,"evidence":"Access to premium content requires a premium membership.","status":"PENDING","created_at":"2026-10-08T05:08:59.422821Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}]

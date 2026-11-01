@@ -1,0 +1,82 @@
+{
+  "results": [
+    {
+      "phase": 1,
+      "concurrency": 200,
+      "cache": "warm",
+      "requests": 2480,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 375.7537002675235,
+      "p95_ms": 702.5386998429894,
+      "p99_ms": 1998.3834000304341,
+      "elapsed_sec": 5.21041820012033,
+      "throughput_rps": 475.96947207476103
+    },
+    {
+      "phase": 2,
+      "concurrency": 200,
+      "cache": "warm",
+      "requests": 1576,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 693.1750001385808,
+      "p95_ms": 1041.6179997846484,
+      "p99_ms": 1597.0613001845777,
+      "elapsed_sec": 5.957350200042129,
+      "throughput_rps": 264.54714715090194
+    }
+  ],
+  "timings": {
+    "false/cache.get execution (queue wait excluded)": {
+      "count": 2481,
+      "p50_ms": 0.0041997991502285,
+      "p95_ms": 0.007899943739175797
+    },
+    "false/SQLite execution (queue wait excluded)": {
+      "count": 1,
+      "p50_ms": 1.573200337588787,
+      "p95_ms": 1.573200337588787
+    },
+    "false/SQLite await (queue wait included)": {
+      "count": 1,
+      "p50_ms": 8.0808000639081,
+      "p95_ms": 8.0808000639081
+    },
+    "false/cache.set execution (queue wait excluded)": {
+      "count": 1,
+      "p50_ms": 0.010500196367502213,
+      "p95_ms": 0.010500196367502213
+    },
+    "false/evaluate await (queue wait included)": {
+      "count": 2481,
+      "p50_ms": 0.017600134015083313,
+      "p95_ms": 0.03590015694499016
+    },
+    "true/cache.get execution (queue wait excluded)": {
+      "count": 1577,
+      "p50_ms": 34.75720016285777,
+      "p95_ms": 48.1245000846684
+    },
+    "true/SQLite execution (queue wait excluded)": {
+      "count": 1,
+      "p50_ms": 1.1253003031015396,
+      "p95_ms": 1.1253003031015396
+    },
+    "true/SQLite await (queue wait included)": {
+      "count": 1,
+      "p50_ms": 1.5386003069579601,
+      "p95_ms": 1.5386003069579601
+    },
+    "true/cache.set execution (queue wait excluded)": {
+      "count": 1,
+      "p50_ms": 2.0870999433100224,
+      "p95_ms": 2.0870999433100224
+    },
+    "true/evaluate await (queue wait included)": {
+      "count": 1577,
+      "p50_ms": 648.5500000417233,
+      "p95_ms": 886.3532999530435
+    }
+  }
+}

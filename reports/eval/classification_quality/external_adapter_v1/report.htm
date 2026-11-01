@@ -1,0 +1,717 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>외부 추출 어댑터 검증</title><style>body{max-width:1200px;margin:40px auto;padding:20px;font:16px/1.7 system-ui}table{border-collapse:collapse}td,th{padding:8px;border:1px solid #ccd}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin:12px 0}</style><h1>외부 FastAPI 추출 어댑터와 다음 단계 검증</h1>
+<p>전체 라우트 19건을 스캔해 3건에서 연결된 인가 조건을 자동 추출했다. 기존 수동 지정 3건만 검색한 것이 아니며, 나머지는 지원하지 못하거나 구체 조건이 미확보된 상태다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모듈 import → Depends → 비교 함수 자동 연결</td>
+<td>3 라우트</td>
+</tr>
+<tr>
+<td>연결된 조건의 라벨 제안</td>
+<td>owner_match 3건</td>
+</tr>
+<tr>
+<td>추출식 vs 원본 거부 함수</td>
+<td>12/12</td>
+</tr>
+<tr>
+<td>원본 거부 함수를 의존성으로 실행한 격리 HTTP 검사</td>
+<td>12/12</td>
+</tr>
+<tr>
+<td>전체 엔드포인트 정답 확정</td>
+<td>0건</td>
+</tr>
+</tbody>
+</table>
+<h2>구현</h2>
+<p>비동기 라우트, 데코레이터 dependencies 및 인자 Depends, 절대 import의 함수 연결, <code>if not predicate: raise HTTPException(403)</code>, 속성 동등 비교를 지원한다. 실제 인자 바인딩을 반영하고 AND/OR/NOT 구조를 보존한다. 요청자 의존성과 author.username 비교를 확인한 경우에만 owner 조건 후보를 만든다. 전체 요청의 나머지 검사가 해결되지 않았으므로 후보를 최종 라벨로 승격하지 않는다.</p>
+<h2>검증 해석</h2>
+<p>이전에는 순수 비교 함수만 실행했다. 이번에는 원본 거부 함수 본문도 실행하고 FastAPI의 Depends 경로로 HTTP 200/403을 확인했다. 단, 원본 JWT·DB·원본 비즈니스 핸들러를 실행한 통합 테스트가 아니다. 인자에는 대역 객체를 제공하고 인증 헤더는 테스트용이다. article 검사 두 라우트가 같은 함수를 공유하므로 12건이 독립 정책 12개인 것은 아니다.</p>
+<h2>남은 제한</h2>
+<p>인증 factory, DB 객체 조회, 전역 middleware, include_router prefix는 완전 분석하지 않는다. 이 소스를 보고 어댑터를 확장했으므로 독립 외부 정확도로 주장하지 않는다. 역할·tenant·구독 조건의 외부 검증은 여전히 별도 필요하다. 미지원 라우트를 public으로 바꾸지 않는다. 원본 소스·기존 보고서·런타임·고정 test를 유지한다.</p>
+<h2>전체 라우트 상태</h2>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>상대 경로</th>
+<th>핸들러</th>
+<th style="text-align:right">추출 조건 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/feed</td>
+<td>get_articles_for_user_feed</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/{slug}/favorite</td>
+<td>mark_article_as_favorite</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{slug}/favorite</td>
+<td>remove_article_from_favorites</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>list_articles</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>create_new_article</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/{slug}</td>
+<td>retrieve_article_by_slug</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>/{slug}</td>
+<td>update_article_by_slug</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{slug}</td>
+<td>delete_article_by_slug</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/login</td>
+<td>login</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>register</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>list_comments_for_article</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>create_comment_for_article</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{comment_id}</td>
+<td>delete_comment_from_article</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/{username}</td>
+<td>retrieve_profile_by_username</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/{username}/follow</td>
+<td>follow_for_user</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{username}/follow</td>
+<td>unsubscribe_from_user</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>get_all_tags</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>retrieve_current_user</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td></td>
+<td>update_current_user</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<p>출처: https://github.com/nsidnev/fastapi-realworld-example-app/tree/029eb7781c60d5f563ee8990a0cbfb79b244538c</p>
+<details><summary>get_articles_for_user_feed</summary><pre>{
+  &quot;handler&quot;: &quot;get_articles_for_user_feed&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 22,
+    &quot;end&quot;: 44,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;22: @router.get(\n23:     \&quot;/feed\&quot;,\n24:     response_model=ListOfArticlesInResponse,\n25:     name=\&quot;articles:get-user-feed-articles\&quot;,\n26: )\n27: async def get_articles_for_user_feed(\n28:     limit: int = Query(DEFAULT_ARTICLES_LIMIT, ge=1),\n29:     offset: int = Query(DEFAULT_ARTICLES_OFFSET, ge=0),\n30:     user: User = Depends(get_current_user_authorizer()),\n31:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n32: ) -&gt; ListOfArticlesInResponse:\n33:     articles = await articles_repo.get_articles_for_user_feed(\n34:         user=user,\n35:         limit=limit,\n36:         offset=offset,\n37:     )\n38:     articles_for_response = [\n39:         ArticleForResponse(**article.dict()) for article in articles\n40:     ]\n41:     return ListOfArticlesInResponse(\n42:         articles=articles_for_response,\n43:         articles_count=len(articles),\n44:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/feed&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>mark_article_as_favorite</summary><pre>{
+  &quot;handler&quot;: &quot;mark_article_as_favorite&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 47,
+    &quot;end&quot;: 74,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;47: @router.post(\n48:     \&quot;/{slug}/favorite\&quot;,\n49:     response_model=ArticleInResponse,\n50:     name=\&quot;articles:mark-article-favorite\&quot;,\n51: )\n52: async def mark_article_as_favorite(\n53:     article: Article = Depends(get_article_by_slug_from_path),\n54:     user: User = Depends(get_current_user_authorizer()),\n55:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n56: ) -&gt; ArticleInResponse:\n57:     if not article.favorited:\n58:         await articles_repo.add_article_into_favorites(article=article, user=user)\n59: \n60:         return ArticleInResponse(\n61:             article=ArticleForResponse.from_orm(\n62:                 article.copy(\n63:                     update={\n64:                         \&quot;favorited\&quot;: True,\n65:                         \&quot;favorites_count\&quot;: article.favorites_count + 1,\n66:                     },\n67:                 ),\n68:             ),\n69:         )\n70: \n71:     raise HTTPException(\n72:         status_code=status.HTTP_400_BAD_REQUEST,\n73:         detail=strings.ARTICLE_IS_ALREADY_FAVORITED,\n74:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}/favorite&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>remove_article_from_favorites</summary><pre>{
+  &quot;handler&quot;: &quot;remove_article_from_favorites&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 77,
+    &quot;end&quot;: 104,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;77: @router.delete(\n78:     \&quot;/{slug}/favorite\&quot;,\n79:     response_model=ArticleInResponse,\n80:     name=\&quot;articles:unmark-article-favorite\&quot;,\n81: )\n82: async def remove_article_from_favorites(\n83:     article: Article = Depends(get_article_by_slug_from_path),\n84:     user: User = Depends(get_current_user_authorizer()),\n85:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n86: ) -&gt; ArticleInResponse:\n87:     if article.favorited:\n88:         await articles_repo.remove_article_from_favorites(article=article, user=user)\n89: \n90:         return ArticleInResponse(\n91:             article=ArticleForResponse.from_orm(\n92:                 article.copy(\n93:                     update={\n94:                         \&quot;favorited\&quot;: False,\n95:                         \&quot;favorites_count\&quot;: article.favorites_count - 1,\n96:                     },\n97:                 ),\n98:             ),\n99:         )\n100: \n101:     raise HTTPException(\n102:         status_code=status.HTTP_400_BAD_REQUEST,\n103:         detail=strings.ARTICLE_IS_NOT_FAVORITED,\n104:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}/favorite&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>list_articles</summary><pre>{
+  &quot;handler&quot;: &quot;list_articles&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 30,
+    &quot;end&quot;: 50,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;30: @router.get(\&quot;\&quot;, response_model=ListOfArticlesInResponse, name=\&quot;articles:list-articles\&quot;)\n31: async def list_articles(\n32:     articles_filters: ArticlesFilters = Depends(get_articles_filters),\n33:     user: Optional[User] = Depends(get_current_user_authorizer(required=False)),\n34:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n35: ) -&gt; ListOfArticlesInResponse:\n36:     articles = await articles_repo.filter_articles(\n37:         tag=articles_filters.tag,\n38:         author=articles_filters.author,\n39:         favorited=articles_filters.favorited,\n40:         limit=articles_filters.limit,\n41:         offset=articles_filters.offset,\n42:         requested_user=user,\n43:     )\n44:     articles_for_response = [\n45:         ArticleForResponse.from_orm(article) for article in articles\n46:     ]\n47:     return ListOfArticlesInResponse(\n48:         articles=articles_for_response,\n49:         articles_count=len(articles),\n50:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer(required=False))&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>create_new_article</summary><pre>{
+  &quot;handler&quot;: &quot;create_new_article&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 53,
+    &quot;end&quot;: 79,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;53: @router.post(\n54:     \&quot;\&quot;,\n55:     status_code=status.HTTP_201_CREATED,\n56:     response_model=ArticleInResponse,\n57:     name=\&quot;articles:create-article\&quot;,\n58: )\n59: async def create_new_article(\n60:     article_create: ArticleInCreate = Body(..., embed=True, alias=\&quot;article\&quot;),\n61:     user: User = Depends(get_current_user_authorizer()),\n62:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n63: ) -&gt; ArticleInResponse:\n64:     slug = get_slug_for_article(article_create.title)\n65:     if await check_article_exists(articles_repo, slug):\n66:         raise HTTPException(\n67:             status_code=status.HTTP_400_BAD_REQUEST,\n68:             detail=strings.ARTICLE_ALREADY_EXISTS,\n69:         )\n70: \n71:     article = await articles_repo.create_article(\n72:         slug=slug,\n73:         title=article_create.title,\n74:         description=article_create.description,\n75:         body=article_create.body,\n76:         author=user,\n77:         tags=article_create.tags,\n78:     )\n79:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>retrieve_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_article_by_slug&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 82,
+    &quot;end&quot;: 86,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;82: @router.get(\&quot;/{slug}\&quot;, response_model=ArticleInResponse, name=\&quot;articles:get-article\&quot;)\n83: async def retrieve_article_by_slug(\n84:     article: Article = Depends(get_article_by_slug_from_path),\n85: ) -&gt; ArticleInResponse:\n86:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>update_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;update_article_by_slug&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 89,
+    &quot;end&quot;: 106,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;89: @router.put(\n90:     \&quot;/{slug}\&quot;,\n91:     response_model=ArticleInResponse,\n92:     name=\&quot;articles:update-article\&quot;,\n93:     dependencies=[Depends(check_article_modification_permissions)],\n94: )\n95: async def update_article_by_slug(\n96:     article_update: ArticleInUpdate = Body(..., embed=True, alias=\&quot;article\&quot;),\n97:     current_article: Article = Depends(get_article_by_slug_from_path),\n98:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n99: ) -&gt; ArticleInResponse:\n100:     slug = get_slug_for_article(article_update.title) if article_update.title else None\n101:     article = await articles_repo.update_article(\n102:         article=current_article,\n103:         slug=slug,\n104:         **article_update.dict(),\n105:     )\n106:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+  },
+  &quot;guards&quot;: [
+    {
+      &quot;condition&quot;: {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;current_article&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      },
+      &quot;condition_label_proposal&quot;: &quot;owner_match&quot;,
+      &quot;mapping_basis&quot;: &quot;requester username equals resource author username; same-source tests must corroborate semantics&quot;,
+      &quot;chain&quot;: [
+        &quot;check_article_modification_permissions&quot;,
+        &quot;check_user_can_modify_article&quot;
+      ],
+      &quot;guard_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/articles.py&quot;,
+        &quot;start&quot;: 51,
+        &quot;end&quot;: 59,
+        &quot;sha256&quot;: &quot;ebf8577282e1173be6808cbeec9cc39ca79ca91275aa1623134b2e328bfc6101&quot;,
+        &quot;code&quot;: &quot;51: def check_article_modification_permissions(\n52:     current_article: Article = Depends(get_article_by_slug_from_path),\n53:     user: User = Depends(get_current_user_authorizer()),\n54: ) -&gt; None:\n55:     if not check_user_can_modify_article(current_article, user):\n56:         raise HTTPException(\n57:             status_code=status.HTTP_403_FORBIDDEN,\n58:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n59:         )&quot;
+      },
+      &quot;predicate_ref&quot;: {
+        &quot;path&quot;: &quot;app/services/articles.py&quot;,
+        &quot;start&quot;: 22,
+        &quot;end&quot;: 23,
+        &quot;sha256&quot;: &quot;60e458e628bb6a1f211332d7ae39591f90442b4b2e0597ee40bc67f5ca4a7357&quot;,
+        &quot;code&quot;: &quot;22: def check_user_can_modify_article(article: Article, user: User) -&gt; bool:\n23:     return article.author.username == user.username&quot;
+      },
+      &quot;unresolved&quot;: [
+        &quot;authentication factory behavior&quot;,
+        &quot;object lookup provenance beyond dependency declaration&quot;
+      ]
+    }
+  ],
+  &quot;combined_condition&quot;: {
+    &quot;op&quot;: &quot;and&quot;,
+    &quot;args&quot;: [
+      {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;current_article&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      }
+    ]
+  },
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;PUT&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>delete_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;delete_article_by_slug&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 109,
+    &quot;end&quot;: 120,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;109: @router.delete(\n110:     \&quot;/{slug}\&quot;,\n111:     status_code=status.HTTP_204_NO_CONTENT,\n112:     name=\&quot;articles:delete-article\&quot;,\n113:     dependencies=[Depends(check_article_modification_permissions)],\n114:     response_class=Response,\n115: )\n116: async def delete_article_by_slug(\n117:     article: Article = Depends(get_article_by_slug_from_path),\n118:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n119: ) -&gt; None:\n120:     await articles_repo.delete_article(article=article)&quot;
+  },
+  &quot;guards&quot;: [
+    {
+      &quot;condition&quot;: {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;current_article&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      },
+      &quot;condition_label_proposal&quot;: &quot;owner_match&quot;,
+      &quot;mapping_basis&quot;: &quot;requester username equals resource author username; same-source tests must corroborate semantics&quot;,
+      &quot;chain&quot;: [
+        &quot;check_article_modification_permissions&quot;,
+        &quot;check_user_can_modify_article&quot;
+      ],
+      &quot;guard_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/articles.py&quot;,
+        &quot;start&quot;: 51,
+        &quot;end&quot;: 59,
+        &quot;sha256&quot;: &quot;ebf8577282e1173be6808cbeec9cc39ca79ca91275aa1623134b2e328bfc6101&quot;,
+        &quot;code&quot;: &quot;51: def check_article_modification_permissions(\n52:     current_article: Article = Depends(get_article_by_slug_from_path),\n53:     user: User = Depends(get_current_user_authorizer()),\n54: ) -&gt; None:\n55:     if not check_user_can_modify_article(current_article, user):\n56:         raise HTTPException(\n57:             status_code=status.HTTP_403_FORBIDDEN,\n58:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n59:         )&quot;
+      },
+      &quot;predicate_ref&quot;: {
+        &quot;path&quot;: &quot;app/services/articles.py&quot;,
+        &quot;start&quot;: 22,
+        &quot;end&quot;: 23,
+        &quot;sha256&quot;: &quot;60e458e628bb6a1f211332d7ae39591f90442b4b2e0597ee40bc67f5ca4a7357&quot;,
+        &quot;code&quot;: &quot;22: def check_user_can_modify_article(article: Article, user: User) -&gt; bool:\n23:     return article.author.username == user.username&quot;
+      },
+      &quot;unresolved&quot;: [
+        &quot;authentication factory behavior&quot;,
+        &quot;object lookup provenance beyond dependency declaration&quot;
+      ]
+    }
+  ],
+  &quot;combined_condition&quot;: {
+    &quot;op&quot;: &quot;and&quot;,
+    &quot;args&quot;: [
+      {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;current_article&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      }
+    ]
+  },
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ArticlesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>login</summary><pre>{
+  &quot;handler&quot;: &quot;login&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/authentication.py&quot;,
+    &quot;start&quot;: 22,
+    &quot;end&quot;: 53,
+    &quot;sha256&quot;: &quot;f8712fe91435653c8cc35c66e0249277e8eb9db8cba33149a9af546d05938aad&quot;,
+    &quot;code&quot;: &quot;22: @router.post(\&quot;/login\&quot;, response_model=UserInResponse, name=\&quot;auth:login\&quot;)\n23: async def login(\n24:     user_login: UserInLogin = Body(..., embed=True, alias=\&quot;user\&quot;),\n25:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n26:     settings: AppSettings = Depends(get_app_settings),\n27: ) -&gt; UserInResponse:\n28:     wrong_login_error = HTTPException(\n29:         status_code=HTTP_400_BAD_REQUEST,\n30:         detail=strings.INCORRECT_LOGIN_INPUT,\n31:     )\n32: \n33:     try:\n34:         user = await users_repo.get_user_by_email(email=user_login.email)\n35:     except EntityDoesNotExist as existence_error:\n36:         raise wrong_login_error from existence_error\n37: \n38:     if not user.check_password(user_login.password):\n39:         raise wrong_login_error\n40: \n41:     token = jwt.create_access_token_for_user(\n42:         user,\n43:         str(settings.secret_key.get_secret_value()),\n44:     )\n45:     return UserInResponse(\n46:         user=UserWithToken(\n47:             username=user.username,\n48:             email=user.email,\n49:             bio=user.bio,\n50:             image=user.image,\n51:             token=token,\n52:         ),\n53:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_repository(UsersRepository))&quot;,
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/login&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>register</summary><pre>{
+  &quot;handler&quot;: &quot;register&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/authentication.py&quot;,
+    &quot;start&quot;: 56,
+    &quot;end&quot;: 93,
+    &quot;sha256&quot;: &quot;f8712fe91435653c8cc35c66e0249277e8eb9db8cba33149a9af546d05938aad&quot;,
+    &quot;code&quot;: &quot;56: @router.post(\n57:     \&quot;\&quot;,\n58:     status_code=HTTP_201_CREATED,\n59:     response_model=UserInResponse,\n60:     name=\&quot;auth:register\&quot;,\n61: )\n62: async def register(\n63:     user_create: UserInCreate = Body(..., embed=True, alias=\&quot;user\&quot;),\n64:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n65:     settings: AppSettings = Depends(get_app_settings),\n66: ) -&gt; UserInResponse:\n67:     if await check_username_is_taken(users_repo, user_create.username):\n68:         raise HTTPException(\n69:             status_code=HTTP_400_BAD_REQUEST,\n70:             detail=strings.USERNAME_TAKEN,\n71:         )\n72: \n73:     if await check_email_is_taken(users_repo, user_create.email):\n74:         raise HTTPException(\n75:             status_code=HTTP_400_BAD_REQUEST,\n76:             detail=strings.EMAIL_TAKEN,\n77:         )\n78: \n79:     user = await users_repo.create_user(**user_create.dict())\n80: \n81:     token = jwt.create_access_token_for_user(\n82:         user,\n83:         str(settings.secret_key.get_secret_value()),\n84:     )\n85:     return UserInResponse(\n86:         user=UserWithToken(\n87:             username=user.username,\n88:             email=user.email,\n89:             bio=user.bio,\n90:             image=user.image,\n91:             token=token,\n92:         ),\n93:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_repository(UsersRepository))&quot;,
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>list_comments_for_article</summary><pre>{
+  &quot;handler&quot;: &quot;list_comments_for_article&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/comments.py&quot;,
+    &quot;start&quot;: 26,
+    &quot;end&quot;: 37,
+    &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+    &quot;code&quot;: &quot;26: @router.get(\n27:     \&quot;\&quot;,\n28:     response_model=ListOfCommentsInResponse,\n29:     name=\&quot;comments:get-comments-for-article\&quot;,\n30: )\n31: async def list_comments_for_article(\n32:     article: Article = Depends(get_article_by_slug_from_path),\n33:     user: Optional[User] = Depends(get_current_user_authorizer(required=False)),\n34:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n35: ) -&gt; ListOfCommentsInResponse:\n36:     comments = await comments_repo.get_comments_for_article(article=article, user=user)\n37:     return ListOfCommentsInResponse(comments=comments)&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer(required=False))&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(CommentsRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>create_comment_for_article</summary><pre>{
+  &quot;handler&quot;: &quot;create_comment_for_article&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/comments.py&quot;,
+    &quot;start&quot;: 40,
+    &quot;end&quot;: 57,
+    &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+    &quot;code&quot;: &quot;40: @router.post(\n41:     \&quot;\&quot;,\n42:     status_code=status.HTTP_201_CREATED,\n43:     response_model=CommentInResponse,\n44:     name=\&quot;comments:create-comment-for-article\&quot;,\n45: )\n46: async def create_comment_for_article(\n47:     comment_create: CommentInCreate = Body(..., embed=True, alias=\&quot;comment\&quot;),\n48:     article: Article = Depends(get_article_by_slug_from_path),\n49:     user: User = Depends(get_current_user_authorizer()),\n50:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n51: ) -&gt; CommentInResponse:\n52:     comment = await comments_repo.create_comment_for_article(\n53:         body=comment_create.body,\n54:         article=article,\n55:         user=user,\n56:     )\n57:     return CommentInResponse(comment=comment)&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(CommentsRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>delete_comment_from_article</summary><pre>{
+  &quot;handler&quot;: &quot;delete_comment_from_article&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/comments.py&quot;,
+    &quot;start&quot;: 60,
+    &quot;end&quot;: 71,
+    &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+    &quot;code&quot;: &quot;60: @router.delete(\n61:     \&quot;/{comment_id}\&quot;,\n62:     status_code=status.HTTP_204_NO_CONTENT,\n63:     name=\&quot;comments:delete-comment-from-article\&quot;,\n64:     dependencies=[Depends(check_comment_modification_permissions)],\n65:     response_class=Response,\n66: )\n67: async def delete_comment_from_article(\n68:     comment: Comment = Depends(get_comment_by_id_from_path),\n69:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n70: ) -&gt; None:\n71:     await comments_repo.delete_comment(comment=comment)&quot;
+  },
+  &quot;guards&quot;: [
+    {
+      &quot;condition&quot;: {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;comment&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      },
+      &quot;condition_label_proposal&quot;: &quot;owner_match&quot;,
+      &quot;mapping_basis&quot;: &quot;requester username equals resource author username; same-source tests must corroborate semantics&quot;,
+      &quot;chain&quot;: [
+        &quot;check_comment_modification_permissions&quot;,
+        &quot;check_user_can_modify_comment&quot;
+      ],
+      &quot;guard_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/comments.py&quot;,
+        &quot;start&quot;: 39,
+        &quot;end&quot;: 47,
+        &quot;sha256&quot;: &quot;ba856a769f1adc5e5f4106d03c857202d23e3d7861a44e60192f0b5c188b6756&quot;,
+        &quot;code&quot;: &quot;39: def check_comment_modification_permissions(\n40:     comment: Comment = Depends(get_comment_by_id_from_path),\n41:     user: User = Depends(authentication.get_current_user_authorizer()),\n42: ) -&gt; None:\n43:     if not check_user_can_modify_comment(comment, user):\n44:         raise HTTPException(\n45:             status_code=status.HTTP_403_FORBIDDEN,\n46:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n47:         )&quot;
+      },
+      &quot;predicate_ref&quot;: {
+        &quot;path&quot;: &quot;app/services/comments.py&quot;,
+        &quot;start&quot;: 5,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;1e5796ff77223beaa3c998ad4da72908b0bacb8bafe861526f9a1b70a8a7073c&quot;,
+        &quot;code&quot;: &quot;5: def check_user_can_modify_comment(comment: Comment, user: User) -&gt; bool:\n6:     return comment.author.username == user.username&quot;
+      },
+      &quot;unresolved&quot;: [
+        &quot;authentication factory behavior&quot;,
+        &quot;object lookup provenance beyond dependency declaration&quot;
+      ]
+    }
+  ],
+  &quot;combined_condition&quot;: {
+    &quot;op&quot;: &quot;and&quot;,
+    &quot;args&quot;: [
+      {
+        &quot;op&quot;: &quot;eq&quot;,
+        &quot;left&quot;: [
+          &quot;comment&quot;,
+          &quot;author&quot;,
+          &quot;username&quot;
+        ],
+        &quot;right&quot;: [
+          &quot;user&quot;,
+          &quot;username&quot;
+        ]
+      }
+    ]
+  },
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(CommentsRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{comment_id}&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>retrieve_profile_by_username</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_profile_by_username&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 16,
+    &quot;end&quot;: 24,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;16: @router.get(\n17:     \&quot;/{username}\&quot;,\n18:     response_model=ProfileInResponse,\n19:     name=\&quot;profiles:get-profile\&quot;,\n20: )\n21: async def retrieve_profile_by_username(\n22:     profile: Profile = Depends(get_profile_by_username_from_path),\n23: ) -&gt; ProfileInResponse:\n24:     return ProfileInResponse(profile=profile)&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/{username}&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>follow_for_user</summary><pre>{
+  &quot;handler&quot;: &quot;follow_for_user&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 27,
+    &quot;end&quot;: 54,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;27: @router.post(\n28:     \&quot;/{username}/follow\&quot;,\n29:     response_model=ProfileInResponse,\n30:     name=\&quot;profiles:follow-user\&quot;,\n31: )\n32: async def follow_for_user(\n33:     profile: Profile = Depends(get_profile_by_username_from_path),\n34:     user: User = Depends(get_current_user_authorizer()),\n35:     profiles_repo: ProfilesRepository = Depends(get_repository(ProfilesRepository)),\n36: ) -&gt; ProfileInResponse:\n37:     if user.username == profile.username:\n38:         raise HTTPException(\n39:             status_code=HTTP_400_BAD_REQUEST,\n40:             detail=strings.UNABLE_TO_FOLLOW_YOURSELF,\n41:         )\n42: \n43:     if profile.following:\n44:         raise HTTPException(\n45:             status_code=HTTP_400_BAD_REQUEST,\n46:             detail=strings.USER_IS_ALREADY_FOLLOWED,\n47:         )\n48: \n49:     await profiles_repo.add_user_into_followers(\n50:         target_user=profile,\n51:         requested_user=user,\n52:     )\n53: \n54:     return ProfileInResponse(profile=profile.copy(update={\&quot;following\&quot;: True}))&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ProfilesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/{username}/follow&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>unsubscribe_from_user</summary><pre>{
+  &quot;handler&quot;: &quot;unsubscribe_from_user&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 57,
+    &quot;end&quot;: 84,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;57: @router.delete(\n58:     \&quot;/{username}/follow\&quot;,\n59:     response_model=ProfileInResponse,\n60:     name=\&quot;profiles:unsubscribe-from-user\&quot;,\n61: )\n62: async def unsubscribe_from_user(\n63:     profile: Profile = Depends(get_profile_by_username_from_path),\n64:     user: User = Depends(get_current_user_authorizer()),\n65:     profiles_repo: ProfilesRepository = Depends(get_repository(ProfilesRepository)),\n66: ) -&gt; ProfileInResponse:\n67:     if user.username == profile.username:\n68:         raise HTTPException(\n69:             status_code=HTTP_400_BAD_REQUEST,\n70:             detail=strings.UNABLE_TO_UNSUBSCRIBE_FROM_YOURSELF,\n71:         )\n72: \n73:     if not profile.following:\n74:         raise HTTPException(\n75:             status_code=HTTP_400_BAD_REQUEST,\n76:             detail=strings.USER_IS_NOT_FOLLOWED,\n77:         )\n78: \n79:     await profiles_repo.remove_user_from_followers(\n80:         target_user=profile,\n81:         requested_user=user,\n82:     )\n83: \n84:     return ProfileInResponse(profile=profile.copy(update={\&quot;following\&quot;: False}))&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;not_single_rejection_guard&quot;,
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(ProfilesRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{username}/follow&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>get_all_tags</summary><pre>{
+  &quot;handler&quot;: &quot;get_all_tags&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/tags.py&quot;,
+    &quot;start&quot;: 10,
+    &quot;end&quot;: 15,
+    &quot;sha256&quot;: &quot;92a8c0abd744834c84fffe81f09dddd6cf08886b2ff46437cba00602c879325e&quot;,
+    &quot;code&quot;: &quot;10: @router.get(\&quot;\&quot;, response_model=TagsInList, name=\&quot;tags:get-all\&quot;)\n11: async def get_all_tags(\n12:     tags_repo: TagsRepository = Depends(get_repository(TagsRepository)),\n13: ) -&gt; TagsInList:\n14:     tags = await tags_repo.get_all_tags()\n15:     return TagsInList(tags=tags)&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_repository(TagsRepository))&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>retrieve_current_user</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_current_user&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+    &quot;start&quot;: 18,
+    &quot;end&quot;: 35,
+    &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+    &quot;code&quot;: &quot;18: @router.get(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:get-current-user\&quot;)\n19: async def retrieve_current_user(\n20:     user: User = Depends(get_current_user_authorizer()),\n21:     settings: AppSettings = Depends(get_app_settings),\n22: ) -&gt; UserInResponse:\n23:     token = jwt.create_access_token_for_user(\n24:         user,\n25:         str(settings.secret_key.get_secret_value()),\n26:     )\n27:     return UserInResponse(\n28:         user=UserWithToken(\n29:             username=user.username,\n30:             email=user.email,\n31:             bio=user.bio,\n32:             image=user.image,\n33:             token=token,\n34:         ),\n35:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details><details><summary>update_current_user</summary><pre>{
+  &quot;handler&quot;: &quot;update_current_user&quot;,
+  &quot;route_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+    &quot;start&quot;: 38,
+    &quot;end&quot;: 73,
+    &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+    &quot;code&quot;: &quot;38: @router.put(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:update-current-user\&quot;)\n39: async def update_current_user(\n40:     user_update: UserInUpdate = Body(..., embed=True, alias=\&quot;user\&quot;),\n41:     current_user: User = Depends(get_current_user_authorizer()),\n42:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n43:     settings: AppSettings = Depends(get_app_settings),\n44: ) -&gt; UserInResponse:\n45:     if user_update.username and user_update.username != current_user.username:\n46:         if await check_username_is_taken(users_repo, user_update.username):\n47:             raise HTTPException(\n48:                 status_code=HTTP_400_BAD_REQUEST,\n49:                 detail=strings.USERNAME_TAKEN,\n50:             )\n51: \n52:     if user_update.email and user_update.email != current_user.email:\n53:         if await check_email_is_taken(users_repo, user_update.email):\n54:             raise HTTPException(\n55:                 status_code=HTTP_400_BAD_REQUEST,\n56:                 detail=strings.EMAIL_TAKEN,\n57:             )\n58: \n59:     user = await users_repo.update_user(user=current_user, **user_update.dict())\n60: \n61:     token = jwt.create_access_token_for_user(\n62:         user,\n63:         str(settings.secret_key.get_secret_value()),\n64:     )\n65:     return UserInResponse(\n66:         user=UserWithToken(\n67:             username=user.username,\n68:             email=user.email,\n69:             bio=user.bio,\n70:             image=user.image,\n71:             token=token,\n72:         ),\n73:     )&quot;
+  },
+  &quot;guards&quot;: [],
+  &quot;combined_condition&quot;: null,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;dynamic_dependency:Depends(get_current_user_authorizer())&quot;,
+    &quot;dynamic_dependency:Depends(get_repository(UsersRepository))&quot;,
+    &quot;not_single_rejection_guard&quot;,
+    &quot;full handler effects and deployment middleware not analyzed&quot;
+  ],
+  &quot;method&quot;: &quot;PUT&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;path_scope&quot;: &quot;relative router path; include_router prefixes not reconstructed&quot;
+}</pre></details></html>

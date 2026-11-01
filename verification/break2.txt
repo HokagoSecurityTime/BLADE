@@ -1,0 +1,39 @@
+
+===== 2026-09-13T12:18:56.675060+00:00 REQUEST =====
+GET /nothing/here HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 404 Not Found
+Date: Sun, 13 Sep 2026 12:18:55 GMT
+Server: uvicorn
+Content-Type: application/json
+X-Blade-Request-Id: 85e11c4b-9d45-49ff-b02d-7460fad8230c
+Content-Length: 22
+
+{"detail":"Not Found"}
+
+===== 2026-09-13T12:18:56.677347+00:00 REQUEST =====
+GET /detections?limit=100 HTTP/1.1
+Host: 127.0.0.1:8100
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:56 GMT
+server: uvicorn
+content-length: 1694
+content-type: application/json
+
+[{"ts":"2026-09-13T12:18:56.675060Z","request_id":"85e11c4b-9d45-49ff-b02d-7460fad8230c","sub":"","method":"GET","path":"/nothing/here","policy_id":"","label":"manual_review_required","verdict":"OBSERVE","reason":"no_policy"},{"ts":"2026-09-13T12:18:56.670247Z","request_id":"a2085711-99e5-4850-9f74-3d9f6c8f9e0c","sub":"","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"no_token"},{"ts":"2026-09-13T12:18:56.411921Z","request_id":"64149245-c7a7-437e-8306-7592127851bf","sub":"","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"no_token"},{"ts":"2026-09-13T12:18:56.406606Z","request_id":"941f308a-526f-48fb-9f46-5f2e122c5c32","sub":"user_77","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"PASS","reason":"policy_matched"},{"ts":"2026-09-13T12:18:56.404719Z","request_id":"62a27a03-7c50-470d-9d5c-21b139ffbec6","sub":"user_99","method":"DELETE","path":"/orders/1042","policy_id":"pol_orders_delete_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch"},{"ts":"2026-09-13T12:18:56.357327Z","request_id":"4a95344a-0a37-4fcc-8bd7-341246ab9f48","sub":"user_77","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"PASS","reason":"policy_matched"},{"ts":"2026-09-13T12:18:55.955826Z","request_id":"af71415d-eedb-45f6-86b4-c25d9a9669dd","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch"}]

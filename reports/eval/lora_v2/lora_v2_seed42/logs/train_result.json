@@ -1,0 +1,20 @@
+{
+  "train_runtime": 2125.1703,
+  "train_samples_per_second": 1.128,
+  "train_steps_per_second": 0.141,
+  "total_flos": 3.243586042906675e+17,
+  "train_loss": 0.22076401283343633,
+  "epoch": 3.0,
+  "resumed_from": null,
+  "steps": 300,
+  "best_by_condition": {
+    "oas": [
+      210,
+      0.2180887758731842
+    ],
+    "oas_code": [
+      210,
+      0.09208567440509796
+    ]
+  }
+}

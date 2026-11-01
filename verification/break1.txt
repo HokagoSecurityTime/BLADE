@@ -1,0 +1,29 @@
+
+===== 2026-09-13T12:18:56.670247+00:00 REQUEST =====
+GET /orders/1042 HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzc3Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMiIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc4OTQ3NDQ4N30.wB0-_4zaniWea1laTd99oE2PzvLuapqBPvRhlsiARwM
+
+
+
+===== RESPONSE =====
+HTTP/1.1 403 Forbidden
+X-Blade-Request-Id: a2085711-99e5-4850-9f74-3d9f6c8f9e0c
+X-Blade-Policy: pol_orders_get_by_orderId
+Content-Type: application/json; charset=utf-8
+Content-Length: 118
+Date: Sun, 13 Sep 2026 12:18:56 GMT
+Server: Python/3.11 aiohttp/3.14.3
+
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "a2085711-99e5-4850-9f74-3d9f6c8f9e0c"}
+
+Tamper construction proof:
+{
+  "original_sub": "user_99",
+  "forged_sub": "user_77",
+  "original_signature_preserved": true
+}

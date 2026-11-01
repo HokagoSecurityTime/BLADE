@@ -1,0 +1,25 @@
+{
+  "ports": {
+    "9000": "LISTENING",
+    "8100": "LISTENING",
+    "8080": "LISTENING"
+  },
+  "evidence_bytes": {
+    "verification\\break1.txt": 963,
+    "verification\\break2.txt": 2478,
+    "verification\\step1_generate.txt": 12081,
+    "verification\\step1_policies.md": 351,
+    "verification\\step2_approve.txt": 8320,
+    "verification\\step3_backend_untouched.txt": 77,
+    "verification\\step3_other_owner.txt": 829,
+    "verification\\step4_owner.txt": 700,
+    "verification\\step5_delete.txt": 1538,
+    "verification\\step6_no_token.txt": 602,
+    "verification\\step7_detections.txt": 2693
+  },
+  "tamper_proof": {
+    "original_sub": "user_99",
+    "forged_sub": "user_77",
+    "original_signature_preserved": true
+  }
+}

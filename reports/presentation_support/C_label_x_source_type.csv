@@ -1,0 +1,9 @@
+﻿label,공개 명세(APIs.guru),실서비스 코드,합성,합계
+public,19,49,14,82
+role_required,104,200,22,326
+membership_required,25,32,20,77
+tenant_match,32,29,22,83
+owner_match,126,299,22,447
+owner_or_admin,1,63,32,96
+manual_review_required,31,121,11,163
+합계,338,793,143,1274

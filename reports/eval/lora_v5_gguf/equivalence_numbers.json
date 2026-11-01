@@ -1,0 +1,161 @@
+{
+ "gguf": {
+  "f1_207": 0.3996,
+  "p_207": 0.7805,
+  "r_207": 0.6214,
+  "p_265": 0.8261,
+  "f1_265": 0.7731,
+  "manual_265": 0.1849,
+  "err": 9,
+  "pub_new": 2,
+  "pub_den": 47
+ },
+ "hf_s42": {
+  "f1_207": 0.3661,
+  "p_207": 0.7667,
+  "r_207": 0.5583,
+  "p_265": 0.8187,
+  "f1_265": 0.6947,
+  "manual_265": 0.2528,
+  "err": 5,
+  "pub_new": 3,
+  "pub_den": 47
+ },
+ "f1_207": {
+  "gguf": 0.3996,
+  "hf_s42": 0.3661,
+  "diff": 0.0335,
+  "v5_mean": 0.3744,
+  "v5_sd": 0.0104,
+  "v4_mean": 0.3565,
+  "v4_sd": 0.0454,
+  "within_v4_sd": true,
+  "within_v5_sd": false
+ },
+ "p_207": {
+  "gguf": 0.7805,
+  "hf_s42": 0.7667,
+  "diff": 0.0138,
+  "v5_mean": 0.7958,
+  "v5_sd": 0.0252,
+  "v4_mean": 0.811,
+  "v4_sd": 0.0255,
+  "within_v4_sd": true,
+  "within_v5_sd": true
+ },
+ "r_207": {
+  "gguf": 0.6214,
+  "hf_s42": 0.5583,
+  "diff": 0.0631,
+  "v5_mean": 0.5664,
+  "v5_sd": 0.0101,
+  "v4_mean": 0.5583,
+  "v4_sd": 0.0654,
+  "within_v4_sd": true,
+  "within_v5_sd": false
+ },
+ "p_265": {
+  "gguf": 0.8261,
+  "hf_s42": 0.8187,
+  "diff": 0.0074,
+  "v5_mean": 0.8413,
+  "v5_sd": 0.0197,
+  "v4_mean": 0.8554,
+  "v4_sd": 0.0175,
+  "within_v4_sd": true,
+  "within_v5_sd": true
+ },
+ "f1_265": {
+  "gguf": 0.7731,
+  "hf_s42": 0.6947,
+  "diff": 0.0784,
+  "v5_mean": 0.7,
+  "v5_sd": 0.0095,
+  "v4_mean": 0.7157,
+  "v4_sd": 0.0217,
+  "within_v4_sd": false,
+  "within_v5_sd": false
+ },
+ "manual_265": {
+  "gguf": 0.1849,
+  "hf_s42": 0.2528,
+  "diff": -0.0679,
+  "v5_mean": 0.2729,
+  "v5_sd": 0.0178,
+  "v4_mean": 0.2855,
+  "v4_sd": 0.0437,
+  "within_v4_sd": false,
+  "within_v5_sd": false
+ },
+ "rows": {
+  "n": 265,
+  "match": 215,
+  "mismatch": 50,
+  "hf_hold_or_error_to_gguf_concrete": 23,
+  "gguf_hold_or_error_from_hf_concrete": 9,
+  "concrete_to_other_concrete": 12,
+  "mismatch_correct_hf": 8,
+  "mismatch_correct_gguf": 21,
+  "output_errors": {
+   "gguf": 9,
+   "hf": 5
+  },
+  "top_transitions": [
+   [
+    "manual_review_required->owner_match",
+    9
+   ],
+   [
+    "manual_review_required->role_required",
+    6
+   ],
+   [
+    "manual_review_required->output_error",
+    5
+   ],
+   [
+    "manual_review_required->public",
+    5
+   ],
+   [
+    "public->role_required",
+    4
+   ],
+   [
+    "membership_required->owner_match",
+    3
+   ],
+   [
+    "owner_match->manual_review_required",
+    3
+   ],
+   [
+    "output_error->owner_match",
+    3
+   ]
+  ]
+ },
+ "template_check": [
+  {
+   "id": "b98a2ab3b50a679bfa16",
+   "hf_prompt_tokens": 3060,
+   "raw_prompt_tokens": 3060,
+   "chat_prompt_tokens": 3060,
+   "same_output": true
+  },
+  {
+   "id": "a3b2d062cdb1162b5997",
+   "hf_prompt_tokens": 2890,
+   "raw_prompt_tokens": 2890,
+   "chat_prompt_tokens": 2890,
+   "same_output": false
+  },
+  {
+   "id": "4af8a0694ed2e327e0db",
+   "hf_prompt_tokens": 3184,
+   "raw_prompt_tokens": 3184,
+   "chat_prompt_tokens": 3184,
+   "same_output": true
+  }
+ ]
+}

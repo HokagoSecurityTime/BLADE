@@ -1,0 +1,36 @@
+id: pol_orders_get_by_orderId
+endpoint:
+  method: GET
+  path: /orders/{orderId}
+label: owner_match
+params:
+  object_param: orderId
+  owner_lookup:
+    table: orders
+    id_col: id
+    owner_col: user_id
+    tenant_col: null
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: Order belongs to its creator.
+status: ACTIVE
+created_at: '2026-10-12T03:51:32.127577Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs:
+- kind: code
+  ref: demo_with_admin.py#L65:get_order
+  snippet: "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match;\
+    \ orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n    \
+    \    return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+- kind: code
+  ref: demo_with_admin.py#L77:get_user
+  snippet: "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin;\
+    \ users.id\")\n    def get_user(userId: str, current_user: Any = Depends(get_current_user))\
+    \ -> dict[str, Any]:\n        if \"admin\" in current_user.roles:\n          \
+    \  return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        if\
+    \ current_user.id == userId:\n            return fetch_one(\"SELECT * FROM users\
+    \ WHERE id = ?\", userId)\n        raise HTTPException(status_code=403, detail=\"\
+    Forbidden\")"

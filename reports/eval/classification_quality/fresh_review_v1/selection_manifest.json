@@ -1,0 +1,446 @@
+{
+  "seed": 42,
+  "total_input": 2027,
+  "excluded": 737,
+  "eligible": 1290,
+  "selected": 100,
+  "services": 78,
+  "max_per_service": 3,
+  "signal_distribution": {
+    "tenant": 20,
+    "path_only": 20,
+    "none": 20,
+    "both": 20,
+    "owner": 20
+  },
+  "method_distribution": {
+    "GET": 67,
+    "PUT": 13,
+    "POST": 10,
+    "PATCH": 9,
+    "DELETE": 1
+  },
+  "ids": [
+    "apisguru:ably.net:get:/apps/{app_id}/rules",
+    "apisguru:adafruit.com:put:/{username}/dashboards/{dashboard_id}/blocks/{id}",
+    "apisguru:amazonaws.com:post:/workspaces/{workspaceId}/rulegroupsnamespaces",
+    "apisguru:amazonaws.com:put:/workspaces/{workspaceId}/rulegroupsnamespaces/{name}",
+    "apisguru:apacta.com:get:/cities/{city_id}",
+    "apisguru:apacta.com:get:/clocking_records/{clocking_record_id}",
+    "apisguru:api.video:get:/live-streams/{liveStreamId}",
+    "apisguru:apigee.net:get:/dealer/rv/{id}",
+    "apisguru:appcenter.ms:patch:/v0.1/apps/{owner_name}/{app_name}/crash_groups/{crash_group_id}",
+    "apisguru:appveyor.com:get:/deployments/{deploymentId}",
+    "apisguru:appwrite.io:get:/teams/{teamId}",
+    "apisguru:authentiq.io:put:/client/{client_id}",
+    "apisguru:bbc.com:get:/master_brands",
+    "apisguru:bbc.com:get:/programmes",
+    "apisguru:bbc.com:get:/promotions",
+    "apisguru:beezup.com:get:/orders/v3/{marketplaceTechnicalCode}/{accountId}/{beezUPOrderId}",
+    "apisguru:bigredcloud.com:get:/v1/bankAccounts/{id}",
+    "apisguru:bigredcloud.com:put:/v1/customers/{id}",
+    "apisguru:box.com:get:/collections/{collection_id}/items",
+    "apisguru:browshot.com:get:/browser/info",
+    "apisguru:chaingateway.io:get:/v2/ethereum/nfts/{contract}/uri/{token_id}",
+    "apisguru:clever-cloud.com:post:/organisations/{id}/addonproviders/{providerId}/features",
+    "apisguru:clicksend.com:put:/lists/{list_id}/contacts/{contact_id}",
+    "apisguru:configcat.com:get:/v1/configs/{configId}/settings",
+    "apisguru:contribly.com:get:/users/{id}",
+    "apisguru:cpy.re:get:/api/v1/users/{id}",
+    "apisguru:deutschebahn.com:get:/providernetworks/{uid}",
+    "apisguru:discourse.local:get:/admin/users/{id}.json",
+    "apisguru:dracoon.team:get:/v4/nodes/files/uploads/{upload_id}",
+    "apisguru:evetech.net:get:/characters/{character_id}/calendar/{event_id}/",
+    "apisguru:files.com:get:/api_keys",
+    "apisguru:files.com:get:/automation_runs",
+    "apisguru:flat.io:post:/scores/{score}/fork",
+    "apisguru:gitea.io:get:/repos/{owner}/{repo}/hooks/{id}",
+    "apisguru:gitea.io:patch:/orgs/{org}/hooks/{id}",
+    "apisguru:googleapis.com:put:/billinginfo/{accountId}/{billingId}",
+    "apisguru:gsmtasks.com:patch:/accounts/{id}/",
+    "apisguru:gsmtasks.com:post:/accounts/{id}/managers/",
+    "apisguru:hetras-certification.net:get:/api/booking/v0/bookings/{confirmationId}/reservations/{reservationNumber}",
+    "apisguru:i-cue.solutions:get:/report/performance/sku-rationalization/{planningLevelId}",
+    "apisguru:increase.com:get:/account_transfers/{account_transfer_id}",
+    "apisguru:increase.com:patch:/account_numbers/{account_number_id}",
+    "apisguru:influxdata.com:patch:/authorizations/{authID}",
+    "apisguru:izettle.com:get:/organizations/{organizationUuid}/categories/v2",
+    "apisguru:izettle.com:put:/organizations/{organizationUuid}/discounts/{discountUuid}",
+    "apisguru:keycloak.local:put:/{realm}/authentication/flows/{id}",
+    "apisguru:letmc.com:get:/v2/tier2/{shortName}/branch/branches/{branchID}",
+    "apisguru:lyft.com:get:/rides/{id}/receipt",
+    "apisguru:medium.com:get:/user/{user_id}/articles",
+    "apisguru:meshery.local:get:/api/application/{id}",
+    "apisguru:meteosource.com:get:/nearest_place",
+    "apisguru:microsoft.com:post:/{projectId}/url",
+    "apisguru:n-auth.com:get:/servers/{serverid}/users/{userid}/accounts",
+    "apisguru:naviplancentral.com:post:/api/Accounts/{accountId}/Holdings",
+    "apisguru:netbox.dev:get:/circuits/provider-networks/{id}/",
+    "apisguru:netboxdemo.com:put:/circuits/providers/{id}/",
+    "apisguru:nordigen.com:get:/api/v2/institutions/{id}/",
+    "apisguru:nordigen.com:post:/api/v2/payments/{id}/submit/",
+    "apisguru:onsched.com:get:/consumer/v1/appointments/{id}",
+    "apisguru:onsched.com:put:/consumer/v1/appointments/{id}/cancel",
+    "apisguru:openchannel.io:patch:/apps/{appId}/versions/{version}",
+    "apisguru:openfintech.io:get:/exchangers/{id}",
+    "apisguru:orbit.love:put:/{workspace_slug}/members/{member_slug}/activities/{id}",
+    "apisguru:osf.io:get:/files/{file_id}/",
+    "apisguru:osf.io:get:/institutions/{institution_id}/users/",
+    "apisguru:osf.io:post:/draft_registrations/{draft_id}/contributors/",
+    "apisguru:patientview.org:get:/user/{userId}/availableobservationheadings",
+    "apisguru:payrun.io:put:/Employer/{EmployerId}/CisLineType/{CisLineTypeId}/Tag/{TagId}",
+    "apisguru:pocketsmith.com:get:/accounts/{id}",
+    "apisguru:probely.com:get:/events/{id}/",
+    "apisguru:probely.com:get:/integrations/jira-cloud/projects/{project_id}/issue_types/{issue_type_id}/status/",
+    "apisguru:probely.com:patch:/targets/{id}/",
+    "apisguru:prss.org:get:/api/v2/episodes",
+    "apisguru:rebilly.com:get:/attachments/{id}",
+    "apisguru:rebilly.com:get:/bank-accounts/{id}",
+    "apisguru:reverb.com:post:/my/orders/selling/{id}/ship",
+    "apisguru:runscope.com:get:/teams/{teamId}/integrations",
+    "apisguru:signl4.com:get:/alerts/{alertId}/annotations",
+    "apisguru:simplyrets.com:get:/properties/{mlsId}",
+    "apisguru:slmonitor.com:put:/api/v2.1/companies/{companyId}/users/{uniqueUserId}/itinerary-file",
+    "apisguru:soundcloud.com:get:/playlists/{playlist_id}",
+    "apisguru:spoonacular.com:get:/mealplanner/{username}/templates/{id}",
+    "apisguru:stackexchange.com:get:/users/{id}/inbox",
+    "apisguru:storecove.com:patch:/legal_entities/{id}",
+    "apisguru:stripe.com:get:/v1/accounts/{account}/bank_accounts/{id}",
+    "apisguru:telnyx.com:get:/authentication_providers/{id}",
+    "apisguru:telnyx.com:patch:/billing_groups/{id}",
+    "apisguru:tokenjay.app:get:/cancelbabel/{boxId}",
+    "apisguru:twilio.com:get:/2010-04-01/Accounts/{AccountSid}/AuthorizedConnectApps.json",
+    "apisguru:vestorly.com:get:/advisors/{id}",
+    "apisguru:visma.com:delete:/v1/activities/{guid}",
+    "apisguru:visma.com:get:/v1/activities/{guid}",
+    "apisguru:watchful.li:get:/sites/{id}/extensions",
+    "apisguru:watchful.li:post:/sites/{id}/backupstart",
+    "apisguru:webflow.com:get:/deploymentEnvironments/{deploymentEnvironmentId}",
+    "apisguru:xero.com:get:/Connections",
+    "apisguru:yodlee.com:get:/providers",
+    "apisguru:yodlee.com:get:/providers/{providerId}",
+    "apisguru:zuora.com:get:/notifications/notification-definitions/{id}",
+    "apisguru:zuora.com:get:/objects/records/default/{object}/{id}"
+  ],
+  "dataset_sha256": "ed6e2b2d36f0edc57ceb8878e0e2b67bf8b7a5f7a57a11499aba132bb56dd0f5",
+  "exclusion_sources": [
+    {
+      "path": "reports/eval/classification_quality/abstention.manifest.json",
+      "sha256": "f0318a42652d945b70a132f45883498b008fd3c9e5c958bf9e6c3845a5f426ea",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/abstention_report.md",
+      "sha256": "5a5cf36b0fc50c6e59aa67742bb533498a6904ce6b421d5d096a30a8ce9637d3",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/abstention_results.jsonl",
+      "sha256": "1f77c7b1dbd06f83625a512850eac5767e8698d1b811ae450d98a7e32810185b",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/abstention_summary.json",
+      "sha256": "7b3e68ce4169b7ddba9023a1281b6956560748c9320d8ba119750d70261e88df",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/abstention_usage.jsonl",
+      "sha256": "281b8d0ae4d60752bc7ee7fcc6482f107bfe89faa273d3e2ea2e2a3de969e920",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/development_evidence.jsonl",
+      "sha256": "83ff512f858ec7f788411488c59f952e2e6ebcba3968da5c7dd360b47ab0a098",
+      "matched_ids": 79
+    },
+    {
+      "path": "reports/eval/classification_quality/development_report.md",
+      "sha256": "eb0eb5676c4394e41e248882c5a22809e026efb933e512b9b88a33f0ed7d12e1",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/diagnosis.json",
+      "sha256": "7499763264395a106eb930ff8a8932e627deed687e9c1943955f37475a45a90f",
+      "matched_ids": 38
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions.md",
+      "sha256": "b1428e1eb4fa381453fa664652d4cc1c4471347901ef5a973d92fd50477082be",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions_dev_v1.jsonl",
+      "sha256": "ffd421861efc7ec72b28125fcec6c3949948618b52e0b98e322d30309e9c823d",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions_dev_v1.md",
+      "sha256": "8654e1caf9c9ba95ef9f1bebecafd6239c2c77e71d8b98f620e48da32a891a79",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions_dev_v1_confirmed.jsonl",
+      "sha256": "22fb53fcd478ab3be6fc85127402212df95a4d3367dfd38dd9a7667841158c12",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions_dev_v1_confirmed.manifest.json",
+      "sha256": "c24e5a6115afa41cc073f68f1b8d3786c6b2d192229548ad00409656a319d523",
+      "matched_ids": 0
+    },
+    {
+      "path": "reports/eval/classification_quality/label_decisions_dev_v1_confirmed.md",
+      "sha256": "d59c74dded5c218137702c21a470791be607717316af14c5b4e7adc409308bab",
+      "matched_ids": 11
+    },
+    {
+      "path": "reports/eval/classification_quality/label_standard_dev_v1.manifest.json",
+      "sha256": "e640c4e2eae0f9055f663a663293d829a4bb29742cddfca511eed3ea4b40c055",
+      "matched_ids": 0
+    },
+    {
+      "path": "reports/eval/classification_quality/model_error_followup.md",
+      "sha256": "977c9741f90af74ee98d15ae3f415d3bbbdf2e5925f85178257ae491b6c84fac",
+      "matched_ids": 14
+    },
+    {
+      "path": "reports/eval/classification_quality/paired.manifest.json",
+      "sha256": "2522c0bfa3d1c8ab5032957b550f767e087750c15723b088a715a3c71fdf0e65",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/paired_report.md",
+      "sha256": "c728ad0e6c78551f00c333ae16762598d2a6313037035ead33eb54497bc513a8",
+      "matched_ids": 0
+    },
+    {
+      "path": "reports/eval/classification_quality/paired_results.jsonl",
+      "sha256": "78ddf01ae117328931bebca08c3558a74760b8a8c1a78f16affc4ffbc862052f",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/paired_summary.json",
+      "sha256": "78d52accb39c8caabbf0e839c4f0ac10d10d116c018ca3a390540984b8f07501",
+      "matched_ids": 0
+    },
+    {
+      "path": "reports/eval/classification_quality/paired_usage.jsonl",
+      "sha256": "c7e3211fdfb9ae563ce77f871cc5444a69e58066e76cacf14698e567cd20c76c",
+      "matched_ids": 41
+    },
+    {
+      "path": "reports/eval/classification_quality/remaining_label_review_dev_v1.json",
+      "sha256": "0547f8adbb6f8ded5f2e83ed0fedae1fd0bbedb02a1145ae3028a8da80da0c05",
+      "matched_ids": 8
+    },
+    {
+      "path": "reports/eval/classification_quality/remaining_label_review_dev_v1.md",
+      "sha256": "b5d9aa2f68671eb29c905f2117aa8aae556e19bf5722315861f79b0cfd8b480a",
+      "matched_ids": 8
+    },
+    {
+      "path": "reports/eval/classification_quality/review_decisions.json",
+      "sha256": "cbbe7d232e08d3c47725920a1ddd106e3341811e7edfc1281f8844e2233a5749",
+      "matched_ids": 25
+    },
+    {
+      "path": "training/data/human_corrections_v5.jsonl",
+      "sha256": "4242e6da18f51ee513a40182cc39c138d747cf01b6c66d25ea73f90dc9c5f3bf",
+      "matched_ids": 79
+    },
+    {
+      "path": "training/data/human_corrections_v5_split.json",
+      "sha256": "bd58b6d41de22ee2871b45a32635f93687eca8407edeadf7259cc48975c884db",
+      "matched_ids": 142
+    },
+    {
+      "path": "training/data/pilot_comparison_v2.json",
+      "sha256": "b3d4d7abbac38f17feca8d87ecbfe2b0fbfaa9862df46874c700167cd28016a8",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v2_ids.json",
+      "sha256": "581379bcde8a090bfdfbe744250ba15729cac939fa0206b35556b055aec9c250",
+      "matched_ids": 117
+    },
+    {
+      "path": "training/data/pilot_v3_ids.json",
+      "sha256": "524c5c002242f1d3509d2e4e4d8a2407af8e3d5aee2f83fbe247edc0344dac0f",
+      "matched_ids": 54
+    },
+    {
+      "path": "training/data/pilot_v3_openai_http400_attempt.json",
+      "sha256": "bb58802910398efb945ba69855c7a498874e2cb939ae267f0d8646b0e896aa99",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v3_openai_r0.json",
+      "sha256": "5cf021ec11dec67a9fb87d6b461b8a7da3d5e4e7297befd9b7edd6d5eb2a5514",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v4_ids.json",
+      "sha256": "f98702bc90a10520d2b10258fe03d07402ac619086ec2f66c256299f77bf5530",
+      "matched_ids": 233
+    },
+    {
+      "path": "training/data/pilot_v4_report.json",
+      "sha256": "13a190bba5df64b90f5282fbb0f1eae926ac92598f45925f6ee5dd33bf8bcc49",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v5_authorized_resume_report.json",
+      "sha256": "41ef5268ff7a1df0a46e15db269d6be6fcf98d5d2e9fa12f7d594fa82a8fcf3c",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v5_ids.json",
+      "sha256": "f98702bc90a10520d2b10258fe03d07402ac619086ec2f66c256299f77bf5530",
+      "matched_ids": 233
+    },
+    {
+      "path": "training/data/pilot_v5_report.json",
+      "sha256": "7acc6097e6f8d9710f82bb60e4accd30767fefab5b55e17bc56db30156808834",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/pilot_v6_ids.json",
+      "sha256": "1ab270529ca36a12f90bda4aeda3be08efb6d089bf23e54bdd5a455b010b6d16",
+      "matched_ids": 278
+    },
+    {
+      "path": "training/data/pilot_v6_report.json",
+      "sha256": "86325c3e2b7e3c43673456311fcbb9201dcb50eb3502f937625e377dd1b5749c",
+      "matched_ids": 41
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/author_shard0.py",
+      "sha256": "e7246e4765f8813b8b3aad841350c131d46d3e16f155643b77c4a9df14211b39",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/author_shard1.py",
+      "sha256": "e7422fc6f60c904c7af826be01c4e630b29c5c0aa52e88ebe3455fca64436622",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/author_shard2.py",
+      "sha256": "1cfbf28c6b4014edf6ce9d0db468c85a2ca36c5f7328f53db66d09002a3d3ec9",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/blind_input.jsonl",
+      "sha256": "593c807c1db609a9ea3a47971fa9498154540b5c65476e8d3357373be699ca56",
+      "matched_ids": 117
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard0.jsonl",
+      "sha256": "1ce7ef9643815f105176f8231aa7fbd25521fe651b02adc4edfe1c0b4dcf3ac1",
+      "matched_ids": 40
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard0.md",
+      "sha256": "93178a0d9e241e07ef5a2f08dd08014ded6e668e7d22d2b071b98a7cc4c949ce",
+      "matched_ids": 40
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard1.jsonl",
+      "sha256": "775ae0e21c88151e517500f58e83948ad26f317fec5c7df0eef15223ee3fc37d",
+      "matched_ids": 42
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard1.md",
+      "sha256": "5a741676390e58fa14bc8e44f6f83b79158a83f141360bb8366862cc026b1060",
+      "matched_ids": 42
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard2.jsonl",
+      "sha256": "86db73dea66577d4672e247e3627cef8b845ca57dff50d10858b2f3faf394026",
+      "matched_ids": 38
+    },
+    {
+      "path": "training/data/policy_pilot_decisions/shard2.md",
+      "sha256": "d85764959fb411537a61f09fe748a152f2acade99954302f121a12e0956a2e01",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.2.md",
+      "sha256": "a1ef389e8fdc79a64a67442d4b049e5ff9b05c39e2af69365ca8323730353745",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.3.md",
+      "sha256": "b6519b701f15f938da06cf3f1d91bd2cba11b1b492363156751b46bed26652a7",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.4.md",
+      "sha256": "a7be29ca6139571b9e152d7c17b7080c51a0076d6e6fcaec167f832511127947",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.5.md",
+      "sha256": "35019e0c8af1c61935a3de8c87c4edfac79b7fa81107808988d8aff6c9881723",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.6.md",
+      "sha256": "48097a678caa50901a213009844624d18a1151197eaa8ae5f0edd1a0418464f5",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/prompts/policy_label_v2.6_abstention_dev.md",
+      "sha256": "845d8032835a04b36c19a9c0449aabea6601947e6b0a787c4ca885df8c966118",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/REVIEW_IMPORT_STATUS.md",
+      "sha256": "357b52d77fe03896d6ddf9da30ffac13615ed264ace885b17c5d6cec206f5a34",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/review_sample.md",
+      "sha256": "8f9e1213cd1963338b0016e4b554d17cb6b1a58c1a12bc8508af90165e541a2a",
+      "matched_ids": 47
+    },
+    {
+      "path": "training/data/review_sample_v2.md",
+      "sha256": "8b1117113271a5863a40ef820c3e371553261f3771f9b70e004915b5bb59ef44",
+      "matched_ids": 117
+    },
+    {
+      "path": "training/data/review_sample_v3.md",
+      "sha256": "161edcffc80efb76ee55fc6481ffbaac1ae3b3c9708dc39a3dae6ab57955ed17",
+      "matched_ids": 163
+    },
+    {
+      "path": "training/data/review_sample_v5.md",
+      "sha256": "68a337a1cfa3b641b68d0feabc4c09a8917b4f2c2caadb90b48ff4343f9fef9b",
+      "matched_ids": 142
+    },
+    {
+      "path": "training/data/review_sample_v5_filtered.md",
+      "sha256": "a81c95242ae7fdb924414e641a6b41fb9344213fb3a497763f73e399c03eb0b8",
+      "matched_ids": 110
+    },
+    {
+      "path": "training/data/review_test.md",
+      "sha256": "75a9e08008ce06fdb4e0e500a3fd341241433cbdc6a9ad1a18b201e4a1271037",
+      "matched_ids": 0
+    },
+    {
+      "path": "training/data/v6_error_analysis.json",
+      "sha256": "e5f7df2307b3297fb84674a19832393f3fb7d7b488e0caacf004c02bde8a465a",
+      "matched_ids": 38
+    },
+    {
+      "path": "training/data/v6_error_analysis.md",
+      "sha256": "afe2b46a3aee7b4208d63afccd629ff10a82b5369f409dffd2d33f939eb4e09d",
+      "matched_ids": 38
+    }
+  ],
+  "overlap": 0,
+  "label_stratification": false,
+  "prior_automatic_labeling": true
+}

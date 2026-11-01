@@ -1,0 +1,746 @@
+{
+  "counts": {
+    "equivalent": 4,
+    "incorrect": 3,
+    "unsupported": 3
+  },
+  "results": [
+    {
+      "id": "owner_or_admin",
+      "status": "equivalent",
+      "formula": "((True and not (((not admin) and (not owner)))))",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "owner_and_admin",
+      "status": "equivalent",
+      "formula": "((True and not (((not admin) or (not owner)))))",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "owner_not_admin",
+      "status": "equivalent",
+      "formula": "((True and not ((admin or (not owner)))))",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "admin_early_return",
+      "status": "equivalent",
+      "formula": "((True and admin) or ((True and not (admin)) and not ((not owner))))",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": false
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "masked_404",
+      "status": "incorrect",
+      "formula": "(True)",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        }
+      ]
+    },
+    {
+      "id": "helper_guard",
+      "status": "incorrect",
+      "formula": "(True)",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        }
+      ]
+    },
+    {
+      "id": "assert_guard",
+      "status": "incorrect",
+      "formula": "(True)",
+      "error": null,
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": true
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": true
+        }
+      ],
+      "counterexamples": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": true
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": true
+        }
+      ]
+    },
+    {
+      "id": "unknown_tenant",
+      "status": "unsupported",
+      "formula": null,
+      "error": "Unsupported authorization expression: item.tenant_id != current_user.tenant_id",
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "alias_owner",
+      "status": "unsupported",
+      "formula": null,
+      "error": "Unsupported authorization expression: item.owner_id != caller.id",
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        }
+      ],
+      "counterexamples": []
+    },
+    {
+      "id": "nested_guard",
+      "status": "unsupported",
+      "formula": null,
+      "error": "Unsupported branch",
+      "states": [
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": false,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": false,
+          "tenant": true,
+          "actual": false,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": false,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": false,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": false,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": false,
+          "actual": true,
+          "extracted": null
+        },
+        {
+          "owner": true,
+          "admin": true,
+          "tenant": true,
+          "actual": true,
+          "extracted": null
+        }
+      ],
+      "counterexamples": []
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>본인 계정 검증</title><style>body{max-width:1100px;margin:40px auto;padding:20px;font:16px/1.7 system-ui}td,th{padding:10px;border:1px solid #ccd}pre{white-space:pre-wrap}</style><h1>본인 계정 바인딩 추출·타인 ID 주입 검사</h1>
+<p>인증 사용자 → 핸들러 대상 → 저장소 대상 키 → SQL WHERE 연결을 확인했다. 요청에 넣은 id/user_id/owner_id는 수정 대상 키로 사용되지 않는다. username은 변경할 새 값이며 기존 대상 키와 다르다.</p>
+<p>격리 검사 <strong>9/9 통과</strong>. 모든 사례에서 다른 계정의 DB 행은 그대로였다.</p>
+<table>
+<thead>
+<tr>
+<th>요청</th>
+<th>주입값</th>
+<th style="text-align:right">상태</th>
+<th>타인 계정 보존</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET ?id=2&amp;user_id=2&amp;username=bob</td>
+<td>null</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;id&quot;: 2, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;user_id&quot;: 2, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;owner_id&quot;: &quot;bob&quot;, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;user&quot;: {&quot;username&quot;: &quot;bob&quot;}, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT ?username=bob&amp;id=2</td>
+<td>{&quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;username&quot;: &quot;bob&quot;, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">400</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;email&quot;: &quot;bob@example.com&quot;, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">400</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>{&quot;username&quot;: &quot;alice_new&quot;, &quot;id&quot;: 2, &quot;bio&quot;: &quot;changed&quot;}</td>
+<td style="text-align:right">200</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h2>해석</h2>
+<p>200 응답을 주입 차단 실패로 보지 않는다. 알 수 없는 필드는 원본 Update 스키마에서 무시되고 실제 대상은 인증 사용자로 유지된다. 이미 존재하는 다른 username/email로 변경하려는 요청은 원본 중복 검사에서 400으로 거부된다. 사용하지 않는 새 username으로 이름을 바꾸는 경우에도 동일한 사용자 행만 갱신된다.</p>
+<h2>실행 범위</h2>
+<p>원본 GET/PUT 핸들러·update_user 저장소 메서드·중복 검사 함수의 본문을 그대로 격리 실행했다. import·타입 annotation·Depends 기본값은 격리 호출을 위해 제거했다. 원본 UserInUpdate 스키마는 Pydantic v1 호환 모드로 실행했다. 같은 커밋의 원본 SQL을 SQLite에서 실행했으며 전체 PostgreSQL 앱 실행은 아니다. 인증 사용자는 테스트 헤더로 주입했고 JWT는 검증하지 않았다.</p>
+<h2>라벨 처리</h2>
+<p>요청자에게 대상을 고정하는 패턴을 구현 근거로 추가했다. 기존 owner_match의 후보로만 기록하며 새 8번째 라벨을 만들지 않았다. 최종 라벨·고정 test·학습 데이터·런타임은 변경하지 않았다. 다음은 생성자 귀속과 관계 레코드의 요청자 키 추적이다.</p>
+<details><summary>검사 기록·근거</summary><pre>{
+  &quot;binding&quot;: &quot;authenticated current_user -&gt; update_user(user=current_user) -&gt; SQL WHERE username=:username&quot;,
+  &quot;proposed_pattern&quot;: &quot;self_account_binding&quot;,
+  &quot;existing_label_candidate&quot;: &quot;owner_match&quot;,
+  &quot;final_label&quot;: null,
+  &quot;outcomes&quot;: [
+    {
+      &quot;method&quot;: &quot;GET&quot;,
+      &quot;query&quot;: &quot;?id=2&amp;user_id=2&amp;username=bob&quot;,
+      &quot;body&quot;: null,
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;original-alice&quot;,
+      &quot;sql_target_values&quot;: [],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;id&quot;: 2,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;user_id&quot;: 2,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;owner_id&quot;: &quot;bob&quot;,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;user&quot;: {
+          &quot;username&quot;: &quot;bob&quot;
+        },
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;?username=bob&amp;id=2&quot;,
+      &quot;body&quot;: {
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;username&quot;: &quot;bob&quot;,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 400,
+      &quot;actual_status&quot;: 400,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;original-alice&quot;,
+      &quot;sql_target_values&quot;: [],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;email&quot;: &quot;bob@example.com&quot;,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 400,
+      &quot;actual_status&quot;: 400,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;original-alice&quot;,
+      &quot;sql_target_values&quot;: [],
+      &quot;passed&quot;: true
+    },
+    {
+      &quot;method&quot;: &quot;PUT&quot;,
+      &quot;query&quot;: &quot;&quot;,
+      &quot;body&quot;: {
+        &quot;username&quot;: &quot;alice_new&quot;,
+        &quot;id&quot;: 2,
+        &quot;bio&quot;: &quot;changed&quot;
+      },
+      &quot;expected_status&quot;: 200,
+      &quot;actual_status&quot;: 200,
+      &quot;other_account_unchanged&quot;: true,
+      &quot;self_account_bio&quot;: &quot;changed&quot;,
+      &quot;sql_target_values&quot;: [
+        &quot;alice&quot;
+      ],
+      &quot;passed&quot;: true
+    }
+  ],
+  &quot;evidence&quot;: [
+    {
+      &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+      &quot;start&quot;: 18,
+      &quot;end&quot;: 35,
+      &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+      &quot;code&quot;: &quot;18: @router.get(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:get-current-user\&quot;)\n19: async def retrieve_current_user(\n20:     user: User = Depends(get_current_user_authorizer()),\n21:     settings: AppSettings = Depends(get_app_settings),\n22: ) -&gt; UserInResponse:\n23:     token = jwt.create_access_token_for_user(\n24:         user,\n25:         str(settings.secret_key.get_secret_value()),\n26:     )\n27:     return UserInResponse(\n28:         user=UserWithToken(\n29:             username=user.username,\n30:             email=user.email,\n31:             bio=user.bio,\n32:             image=user.image,\n33:             token=token,\n34:         ),\n35:     )&quot;
+    },
+    {
+      &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+      &quot;start&quot;: 38,
+      &quot;end&quot;: 73,
+      &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+      &quot;code&quot;: &quot;38: @router.put(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:update-current-user\&quot;)\n39: async def update_current_user(\n40:     user_update: UserInUpdate = Body(..., embed=True, alias=\&quot;user\&quot;),\n41:     current_user: User = Depends(get_current_user_authorizer()),\n42:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n43:     settings: AppSettings = Depends(get_app_settings),\n44: ) -&gt; UserInResponse:\n45:     if user_update.username and user_update.username != current_user.username:\n46:         if await check_username_is_taken(users_repo, user_update.username):\n47:             raise HTTPException(\n48:                 status_code=HTTP_400_BAD_REQUEST,\n49:                 detail=strings.USERNAME_TAKEN,\n50:             )\n51: \n52:     if user_update.email and user_update.email != current_user.email:\n53:         if await check_email_is_taken(users_repo, user_update.email):\n54:             raise HTTPException(\n55:                 status_code=HTTP_400_BAD_REQUEST,\n56:                 detail=strings.EMAIL_TAKEN,\n57:             )\n58: \n59:     user = await users_repo.update_user(user=current_user, **user_update.dict())\n60: \n61:     token = jwt.create_access_token_for_user(\n62:         user,\n63:         str(settings.secret_key.get_secret_value()),\n64:     )\n65:     return UserInResponse(\n66:         user=UserWithToken(\n67:             username=user.username,\n68:             email=user.email,\n69:             bio=user.bio,\n70:             image=user.image,\n71:             token=token,\n72:         ),\n73:     )&quot;
+    },
+    {
+      &quot;path&quot;: &quot;app/db/repositories/users.py&quot;,
+      &quot;start&quot;: 50,
+      &quot;end&quot;: 81,
+      &quot;sha256&quot;: &quot;81aa44c80794c78f08245fed90be373f62c0fd93bdd8951c3737846738f5bfef&quot;,
+      &quot;code&quot;: &quot;50:     async def update_user(  # noqa: WPS211\n51:         self,\n52:         *,\n53:         user: User,\n54:         username: Optional[str] = None,\n55:         email: Optional[str] = None,\n56:         password: Optional[str] = None,\n57:         bio: Optional[str] = None,\n58:         image: Optional[str] = None,\n59:     ) -&gt; UserInDB:\n60:         user_in_db = await self.get_user_by_username(username=user.username)\n61: \n62:         user_in_db.username = username or user_in_db.username\n63:         user_in_db.email = email or user_in_db.email\n64:         user_in_db.bio = bio or user_in_db.bio\n65:         user_in_db.image = image or user_in_db.image\n66:         if password:\n67:             user_in_db.change_password(password)\n68: \n69:         async with self.connection.transaction():\n70:             user_in_db.updated_at = await queries.update_user_by_username(\n71:                 self.connection,\n72:                 username=user.username,\n73:                 new_username=user_in_db.username,\n74:                 new_email=user_in_db.email,\n75:                 new_salt=user_in_db.salt,\n76:                 new_password=user_in_db.hashed_password,\n77:                 new_bio=user_in_db.bio,\n78:                 new_image=user_in_db.image,\n79:             )\n80: \n81:         return user_in_db&quot;
+    }
+  ],
+  &quot;api_calls&quot;: 0,
+  &quot;limitations&quot;: [
+    &quot;synthetic header principal; JWT not tested&quot;,
+    &quot;SQLite rather than upstream PostgreSQL&quot;,
+    &quot;Pydantic v1 compatibility layer rather than exact upstream dependency lock&quot;,
+    &quot;JWT signing/response objects/connection and user loading are test doubles&quot;,
+    &quot;no production middleware or concurrent mutation testing&quot;
+  ]
+}</pre></details></html>

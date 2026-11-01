@@ -1,0 +1,176 @@
+{
+  "binding": "authenticated current_user -> update_user(user=current_user) -> SQL WHERE username=:username",
+  "proposed_pattern": "self_account_binding",
+  "existing_label_candidate": "owner_match",
+  "final_label": null,
+  "outcomes": [
+    {
+      "method": "GET",
+      "query": "?id=2&user_id=2&username=bob",
+      "body": null,
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "original-alice",
+      "sql_target_values": [],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "id": 2,
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "user_id": 2,
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "owner_id": "bob",
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "user": {
+          "username": "bob"
+        },
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "?username=bob&id=2",
+      "body": {
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "username": "bob",
+        "bio": "changed"
+      },
+      "expected_status": 400,
+      "actual_status": 400,
+      "other_account_unchanged": true,
+      "self_account_bio": "original-alice",
+      "sql_target_values": [],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "email": "bob@example.com",
+        "bio": "changed"
+      },
+      "expected_status": 400,
+      "actual_status": 400,
+      "other_account_unchanged": true,
+      "self_account_bio": "original-alice",
+      "sql_target_values": [],
+      "passed": true
+    },
+    {
+      "method": "PUT",
+      "query": "",
+      "body": {
+        "username": "alice_new",
+        "id": 2,
+        "bio": "changed"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "other_account_unchanged": true,
+      "self_account_bio": "changed",
+      "sql_target_values": [
+        "alice"
+      ],
+      "passed": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "app/api/routes/users.py",
+      "start": 18,
+      "end": 35,
+      "sha256": "b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1",
+      "code": "18: @router.get(\"\", response_model=UserInResponse, name=\"users:get-current-user\")\n19: async def retrieve_current_user(\n20:     user: User = Depends(get_current_user_authorizer()),\n21:     settings: AppSettings = Depends(get_app_settings),\n22: ) -> UserInResponse:\n23:     token = jwt.create_access_token_for_user(\n24:         user,\n25:         str(settings.secret_key.get_secret_value()),\n26:     )\n27:     return UserInResponse(\n28:         user=UserWithToken(\n29:             username=user.username,\n30:             email=user.email,\n31:             bio=user.bio,\n32:             image=user.image,\n33:             token=token,\n34:         ),\n35:     )"
+    },
+    {
+      "path": "app/api/routes/users.py",
+      "start": 38,
+      "end": 73,
+      "sha256": "b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1",
+      "code": "38: @router.put(\"\", response_model=UserInResponse, name=\"users:update-current-user\")\n39: async def update_current_user(\n40:     user_update: UserInUpdate = Body(..., embed=True, alias=\"user\"),\n41:     current_user: User = Depends(get_current_user_authorizer()),\n42:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n43:     settings: AppSettings = Depends(get_app_settings),\n44: ) -> UserInResponse:\n45:     if user_update.username and user_update.username != current_user.username:\n46:         if await check_username_is_taken(users_repo, user_update.username):\n47:             raise HTTPException(\n48:                 status_code=HTTP_400_BAD_REQUEST,\n49:                 detail=strings.USERNAME_TAKEN,\n50:             )\n51: \n52:     if user_update.email and user_update.email != current_user.email:\n53:         if await check_email_is_taken(users_repo, user_update.email):\n54:             raise HTTPException(\n55:                 status_code=HTTP_400_BAD_REQUEST,\n56:                 detail=strings.EMAIL_TAKEN,\n57:             )\n58: \n59:     user = await users_repo.update_user(user=current_user, **user_update.dict())\n60: \n61:     token = jwt.create_access_token_for_user(\n62:         user,\n63:         str(settings.secret_key.get_secret_value()),\n64:     )\n65:     return UserInResponse(\n66:         user=UserWithToken(\n67:             username=user.username,\n68:             email=user.email,\n69:             bio=user.bio,\n70:             image=user.image,\n71:             token=token,\n72:         ),\n73:     )"
+    },
+    {
+      "path": "app/db/repositories/users.py",
+      "start": 50,
+      "end": 81,
+      "sha256": "81aa44c80794c78f08245fed90be373f62c0fd93bdd8951c3737846738f5bfef",
+      "code": "50:     async def update_user(  # noqa: WPS211\n51:         self,\n52:         *,\n53:         user: User,\n54:         username: Optional[str] = None,\n55:         email: Optional[str] = None,\n56:         password: Optional[str] = None,\n57:         bio: Optional[str] = None,\n58:         image: Optional[str] = None,\n59:     ) -> UserInDB:\n60:         user_in_db = await self.get_user_by_username(username=user.username)\n61: \n62:         user_in_db.username = username or user_in_db.username\n63:         user_in_db.email = email or user_in_db.email\n64:         user_in_db.bio = bio or user_in_db.bio\n65:         user_in_db.image = image or user_in_db.image\n66:         if password:\n67:             user_in_db.change_password(password)\n68: \n69:         async with self.connection.transaction():\n70:             user_in_db.updated_at = await queries.update_user_by_username(\n71:                 self.connection,\n72:                 username=user.username,\n73:                 new_username=user_in_db.username,\n74:                 new_email=user_in_db.email,\n75:                 new_salt=user_in_db.salt,\n76:                 new_password=user_in_db.hashed_password,\n77:                 new_bio=user_in_db.bio,\n78:                 new_image=user_in_db.image,\n79:             )\n80: \n81:         return user_in_db"
+    }
+  ],
+  "api_calls": 0,
+  "limitations": [
+    "synthetic header principal; JWT not tested",
+    "SQLite rather than upstream PostgreSQL",
+    "Pydantic v1 compatibility layer rather than exact upstream dependency lock",
+    "JWT signing/response objects/connection and user loading are test doubles",
+    "no production middleware or concurrent mutation testing"
+  ]
+}

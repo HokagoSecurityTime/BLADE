@@ -1,0 +1,6 @@
+{
+  "api_calls": 0,
+  "adapter_sha256": "af4bcebe104ac30f64fd75d012291bb9bdf023b3e263bf36d111a00f5e6a5788",
+  "prediction_sha256": "4fbbbf616dfb808f3ebdc61ff3d01815a7b5887b866f8506f1865478b8b9ba27",
+  "scope": "development regression; not independent evaluation"
+}

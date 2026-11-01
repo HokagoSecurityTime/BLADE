@@ -1,0 +1,121 @@
+{
+  "paths": {
+    "/me": {
+      "get": {
+        "operationId": "me",
+        "summary": "Me",
+        "description": "",
+        "response_text": [
+          "description",
+          "Missing token or inactive user."
+        ],
+        "security": [
+          {
+            "configured_authentication_backend": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "update_me",
+        "summary": "Update Me",
+        "description": "",
+        "response_text": [
+          "description",
+          "Missing token or inactive user.",
+          "model",
+          "content",
+          "application/json",
+          "examples",
+          "summary",
+          "value",
+          "A user with this email already exists.",
+          "summary",
+          "value",
+          "Password validation failed.",
+          "detail",
+          "detail",
+          "code",
+          "reason",
+          "Password should beat least 3 characters"
+        ],
+        "security": [
+          {
+            "configured_authentication_backend": []
+          }
+        ]
+      }
+    },
+    "/{id}": {
+      "get": {
+        "operationId": "get_user",
+        "summary": "Get User",
+        "description": "",
+        "response_text": [
+          "description",
+          "Missing token or inactive user.",
+          "description",
+          "Not a superuser.",
+          "description",
+          "The user does not exist."
+        ],
+        "security": [
+          {
+            "configured_authentication_backend": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "update_user",
+        "summary": "Update User",
+        "description": "",
+        "response_text": [
+          "description",
+          "Missing token or inactive user.",
+          "description",
+          "Not a superuser.",
+          "description",
+          "The user does not exist.",
+          "model",
+          "content",
+          "application/json",
+          "examples",
+          "summary",
+          "value",
+          "A user with this email already exists.",
+          "summary",
+          "value",
+          "Password validation failed.",
+          "detail",
+          "detail",
+          "code",
+          "reason",
+          "Password should beat least 3 characters"
+        ],
+        "security": [
+          {
+            "configured_authentication_backend": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete_user",
+        "summary": "Delete User",
+        "description": "",
+        "response_text": [
+          "description",
+          "Missing token or inactive user.",
+          "description",
+          "Not a superuser.",
+          "description",
+          "The user does not exist."
+        ],
+        "security": [
+          {
+            "configured_authentication_backend": []
+          }
+        ]
+      }
+    }
+  },
+  "provenance": "static router-relative projection, configurable backend scheme placeholder; not live OAS export"
+}

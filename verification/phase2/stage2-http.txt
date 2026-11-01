@@ -1,0 +1,558 @@
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/approve
+Headers({'host': '127.0.0.1:52799', 'content-length': '0', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '1a4748b6-8895-47b8-9df5-5d0958928522', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/mode
+Headers({'host': '127.0.0.1:52799', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'content-length': '18', 'content-type': 'application/json'})
+{"mode":"enforce"}
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"enforce","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '4a21f26d-96e1-4900-ad34-e5fcdd13eb7a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 403
+Headers({'x-blade-request-id': '6072cef0-9572-4336-8483-6e171ff3a2b6', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-type': 'application/json; charset=utf-8', 'content-length': '118', 'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'Python/3.11 aiohttp/3.14.3'})
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "6072cef0-9572-4336-8483-6e171ff3a2b6"}
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/rollback
+Headers({'host': '127.0.0.1:52799', 'content-length': '0', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '439', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"PENDING","created_at":"2026-09-09T00:00:00Z","mode":"enforce","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '1e92775a-3fac-4453-b06c-f04b05e9dd8e', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/approve
+Headers({'host': '127.0.0.1:52799', 'content-length': '0', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'df8b9aed-7201-41b8-be97-17a64f5cb247', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/mode
+Headers({'host': '127.0.0.1:52799', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'content-length': '18', 'content-type': 'application/json'})
+{"mode":"observe"}
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '7b31ccd7-be2e-40ef-8084-e58ce3b26095', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+$ docker compose ... kill redis
+
+ Container blade-phase2-redis-redis-1 Killing 
+ Container blade-phase2-redis-redis-1 Killed 
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '6b352796-90be-4343-807b-8fe647aa6483', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52799/detections
+Headers({'host': '127.0.0.1:52799', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '2123', 'content-type': 'application/json'})
+[{"ts":"2026-10-08T05:22:21.413306Z","request_id":"6b352796-90be-4343-807b-8fe647aa6483","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true},{"ts":"2026-10-08T05:22:20.805397Z","request_id":"7b31ccd7-be2e-40ef-8084-e58ce3b26095","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true},{"ts":"2026-10-08T05:22:20.769213Z","request_id":"df8b9aed-7201-41b8-be97-17a64f5cb247","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true},{"ts":"2026-10-08T05:22:20.729236Z","request_id":"1e92775a-3fac-4453-b06c-f04b05e9dd8e","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"","label":"manual_review_required","verdict":"OBSERVE","reason":"no_policy","mode":"observe","explanation":null,"would_block":false},{"ts":"2026-10-08T05:22:20.692666Z","request_id":"6072cef0-9572-4336-8483-6e171ff3a2b6","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-08T05:22:20.663520Z","request_id":"4a21f26d-96e1-4900-ad34-e5fcdd13eb7a","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true},{"ts":"2026-10-08T05:22:20.622985Z","request_id":"1a4748b6-8895-47b8-9df5-5d0958928522","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true}]
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/mode
+Headers({'host': '127.0.0.1:52799', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'content-length': '18', 'content-type': 'application/json'})
+{"mode":"enforce"}
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:20 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"enforce","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '569e8434-8917-4d40-9ce5-dafb685eb2a0', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'ab282e25-c33a-44ab-bf39-c758cfcfca12', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '0ccaec32-213b-4f56-9c91-b2ba6305244c', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '755e3c06-5020-4b63-bf93-e86f43c1e997', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd1fc1309-8351-4edf-8dd8-d6729c285349', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'a42b68b6-587d-455b-967d-15246117f4ca', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '381ad47b-c3f7-4b51-8896-83e9d98b9b82', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'ca633a2b-99c4-4630-8819-ef7afdad8c86', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '87d98d61-9581-440e-8e52-50f4258e8785', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'e8742d26-7eff-4ee2-840a-1096a2ca77f8', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '823d1bc0-c06b-4d89-8866-637b9778fb6f', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'cd949c94-a4ef-4d90-b474-69789f64ba0e', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'b817cc12-8ab5-4fe7-97c6-3b30b90bd8eb', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '1b21d2f2-e2e3-47da-9060-5412586af26c', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'a509b90e-633f-4d6d-a903-a9d9b552866a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd0633c6a-6046-458c-b4b9-2052f84b0fb6', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '9c7ca8b1-ad40-41f0-8c8d-bdf9148af3a7', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '3179493b-1ff0-4662-bf1e-586e8d97bb06', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd0230547-aaa6-4606-b180-de54c5513c10', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '5e349bc0-81f9-464a-a747-fc27a3a74827', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'e2a3038b-2c72-4709-89ad-6a77608969fe', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '95cc6a08-1918-40bb-8c5c-64a49a2a1a28', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd4232642-7098-43ac-bb6d-6037a5fc17fe', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'e0d4f8e3-ae0c-4731-985f-a921ef7f1a4c', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'f6bad882-0a34-40d2-a743-8495a1ba36ba', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '8c91efe9-6770-40ad-b5e6-bbae66222b9a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:21 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '136c8f7f-d5ee-4b31-95dd-f0322cf0a3df', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '6922f351-5ff2-402f-b2e8-beb51bae91ce', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'eeeb4049-2524-49ba-bd3a-f3ef0c7ff593', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '9e947a25-50d3-4ef8-a65d-8996a8cab2af', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '72828ec2-7e7f-4d56-a2cc-ff8db41e70ad', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '534214a3-dede-45e5-8201-794de07d5ace', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '89b025f3-de78-48e2-9b9f-44fe90a53433', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '5ae0f559-aaee-4baf-9d26-9abd2f7d12d5', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '8774f87f-728b-49d7-97d0-cb227116c06a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'bb1465d1-0bff-48ed-b2f0-d06d8de4db4b', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'cd990d1a-dcdf-4233-89b7-016ea62a8ca0', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'e34aee16-f221-477d-adde-20ade9b3f6e9', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'ca33c24d-3296-4af8-8e2f-c81407ce91ff', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '71512645-919a-4af3-9091-913ae02d24fe', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '91de73c3-6fbf-4652-86f9-a258d4aa94d7', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'fff699bb-6b06-4749-9c2c-f948029490f8', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '0faf7ec7-0d9b-429a-89ea-b65d03164e91', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '7b51109d-247c-4395-965d-bbb2448b16c0', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '3614a150-44ff-4269-808c-a04b2f7a4d99', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'aca99a45-3420-4d85-8310-c87ca0ba755a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '0eebd47e-ecb8-4f6c-b6e3-7ea10bd57332', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '190cab94-c6e0-45df-87b8-91b116d666cf', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '8e0866db-eeb1-4936-b35d-b1421e07dced', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'cce7788d-cb62-4d1b-935d-7ec90aecbdea', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd19dbf6f-82c8-45c4-b86c-469f17f4a1f2', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '22d22bdc-1c3f-41e6-a9e4-d66e53f44d76', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '34ba3dc2-3c14-4c09-8bce-aef5a1f41d70', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'c1414eb4-e0de-4645-8a11-20112985370c', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd72bcedf-1943-4b42-b8d2-2a190126993f', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'b161618f-5214-4d1b-bcea-986d5d878dfb', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'b83ce4ab-1f01-4272-9ae2-7e9e75c28c8a', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '99aac9cf-29f4-40ef-8475-1cf8548f14d8', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '42fa8cb4-359a-4b00-aa07-e1ef8c4c0c12', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:22 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': 'd0b705ec-b968-4ece-981d-9aba3ec035d3', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 403
+Headers({'x-blade-request-id': 'e53f8edb-e9f0-4877-91ec-026de12a1dbf', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-type': 'application/json; charset=utf-8', 'content-length': '118', 'date': 'Thu, 08 Oct 2026 05:22:23 GMT', 'server': 'Python/3.11 aiohttp/3.14.3'})
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "e53f8edb-e9f0-4877-91ec-026de12a1dbf"}
+
+$ docker compose ... start redis
+
+ Container blade-phase2-redis-redis-1 Starting 
+ Container blade-phase2-redis-redis-1 Started 
+
+POST http://127.0.0.1:52799/policies/pol_orders_get_by_orderId/mode
+Headers({'host': '127.0.0.1:52799', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'content-length': '18', 'content-type': 'application/json'})
+{"mode":"observe"}
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:24 GMT', 'server': 'uvicorn', 'content-length': '438', 'content-type': 'application/json'})
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":["admin"],"allowed_membership":["premium"]},"confidence":1.0,"evidence":"test","status":"ACTIVE","created_at":"2026-09-09T00:00:00Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 403
+Headers({'x-blade-request-id': 'b9b9f267-7ea7-43bc-b427-5d2eb1d52962', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-type': 'application/json; charset=utf-8', 'content-length': '118', 'date': 'Thu, 08 Oct 2026 05:22:25 GMT', 'server': 'Python/3.11 aiohttp/3.14.3'})
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "b9b9f267-7ea7-43bc-b427-5d2eb1d52962"}
+
+GET http://127.0.0.1:52804/orders/1042
+Headers({'host': '127.0.0.1:52804', 'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'connection': 'keep-alive', 'user-agent': 'python-httpx/0.28.1', 'authorization': '[secure]'})
+
+HTTP 200
+Headers({'date': 'Thu, 08 Oct 2026 05:22:24 GMT', 'server': 'uvicorn', 'content-type': 'application/json', 'x-blade-request-id': '3cfc0fce-3a14-47dd-9c2e-388c563066bd', 'x-blade-policy': 'pol_orders_get_by_orderId', 'content-length': '31'})
+{"id":1042,"user_id":"user_77"}
+
+$ docker compose ... start redis
+

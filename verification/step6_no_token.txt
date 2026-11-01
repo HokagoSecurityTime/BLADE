@@ -1,0 +1,21 @@
+
+===== 2026-09-13T12:18:56.410692+00:00 REQUEST =====
+GET /orders/1042 HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 403 Forbidden
+X-Blade-Request-Id: 64149245-c7a7-437e-8306-7592127851bf
+X-Blade-Policy: pol_orders_get_by_orderId
+Content-Type: application/json; charset=utf-8
+Content-Length: 118
+Date: Sun, 13 Sep 2026 12:18:56 GMT
+Server: Python/3.11 aiohttp/3.14.3
+
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "64149245-c7a7-437e-8306-7592127851bf"}

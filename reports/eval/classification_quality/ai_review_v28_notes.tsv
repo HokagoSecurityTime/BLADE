@@ -1,0 +1,101 @@
+index	label	reason
+0	manual_review_required	app_id와 bearer 인증은 있으나 앱 접근 주체·조직 일치 조건은 없다. target.projectId는 외부 전송 대상 필드다.
+1	manual_review_required	username 경로와 your data 설명은 소유 후보지만 per-feed 키·shared_with가 있어 개인 소유와 공유 권한을 구분할 수 없다.
+2	manual_review_required	workspaceId와 SigV4는 조직 일치 조건이나 특정 역할 요구를 명시하지 않는다.
+3	manual_review_required	workspace namespace 변경 설명과 SigV4만 있어 tenant 또는 role 조건을 확정할 수 없다.
+4	manual_review_required	도시명·우편번호는 참조 데이터지만 API 토큰 요구와 익명 허용의 관계가 불명확하다. public 기준 해석 보완 대상이다.
+5	manual_review_required	user_id·created_by_id·project_id는 관계 필드이며 누구에게 조회를 허용하는지는 없다.
+6	manual_review_required	응답의 public 필드는 접근 허용 선언이 아니며 streamKey까지 반환한다. bearer 외 정책은 불명이다.
+7	manual_review_required	판매자 정보 조회이나 basic 인증이 있고 공개 허용 설명은 없다. 참조 데이터와 public 의미 경계가 남는다.
+8	manual_review_required	owner_name은 앱 경로의 이름이다. Updates a group만으로 개인 소유와 조직·공유 접근을 구분할 수 없다.
+9	manual_review_required	user-level key의 accountName은 인증 문맥이며 배포 객체의 개인 소유 조건은 없다. account 조직 여부도 불명이다.
+10	tenant_match	All team members have read access가 대상 팀과 요청자의 구성원 관계를 직접 지지한다. 유료 등급 조건은 아니다.
+11	manual_review_required	client registration token과 사용자 OAuth 대안은 있으나 client 수정의 소유·역할 조건은 없다.
+12	manual_review_required	브랜드 목록은 참조 데이터 성격이나 API 키 요구가 있다. 공개 허용과 인증된 참조 데이터의 기준 경계다.
+13	manual_review_required	프로그램 메타데이터 검색은 참조 데이터 성격이나 API 키가 요구된다. 익명 허용은 명시되지 않았다.
+14	manual_review_required	콘텐츠 프로모션 메타데이터와 API 키가 함께 있다. 공개 콘텐츠와 해당 API 익명 허용을 구분할 근거가 부족하다.
+15	manual_review_required	accountId가 주문 관계를 보여주지만 개인 계정·상점 조직 중 무엇인지와 접근 제한이 불명이다.
+16	manual_review_required	accountName은 은행 계좌명일 수 있어 인증 주체나 조직 일치의 근거로 사용할 수 없다.
+17	manual_review_required	고객 수정 설명만 있으며 accountName 후보는 접근 정책이나 요청자 소유 관계를 명시하지 않는다.
+18	manual_review_required	파일·폴더 컬렉션 조회이며 OAuth 전체 scope 사전의 manage 항목은 이 요청에 요구된 역할이 아니다.
+19	manual_review_required	브라우저 속성은 참조 데이터 후보지만 API 키 요구와 공개 접근 관계가 명시되지 않았다.
+20	public	NFT URI 조회는 계약·토큰 식별자로 찾는 공개 참조 메타데이터라는 구조적 근거가 있다. 익명 동작 실측은 아니므로 약한 제안이다.
+21	manual_review_required	organisations 경로만 있고 설명·접근 조건이 없다. 조직 이름만으로 tenant를 확정하지 않는다.
+22	manual_review_required	연락처 수정과 basic 인증만 있다. organization_name은 연락처 속성일 수 있다.
+23	manual_review_required	조직·제품 관계가 응답에 있으나 Config 조회 허용 조건은 없다. Public API credentials는 익명 허용이 아니다.
+24	manual_review_required	사용자 프로필 조회와 username은 대상 식별이다. 공개 프로필 또는 본인 전용이라는 선언은 없다.
+25	manual_review_required	OAuth 설명에 역할 일반론과 전체 scope 목록이 있으나 이 operation은 요구 scope가 빈 배열이다. 특정 역할을 정할 수 없다.
+26	manual_review_required	provider 네트워크와 가격 속성은 조직 소유·공개 허용 조건을 명시하지 않는다.
+27	role_required	/admin/users 경로가 관리자 기능 범위를 직접 나타낸다. 사용자 응답 필드는 개인 소유 조건의 증명이 아니다.
+28	owner_match	Precondition에 user has to be the creator of the upload channel이 명시돼 있다. 관리자 우회는 없다.
+29	manual_review_required	캐릭터 일정 scope와 event owner 필드가 있으나 일정 참여자와 이벤트 소유자의 접근을 구분할 근거가 없다.
+30	manual_review_required	user_id 필터와 키 소유 필드는 있으나 본인 키만 열람 가능한지 관리자도 가능한지 설명이 없다.
+31	manual_review_required	user_id 조회 필터는 접근 제한의 증명이 아니다. 자동화 실행 목록의 정책이 없다.
+32	manual_review_required	사용자 scores scope가 있으나 sharingKey·collaborators ACL이 함께 있고 원본 fork 허용 조건이 없다. education 언급은 필수 구독 조건이 아니다.
+33	manual_review_required	Sudo 인증 대안의 admin 요구를 일반 hook 조회 요구로 전용할 수 없다. repo 소유·공유 권한은 불명이다.
+34	manual_review_required	Sudo 외 여러 인증 대안이 있다. 조직 hook 수정의 실제 역할·조직 일치 조건은 명시되지 않았다.
+35	manual_review_required	Manage your buyer account는 계정 범위를 지지하지만 개인 소유와 광고 조직 계정이 구분되지 않는다. 기능 scope는 역할이 아니다.
+36	manual_review_required	계정 수정과 owner 후보만 있다. 개인 소유 조건인지 회사 관리자 권한인지 알 수 없다.
+37	manual_review_required	managers는 생성 대상의 이름일 수 있다. 요청자의 관리자 역할 요구로 읽을 수 없다.
+38	manual_review_required	customer·company는 예약의 관계 정보다. 손님 본인·호텔 직원·조직 중 허용 주체가 명시되지 않았다.
+39	manual_review_required	보고서 조회 설명과 planningLevelId만 있어 공개 통계·조직 내부 보고서 여부를 판단할 수 없다.
+40	manual_review_required	송금 account_id는 금융 계좌 관계다. bearer만으로 개인 소유 또는 조직 일치를 결정할 수 없다.
+41	manual_review_required	계좌번호 수정과 account_id는 대상 식별이다. 요청자 접근 조건이 없다.
+42	manual_review_required	user·org·permissions가 응답에 있지만 authorization 활성화 변경의 허용 주체는 없다.
+43	manual_review_required	조직 경로와 READ:PRODUCT는 데이터 범위·기능 권한이다. 요청자와 조직 일치가 접근 조건인지 명시되지 않았다.
+44	manual_review_required	IF_MATCH는 동시성 조건이다. 조직 경로·WRITE:PRODUCT만으로 tenant나 role 조건을 확정할 수 없다.
+45	manual_review_required	인증 흐름 수정이라는 관리 성격만으로 관리자 역할을 발명하지 않는다. access_token 외 정책이 없다.
+46	manual_review_required	tier2와 CompanyName만으로 유료 등급 또는 회사 일치 조건을 도출할 수 없다.
+47	owner_match	이 operation이 요구하는 rides.read 설명이 user's current and past rides로 범위를 제한한다. 결제 완료는 영수증 가용 상태다.
+48	manual_review_required	사용자가 작성한 글 목록은 소유 관계 설명이지만 요청자가 그 사용자여야 하는지 또는 공개 글만인지 없다.
+49	owner_match	current user가 저장한 애플리케이션을 조회한다는 설명과 user_id가 같은 주체 범위를 지지한다.
+50	manual_review_required	GPS 지명은 공개 참조 데이터 후보지만 API 키 요구가 있어 익명 허용과의 기준 경계가 남는다.
+51	manual_review_required	projectId와 응답 Project는 프로젝트 관계일 뿐 요청자의 조직 일치나 역할 요구를 증명하지 않는다.
+52	manual_review_required	sessions 또는 users 기능 permission은 명시됐지만 특정 역할은 없다. 선택적 role impersonation의 root 요구를 전체 요청에 적용할 수 없다.
+53	manual_review_required	Account에 holding을 추가한다는 설명만 있다. 금융 계좌를 개인 소유자·테넌트와 동일시할 수 없다.
+54	manual_review_required	provider 필드는 네트워크 제공업체 정보다. bearer 외 조회 인가 조건이 없다.
+55	manual_review_required	account·admin_contact는 공급업체 속성이다. 관리자 전용이라는 요구를 나타내지 않는다.
+56	manual_review_required	기관명·BIC는 참조 데이터지만 JWT가 요구된다. public 기준의 인증된 참조 데이터 경계에 해당한다.
+57	manual_review_required	송금 제출은 채권자·채무자 계좌를 포함하나 호출자와 계좌의 소유 관계 조건을 설명하지 않는다.
+58	manual_review_required	customerId는 예약 대상 고객이다. clientCredentials 인증 주체가 그 고객이라는 근거가 없다.
+59	manual_review_required	BK·RS 상태와 날짜는 취소 가능 상태 조건이다. 고객 본인·직원 권한 조건은 명시되지 않았다.
+60	manual_review_required	on behalf of a developer는 대행 문맥이며 개인 소유자 일치 조건은 아니다. single·recurring은 앱 판매 모델이지 호출자 구독 요구가 아니다.
+61	public	환전업체 이름·환율 공개 주소·상태를 반환하는 참조 디렉터리 구조가 public 후보를 지지한다. 실제 익명 허용 검증은 없어 약한 제안이다.
+62	manual_review_required	workspace와 member 경로는 대상 범위다. 회원은 커뮤니티 구성원일 수 있으며 호출자 조직 일치나 구독 조건은 없다.
+63	manual_review_required	설명 대부분은 다른 Waterbutler 수정 경로에 관한 내용이다. 현재 GET 파일 메타데이터의 공개·ACL 접근 조건은 없다.
+64	manual_review_required	기관 소속 사용자 목록과 프로필 링크만으로 익명 공개를 확정하지 않는다. 기관 일치 제한도 명시되지 않았다.
+65	role_required	Only project administrators can add contributors가 해당 POST의 역할 요구를 명시한다. 역할의 프로젝트 범위는 별도 집행 문맥이다.
+66	manual_review_required	특정 사용자의 관찰 데이터 종류를 반환하나 본인·의료진·대리인 중 누가 읽는지 명시되지 않았다.
+67	manual_review_required	EmployerId는 대상 고용주 식별자다. 요청자의 고용주 일치 조건과 급여 담당 역할 여부는 없다.
+68	owner_match	developerKey 설명의 persistent API access to just your account가 본인 계정 범위를 명시하며 잔액 조회 문맥과 연결된다.
+69	manual_review_required	응답 is_admin·is_billing_admin은 이벤트 내용이다. 이벤트 조회자의 역할 요구로 해석할 수 없다.
+70	manual_review_required	통합 프로젝트의 이슈 상태 조회다. JWT 외 권한 조건이 없으며 공개 참조 목록이라고 확정할 수 없다.
+71	manual_review_required	target 변경과 site·username 필드는 자산 문맥이다. 요청자 소유·조직·관리 역할 조건은 명시되지 않았다.
+72	manual_review_required	cd:full은 ContentDepot 계정 기능 범위다. customerId가 요청자 개인인지 조직인지 설명하지 않는다.
+73	manual_review_required	isPublic은 파일의 가변 속성이며 해당 attachment GET의 공개 선언이 아니다. 제한된 API 키 권한은 역할 정의가 아니다.
+74	manual_review_required	customerId는 은행 계좌 대상 고객이다. 서비스 API 키 주체와 같은 사람이라는 근거가 없다.
+75	owner_match	/my/orders/selling 경로가 호출자의 판매 주문 범위를 나타내고 write_orders가 해당 행위를 지지한다. 관리자 우회는 없다.
+76	manual_review_required	team:read는 팀 정보를 읽는 기능 권한이다. 요청자가 그 팀 구성원이어야 한다는 관계 조건은 명시되지 않았다.
+77	manual_review_required	userId는 annotation 작성자일 수 있다. public_api_read 이름은 익명 공개도 특정 역할도 의미하지 않는다.
+78	manual_review_required	public number는 listingId의 성격이지 API 공개 선언이 아니다. basic 인증과 별도의 조회 허용 조건은 불명이다.
+79	manual_review_required	CompanyMonitor 요구가 OAuth 대안에 있지만 Pin 대안에는 없다. 모든 호출에 같은 역할이 필수인지 확정할 수 없다.
+80	manual_review_required	sharing 속성이 있으므로 playlist 공개·비공개 차이가 가능하다. user_id와 OAuth만으로 소유 전용 또는 public을 확정하지 않는다.
+81	manual_review_required	username 경로는 식단 대상 사용자다. API 키와 템플릿 설명만으로 본인만 조회 가능한지는 불명이다.
+82	owner_match	사용자 inbox 조회가 access_token의 read_inbox를 요구하고 /inbox의 별칭이라는 설명이 사용자 자신의 수신함 범위를 지지한다.
+83	manual_review_required	tenant_id는 법인 객체 속성이다. 요청자 테넌트와의 일치 검사나 역할 요구는 설명되지 않았다.
+84	manual_review_required	account 경로와 external bank account는 연결 관계다. 플랫폼 대행·개인 소유·조직 정책 중 하나를 확정할 수 없다.
+85	manual_review_required	organization_id와 인증 제공자 설정은 소속을 나타내지만 조회자의 조직 일치 조건은 명시되지 않았다.
+86	manual_review_required	organization_id가 응답에 있어도 billing group 수정이 조직 전체 허용인지 역할 제한인지 알 수 없다.
+87	manual_review_required	cancelbabel 이름과 트랜잭션 응답은 행위 추정만 가능하다. GET이라고 공개 읽기로 판단할 수 없다.
+88	manual_review_required	요청에 사용된 account에 속한다는 조건은 명시됐지만 account가 개인 주체인지 조직인지 불명이다. owner와 tenant 경계 보완 대상이다.
+89	manual_review_required	your account 기능 범위는 있지만 advisor 대상과 개인 소유 관계는 없다. plan 필드는 구독 요구의 증명이 아니다.
+90	manual_review_required	activities:delete는 기능 scope다. 역할명이나 객체 소유 조건 없이 role_required로 바꿀 수 없다.
+91	manual_review_required	ownerUser는 관계 필드다. activities:read와 clientCredentials는 요청자가 그 owner여야 함을 명시하지 않는다.
+92	manual_review_required	사이트 확장 목록 조회만 설명한다. 사이트 소유자·조직·역할 정책이 없다.
+93	manual_review_required	백업 실행과 admin_url 응답은 관리자 역할 요구의 근거가 아니다. 사이트 접근 조건이 없다.
+94	manual_review_required	organizations:read는 읽기 권한이며 organizationId는 객체 속성이다. 조직 일치 조건은 없고 서비스명과 scope 도메인도 원천 확인 대상이다.
+95	owner_match	Retrieves the connections for this user가 호출 사용자 범위를 지지한다. 응답 tenantId는 연결 대상이지 모든 결과에 같은 테넌트라는 조건이 아니다.
+96	manual_review_required	고객에게 활성화된 데이터만 반환한다고 명시돼 공개 카탈로그로 단순화할 수 없다. 고객 자격이 구독·계약·조직 중 무엇인지 불명이다.
+97	manual_review_required	enabled datasets만 반환하는 제한이 있으나 활성화 권한 조건이 없다. provider 정보를 곧바로 public으로 확정하지 않는다.
+98	manual_review_required	createdBy는 감사 정보이며 calloutAuth는 발신 호출 인증이다. 현재 조회자의 소유·역할 근거가 아니다.
+99	manual_review_required	CreatedById는 생성자 기록이다. 해당 생성자만 custom object를 읽을 수 있다는 조건은 없다.

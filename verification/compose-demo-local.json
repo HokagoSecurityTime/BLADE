@@ -1,0 +1,36 @@
+{
+  "validation": "local HTTP, mocked classification; not Docker",
+  "results": [
+    {
+      "step": 1,
+      "detail": "POST /generate: 7 PENDING policies"
+    },
+    {
+      "step": 2,
+      "detail": "All 7 policies approved"
+    },
+    {
+      "step": 3,
+      "detail": "user_99 GET: 403; approve hot reload 0.359s <= 0.5s",
+      "elapsed_sec": 0.35900000017136335
+    },
+    {
+      "step": 4,
+      "detail": "user_77 GET: 200"
+    },
+    {
+      "step": 5,
+      "detail": "user_99 DELETE: 403; SQLite confirms order 1042 still belongs to user_77"
+    },
+    {
+      "step": 6,
+      "detail": "GET /detections: both demo requests have BLOCK records",
+      "block_count": 2
+    },
+    {
+      "step": 7,
+      "detail": "Rollback: user_99 GET 200 + OBSERVE/no_policy; 0.391s <= 0.5s",
+      "elapsed_sec": 0.39099999982863665
+    }
+  ]
+}

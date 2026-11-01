@@ -1,0 +1,287 @@
+{
+ "Phase 1 (2026-09-13)": {
+  "per_label": {
+   "public": {
+    "n": 40,
+    "TP": 0,
+    "FN": 0,
+    "FP": 0,
+    "TN": 40,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "role_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "membership_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "tenant_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_or_admin": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "manual_review_required": {
+    "n": 40,
+    "TP": 0,
+    "FN": 20,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   }
+  },
+  "det5": 1.0,
+  "det5_n": "100/100",
+  "det6": 0.8333333333333334,
+  "det6_n": "100/120",
+  "fpr_normal": 0.0,
+  "fpr_normal_n": "0/140",
+  "fpr_sim": 0.0,
+  "fpr_sim_n": "0/160",
+  "proxy_p50": 3.056000015931204,
+  "proxy_p95": 4.741399985505268,
+  "direct_p50": 1.956599997356534,
+  "direct_p95": 3.1423000036738813,
+  "delta": 1.5990999818313867,
+  "errors": 0,
+  "direct_non_200": 0,
+  "run_utc": "2026-09-13T12:40:06.118881+00:00",
+  "attack_sim_sha": "e84571c73319",
+  "restored": true,
+  "classification": "6/7",
+  "n_requests": 280,
+  "n_direct": 280
+ },
+ "재측정 1 (2026-10-31)": {
+  "per_label": {
+   "public": {
+    "n": 40,
+    "TP": 0,
+    "FN": 0,
+    "FP": 0,
+    "TN": 40,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "role_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "membership_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "tenant_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_or_admin": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "manual_review_required": {
+    "n": 40,
+    "TP": 0,
+    "FN": 20,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   }
+  },
+  "det5": 1.0,
+  "det5_n": "100/100",
+  "det6": 0.8333333333333334,
+  "det6_n": "100/120",
+  "fpr_normal": 0.0,
+  "fpr_normal_n": "0/140",
+  "fpr_sim": 0.0,
+  "fpr_sim_n": "0/160",
+  "proxy_p50": 4.079299978911877,
+  "proxy_p95": 6.658599944785237,
+  "direct_p50": 3.0817000661045313,
+  "direct_p95": 4.014400066807866,
+  "delta": 2.644199877977371,
+  "errors": 0,
+  "direct_non_200": 0,
+  "run_utc": "2026-10-30T17:01:13.679100+00:00",
+  "attack_sim_sha": "e84571c73319",
+  "restored": true,
+  "classification": "6/7",
+  "n_requests": 280,
+  "n_direct": 280
+ },
+ "재측정 2 (2026-11-01, 이번)": {
+  "per_label": {
+   "public": {
+    "n": 40,
+    "TP": 0,
+    "FN": 0,
+    "FP": 0,
+    "TN": 40,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "role_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "membership_required": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "tenant_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_match": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "owner_or_admin": {
+    "n": 40,
+    "TP": 20,
+    "FN": 0,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   },
+   "manual_review_required": {
+    "n": 40,
+    "TP": 0,
+    "FN": 20,
+    "FP": 0,
+    "TN": 20,
+    "errors": 0,
+    "normal_n": 20,
+    "attack_n": 20
+   }
+  },
+  "det5": 1.0,
+  "det5_n": "100/100",
+  "det6": 0.8333333333333334,
+  "det6_n": "100/120",
+  "fpr_normal": 0.0,
+  "fpr_normal_n": "0/140",
+  "fpr_sim": 0.0,
+  "fpr_sim_n": "0/160",
+  "proxy_p50": 4.009900148957968,
+  "proxy_p95": 6.0454001650214195,
+  "direct_p50": 2.9011000879108906,
+  "direct_p95": 4.0126999374479055,
+  "delta": 2.032700227573514,
+  "errors": 0,
+  "direct_non_200": 0,
+  "run_utc": "2026-10-31T17:48:10.516694+00:00",
+  "attack_sim_sha": "e84571c73319",
+  "restored": true,
+  "classification": "6/7",
+  "n_requests": 280,
+  "n_direct": 280
+ }
+}

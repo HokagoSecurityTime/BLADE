@@ -1,0 +1,667 @@
+[
+  {
+    "id": "controlled-observatory:observations",
+    "label": "owner_match",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "owner_equal",
+        "value": null,
+        "comparison": "eq",
+        "source_expression": "user['sub'] != item['owner']"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 34,
+          "rejection": "user['sub'] != item['owner']",
+          "allow": {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_a",
+        "load",
+        "observations"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "label": "owner_match",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "owner_equal",
+        "value": null,
+        "comparison": "eq",
+        "source_expression": "user['sub'] != item['owner']"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 34,
+          "rejection": "user['sub'] != item['owner']",
+          "allow": {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_a",
+        "load",
+        "notebooks"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "label": "owner_or_admin",
+    "reason": "explicit_owner_or_admin",
+    "extraction": {
+      "conditions": {
+        "op": "or",
+        "args": [
+          {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          },
+          {
+            "op": "atom",
+            "kind": "role",
+            "value": "admin",
+            "comparison": "eq",
+            "source_expression": "user['role'] != 'admin'"
+          }
+        ]
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 39,
+          "rejection": "user['sub'] != item['owner'] and user['role'] != 'admin'",
+          "allow": {
+            "op": "or",
+            "args": [
+              {
+                "op": "atom",
+                "kind": "owner_equal",
+                "value": null,
+                "comparison": "eq",
+                "source_expression": "user['sub'] != item['owner']"
+              },
+              {
+                "op": "atom",
+                "kind": "role",
+                "value": "admin",
+                "comparison": "eq",
+                "source_expression": "user['role'] != 'admin'"
+              }
+            ]
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "calibrations",
+        "guard_b",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "label": "owner_or_admin",
+    "reason": "explicit_owner_or_admin",
+    "extraction": {
+      "conditions": {
+        "op": "or",
+        "args": [
+          {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          },
+          {
+            "op": "atom",
+            "kind": "role",
+            "value": "admin",
+            "comparison": "eq",
+            "source_expression": "user['role'] != 'admin'"
+          }
+        ]
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 39,
+          "rejection": "user['sub'] != item['owner'] and user['role'] != 'admin'",
+          "allow": {
+            "op": "or",
+            "args": [
+              {
+                "op": "atom",
+                "kind": "owner_equal",
+                "value": null,
+                "comparison": "eq",
+                "source_expression": "user['sub'] != item['owner']"
+              },
+              {
+                "op": "atom",
+                "kind": "role",
+                "value": "admin",
+                "comparison": "eq",
+                "source_expression": "user['role'] != 'admin'"
+              }
+            ]
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "captures",
+        "guard_b",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "label": "tenant_match",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "tenant_equal",
+        "value": null,
+        "comparison": "eq",
+        "source_expression": "user['tenant'] != item['tenant']"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 44,
+          "rejection": "user['tenant'] != item['tenant']",
+          "allow": {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "allocations",
+        "guard_c",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "label": "tenant_match",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "tenant_equal",
+        "value": null,
+        "comparison": "eq",
+        "source_expression": "user['tenant'] != item['tenant']"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 44,
+          "rejection": "user['tenant'] != item['tenant']",
+          "allow": {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_c",
+        "inventories",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "label": "role_required",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "role",
+        "value": "operator",
+        "comparison": "eq",
+        "source_expression": "user['role'] != 'operator'"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 49,
+          "rejection": "user['role'] != 'operator'",
+          "allow": {
+            "op": "atom",
+            "kind": "role",
+            "value": "operator",
+            "comparison": "eq",
+            "source_expression": "user['role'] != 'operator'"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_d",
+        "load",
+        "queues"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "label": "role_required",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "role",
+        "value": "operator",
+        "comparison": "eq",
+        "source_expression": "user['role'] != 'operator'"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 49,
+          "rejection": "user['role'] != 'operator'",
+          "allow": {
+            "op": "atom",
+            "kind": "role",
+            "value": "operator",
+            "comparison": "eq",
+            "source_expression": "user['role'] != 'operator'"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_d",
+        "load",
+        "relays"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "label": "membership_required",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "subscription",
+        "value": "plus",
+        "comparison": "eq",
+        "source_expression": "user['plan'] != 'plus'"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 54,
+          "rejection": "user['plan'] != 'plus'",
+          "allow": {
+            "op": "atom",
+            "kind": "subscription",
+            "value": "plus",
+            "comparison": "eq",
+            "source_expression": "user['plan'] != 'plus'"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_e",
+        "load",
+        "spectra"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "label": "membership_required",
+    "reason": "single_condition",
+    "extraction": {
+      "conditions": {
+        "op": "atom",
+        "kind": "subscription",
+        "value": "plus",
+        "comparison": "eq",
+        "source_expression": "user['plan'] != 'plus'"
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 54,
+          "rejection": "user['plan'] != 'plus'",
+          "allow": {
+            "op": "atom",
+            "kind": "subscription",
+            "value": "plus",
+            "comparison": "eq",
+            "source_expression": "user['plan'] != 'plus'"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "forecasts",
+        "guard_e",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "label": "public",
+    "reason": "explicit_anonymous_evidence",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [],
+      "functions": [
+        "catalog",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "label": "public",
+    "reason": "explicit_anonymous_evidence",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [],
+      "functions": [
+        "bulletins",
+        "load"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "label": "manual_review_required",
+    "reason": "compound_or_unrepresentable_condition",
+    "extraction": {
+      "conditions": {
+        "op": "and",
+        "args": [
+          {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          },
+          {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          }
+        ]
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 34,
+          "rejection": "user['sub'] != item['owner']",
+          "allow": {
+            "op": "atom",
+            "kind": "owner_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['sub'] != item['owner']"
+          }
+        },
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 44,
+          "rejection": "user['tenant'] != item['tenant']",
+          "allow": {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_a",
+        "guard_c",
+        "load",
+        "transfers"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "label": "manual_review_required",
+    "reason": "compound_or_unrepresentable_condition",
+    "extraction": {
+      "conditions": {
+        "op": "and",
+        "args": [
+          {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          },
+          {
+            "op": "atom",
+            "kind": "subscription",
+            "value": "plus",
+            "comparison": "eq",
+            "source_expression": "user['plan'] != 'plus'"
+          }
+        ]
+      },
+      "authentication": true,
+      "evidence": [
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 44,
+          "rejection": "user['tenant'] != item['tenant']",
+          "allow": {
+            "op": "atom",
+            "kind": "tenant_equal",
+            "value": null,
+            "comparison": "eq",
+            "source_expression": "user['tenant'] != item['tenant']"
+          }
+        },
+        {
+          "path": "training/experiments/paired_policy_fixture.py",
+          "sha256": "945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f",
+          "line": 54,
+          "rejection": "user['plan'] != 'plus'",
+          "allow": {
+            "op": "atom",
+            "kind": "subscription",
+            "value": "plus",
+            "comparison": "eq",
+            "source_expression": "user['plan'] != 'plus'"
+          }
+        }
+      ],
+      "issues": [],
+      "functions": [
+        "actor",
+        "guard_c",
+        "guard_e",
+        "load",
+        "reservations"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "realworld-django:GET:/articles/{slug}",
+    "label": "manual_review_required",
+    "reason": "unsupported_or_incomplete_code",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "handler_unresolved"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "realworld-django:PUT:/articles/{slug}",
+    "label": "manual_review_required",
+    "reason": "unsupported_or_incomplete_code",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "handler_unresolved"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "realworld-django:DELETE:/articles/{slug}/comments/{id}",
+    "label": "manual_review_required",
+    "reason": "unsupported_or_incomplete_code",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "handler_unresolved"
+      ]
+    },
+    "elapsed_ms": 0
+  },
+  {
+    "id": "realworld-django:GET:/tags",
+    "label": "manual_review_required",
+    "reason": "unsupported_or_incomplete_code",
+    "extraction": {
+      "conditions": null,
+      "authentication": false,
+      "evidence": [],
+      "issues": [
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "non_top_level_or_incomplete_excerpt",
+        "handler_unresolved"
+      ]
+    },
+    "elapsed_ms": 0
+  }
+]

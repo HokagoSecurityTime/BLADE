@@ -1,0 +1,20 @@
+[
+  {
+    "name": "email-validator",
+    "version": "2.3.0",
+    "path": "email_validator-2.3.0-py3-none-any.whl",
+    "sha256": "80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4"
+  },
+  {
+    "name": "dnspython",
+    "version": "2.9.0",
+    "path": "dnspython-2.9.0-py3-none-any.whl",
+    "sha256": "9a4aedb833c3c1b49214d04d44d3032ab7a9135f7c1d29a549b4ff78fd82fda9"
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "path": "idna-3.20-py3-none-any.whl",
+    "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "services": {
+    "quill_blog": {
+      "endpoints": 14,
+      "schema_paths": 14,
+      "framework_export": true
+    },
+    "orbit_tickets": {
+      "endpoints": 14,
+      "schema_paths": 14,
+      "framework_export": true
+    },
+    "folio_wiki": {
+      "endpoints": 14,
+      "schema_paths": 14,
+      "framework_export": true
+    },
+    "copper_wallet": {
+      "endpoints": 14,
+      "schema_paths": 14,
+      "framework_export": true
+    },
+    "campus_records": {
+      "endpoints": 14,
+      "schema_paths": 14,
+      "framework_export": true
+    },
+    "beacon_iot": {
+      "endpoints": 14,
+      "schema_paths": 15,
+      "framework_export": true
+    }
+  },
+  "checks": 336,
+  "failures": []
+}

@@ -1,0 +1,70 @@
+{
+  "original": {
+    "n": 31,
+    "correct": 4,
+    "labels": {
+      "manual_review_required": 13,
+      "owner_match": 3,
+      "membership_required": 6,
+      "role_required": 8,
+      "public": 1
+    },
+    "categories": {
+      "previously_correct": {
+        "n": 3,
+        "correct": 3
+      },
+      "규칙·라벨 기준 충돌": {
+        "n": 7,
+        "correct": 0
+      },
+      "모델 판단 오류": {
+        "n": 9,
+        "correct": 1
+      },
+      "사람 라벨 재확인": {
+        "n": 2,
+        "correct": 0
+      },
+      "입력 근거 부족": {
+        "n": 10,
+        "correct": 0
+      }
+    },
+    "evidence_invalid": 0
+  },
+  "supplemented": {
+    "n": 31,
+    "correct": 3,
+    "labels": {
+      "manual_review_required": 9,
+      "owner_match": 2,
+      "owner_or_admin": 1,
+      "role_required": 11,
+      "membership_required": 8
+    },
+    "categories": {
+      "previously_correct": {
+        "n": 3,
+        "correct": 2
+      },
+      "규칙·라벨 기준 충돌": {
+        "n": 7,
+        "correct": 0
+      },
+      "모델 판단 오류": {
+        "n": 9,
+        "correct": 0
+      },
+      "사람 라벨 재확인": {
+        "n": 2,
+        "correct": 0
+      },
+      "입력 근거 부족": {
+        "n": 10,
+        "correct": 1
+      }
+    },
+    "evidence_invalid": 0
+  }
+}

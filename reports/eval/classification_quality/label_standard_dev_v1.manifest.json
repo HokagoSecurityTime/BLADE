@@ -1,0 +1,14 @@
+{
+  "preserved_sha256": {
+    "reports\\eval\\classification_quality\\review_decisions.json": "cbbe7d232e08d3c47725920a1ddd106e3341811e7edfc1281f8844e2233a5749",
+    "reports\\eval\\classification_quality\\label_decisions.md": "b1428e1eb4fa381453fa664652d4cc1c4471347901ef5a973d92fd50477082be",
+    "AGENTS.md": "1e7c3ed445c01ec358ebea5d690903ff93e68ed085b40e17408d06ee47ce284c",
+    "datasets\\blade\\processed\\test.jsonl": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+    "training\\data\\human_corrections_v5.jsonl": "4242e6da18f51ee513a40182cc39c138d747cf01b6c66d25ea73f90dc9c5f3bf"
+  },
+  "standard_sha256": "f721522f1cbdc2aa8aa13cb39e3980a06270b7424db187f8ae0af098fc8c0125",
+  "records": 9,
+  "confirmed": 3,
+  "conditional": 5,
+  "pending_get": 1
+}

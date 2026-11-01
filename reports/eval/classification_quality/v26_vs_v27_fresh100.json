@@ -1,0 +1,88 @@
+{
+  "records": 100,
+  "changed": 59,
+  "v26": {
+    "tenant_match": 5,
+    "role_required": 20,
+    "owner_match": 24,
+    "manual_review_required": 37,
+    "public": 3,
+    "membership_required": 10,
+    "owner_or_admin": 1
+  },
+  "v27": {
+    "role_required": 57,
+    "manual_review_required": 21,
+    "membership_required": 3,
+    "public": 16,
+    "owner_match": 2,
+    "tenant_match": 1
+  },
+  "transitions": {
+    "public": {
+      "public": 0,
+      "role_required": 2,
+      "membership_required": 1,
+      "tenant_match": 0,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 0
+    },
+    "role_required": {
+      "public": 0,
+      "role_required": 19,
+      "membership_required": 0,
+      "tenant_match": 0,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 1
+    },
+    "membership_required": {
+      "public": 3,
+      "role_required": 6,
+      "membership_required": 0,
+      "tenant_match": 1,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 0
+    },
+    "tenant_match": {
+      "public": 0,
+      "role_required": 5,
+      "membership_required": 0,
+      "tenant_match": 0,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 0
+    },
+    "owner_match": {
+      "public": 1,
+      "role_required": 21,
+      "membership_required": 0,
+      "tenant_match": 0,
+      "owner_match": 2,
+      "owner_or_admin": 0,
+      "manual_review_required": 0
+    },
+    "owner_or_admin": {
+      "public": 0,
+      "role_required": 1,
+      "membership_required": 0,
+      "tenant_match": 0,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 0
+    },
+    "manual_review_required": {
+      "public": 12,
+      "role_required": 3,
+      "membership_required": 2,
+      "tenant_match": 0,
+      "owner_match": 0,
+      "owner_or_admin": 0,
+      "manual_review_required": 20
+    }
+  },
+  "accuracy": null,
+  "human_review_pending": true
+}

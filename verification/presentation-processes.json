@@ -1,0 +1,39 @@
+{
+  "demo_backend": {
+    "pid": 5604,
+    "command": [
+      "C:\\BLADE\\.python\\python.exe",
+      "-m",
+      "uvicorn",
+      "demo_backend.main:app",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "9000"
+    ],
+    "log": "C:\\BLADE\\verification\\logs\\demo_backend.log"
+  },
+  "admin_api": {
+    "pid": 13024,
+    "command": [
+      "C:\\BLADE\\.python\\python.exe",
+      "-m",
+      "uvicorn",
+      "admin_api.main:app",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8100"
+    ],
+    "log": "C:\\BLADE\\verification\\logs\\admin_api.log"
+  },
+  "proxy": {
+    "pid": 7840,
+    "command": [
+      "C:\\BLADE\\.python\\python.exe",
+      "-m",
+      "proxy.server"
+    ],
+    "log": "C:\\BLADE\\verification\\logs\\proxy.log"
+  }
+}

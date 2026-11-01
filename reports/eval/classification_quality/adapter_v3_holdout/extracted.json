@@ -1,0 +1,96 @@
+{
+  "me": {
+    "status": "unresolved",
+    "necessary_conditions": [],
+    "evidence": [],
+    "unresolved_dependencies": [
+      {
+        "dependency": "get_current_active_user",
+        "reason": "unresolved definition"
+      }
+    ],
+    "complete_context": false,
+    "auto_apply_allowed": false,
+    "limitation": "Only proven necessary dependency guards; ORM filters and identity are candidate evidence, not complete policy."
+  },
+  "update_me": {
+    "status": "unresolved",
+    "necessary_conditions": [],
+    "evidence": [],
+    "unresolved_dependencies": [
+      {
+        "dependency": "get_current_active_user",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_manager",
+        "reason": "unresolved definition"
+      }
+    ],
+    "complete_context": false,
+    "auto_apply_allowed": false,
+    "limitation": "Only proven necessary dependency guards; ORM filters and identity are candidate evidence, not complete policy."
+  },
+  "get_user": {
+    "status": "unresolved",
+    "necessary_conditions": [],
+    "evidence": [],
+    "unresolved_dependencies": [
+      {
+        "dependency": "get_current_superuser",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_or_404",
+        "reason": "unresolved definition"
+      }
+    ],
+    "complete_context": false,
+    "auto_apply_allowed": false,
+    "limitation": "Only proven necessary dependency guards; ORM filters and identity are candidate evidence, not complete policy."
+  },
+  "update_user": {
+    "status": "unresolved",
+    "necessary_conditions": [],
+    "evidence": [],
+    "unresolved_dependencies": [
+      {
+        "dependency": "get_current_superuser",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_manager",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_or_404",
+        "reason": "unresolved definition"
+      }
+    ],
+    "complete_context": false,
+    "auto_apply_allowed": false,
+    "limitation": "Only proven necessary dependency guards; ORM filters and identity are candidate evidence, not complete policy."
+  },
+  "delete_user": {
+    "status": "unresolved",
+    "necessary_conditions": [],
+    "evidence": [],
+    "unresolved_dependencies": [
+      {
+        "dependency": "get_current_superuser",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_manager",
+        "reason": "unresolved definition"
+      },
+      {
+        "dependency": "get_user_or_404",
+        "reason": "unresolved definition"
+      }
+    ],
+    "complete_context": false,
+    "auto_apply_allowed": false,
+    "limitation": "Only proven necessary dependency guards; ORM filters and identity are candidate evidence, not complete policy."
+  }
+}

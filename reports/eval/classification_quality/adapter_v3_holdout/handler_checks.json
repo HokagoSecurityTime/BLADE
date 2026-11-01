@@ -1,0 +1,54 @@
+{
+  "checks": [
+    {
+      "require_superuser": false,
+      "actor_superuser": false,
+      "active": false,
+      "status": 401
+    },
+    {
+      "require_superuser": false,
+      "actor_superuser": false,
+      "active": true,
+      "status": 200
+    },
+    {
+      "require_superuser": false,
+      "actor_superuser": true,
+      "active": false,
+      "status": 401
+    },
+    {
+      "require_superuser": false,
+      "actor_superuser": true,
+      "active": true,
+      "status": 200
+    },
+    {
+      "require_superuser": true,
+      "actor_superuser": false,
+      "active": false,
+      "status": 401
+    },
+    {
+      "require_superuser": true,
+      "actor_superuser": false,
+      "active": true,
+      "status": 403
+    },
+    {
+      "require_superuser": true,
+      "actor_superuser": true,
+      "active": false,
+      "status": 401
+    },
+    {
+      "require_superuser": true,
+      "actor_superuser": true,
+      "active": true,
+      "status": 200
+    }
+  ],
+  "passed": 8,
+  "scope": "original _authenticate body, strategy/identity doubles; no deployed integration"
+}

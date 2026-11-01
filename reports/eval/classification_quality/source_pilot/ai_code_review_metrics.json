@@ -1,0 +1,20 @@
+{
+  "26": {
+    "supported_n": 12,
+    "supported_agreement": 0,
+    "comparable_n": 40,
+    "comparable_agreement": 24
+  },
+  "27": {
+    "supported_n": 12,
+    "supported_agreement": 9,
+    "comparable_n": 40,
+    "comparable_agreement": 18
+  },
+  "28": {
+    "supported_n": 12,
+    "supported_agreement": 11,
+    "comparable_n": 40,
+    "comparable_agreement": 21
+  }
+}

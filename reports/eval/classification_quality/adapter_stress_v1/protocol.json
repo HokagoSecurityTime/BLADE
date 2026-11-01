@@ -1,0 +1,17 @@
+{
+  "adapter_sha256": "cede82d5b47aa67da10cffc3b0b6e67796ce423d6d4525d312f284bd9bcdfd94",
+  "cases": {
+    "owner_or_admin": "def access(current_user, item):\n    if not current_user.is_superuser and item.owner_id != current_user.id:\n        raise Denied(status_code=403)\n    return item\n",
+    "owner_and_admin": "def access(current_user, item):\n    if not current_user.is_superuser or item.owner_id != current_user.id:\n        raise Denied(status_code=403)\n    return item\n",
+    "owner_not_admin": "def access(current_user, item):\n    if current_user.is_superuser or item.owner_id != current_user.id:\n        raise Denied(status_code=403)\n    return item\n",
+    "admin_early_return": "def access(current_user, item):\n    if current_user.is_superuser:\n        return item\n    if item.owner_id != current_user.id:\n        raise Denied(status_code=403)\n    return item\n",
+    "masked_404": "def access(current_user, item):\n    if item.owner_id != current_user.id:\n        raise Denied(status_code=404)\n    return item\n",
+    "helper_guard": "def access(current_user, item):\n    require_owner(current_user, item)\n    return item\n",
+    "assert_guard": "def access(current_user, item):\n    assert item.owner_id == current_user.id\n    return item\n",
+    "unknown_tenant": "def access(current_user, item):\n    if item.tenant_id != current_user.tenant_id:\n        raise Denied(status_code=403)\n    return item\n",
+    "alias_owner": "def access(current_user, item):\n    caller = current_user\n    if item.owner_id != caller.id:\n        raise Denied(status_code=403)\n    return item\n",
+    "nested_guard": "def access(current_user, item):\n    if not current_user.is_superuser:\n        if item.owner_id != current_user.id:\n            raise Denied(status_code=403)\n    return item\n"
+  },
+  "scope": "synthetic mutation development; no external repository changes",
+  "api_calls": 0
+}

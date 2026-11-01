@@ -1,0 +1,3575 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>v2.9 30건 경계 실험</title><style>body{max-width:1200px;margin:40px auto;padding:20px;font:16px/1.7 system-ui}table{border-collapse:collapse}td,th{border:1px solid #ccd;padding:8px}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin:12px 0}</style><h1>이번 실행의 결론</h1>
+<p><strong>추출 조건식을 단순 추가하는 방식은 이번 개발 표본에서 채택하지 않는다.</strong></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th style="text-align:right">코드만</th>
+<th style="text-align:right">코드 + 추출 조건식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>계약 일치</td>
+<td style="text-align:right">21/30 (70%)</td>
+<td style="text-align:right">15/30 (50%)</td>
+</tr>
+<tr>
+<td>macro-F1</td>
+<td style="text-align:right">0.7905</td>
+<td style="text-align:right">0.6800</td>
+</tr>
+<tr>
+<td>복합 조건 16건을 구체 라벨로 축약</td>
+<td style="text-align:right">7/16</td>
+<td style="text-align:right">13/16</td>
+</tr>
+<tr>
+<td>출력 오류 / 최종 근거 필드 오류</td>
+<td style="text-align:right">0 / 0</td>
+<td style="text-align:right">0 / 0</td>
+</tr>
+</tbody>
+</table>
+<p>조건식 추가로 정답에서 오답으로 바뀐 사례 6건, 오답에서 정답으로 바뀐 사례 0건이다. 그룹 AND 역할을 그룹만으로, 소유자 AND 관리자를 소유자 OR 관리자로 선택한 사례가 포함된다. 추출식은 1,920개 진리표 검사에서 원본 함수·계약과 일치했다. 최종 evidence_invalid=0은 입력 참조 형식 검증일 뿐 조건 의미가 맞다는 뜻이 아니다.</p>
+<p>이번 결과는 템플릿 15개×표현 2종의 합성 개발 표본에서 각 조건 1회 실행한 결과다. 더 넓은 데이터에서 조건식이 항상 해롭다는 결론은 아니다. 코드만 조건 역시 오류 9건이 남아 운영 적용 기준을 충족했다고 볼 수 없다.</p>
+<p>다음 후보는 최종 라벨을 LLM이 선택하는 구조를 유지하면서 <strong>누락된 필수 조건을 탐지해 자동 적용을 차단하는 검증기</strong>를 별도로 평가하는 것이다. 원시 모델 라벨은 보존하고 적용 가능 여부만 구분해야 한다. 이번 실행에서 해당 검증기나 런타임은 변경하지 않았다.</p>
+<p>총 API 응답 61회(기본 60개 예측 + 재요청 1회), 실제 사용량 입력 84,445토큰·출력 3,761토큰. 기존 v2.9 프롬프트·고정 test·학습 데이터는 보존했다. 관련 단위 테스트 9개 통과.</p>
+<h1>v2.9 새 경계 사례 30건: 추출 조건식 효과</h1>
+<p>동일 프롬프트·동일 모델·동일 코드에 추출 허용 조건식만 추가했다. 모델의 최종 라벨을 변경하지 않았다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th style="text-align:right">계약 일치</th>
+<th style="text-align:right">macro-F1</th>
+<th style="text-align:right">복합 정책을 구체 라벨로 축약</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td style="text-align:right">21/30</td>
+<td style="text-align:right">0.7905</td>
+<td style="text-align:right">7/16</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td style="text-align:right">15/30</td>
+<td style="text-align:right">0.6800</td>
+<td style="text-align:right">13/16</td>
+</tr>
+</tbody>
+</table>
+<h2>해석 범위</h2>
+<p>15개 정책 템플릿 × 코드 표현 2종이다. 독립 정책 30개가 아니다. 기존 8건의 파일·ID는 사용하지 않지만 단일 조건 의미는 일부 겹친다. 새 프로젝트 또는 독립 외부 평가셋이 아니다. 동일 제작자가 합성 계약과 구현을 작성했다.</p>
+<p>조건식은 AST의 반환·거부 분기에서 추출하고 별칭 확장과 De Morgan 변환을 수행했다. 30×64=1,920개 조합에서 원본 함수·추출식·별도 계약 논리의 판정을 비교했다. 기존 8건과 달리 복합 조건을 의도적으로 많이 포함하므로 이전 7/8과 직접 점수 비교하지 않는다.</p>
+<p>복합 계약을 구체 라벨로 축약한 건수는 계약 불일치 위험 지표다. 실제 운영에서 권한이 확대됐음을 입증한 수치는 아니다. runtime에는 반영하지 않았다. 양 조건은 seed 42로 섞어 동시성 4로 실행했고 각 1회이며 반복 실행 안정성은 측정하지 않았다. 오류는 보류 정답으로 처리하지 않는다.</p>
+<h2>사례별 비교</h2>
+<table>
+<thead>
+<tr>
+<th>사례</th>
+<th>계약</th>
+<th>코드</th>
+<th>코드+조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boundary-00-0</td>
+<td>membership_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-00-1</td>
+<td>membership_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-01-0</td>
+<td>tenant_match</td>
+<td>tenant_match</td>
+<td>tenant_match</td>
+</tr>
+<tr>
+<td>boundary-01-1</td>
+<td>tenant_match</td>
+<td>tenant_match</td>
+<td>tenant_match</td>
+</tr>
+<tr>
+<td>boundary-02-0</td>
+<td>owner_match</td>
+<td>owner_match</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>boundary-02-1</td>
+<td>owner_match</td>
+<td>owner_match</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>boundary-03-0</td>
+<td>role_required</td>
+<td>role_required</td>
+<td>role_required</td>
+</tr>
+<tr>
+<td>boundary-03-1</td>
+<td>role_required</td>
+<td>role_required</td>
+<td>role_required</td>
+</tr>
+<tr>
+<td>boundary-04-0</td>
+<td>owner_or_admin</td>
+<td>owner_or_admin</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-04-1</td>
+<td>owner_or_admin</td>
+<td>owner_or_admin</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-05-0</td>
+<td>public</td>
+<td>public</td>
+<td>public</td>
+</tr>
+<tr>
+<td>boundary-05-1</td>
+<td>public</td>
+<td>public</td>
+<td>public</td>
+</tr>
+<tr>
+<td>boundary-06-0</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-06-1</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-07-0</td>
+<td>manual_review_required</td>
+<td>owner_match</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>boundary-07-1</td>
+<td>manual_review_required</td>
+<td>owner_match</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>boundary-08-0</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-08-1</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-09-0</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-09-1</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-10-0</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-10-1</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-11-0</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-11-1</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>boundary-12-0</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+</tr>
+<tr>
+<td>boundary-12-1</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+</tr>
+<tr>
+<td>boundary-13-0</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-13-1</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>boundary-14-0</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+</tr>
+<tr>
+<td>boundary-14-1</td>
+<td>manual_review_required</td>
+<td>manual_review_required</td>
+<td>membership_required</td>
+</tr>
+</tbody>
+</table>
+<h2>원본 및 재현</h2>
+<p>contracts.json은 모델에게 전달하지 않은 계약·검사 논리, inputs.jsonl은 두 조건의 실제 입력, 각 폴더의 predictions.jsonl·usage.jsonl은 원시 예측과 사용량이다. raw_responses.jsonl은 API 응답 전체다. manifest에는 모델·프롬프트·입력·계약 해시를 기록했다. 기존 membership 런타임은 그룹 관계를 집행하지 못하므로 새 의미 결과 자동 적용은 금지한다.</p>
+<details><summary>boundary-00-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-00-0&quot;,
+    &quot;target&quot;: &quot;membership_required&quot;,
+    &quot;formula&quot;: &quot;m&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    return m\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-00-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-0/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:48.036635+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1350,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1408
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-00-0&quot;,
+    &quot;elapsed_ms&quot;: 1186.105899978429
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-00-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-0/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자는 해당 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:44.241103+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1379,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 56,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1435
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-00-0&quot;,
+    &quot;elapsed_ms&quot;: 1832.654099969659
+  }
+}</pre></details><details><summary>boundary-00-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-00-1&quot;,
+    &quot;target&quot;: &quot;membership_required&quot;,
+    &quot;formula&quot;: &quot;m&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    if not (m):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-00-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-0/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:59.002608+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1362,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1152
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1420
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-00-1&quot;,
+    &quot;elapsed_ms&quot;: 1629.8406000132672
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-00-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-0/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:43.672436+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1391,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1449
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-00-1&quot;,
+    &quot;elapsed_ms&quot;: 1422.3615999799222
+  }
+}</pre></details><details><summary>boundary-01-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-01-0&quot;,
+    &quot;target&quot;: &quot;tenant_match&quot;,
+    &quot;formula&quot;: &quot;t&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return t\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-01-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-1/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;tenant_match&quot;
+    },
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] 조건이 실제 접근 조건으로 확인됨; 판단: 요청자의 tenant와 대상 자원의 tenant가 같아야 함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:53.827045+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1350,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 62,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1412
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-01-0&quot;,
+    &quot;elapsed_ms&quot;: 1272.4228000151925
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-01-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-1/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;tenant_match&quot;
+    },
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] 조건이 실제 접근 조건으로 명시되어 있으며, 인증이 선행되어야 한다고 설명됨. 판단: 요청자는 대상 자원의 tenant와 일치해야 하므로 tenant_match 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:52.460240+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1377,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 81,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1458
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-01-0&quot;,
+    &quot;elapsed_ms&quot;: 1475.4703000071459
+  }
+}</pre></details><details><summary>boundary-01-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-01-1&quot;,
+    &quot;target&quot;: &quot;tenant_match&quot;,
+    &quot;formula&quot;: &quot;t&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not (t):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-01-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-1/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;tenant_match&quot;
+    },
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] 조건이 실제 접근 조건으로 확인됨; 판단: 요청자의 tenant와 대상 자원의 tenant가 일치해야 함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:44.824367+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1362,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 62,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1424
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-01-1&quot;,
+    &quot;elapsed_ms&quot;: 1151.8729999661446
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-01-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-1/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;tenant_match&quot;
+    },
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] 조건이 실제 접근 조건으로 명시되어 있습니다. 판단: 요청자의 tenant와 대상 자원의 tenant가 일치해야 하므로 tenant_match 라벨을 선택했습니다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:42.249244+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1389,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 72,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1461
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-01-1&quot;,
+    &quot;elapsed_ms&quot;: 1389.5692999940366
+  }
+}</pre></details><details><summary>boundary-02-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-02-0&quot;,
+    &quot;target&quot;: &quot;owner_match&quot;,
+    &quot;formula&quot;: &quot;o&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    return o\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-02-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-2/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 조건이 실제 접근 조건으로 명시되어 있으며, 소유자 본인만 접근할 수 있도록 설정되어 있다. 판단: 소유자 본인만 접근할 수 있는 조건이 명확하므로 owner_match로 선택했다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:46.069859+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1349,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 85,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1434
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-02-0&quot;,
+    &quot;elapsed_ms&quot;: 1246.7870999826118
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-02-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-2/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]; 판단: 요청자가 대상 객체 소유자 본인이어야 하므로 owner_match 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:55.057183+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1375,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 59,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1434
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-02-0&quot;,
+    &quot;elapsed_ms&quot;: 1229.64839998167
+  }
+}</pre></details><details><summary>boundary-02-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-02-1&quot;,
+    &quot;target&quot;: &quot;owner_match&quot;,
+    &quot;formula&quot;: &quot;o&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    if not (o):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-02-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-2/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 조건이 실제 접근 조건으로 명시되어 있으며, 소유자 본인만 접근할 수 있도록 설정되어 있다. 판단: 소유자 본인만 접근 가능하므로 owner_match 라벨을 선택했다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:54.936812+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1361,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 81,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1442
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-02-1&quot;,
+    &quot;elapsed_ms&quot;: 1225.453799997922
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-02-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-2/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 대상 객체의 소유자여야 하므로 owner_match 라벨을 선택함. 제공된 코드에서 actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 조건이 이를 명확히 나타냄.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:51.700453+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1387,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 74,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1461
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-02-1&quot;,
+    &quot;elapsed_ms&quot;: 1283.5682000149973
+  }
+}</pre></details><details><summary>boundary-03-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-03-0&quot;,
+    &quot;target&quot;: &quot;role_required&quot;,
+    &quot;formula&quot;: &quot;r&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    return r\n&quot;,
+    &quot;extracted&quot;: &quot;&#x27;operator&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-03-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-3/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;role_required&quot;
+    },
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 특정 역할(&#x27;operator&#x27;) 보유가 실제 접근 조건으로 명시되어 있음.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:56.020656+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1347,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 47,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1394
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-03-0&quot;,
+    &quot;elapsed_ms&quot;: 1084.2718000058085
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-03-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-3/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;role_required&quot;
+    },
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: &#x27;operator&#x27; in actor[&#x27;roles&#x27;]가 실제 접근 조건을 명시하고 있다; 판단: 특정 역할 보유가 실제 접근 조건이므로 role_required로 선택했다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:42.742636+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1371,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 62,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1433
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-03-0&quot;,
+    &quot;elapsed_ms&quot;: 1192.0255000004545
+  }
+}</pre></details><details><summary>boundary-03-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-03-1&quot;,
+    &quot;target&quot;: &quot;role_required&quot;,
+    &quot;formula&quot;: &quot;r&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    if not (r):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;&#x27;operator&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-03-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-3/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;role_required&quot;
+    },
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 특정 역할(&#x27;operator&#x27;) 보유가 실제 접근 조건이다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:58.684028+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1359,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 43,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1402
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-03-1&quot;,
+    &quot;elapsed_ms&quot;: 1290.323699999135
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-03-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-3/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;role_required&quot;
+    },
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: &#x27;operator&#x27; in actor[&#x27;roles&#x27;]가 실제 접근 조건; 판단: 특정 역할 보유가 실제 접근 조건이므로 role_required 선택.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:54.612206+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1383,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1438
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-03-1&quot;,
+    &quot;elapsed_ms&quot;: 1389.289100014139
+  }
+}</pre></details><details><summary>boundary-04-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-04-0&quot;,
+    &quot;target&quot;: &quot;owner_or_admin&quot;,
+    &quot;formula&quot;: &quot;o or a&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    return o or a\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] or &#x27;admin&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-04-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-4/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 리소스 소유자이거나 관리자여야 하므로 owner_or_admin 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:56.624073+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1364,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1419
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-04-0&quot;,
+    &quot;elapsed_ms&quot;: 1389.2550999880768
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-04-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-4/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 리소스 소유자이거나 관리자여야 하므로 owner_or_admin 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:39.691900+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1399,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1454
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-04-0&quot;,
+    &quot;elapsed_ms&quot;: 1704.3727000127546
+  }
+}</pre></details><details><summary>boundary-04-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-04-1&quot;,
+    &quot;target&quot;: &quot;owner_or_admin&quot;,
+    &quot;formula&quot;: &quot;o or a&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    if not (o or a):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] or &#x27;admin&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-04-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-4/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 리소스 소유자이거나 관리자여야 하므로 owner_or_admin 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:42.407872+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1376,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1431
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-04-1&quot;,
+    &quot;elapsed_ms&quot;: 1168.978200003039
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-04-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-4/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 또는 &#x27;admin&#x27; in actor[&#x27;roles&#x27;] 조건이 실제 접근 허용을 결정한다; 판단: 소유자 또는 관리자 권한이 필요하므로 owner_or_admin 라벨을 선택했다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:50.416459+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1411,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 78,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1489
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-04-1&quot;,
+    &quot;elapsed_ms&quot;: 1469.2791000124998
+  }
+}</pre></details><details><summary>boundary-05-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-05-0&quot;,
+    &quot;target&quot;: &quot;public&quot;,
+    &quot;formula&quot;: &quot;True&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    \&quot;\&quot;\&quot;Anonymous access is explicitly permitted.\&quot;\&quot;\&quot;\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;True&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-05-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-5/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;public&quot;
+    },
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 인증 없이 접근이 허용된다는 명시적 근거가 있다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;explicitly_anonymous&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:46.224491+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1345,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 45,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1390
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-05-0&quot;,
+    &quot;elapsed_ms&quot;: 1150.9743999922648
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-05-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-5/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;public&quot;
+    },
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 인증 없이 접근이 허용되므로 public으로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;explicitly_anonymous&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:59.132289+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1363,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 42,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1405
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-05-0&quot;,
+    &quot;elapsed_ms&quot;: 1336.1689999583177
+  }
+}</pre></details><details><summary>boundary-05-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-05-1&quot;,
+    &quot;target&quot;: &quot;public&quot;,
+    &quot;formula&quot;: &quot;True&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    \&quot;\&quot;\&quot;Anonymous access is explicitly permitted.\&quot;\&quot;\&quot;\n    if not (True):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;True&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-05-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-5/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;public&quot;
+    },
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;description: Anonymous access is explicitly permitted. The access function allows access without additional authorization guards. Therefore, it qualifies as public access.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;explicitly_anonymous&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:39.730974+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1357,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 48,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1405
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-05-1&quot;,
+    &quot;elapsed_ms&quot;: 1718.782200012356
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-05-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-5/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;public&quot;
+    },
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;description: Anonymous access is explicitly permitted. The access function allows access without any additional authorization guards. Therefore, it qualifies as public access.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;explicitly_anonymous&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:47.146573+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1375,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 49,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1424
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-05-1&quot;,
+    &quot;elapsed_ms&quot;: 1050.3034999710508
+  }
+}</pre></details><details><summary>boundary-06-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-06-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and t&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return m and t\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-06-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-6/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:51.461670+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1368,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1426
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-06-0&quot;,
+    &quot;elapsed_ms&quot;: 1093.6647000489756
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-06-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-6/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:52.033276+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1408,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1466
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-06-0&quot;,
+    &quot;elapsed_ms&quot;: 1185.7078000321053
+  }
+}</pre></details><details><summary>boundary-06-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-06-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and t&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not (m and t):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-06-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-6/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자는 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:52.916278+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1380,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1438
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-06-1&quot;,
+    &quot;elapsed_ms&quot;: 1215.7838999992236
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-06-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-6/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:56.011281+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1420,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1478
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-06-1&quot;,
+    &quot;elapsed_ms&quot;: 1399.539400008507
+  }
+}</pre></details><details><summary>boundary-07-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-07-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;o and t&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return o and t\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-07-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-7/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 조건이 실제 소유자 여부를 확인하는 근거; 판단: 요청자가 대상 객체의 소유자여야 하므로 owner_match 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:57.372251+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1367,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 71,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1438
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-07-0&quot;,
+    &quot;elapsed_ms&quot;: 1361.1935000517406
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-07-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-7/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 대상 객체의 소유자여야 하며, 같은 tenant에 속해야 한다는 조건이 명시되어 있다. 이 조건은 owner_match 라벨에 해당한다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:48.267762+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1405,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 68,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1473
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-07-0&quot;,
+    &quot;elapsed_ms&quot;: 1119.8573000147007
+  }
+}</pre></details><details><summary>boundary-07-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-07-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;o and t&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not (o and t):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-07-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-7/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: owner_id와 tenant_id를 비교하여 접근을 결정하는 로직이 명시되어 있다. 판단: 요청자가 대상 객체의 소유자이면서 같은 tenant에 속해야 하므로 owner_match로 선택했다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:57.394097+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1379,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 71,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1450
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-07-1&quot;,
+    &quot;elapsed_ms&quot;: 1373.16960003227
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-07-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-7/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_match&quot;
+    },
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]; 판단: 요청자가 대상 객체 소유자 본인이어야 하며, 같은 tenant에 속해야 하므로 owner_match 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:43.682514+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1417,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 79,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1496
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-07-1&quot;,
+    &quot;elapsed_ms&quot;: 1287.1894999989308
+  }
+}</pre></details><details><summary>boundary-08-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-08-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and r&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    return m and r\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and &#x27;operator&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-08-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-8/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.7,
+    &quot;rationale&quot;: &quot;The access function requires both membership in a group and a specific role (&#x27;operator&#x27;) for authorization, which creates a complex condition that cannot be simplified into one of the fixed labels. The presence of multiple independent conditions (membership and role) leads to ambiguity in determining a single authorization label.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:41.550158+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1365,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 80,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1445
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-08-0&quot;,
+    &quot;elapsed_ms&quot;: 1970.687499968335
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-08-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-8/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자는 해당 요청 대상 그룹의 구성원이어야 하며, 이는 membership_required 조건을 충족한다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:53.222808+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1402,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 62,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1464
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-08-0&quot;,
+    &quot;elapsed_ms&quot;: 1188.8513000449166
+  }
+}</pre></details><details><summary>boundary-08-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-08-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and r&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    if not (m and r):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and &#x27;operator&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-08-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-8/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: memberships에 대한 조건이 명확하지 않음; 판단: 특정 역할과 그룹 구성원 여부가 결합된 조건으로 인해 단일 라벨을 선택할 수 없음&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:57.793258+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1377,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 64,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1441
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-08-1&quot;,
+    &quot;elapsed_ms&quot;: 1258.217099995818
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-08-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-8/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:57.830988+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1414,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1472
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-08-1&quot;,
+    &quot;elapsed_ms&quot;: 1206.6265000030398
+  }
+}</pre></details><details><summary>boundary-09-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-09-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;(o or a) and t&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return (o or a) and t\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] or &#x27;admin&#x27; in actor[&#x27;roles&#x27;]) and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-09-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-9/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] 또는 &#x27;admin&#x27; in actor[&#x27;roles&#x27;]가 조건으로 작용; 판단: 소유자 또는 관리자 권한이 필요하므로 owner_or_admin 선택.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:49.248528+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1384,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 70,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1454
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-09-0&quot;,
+    &quot;elapsed_ms&quot;: 1212.6003000303172
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-09-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-9/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 리소스 소유자이거나 관리자여야 하며, 같은 tenant에 있어야 한다. 이 조건이 명확하게 정의되어 있다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:50.848034+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1432,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 64,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1496
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-09-0&quot;,
+    &quot;elapsed_ms&quot;: 1285.7506000436842
+  }
+}</pre></details><details><summary>boundary-09-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-09-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;(o or a) and t&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not ((o or a) and t):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] or &#x27;admin&#x27; in actor[&#x27;roles&#x27;]) and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-09-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-9/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 조건이 복합적이며, 소유자 또는 관리자와 같은 tenant 조건이 결합되어 있어 단일 라벨로 선택할 수 없음.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:42.394801+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1395,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 62,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1457
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-09-1&quot;,
+    &quot;elapsed_ms&quot;: 1260.1641999790445
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-09-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-9/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 소유자이거나 관리자여야 하며, 같은 tenant에 있어야 한다는 조건이 명시되어 있다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:45.075480+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1443,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1501
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-09-1&quot;,
+    &quot;elapsed_ms&quot;: 2333.014700037893
+  }
+}</pre></details><details><summary>boundary-10-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-10-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m or t&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return m or t\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships or actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-10-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-10/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:40.859849+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1368,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1426
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-10-0&quot;,
+    &quot;elapsed_ms&quot;: 1168.7736000167206
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-10-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-10/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:45.652296+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1408,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1466
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-10-0&quot;,
+    &quot;elapsed_ms&quot;: 1411.2280000117607
+  }
+}</pre></details><details><summary>boundary-10-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-10-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m or t&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not (m or t):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships or actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-10-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-10/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:44.924456+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1380,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1438
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-10-1&quot;,
+    &quot;elapsed_ms&quot;: 1242.5661999732256
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-10-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-10/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships; 판단: 요청자가 해당 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:55.234852+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1420,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 47,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1467
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-10-1&quot;,
+    &quot;elapsed_ms&quot;: 1257.9152999678627
+  }
+}</pre></details><details><summary>boundary-11-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-11-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;o and a&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    return o and a\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] and &#x27;admin&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-11-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-11/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 실제 접근 조건이 명확하지 않으며, 소유자와 관리자 역할의 조합이 필요하나 이를 충족하는 조건이 불분명하다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:47.514162+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1364,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 65,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1429
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-11-0&quot;,
+    &quot;elapsed_ms&quot;: 1444.9545000097714
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-11-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-11/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 대상 객체의 소유자이거나 관리자여야 하므로 owner_or_admin 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:50.984564+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1399,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 54,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1453
+      },
+      {
+        &quot;input_tokens&quot;: 1399,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1454
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-11-0&quot;,
+    &quot;elapsed_ms&quot;: 3389.9590999935754
+  }
+}</pre></details><details><summary>boundary-11-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-11-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;o and a&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    a = &#x27;admin&#x27; in actor[&#x27;roles&#x27;]\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    if not (o and a):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;] and &#x27;admin&#x27; in actor[&#x27;roles&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-11-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-11/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.8,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 소유자와 관리자 역할이 모두 충족되어야 접근이 허용되므로, 단일 라벨로 분류할 수 없음.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:39.579575+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1376,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 61,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1437
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-11-1&quot;,
+    &quot;elapsed_ms&quot;: 1571.7057000147179
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-11-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-11/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;owner_or_admin&quot;
+    },
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 리소스 소유자이거나 관리자여야 하므로 owner_or_admin 라벨을 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:52.553073+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;unresolved&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1411,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 55,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1466
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-11-1&quot;,
+    &quot;elapsed_ms&quot;: 1092.2087999642827
+  }
+}</pre></details><details><summary>boundary-12-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-12-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and o&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    return m and o\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-12-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-12/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.6,
+    &quot;rationale&quot;: &quot;The access function combines two conditions: membership in a group and ownership of the resource. Since both conditions must be satisfied (AND), it cannot be classified under a single fixed label. The presence of both conditions creates ambiguity in determining the appropriate authorization label.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:47.594554+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1367,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 74,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1441
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-12-0&quot;,
+    &quot;elapsed_ms&quot;: 1367.9986000061035
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-12-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-12/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;The access function requires both membership in a group and ownership of the resource for access, which creates a compound condition that cannot be simplified to a single authorization label. The presence of both conditions (membership and ownership) leads to ambiguity in determining a clear authorization pattern.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:39.827335+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1406,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 76,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1482
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-12-0&quot;,
+    &quot;elapsed_ms&quot;: 1817.785500024911
+  }
+}</pre></details><details><summary>boundary-12-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-12-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and o&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    o = actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]\n    if not (m and o):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;id&#x27;] == resource[&#x27;owner_id&#x27;]&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-12-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-12/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: memberships에 대한 조건이 명확하지 않음; 판단: 그룹 구성원 여부와 소유자 여부를 모두 충족해야 하므로 단일 라벨로 선택할 수 없음&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:48.947468+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1379,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 66,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1445
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-12-1&quot;,
+    &quot;elapsed_ms&quot;: 1431.366499979049
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-12-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-12/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: memberships에 대한 조건이 명확하지 않음; 판단: 그룹 구성원 여부와 소유자 여부를 동시에 만족해야 하므로 단일 라벨로 선택할 수 없음&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:41.135445+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1418,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 65,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1483
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-12-1&quot;,
+    &quot;elapsed_ms&quot;: 1403.7097000400536
+  }
+}</pre></details><details><summary>boundary-13-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-13-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;p&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    p = actor[&#x27;subscription&#x27;] == &#x27;premium&#x27;\n    return p\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;subscription&#x27;] == &#x27;premium&#x27;&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-13-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-13/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:50.369042+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1346,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1404
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-13-0&quot;,
+    &quot;elapsed_ms&quot;: 1119.802700006403
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-13-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-13/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: actor[&#x27;subscription&#x27;] == &#x27;premium&#x27; 조건이 실제 접근 조건으로 작용하며, 요청자가 해당 구독 그룹의 구성원이어야 함을 나타냅니다. 판단: 요청자는 &#x27;premium&#x27; 구독을 보유해야 하므로 membership_required로 선택했습니다.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:56.537681+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1370,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 82,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1452
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-13-0&quot;,
+    &quot;elapsed_ms&quot;: 1480.8305999613367
+  }
+}</pre></details><details><summary>boundary-13-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-13-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;p&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: false,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    p = actor[&#x27;subscription&#x27;] == &#x27;premium&#x27;\n    if not (p):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;actor[&#x27;subscription&#x27;] == &#x27;premium&#x27;&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-13-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-13/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:53.976656+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1358,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1416
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-13-1&quot;,
+    &quot;elapsed_ms&quot;: 1060.4782000300474
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-13-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-13/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 요청자는 &#x27;premium&#x27; 구독을 보유해야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:53.710583+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1382,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 49,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1431
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-13-1&quot;,
+    &quot;elapsed_ms&quot;: 1251.3241000124253
+  }
+}</pre></details><details><summary>boundary-14-0</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-14-0&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and t and r&quot;,
+    &quot;variant&quot;: 0,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    return m and t and r\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] and (&#x27;operator&#x27; in actor[&#x27;roles&#x27;])&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-14-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-14/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: memberships에 대한 조건이 명확하지 않음; 판단: 특정 역할과 그룹 구성원 여부가 결합된 조건으로 인해 단일 라벨을 선택할 수 없음&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:49.562228+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1383,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 64,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1447
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-14-0&quot;,
+    &quot;elapsed_ms&quot;: 1294.5878999889828
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-14-0&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-14/0/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 조건이 복합적이며, memberships와 역할, tenant 일치가 모두 필요하므로 단일 라벨로 선택할 수 없음.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:41.238956+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1433,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 0
+        },
+        &quot;output_tokens&quot;: 60,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1493
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-14-0&quot;,
+    &quot;elapsed_ms&quot;: 1410.6427999795415
+  }
+}</pre></details><details><summary>boundary-14-1</summary><pre>{
+  &quot;contract&quot;: {
+    &quot;id&quot;: &quot;boundary-14-1&quot;,
+    &quot;target&quot;: &quot;manual_review_required&quot;,
+    &quot;formula&quot;: &quot;m and t and r&quot;,
+    &quot;variant&quot;: 1,
+    &quot;compound&quot;: true,
+    &quot;source&quot;: &quot;def access(actor, resource, memberships):\n    m = (actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships\n    r = &#x27;operator&#x27; in actor[&#x27;roles&#x27;]\n    t = actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;]\n    if not (m and t and r):\n        return False\n    return True\n&quot;,
+    &quot;extracted&quot;: &quot;(actor[&#x27;id&#x27;], resource[&#x27;group_id&#x27;]) in memberships and actor[&#x27;tenant_id&#x27;] == resource[&#x27;tenant_id&#x27;] and (&#x27;operator&#x27; in actor[&#x27;roles&#x27;])&quot;
+  },
+  &quot;code&quot;: {
+    &quot;id&quot;: &quot;code:boundary-14-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-14/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: true,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;manual_review_required&quot;
+    },
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;confidence&quot;: 0.0,
+    &quot;rationale&quot;: &quot;필드: description; 판단: 조건이 복합적이며, memberships와 roles, tenant_id의 조합이 필요하므로 단일 라벨로 선택할 수 없음.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:46.096532+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1395,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 61,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1456
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-14-1&quot;,
+    &quot;elapsed_ms&quot;: 1171.7735000420362
+  },
+  &quot;code_conditions&quot;: {
+    &quot;id&quot;: &quot;code_conditions:boundary-14-1&quot;,
+    &quot;service&quot;: &quot;boundary-control&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;path&quot;: &quot;/items-14/1/{id}&quot;,
+    &quot;meta&quot;: {
+      &quot;flag_review&quot;: false,
+      &quot;label_source&quot;: &quot;model_api&quot;,
+      &quot;label_error&quot;: false,
+      &quot;low_conf&quot;: false,
+      &quot;evidence_invalid&quot;: false,
+      &quot;invalid_evidence_fields&quot;: [],
+      &quot;evidence_correction_requested&quot;: false,
+      &quot;confidence_label_overridden&quot;: false,
+      &quot;api_original_label&quot;: &quot;membership_required&quot;
+    },
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;confidence&quot;: 0.9,
+    &quot;rationale&quot;: &quot;필드: memberships contains (user_id, group_id) pairs; 판단: 요청자가 해당 요청 대상 그룹의 구성원이어야 하므로 membership_required로 선택함.&quot;,
+    &quot;evidence_fields&quot;: [
+      &quot;description&quot;
+    ],
+    &quot;security_state&quot;: &quot;declared&quot;,
+    &quot;provider&quot;: &quot;openai&quot;,
+    &quot;model_id&quot;: &quot;gpt-4o-mini&quot;,
+    &quot;model_id_returned&quot;: &quot;gpt-4o-mini-2024-07-18&quot;,
+    &quot;prompt_version&quot;: &quot;policy-label-v2.9&quot;,
+    &quot;labeled_at&quot;: &quot;2026-10-21T04:13:46.848609+00:00&quot;,
+    &quot;lookup_status&quot;: &quot;not_applicable&quot;,
+    &quot;training_target_fields&quot;: [
+      &quot;label&quot;,
+      &quot;rationale&quot;
+    ],
+    &quot;usage_attempts&quot;: [
+      {
+        &quot;input_tokens&quot;: 1445,
+        &quot;input_tokens_details&quot;: {
+          &quot;cache_write_tokens&quot;: 0,
+          &quot;cached_tokens&quot;: 1024
+        },
+        &quot;output_tokens&quot;: 58,
+        &quot;output_tokens_details&quot;: {
+          &quot;reasoning_tokens&quot;: 0
+        },
+        &quot;total_tokens&quot;: 1503
+      }
+    ],
+    &quot;case_id&quot;: &quot;boundary-14-1&quot;,
+    &quot;elapsed_ms&quot;: 1198.2333000050858
+  }
+}</pre></details></html>

@@ -1,0 +1,62 @@
+{
+  "records": 50,
+  "services": {
+    "blogapi": 20,
+    "features-service": 10,
+    "user-management": 20
+  },
+  "skipped": [
+    {
+      "service": "features-service",
+      "method": "get",
+      "path": "/products/{productName}/features",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "post",
+      "path": "/products/{productName}/features/{featureName}",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "put",
+      "path": "/products/{productName}/features/{featureName}",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "delete",
+      "path": "/products/{productName}/features/{featureName}",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "delete",
+      "path": "/products/{productName}/configurations/{configurationName}/features/{featureName}",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "get",
+      "path": "/products/{productName}/configurations/{configurationName}/features",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "post",
+      "path": "/products/{productName}/constraints/requires",
+      "reason": "handler_mapping_unresolved"
+    },
+    {
+      "service": "features-service",
+      "method": "post",
+      "path": "/products/{productName}/constraints/excludes",
+      "reason": "handler_mapping_unresolved"
+    }
+  ],
+  "seed": 42,
+  "commit": "915859080da033fc36feae54bab3ad4a7b04e872",
+  "source_execution": false,
+  "frozen_test_used": false
+}

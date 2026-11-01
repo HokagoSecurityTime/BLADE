@@ -1,0 +1,68 @@
+{
+  "counts": {
+    "equivalent": 7,
+    "incorrect": 0,
+    "held": 3
+  },
+  "results": [
+    {
+      "id": "owner_or_admin",
+      "status": "equivalent",
+      "formula": "((False or (True and not (((not admin) and (not owner))))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "owner_and_admin",
+      "status": "equivalent",
+      "formula": "((False or (True and not (((not admin) or (not owner))))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "owner_not_admin",
+      "status": "equivalent",
+      "formula": "((False or (True and not ((admin or (not owner))))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "admin_early_return",
+      "status": "equivalent",
+      "formula": "((True and admin) or (False or ((False or (True and not (admin))) and not ((not owner)))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "masked_404",
+      "status": "equivalent",
+      "formula": "((False or (True and not ((not owner)))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "helper_guard",
+      "status": "equivalent",
+      "formula": "((True and ((False or (True and not ((not owner)))))) or False)",
+      "counterexamples": []
+    },
+    {
+      "id": "assert_guard",
+      "status": "held",
+      "reason": "assert execution mode unverified"
+    },
+    {
+      "id": "unknown_tenant",
+      "status": "held",
+      "reason": "unknown condition: item.tenant_id != current_user.tenant_id"
+    },
+    {
+      "id": "alias_owner",
+      "status": "held",
+      "reason": "unsupported statement: Assign"
+    },
+    {
+      "id": "nested_guard",
+      "status": "equivalent",
+      "formula": "(((False or ((True and (not admin)) and not ((not owner)))) or (True and not ((not admin)))) or False)",
+      "counterexamples": []
+    }
+  ],
+  "api_calls": 0,
+  "adapter_sha256": "0665d25f27b34df4b09089c99a428cf782a2655882a0bff585f59c60291b2c45"
+}

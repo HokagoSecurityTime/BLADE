@@ -1,0 +1,2198 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>v2.8 paired experiment</title><style>body{max-width:1400px;margin:40px auto;padding:24px;font:16px/1.7 system-ui;background:#f4f7fa;color:#172b45}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:white;padding:24px}table{display:block;overflow:auto;border-collapse:collapse;background:white}th,td{padding:10px;border:1px solid #d5dfe9;font-size:13px}h1,h2{margin-top:36px}details{padding:14px;background:white;margin:12px 0}summary{cursor:pointer}</style><h1>v2.8 동일 표본 OAS / OAS+코드 대조</h1>
+<p>외부 프로젝트 정확도 실험은 아직 성립하지 않았다. 아래 점수는 새 합성 대조군 14건만의 계약 대비 결과다. 외부 4건은 근거 미완성으로 채점하지 않았다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th style="text-align:right">정답/14</th>
+<th style="text-align:right">macro-F1</th>
+<th style="text-align:right">보류율</th>
+<th style="text-align:right">평균 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>oas_only</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0.0408</td>
+<td style="text-align:right">14.3%</td>
+<td style="text-align:right">2002</td>
+</tr>
+<tr>
+<td>oas_code</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">0.5333</td>
+<td style="text-align:right">0.0%</td>
+<td style="text-align:right">1654</td>
+</tr>
+</tbody>
+</table>
+<h2>설계와 검증</h2>
+<ul>
+<li>의도된 정책, 구현 검사, 근거 상태를 evidence.jsonl에 분리했다. 미확정 정답은 null이며 manual 정답으로 대체하지 않는다.</li>
+<li>합성 14건: 6종 구체 라벨 각 2건, 복합 조건 보류 2건. 계약은 예측 전에 기록하고 98개 HTTP 허용/거부 검사를 통과해야 API 호출을 시작한다.</li>
+<li>코드 입력은 해당 함수와 직접/간접 호출·Depends의 AST 연결만 포함한다. 외부 DRF 코드는 정확한 메서드와 클래스 설정만 포함하되 프레임워크·serializer 호출 미확보를 기록한다.</li>
+<li>모델·프롬프트 v2.8·표본 순서·OAS 필드는 동일하고 description의 코드 추가만 다르다. 정답·계약·테스트 기대값은 모델에 보내지 않는다.</li>
+<li>자동 생성 OAS를 사용한 새 합성 프로젝트는 기존 합성/test와 별개다. 비슷한 핸들러 쌍이 있어 14개의 독립 정책으로 해석하지 않는다.</li>
+<li>원시 API 응답·usage·개별 소요 시간을 저장한다. 순차 조건 실행, 각 1회이므로 지연 시간의 인과 비교와 확정적 일반화는 하지 않는다.</li>
+</ul>
+<p>OAS-only에는 실제 정책 정보가 의도적으로 생략돼 있다. 따라서 낮은 계약 일치도를 모델 추론 능력만의 실패로 해석하지 않는다. 다만 근거가 없을 때 public으로 추측하는지는 별도로 관찰할 수 있다. 이 실험은 정보를 추가했을 때의 변화이며, 코드가 다른 표현의 동등한 정책 문서보다 우수하다는 실험이 아니다. 합성 계약·구현·테스트는 같은 제작자가 작성했으므로 독립 검증은 아니다.</p>
+<h2>코드가 있어도 남은 불일치</h2>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>계약</th>
+<th>예측</th>
+<th>모델 설명 원문</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>controlled-observatory:calibrations</td>
+<td>owner_or_admin</td>
+<td>owner_match</td>
+<td>요청자는 객체 소유자와 일치해야 하며, 이는 guard_b 함수에서 확인된다. 요청자는 'alice'로 설정된 소유자와 일치해야 하므로 owner_match가 적합하다.</td>
+</tr>
+<tr>
+<td>controlled-observatory:queues</td>
+<td>role_required</td>
+<td>owner_match</td>
+<td>요청자는 'operator' 역할을 가진 사용자만 접근할 수 있으며, 'alice'가 소유한 리소스에 대한 접근을 요구하고 있습니다. 이 조건은 요청자와 리소스 소유자의 일치가 필요함을 지지합니다.</td>
+</tr>
+<tr>
+<td>controlled-observatory:relays</td>
+<td>role_required</td>
+<td>owner_match</td>
+<td>요청자는 'operator' 역할을 가진 사용자만 접근할 수 있으며, 'load' 함수에서 'owner'가 'alice'로 설정된 객체를 반환합니다. 따라서 요청자가 해당 객체의 소유자와 일치해야 접근이 가능합니다.</td>
+</tr>
+<tr>
+<td>controlled-observatory:spectra</td>
+<td>membership_required</td>
+<td>owner_match</td>
+<td>요청자는 특정 아이템의 소유자와 일치해야 하며, 이를 확인하는 로직이 구현되어 있음. 사용자의 플랜이 'plus'일 때만 접근이 허용됨.</td>
+</tr>
+<tr>
+<td>controlled-observatory:transfers</td>
+<td>manual_review_required</td>
+<td>owner_match</td>
+<td>요청자는 객체 소유자와 일치해야 하며, 이를 확인하는 guard_a 함수가 구현되어 있음. 요청의 소유자 조건을 명확히 지지하는 코드가 존재함.</td>
+</tr>
+<tr>
+<td>controlled-observatory:reservations</td>
+<td>manual_review_required</td>
+<td>owner_match</td>
+<td>요청자는 리소스 소유자와 동일한 테넌트에 있어야 하며, 이를 확인하는 guard_c 함수가 구현되어 있음. 또한, 요청자는 'plus' 플랜을 가져야 하며, 이를 확인하는 guard_e 함수도 구현되어 있음. 이 두 조건이 충족되어야 접근이 허용됨.</td>
+</tr>
+</tbody>
+</table>
+<h2>새 외부 소스에서 발견한 문제</h2>
+<p>RealWorld Django 구현과 최신 공통 명세의 버전이 다르다. PUT article와 DELETE comment 핸들러에서 작성자 비교를 확인하지 못했고, 최신 인가 테스트는 타인의 요청에 403을 요구한다. 이는 정적 불일치 후보이며 실제 배포 취약점으로 확정하지 않는다. 공개 조회 2건도 실행 검증 전에는 정답 점수에서 제외했다. 외부 소스에서 tenant·membership·owner_or_admin 등 전체 라벨을 검증한 것은 아니다.</p>
+<h2>라벨별 P/R/F1 (합성만)</h2>
+<table>
+<thead>
+<tr>
+<th>label</th>
+<th>OAS P/R/F1</th>
+<th>코드 P/R/F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>0.167 / 1.000 / 0.286</td>
+<td>1.000 / 1.000 / 1.000</td>
+</tr>
+<tr>
+<td>role_required</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>0.000 / 0.000 / 0.000</td>
+</tr>
+<tr>
+<td>membership_required</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>1.000 / 0.500 / 0.667</td>
+</tr>
+<tr>
+<td>tenant_match</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>1.000 / 1.000 / 1.000</td>
+</tr>
+<tr>
+<td>owner_match</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>0.250 / 1.000 / 0.400</td>
+</tr>
+<tr>
+<td>owner_or_admin</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>1.000 / 0.500 / 0.667</td>
+</tr>
+<tr>
+<td>manual_review_required</td>
+<td>0.000 / 0.000 / 0.000</td>
+<td>0.000 / 0.000 / 0.000</td>
+</tr>
+</tbody>
+</table>
+<h3>oas_only 혼동행렬</h3>
+<p>행은 계약 정답, 열은 예측이다. 합성만 포함한다.</p>
+<table>
+<thead>
+<tr>
+<th>정답 / 예측</th>
+<th style="text-align:right">public</th>
+<th style="text-align:right">role_required</th>
+<th style="text-align:right">membership_required</th>
+<th style="text-align:right">tenant_match</th>
+<th style="text-align:right">owner_match</th>
+<th style="text-align:right">owner_or_admin</th>
+<th style="text-align:right">manual_review_required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>role_required</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>membership_required</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>tenant_match</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>owner_match</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>owner_or_admin</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>manual_review_required</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<h3>oas_code 혼동행렬</h3>
+<p>행은 계약 정답, 열은 예측이다. 합성만 포함한다.</p>
+<table>
+<thead>
+<tr>
+<th>정답 / 예측</th>
+<th style="text-align:right">public</th>
+<th style="text-align:right">role_required</th>
+<th style="text-align:right">membership_required</th>
+<th style="text-align:right">tenant_match</th>
+<th style="text-align:right">owner_match</th>
+<th style="text-align:right">owner_or_admin</th>
+<th style="text-align:right">manual_review_required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>role_required</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>membership_required</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>tenant_match</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>owner_match</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>owner_or_admin</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>manual_review_required</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<h2>모든 사례</h2>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>출처</th>
+<th>채점 정답</th>
+<th>OAS</th>
+<th>코드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>controlled-observatory:observations</td>
+<td>synthetic_control</td>
+<td>owner_match</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:notebooks</td>
+<td>synthetic_control</td>
+<td>owner_match</td>
+<td>manual_review_required</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:calibrations</td>
+<td>synthetic_control</td>
+<td>owner_or_admin</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:captures</td>
+<td>synthetic_control</td>
+<td>owner_or_admin</td>
+<td>public</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>controlled-observatory:allocations</td>
+<td>synthetic_control</td>
+<td>tenant_match</td>
+<td>manual_review_required</td>
+<td>tenant_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:inventories</td>
+<td>synthetic_control</td>
+<td>tenant_match</td>
+<td>public</td>
+<td>tenant_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:queues</td>
+<td>synthetic_control</td>
+<td>role_required</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:relays</td>
+<td>synthetic_control</td>
+<td>role_required</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:spectra</td>
+<td>synthetic_control</td>
+<td>membership_required</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:forecasts</td>
+<td>synthetic_control</td>
+<td>membership_required</td>
+<td>public</td>
+<td>membership_required</td>
+</tr>
+<tr>
+<td>controlled-observatory:catalog</td>
+<td>synthetic_control</td>
+<td>public</td>
+<td>public</td>
+<td>public</td>
+</tr>
+<tr>
+<td>controlled-observatory:bulletins</td>
+<td>synthetic_control</td>
+<td>public</td>
+<td>public</td>
+<td>public</td>
+</tr>
+<tr>
+<td>controlled-observatory:transfers</td>
+<td>synthetic_control</td>
+<td>manual_review_required</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>controlled-observatory:reservations</td>
+<td>synthetic_control</td>
+<td>manual_review_required</td>
+<td>public</td>
+<td>owner_match</td>
+</tr>
+<tr>
+<td>realworld-django:GET:/articles/{slug}</td>
+<td>external_static</td>
+<td>미확정/채점 제외</td>
+<td>public</td>
+<td>public</td>
+</tr>
+<tr>
+<td>realworld-django:PUT:/articles/{slug}</td>
+<td>external_static</td>
+<td>미확정/채점 제외</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>realworld-django:DELETE:/articles/{slug}/comments/{id}</td>
+<td>external_static</td>
+<td>미확정/채점 제외</td>
+<td>manual_review_required</td>
+<td>owner_or_admin</td>
+</tr>
+<tr>
+<td>realworld-django:GET:/tags</td>
+<td>external_static</td>
+<td>미확정/채점 제외</td>
+<td>public</td>
+<td>public</td>
+</tr>
+</tbody>
+</table>
+<h2>남은 작업</h2>
+<p>실제 새 외부 프로젝트에서 여섯 구체 라벨의 명시 정책·호출 연결·실행 테스트가 일치하는 사례를 확보해야 한다. 합성 성능을 외부 성능으로 대체하지 않는다. 이번 결과를 보고 v2.8을 수정하지 않았다.</p>
+<h2>실행량과 재현</h2>
+<pre><code class="language-json">{
+  &quot;oas_only&quot;: {
+    &quot;responses&quot;: 18,
+    &quot;input_tokens&quot;: 51773,
+    &quot;output_tokens&quot;: 1109,
+    &quot;evidence_invalid&quot;: 0,
+    &quot;errors&quot;: 0
+  },
+  &quot;oas_code&quot;: {
+    &quot;responses&quot;: 18,
+    &quot;input_tokens&quot;: 61546,
+    &quot;output_tokens&quot;: 1439,
+    &quot;evidence_invalid&quot;: 0,
+    &quot;errors&quot;: 0
+  }
+}
+</code></pre>
+<p>단가는 확인하지 않아 비용을 추정하지 않았다. 사용량은 API 응답 기록 기준이다.</p>
+<pre><code class="language-powershell">.python/python.exe -X utf8 -m training.experiments.collect_paired_policy
+.python/python.exe -X utf8 -m scripts.eval_classifier --paired-policy prepare
+.python/python.exe -X utf8 -m scripts.eval_classifier --paired-policy run
+.python/python.exe -X utf8 -m pytest tests/test_paired_policy.py tests/test_eval_classifier.py tests/test_eval_context.py -q
+</code></pre>
+<p>정상 완료된 체크포인트는 재실행 시 추가 호출하지 않는다. 입력·프롬프트 해시가 다르면 이어서 실행하지 않는다.</p>
+<h2>분리된 정책·검사·근거 기록</h2><details><summary>controlled-observatory:observations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:observations&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/observations/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;expression&quot;: &quot;authenticated AND subject == object.owner&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;observations&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;observations&quot;,
+        &quot;guard_a&quot;
+      ],
+      [
+        &quot;observations&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;load&quot;,
+      &quot;observations&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 33,
+        &quot;end&quot;: 35,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;33: def guard_a(user, item):\n34:     if user[\&quot;sub\&quot;] != item[\&quot;owner\&quot;]:\n35:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 58,
+        &quot;end&quot;: 62,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;58: @app.get(\&quot;/observations/{item_id}\&quot;)\n59: def observations(item_id: str, user=Depends(actor)):\n60:     item = load(item_id)\n61:     guard_a(user, item)\n62:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;owner_match&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:notebooks</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:notebooks&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/notebooks/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;expression&quot;: &quot;authenticated AND subject == object.owner&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;notebooks&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;notebooks&quot;,
+        &quot;guard_a&quot;
+      ],
+      [
+        &quot;notebooks&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;load&quot;,
+      &quot;notebooks&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 33,
+        &quot;end&quot;: 35,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;33: def guard_a(user, item):\n34:     if user[\&quot;sub\&quot;] != item[\&quot;owner\&quot;]:\n35:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 65,
+        &quot;end&quot;: 69,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;65: @app.get(\&quot;/notebooks/{item_id}\&quot;)\n66: def notebooks(item_id: str, user=Depends(actor)):\n67:     item = load(item_id)\n68:     guard_a(user, item)\n69:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;owner_match&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:calibrations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:calibrations&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/calibrations/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;expression&quot;: &quot;authenticated AND (subject == object.owner OR role == admin)&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;calibrations&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;calibrations&quot;,
+        &quot;guard_b&quot;
+      ],
+      [
+        &quot;calibrations&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;calibrations&quot;,
+      &quot;guard_b&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 38,
+        &quot;end&quot;: 40,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;38: def guard_b(user, item):\n39:     if user[\&quot;sub\&quot;] != item[\&quot;owner\&quot;] and user[\&quot;role\&quot;] != \&quot;admin\&quot;:\n40:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 72,
+        &quot;end&quot;: 76,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;72: @app.get(\&quot;/calibrations/{item_id}\&quot;)\n73: def calibrations(item_id: str, user=Depends(actor)):\n74:     item = load(item_id)\n75:     guard_b(user, item)\n76:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;owner_or_admin&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:captures</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:captures&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/captures/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_or_admin&quot;,
+    &quot;expression&quot;: &quot;authenticated AND (subject == object.owner OR role == admin)&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;captures&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;captures&quot;,
+        &quot;guard_b&quot;
+      ],
+      [
+        &quot;captures&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;captures&quot;,
+      &quot;guard_b&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 38,
+        &quot;end&quot;: 40,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;38: def guard_b(user, item):\n39:     if user[\&quot;sub\&quot;] != item[\&quot;owner\&quot;] and user[\&quot;role\&quot;] != \&quot;admin\&quot;:\n40:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 79,
+        &quot;end&quot;: 83,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;79: @app.get(\&quot;/captures/{item_id}\&quot;)\n80: def captures(item_id: str, user=Depends(actor)):\n81:     item = load(item_id)\n82:     guard_b(user, item)\n83:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;owner_or_admin&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:allocations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:allocations&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/allocations/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;expression&quot;: &quot;authenticated AND actor.tenant == object.tenant&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;allocations&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;allocations&quot;,
+        &quot;guard_c&quot;
+      ],
+      [
+        &quot;allocations&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;allocations&quot;,
+      &quot;guard_c&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 43,
+        &quot;end&quot;: 45,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;43: def guard_c(user, item):\n44:     if user[\&quot;tenant\&quot;] != item[\&quot;tenant\&quot;]:\n45:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 86,
+        &quot;end&quot;: 90,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;86: @app.get(\&quot;/allocations/{item_id}\&quot;)\n87: def allocations(item_id: str, user=Depends(actor)):\n88:     item = load(item_id)\n89:     guard_c(user, item)\n90:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;tenant_match&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:inventories</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:inventories&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/inventories/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;tenant_match&quot;,
+    &quot;expression&quot;: &quot;authenticated AND actor.tenant == object.tenant&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;inventories&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;inventories&quot;,
+        &quot;guard_c&quot;
+      ],
+      [
+        &quot;inventories&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_c&quot;,
+      &quot;inventories&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 43,
+        &quot;end&quot;: 45,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;43: def guard_c(user, item):\n44:     if user[\&quot;tenant\&quot;] != item[\&quot;tenant\&quot;]:\n45:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 93,
+        &quot;end&quot;: 97,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;93: @app.get(\&quot;/inventories/{item_id}\&quot;)\n94: def inventories(item_id: str, user=Depends(actor)):\n95:     item = load(item_id)\n96:     guard_c(user, item)\n97:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;tenant_match&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:queues</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:queues&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/queues/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND role == operator&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;queues&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;queues&quot;,
+        &quot;guard_d&quot;
+      ],
+      [
+        &quot;queues&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_d&quot;,
+      &quot;load&quot;,
+      &quot;queues&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 48,
+        &quot;end&quot;: 50,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;48: def guard_d(user):\n49:     if user[\&quot;role\&quot;] != \&quot;operator\&quot;:\n50:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 100,
+        &quot;end&quot;: 103,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;100: @app.get(\&quot;/queues/{item_id}\&quot;)\n101: def queues(item_id: str, user=Depends(actor)):\n102:     guard_d(user)\n103:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;role_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:relays</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:relays&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/relays/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;role_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND role == operator&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;relays&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;relays&quot;,
+        &quot;guard_d&quot;
+      ],
+      [
+        &quot;relays&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_d&quot;,
+      &quot;load&quot;,
+      &quot;relays&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 48,
+        &quot;end&quot;: 50,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;48: def guard_d(user):\n49:     if user[\&quot;role\&quot;] != \&quot;operator\&quot;:\n50:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 106,
+        &quot;end&quot;: 109,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;106: @app.get(\&quot;/relays/{item_id}\&quot;)\n107: def relays(item_id: str, user=Depends(actor)):\n108:     guard_d(user)\n109:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;role_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:spectra</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:spectra&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/spectra/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND subscription plan == plus&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;spectra&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;spectra&quot;,
+        &quot;guard_e&quot;
+      ],
+      [
+        &quot;spectra&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;,
+      &quot;spectra&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 53,
+        &quot;end&quot;: 55,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;53: def guard_e(user):\n54:     if user[\&quot;plan\&quot;] != \&quot;plus\&quot;:\n55:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 112,
+        &quot;end&quot;: 115,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;112: @app.get(\&quot;/spectra/{item_id}\&quot;)\n113: def spectra(item_id: str, user=Depends(actor)):\n114:     guard_e(user)\n115:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;membership_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:forecasts</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:forecasts&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/forecasts/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;membership_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND subscription plan == plus&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;forecasts&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;forecasts&quot;,
+        &quot;guard_e&quot;
+      ],
+      [
+        &quot;forecasts&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;forecasts&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 53,
+        &quot;end&quot;: 55,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;53: def guard_e(user):\n54:     if user[\&quot;plan\&quot;] != \&quot;plus\&quot;:\n55:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 118,
+        &quot;end&quot;: 121,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;118: @app.get(\&quot;/forecasts/{item_id}\&quot;)\n119: def forecasts(item_id: str, user=Depends(actor)):\n120:     guard_e(user)\n121:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;membership_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:catalog</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:catalog&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/catalog/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;expression&quot;: &quot;anonymous read allowed&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;catalog&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;catalog&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 124,
+        &quot;end&quot;: 127,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;124: @app.get(\&quot;/catalog/{item_id}\&quot;)\n125: def catalog(item_id: str):\n126:     \&quot;\&quot;\&quot;Public reference catalog; no authentication is required.\&quot;\&quot;\&quot;\n127:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;public&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:bulletins</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:bulletins&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/bulletins/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;expression&quot;: &quot;anonymous read allowed&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;bulletins&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;bulletins&quot;,
+      &quot;load&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 130,
+        &quot;end&quot;: 133,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;130: @app.get(\&quot;/bulletins/{item_id}\&quot;)\n131: def bulletins(item_id: str):\n132:     \&quot;\&quot;\&quot;Public reference bulletins; no authentication is required.\&quot;\&quot;\&quot;\n133:     return load(item_id)&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;public&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:transfers</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:transfers&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/transfers/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND owner match AND tenant match; cannot preserve both with one concrete label&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;transfers&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;transfers&quot;,
+        &quot;guard_a&quot;
+      ],
+      [
+        &quot;transfers&quot;,
+        &quot;guard_c&quot;
+      ],
+      [
+        &quot;transfers&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;guard_c&quot;,
+      &quot;load&quot;,
+      &quot;transfers&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 33,
+        &quot;end&quot;: 35,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;33: def guard_a(user, item):\n34:     if user[\&quot;sub\&quot;] != item[\&quot;owner\&quot;]:\n35:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 43,
+        &quot;end&quot;: 45,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;43: def guard_c(user, item):\n44:     if user[\&quot;tenant\&quot;] != item[\&quot;tenant\&quot;]:\n45:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 136,
+        &quot;end&quot;: 141,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;136: @app.get(\&quot;/transfers/{item_id}\&quot;)\n137: def transfers(item_id: str, user=Depends(actor)):\n138:     item = load(item_id)\n139:     guard_a(user, item)\n140:     guard_c(user, item)\n141:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;manual_review_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>controlled-observatory:reservations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:reservations&quot;,
+  &quot;service&quot;: &quot;controlled-observatory&quot;,
+  &quot;origin&quot;: &quot;synthetic_control&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/reservations/{item_id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;manual_review_required&quot;,
+    &quot;expression&quot;: &quot;authenticated AND tenant match AND subscription plus; cannot preserve both with one concrete label&quot;,
+    &quot;provenance&quot;: &quot;author-written contract before predictions&quot;,
+    &quot;ref&quot;: &quot;training/experiments/paired_policy_contract.json&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;call_edges&quot;: [
+      [
+        &quot;reservations&quot;,
+        &quot;actor&quot;
+      ],
+      [
+        &quot;reservations&quot;,
+        &quot;guard_c&quot;
+      ],
+      [
+        &quot;reservations&quot;,
+        &quot;guard_e&quot;
+      ],
+      [
+        &quot;reservations&quot;,
+        &quot;load&quot;
+      ]
+    ],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_c&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;,
+      &quot;reservations&quot;
+    ],
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 6,
+        &quot;end&quot;: 6,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;6: from fastapi import Depends, FastAPI, HTTPException&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 7,
+        &quot;end&quot;: 7,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;7: from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 9,
+        &quot;end&quot;: 9,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;9: app = FastAPI(title=\&quot;Observatory archive\&quot;, version=\&quot;1.0\&quot;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 10,
+        &quot;end&quot;: 10,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;10: bearer = HTTPBearer(auto_error=False)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 11,
+        &quot;end&quot;: 18,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;11: ACTORS = {\n12:     \&quot;alice\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n13:     \&quot;bob\&quot;: {\&quot;sub\&quot;: \&quot;bob\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n14:     \&quot;carol\&quot;: {\&quot;sub\&quot;: \&quot;carol\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n15:     \&quot;dana\&quot;: {\&quot;sub\&quot;: \&quot;dana\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;admin\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n16:     \&quot;erin\&quot;: {\&quot;sub\&quot;: \&quot;erin\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;role\&quot;: \&quot;operator\&quot;, \&quot;plan\&quot;: \&quot;plus\&quot;},\n17:     \&quot;alice_south\&quot;: {\&quot;sub\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;south\&quot;, \&quot;role\&quot;: \&quot;reader\&quot;, \&quot;plan\&quot;: \&quot;basic\&quot;},\n18: }&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 24,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;21: def actor(token: HTTPAuthorizationCredentials | None = Depends(bearer)):\n22:     if token is None or token.credentials not in ACTORS:\n23:         raise HTTPException(401)\n24:     return ACTORS[token.credentials]&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 27,
+        &quot;end&quot;: 30,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;27: def load(item_id: str):\n28:     if item_id != \&quot;sample\&quot;:\n29:         raise HTTPException(404)\n30:     return {\&quot;id\&quot;: item_id, \&quot;owner\&quot;: \&quot;alice\&quot;, \&quot;tenant\&quot;: \&quot;north\&quot;, \&quot;value\&quot;: \&quot;spectrum\&quot;}&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 43,
+        &quot;end&quot;: 45,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;43: def guard_c(user, item):\n44:     if user[\&quot;tenant\&quot;] != item[\&quot;tenant\&quot;]:\n45:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 53,
+        &quot;end&quot;: 55,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;53: def guard_e(user):\n54:     if user[\&quot;plan\&quot;] != \&quot;plus\&quot;:\n55:         raise HTTPException(403)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;start&quot;: 144,
+        &quot;end&quot;: 149,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;code&quot;: &quot;144: @app.get(\&quot;/reservations/{item_id}\&quot;)\n145: def reservations(item_id: str, user=Depends(actor)):\n146:     item = load(item_id)\n147:     guard_c(user, item)\n148:     guard_e(user)\n149:     return item&quot;
+      }
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;resolved_local_fixture&quot;,
+    &quot;policy&quot;: &quot;explicit_fixture_contract&quot;,
+    &quot;tests&quot;: &quot;executed_passed&quot;,
+    &quot;external_validity&quot;: &quot;not_established&quot;
+  },
+  &quot;evaluation_target&quot;: &quot;manual_review_required&quot;,
+  &quot;scoring_eligible&quot;: true
+}</pre></details><details><summary>realworld-django:GET:/articles/{slug}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:GET:/articles/{slug}&quot;,
+  &quot;service&quot;: &quot;realworld-django&quot;,
+  &quot;origin&quot;: &quot;external_static&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/articles/{slug}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;status&quot;: &quot;provisional_cross_revision&quot;,
+    &quot;provenance&quot;: &quot;OAS public text / newer RealWorld errors_authorization.hurl owner-denial assertions&quot;,
+    &quot;ref&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_spec/specs/api/hurl/errors_authorization.hurl&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 19,
+        &quot;end&quot;: 19,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;19:     lookup_field = &#x27;slug&#x27;&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 20,
+        &quot;end&quot;: 20,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;20:     queryset = Article.objects.select_related(&#x27;author&#x27;, &#x27;author__user&#x27;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 21,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;21:     permission_classes = (IsAuthenticatedOrReadOnly,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 22,
+        &quot;end&quot;: 22,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;22:     renderer_classes = (ArticleJSONRenderer,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 23,
+        &quot;end&quot;: 23,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;23:     serializer_class = ArticleSerializer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 71,
+        &quot;end&quot;: 84,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;71:     def retrieve(self, request, slug):\n72:         serializer_context = {&#x27;request&#x27;: request}\n73: \n74:         try:\n75:             serializer_instance = self.queryset.get(slug=slug)\n76:         except Article.DoesNotExist:\n77:             raise NotFound(&#x27;An article with this slug does not exist.&#x27;)\n78: \n79:         serializer = self.serializer_class(\n80:             serializer_instance,\n81:             context=serializer_context\n82:         )\n83: \n84:         return Response(serializer.data, status=status.HTTP_200_OK)&quot;
+      }
+    ],
+    &quot;call_edges&quot;: [],
+    &quot;observation&quot;: &quot;AllowAny / IsAuthenticatedOrReadOnly GET&quot;,
+    &quot;unresolved&quot;: [
+      &quot;DRF framework behavior&quot;,
+      &quot;serializer/model hooks&quot;,
+      &quot;deployment middleware&quot;
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;partial_static&quot;,
+    &quot;policy&quot;: &quot;spec_revision_differs_from_implementation&quot;,
+    &quot;tests&quot;: &quot;upstream_assertions_collected_not_executed&quot;,
+    &quot;alignment&quot;: &quot;static_support_only&quot;
+  },
+  &quot;evaluation_target&quot;: null,
+  &quot;scoring_eligible&quot;: false
+}</pre></details><details><summary>realworld-django:PUT:/articles/{slug}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:PUT:/articles/{slug}&quot;,
+  &quot;service&quot;: &quot;realworld-django&quot;,
+  &quot;origin&quot;: &quot;external_static&quot;,
+  &quot;method&quot;: &quot;PUT&quot;,
+  &quot;path&quot;: &quot;/articles/{slug}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;status&quot;: &quot;provisional_cross_revision&quot;,
+    &quot;provenance&quot;: &quot;OAS public text / newer RealWorld errors_authorization.hurl owner-denial assertions&quot;,
+    &quot;ref&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_spec/specs/api/hurl/errors_authorization.hurl&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 19,
+        &quot;end&quot;: 19,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;19:     lookup_field = &#x27;slug&#x27;&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 20,
+        &quot;end&quot;: 20,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;20:     queryset = Article.objects.select_related(&#x27;author&#x27;, &#x27;author__user&#x27;)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 21,
+        &quot;end&quot;: 21,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;21:     permission_classes = (IsAuthenticatedOrReadOnly,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 22,
+        &quot;end&quot;: 22,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;22:     renderer_classes = (ArticleJSONRenderer,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 23,
+        &quot;end&quot;: 23,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;23:     serializer_class = ArticleSerializer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 87,
+        &quot;end&quot;: 106,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;87:     def update(self, request, slug):\n88:         serializer_context = {&#x27;request&#x27;: request}\n89: \n90:         try:\n91:             serializer_instance = self.queryset.get(slug=slug)\n92:         except Article.DoesNotExist:\n93:             raise NotFound(&#x27;An article with this slug does not exist.&#x27;)\n94:             \n95:         serializer_data = request.data.get(&#x27;article&#x27;, {})\n96: \n97:         serializer = self.serializer_class(\n98:             serializer_instance, \n99:             context=serializer_context,\n100:             data=serializer_data, \n101:             partial=True\n102:         )\n103:         serializer.is_valid(raise_exception=True)\n104:         serializer.save()\n105: \n106:         return Response(serializer.data, status=status.HTTP_200_OK)&quot;
+      }
+    ],
+    &quot;call_edges&quot;: [],
+    &quot;observation&quot;: &quot;IsAuthenticatedOrReadOnly; object comparison not present in captured handler&quot;,
+    &quot;unresolved&quot;: [
+      &quot;DRF framework behavior&quot;,
+      &quot;serializer/model hooks&quot;,
+      &quot;deployment middleware&quot;
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;partial_static&quot;,
+    &quot;policy&quot;: &quot;spec_revision_differs_from_implementation&quot;,
+    &quot;tests&quot;: &quot;upstream_assertions_collected_not_executed&quot;,
+    &quot;alignment&quot;: &quot;potential_conflict&quot;
+  },
+  &quot;evaluation_target&quot;: null,
+  &quot;scoring_eligible&quot;: false
+}</pre></details><details><summary>realworld-django:DELETE:/articles/{slug}/comments/{id}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:DELETE:/articles/{slug}/comments/{id}&quot;,
+  &quot;service&quot;: &quot;realworld-django&quot;,
+  &quot;origin&quot;: &quot;external_static&quot;,
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;path&quot;: &quot;/articles/{slug}/comments/{id}&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;owner_match&quot;,
+    &quot;status&quot;: &quot;provisional_cross_revision&quot;,
+    &quot;provenance&quot;: &quot;OAS public text / newer RealWorld errors_authorization.hurl owner-denial assertions&quot;,
+    &quot;ref&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_spec/specs/api/hurl/errors_authorization.hurl&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 145,
+        &quot;end&quot;: 145,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;145:     lookup_url_kwarg = &#x27;comment_pk&#x27;&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 146,
+        &quot;end&quot;: 146,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;146:     permission_classes = (IsAuthenticatedOrReadOnly,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 147,
+        &quot;end&quot;: 147,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;147:     queryset = Comment.objects.all()&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 149,
+        &quot;end&quot;: 157,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;149:     def destroy(self, request, article_slug=None, comment_pk=None):\n150:         try:\n151:             comment = Comment.objects.get(pk=comment_pk)\n152:         except Comment.DoesNotExist:\n153:             raise NotFound(&#x27;A comment with this ID does not exist.&#x27;)\n154: \n155:         comment.delete()\n156: \n157:         return Response(None, status=status.HTTP_204_NO_CONTENT)&quot;
+      }
+    ],
+    &quot;call_edges&quot;: [],
+    &quot;observation&quot;: &quot;IsAuthenticatedOrReadOnly; object comparison not present in captured handler&quot;,
+    &quot;unresolved&quot;: [
+      &quot;DRF framework behavior&quot;,
+      &quot;serializer/model hooks&quot;,
+      &quot;deployment middleware&quot;
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;partial_static&quot;,
+    &quot;policy&quot;: &quot;spec_revision_differs_from_implementation&quot;,
+    &quot;tests&quot;: &quot;upstream_assertions_collected_not_executed&quot;,
+    &quot;alignment&quot;: &quot;potential_conflict&quot;
+  },
+  &quot;evaluation_target&quot;: null,
+  &quot;scoring_eligible&quot;: false
+}</pre></details><details><summary>realworld-django:GET:/tags</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:GET:/tags&quot;,
+  &quot;service&quot;: &quot;realworld-django&quot;,
+  &quot;origin&quot;: &quot;external_static&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;path&quot;: &quot;/tags&quot;,
+  &quot;intended_policy&quot;: {
+    &quot;label&quot;: &quot;public&quot;,
+    &quot;status&quot;: &quot;provisional_cross_revision&quot;,
+    &quot;provenance&quot;: &quot;OAS public text / newer RealWorld errors_authorization.hurl owner-denial assertions&quot;,
+    &quot;ref&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_spec/specs/api/hurl/errors_authorization.hurl&quot;
+  },
+  &quot;implemented_checks&quot;: {
+    &quot;excerpts&quot;: [
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 197,
+        &quot;end&quot;: 197,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;197:     queryset = Tag.objects.all()&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 198,
+        &quot;end&quot;: 198,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;198:     pagination_class = None&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 199,
+        &quot;end&quot;: 199,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;199:     permission_classes = (AllowAny,)&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 200,
+        &quot;end&quot;: 200,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;200:     serializer_class = TagSerializer&quot;
+      },
+      {
+        &quot;path&quot;: &quot;datasets/blade/raw/paired_policy_v1/realworld_django/conduit/apps/articles/views.py&quot;,
+        &quot;start&quot;: 202,
+        &quot;end&quot;: 208,
+        &quot;sha256&quot;: &quot;925b4352745073771fa14c14ec5617004200fcef2003f7e7e8df5a04e9f083ff&quot;,
+        &quot;code&quot;: &quot;202:     def list(self, request):\n203:         serializer_data = self.get_queryset()\n204:         serializer = self.serializer_class(serializer_data, many=True)\n205: \n206:         return Response({\n207:             &#x27;tags&#x27;: serializer.data\n208:         }, status=status.HTTP_200_OK)&quot;
+      }
+    ],
+    &quot;call_edges&quot;: [],
+    &quot;observation&quot;: &quot;AllowAny / IsAuthenticatedOrReadOnly GET&quot;,
+    &quot;unresolved&quot;: [
+      &quot;DRF framework behavior&quot;,
+      &quot;serializer/model hooks&quot;,
+      &quot;deployment middleware&quot;
+    ]
+  },
+  &quot;evidence_status&quot;: {
+    &quot;code&quot;: &quot;partial_static&quot;,
+    &quot;policy&quot;: &quot;spec_revision_differs_from_implementation&quot;,
+    &quot;tests&quot;: &quot;upstream_assertions_collected_not_executed&quot;,
+    &quot;alignment&quot;: &quot;static_support_only&quot;
+  },
+  &quot;evaluation_target&quot;: null,
+  &quot;scoring_eligible&quot;: false
+}</pre></details></html>

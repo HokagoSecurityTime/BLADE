@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0,
+  "input_sha256": "e75b3096df9a692b2495ac853afd2ea941ddb5d48ac23c17cf7bdcc9875c6358",
+  "prompt_sha256": "f748510fea456603e2b2fbb77f99cff4fa583444968a301a430218b54731b518",
+  "contract_sha256": "f618d037a2a9821e978eb463125396148a8630f9c10bda0593b093a987621673",
+  "version": "2.9"
+}

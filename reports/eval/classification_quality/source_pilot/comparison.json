@@ -1,0 +1,51 @@
+{
+  "metrics": {
+    "26": {
+      "labels": {
+        "manual_review_required": 42,
+        "owner_or_admin": 2,
+        "role_required": 4,
+        "owner_match": 2
+      },
+      "errors": 0,
+      "evidence_invalid": 0,
+      "flag_review": 0,
+      "input_tokens": 1190945,
+      "output_tokens": 3059,
+      "response_count": 51
+    },
+    "27": {
+      "labels": {
+        "public": 14,
+        "role_required": 14,
+        "manual_review_required": 12,
+        "owner_match": 7,
+        "owner_or_admin": 3
+      },
+      "errors": 0,
+      "evidence_invalid": 1,
+      "flag_review": 2,
+      "input_tokens": 990191,
+      "output_tokens": 4802,
+      "response_count": 66
+    },
+    "28": {
+      "labels": {
+        "public": 17,
+        "owner_or_admin": 11,
+        "owner_match": 10,
+        "role_required": 2,
+        "manual_review_required": 10
+      },
+      "errors": 0,
+      "evidence_invalid": 0,
+      "flag_review": 2,
+      "input_tokens": 926138,
+      "output_tokens": 4796,
+      "response_count": 58
+    }
+  },
+  "accuracy": null,
+  "changed_26_27": 34,
+  "changed_27_28": 22
+}

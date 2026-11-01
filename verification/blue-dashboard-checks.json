@@ -1,0 +1,9 @@
+{
+  "build": "passed",
+  "policy_rows": 7,
+  "logs_filter": "passed",
+  "review": "passed",
+  "yaml_open": "passed",
+  "mobile_overflow": false,
+  "page_errors": []
+}

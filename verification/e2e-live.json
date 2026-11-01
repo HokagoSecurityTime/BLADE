@@ -1,0 +1,169 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "direct BOLA remains vulnerable",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "PENDING is not enforced; closed denies uncovered route",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 503,
+      "actual": 503
+    },
+    {
+      "case": "approval propagates without restart",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "public without JWT",
+      "method": "GET",
+      "path": "/public/health",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "owner mismatch",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "missing JWT",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "case": "expired JWT",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 401,
+      "actual": 401
+    },
+    {
+      "case": "manual review passes without JWT",
+      "method": "GET",
+      "path": "/users/user_77",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "reviewed policy now blocks other owner",
+      "method": "GET",
+      "path": "/users/user_77",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "reviewed policy permits owner",
+      "method": "GET",
+      "path": "/users/user_77",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "admin ownership bypass",
+      "method": "GET",
+      "path": "/users/user_77",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "role denies basic user",
+      "method": "GET",
+      "path": "/admin/reports",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "role permits admin",
+      "method": "GET",
+      "path": "/admin/reports",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "tenant matches",
+      "method": "GET",
+      "path": "/orgs/org_1/docs",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "tenant mismatch",
+      "method": "GET",
+      "path": "/orgs/org_1/docs",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "membership denies basic",
+      "method": "GET",
+      "path": "/premium/content",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "membership permits premium",
+      "method": "GET",
+      "path": "/premium/content",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "unauthorized delete blocked",
+      "method": "DELETE",
+      "path": "/orders/1042",
+      "expected": 403,
+      "actual": 403
+    },
+    {
+      "case": "blocked delete preserved row",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "authorized delete",
+      "method": "DELETE",
+      "path": "/orders/2001",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "case": "authorized delete reached backend",
+      "method": "GET",
+      "path": "/orders/2001",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "rollback propagates",
+      "method": "GET",
+      "path": "/orders/1042",
+      "expected": 503,
+      "actual": 503
+    },
+    {
+      "case": "REJECTED cannot be approved",
+      "expected": 409,
+      "actual": 409
+    },
+    {
+      "case": "SQLite and JSONL log equality; PASS/BLOCK/OBSERVE",
+      "count": 22,
+      "passed": true
+    }
+  ]
+}

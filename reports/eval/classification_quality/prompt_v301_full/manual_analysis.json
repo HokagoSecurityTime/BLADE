@@ -1,0 +1,156 @@
+{
+  "manual_records": 1530,
+  "primary_types": [
+    [
+      "객체 ID만 있음",
+      395
+    ],
+    [
+      "요청자-객체 관계 미확인",
+      353
+    ],
+    [
+      "인증만 확인·인가 조건 없음",
+      291
+    ],
+    [
+      "접근 조건 미명시(일반)",
+      137
+    ],
+    [
+      "설명 없음·비어 있음",
+      122
+    ],
+    [
+      "API 키만 요구",
+      109
+    ],
+    [
+      "구독·플랜·등급 조건",
+      40
+    ],
+    [
+      "기타",
+      36
+    ],
+    [
+      "복합 조건(AND)·단일 라벨 불가",
+      26
+    ],
+    [
+      "security·인증 정보 없음",
+      12
+    ],
+    [
+      "역할·권한 조건 불명확",
+      9
+    ]
+  ],
+  "multi_label_type_counts": [
+    [
+      "접근 조건 미명시(일반)",
+      1237
+    ],
+    [
+      "요청자-객체 관계 미확인",
+      1146
+    ],
+    [
+      "객체 ID만 있음",
+      415
+    ],
+    [
+      "인증만 확인·인가 조건 없음",
+      357
+    ],
+    [
+      "API 키만 요구",
+      124
+    ],
+    [
+      "설명 없음·비어 있음",
+      122
+    ],
+    [
+      "구독·플랜·등급 조건",
+      40
+    ],
+    [
+      "복합 조건(AND)·단일 라벨 불가",
+      31
+    ],
+    [
+      "security·인증 정보 없음",
+      13
+    ],
+    [
+      "역할·권한 조건 불명확",
+      11
+    ],
+    [
+      "코드·의도 충돌",
+      1
+    ]
+  ],
+  "security_unknown": {
+    "records": 754,
+    "description_empty": 262,
+    "description_empty_ratio": 0.3475,
+    "description_and_summary_empty": 44,
+    "manual": 729
+  },
+  "security_declared": {
+    "records": 1267,
+    "description_empty": 399
+  },
+  "by_security_state_description": {
+    "declared": {
+      "records": 1267,
+      "description_empty": 399,
+      "manual": 801,
+      "manual_when_description_empty": 301,
+      "manual_when_description_present": 500
+    },
+    "unknown": {
+      "records": 754,
+      "description_empty": 262,
+      "manual": 729,
+      "manual_when_description_empty": 259,
+      "manual_when_description_present": 470
+    },
+    "explicitly_anonymous": {
+      "records": 6,
+      "description_empty": 1,
+      "manual": 0,
+      "manual_when_description_empty": 0,
+      "manual_when_description_present": 0
+    }
+  },
+  "declared_public": {
+    "records": 150,
+    "security_origin": {
+      "global": 86,
+      "operation": 64
+    },
+    "origin_distribution_all_declared": {
+      "operation": 621,
+      "global": 646
+    },
+    "anonymous_alternative": 0,
+    "description_empty": 17,
+    "rationale_types": [
+      [
+        "공개 문서·카탈로그 설명 근거",
+        142
+      ],
+      [
+        "조회·목록 성격 근거",
+        5
+      ],
+      [
+        "기타",
+        3
+      ]
+    ]
+  }
+}

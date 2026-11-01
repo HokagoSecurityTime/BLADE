@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "settings_preserved": true,
+  "policies_preserved": true,
+  "public_proxy_status": 200,
+  "detection_stored": true,
+  "verdict": "OBSERVE",
+  "dashboard_status": 200,
+  "original_tests_unchanged": 17,
+  "slack_configured": true
+}

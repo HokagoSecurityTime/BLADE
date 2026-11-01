@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "policy_id": "pol_users_get_by_userId",
+    "base_version": 1,
+    "base_yaml": "id: pol_users_get_by_userId\nendpoint:\n  method: GET\n  path: /users/{userId}\nlabel: manual_review_required\nparams:\n  object_param: null\n  owner_lookup: null\n  roles: []\n  allowed_membership: []\nconfidence: 0.5\nevidence: Explicit manual-review setup fixture for the Phase 2 trigger test\nstatus: ACTIVE\ncreated_at: '2026-10-11T16:04:22.746249Z'\nmode: observe\nversion: 1\nsource: llm\nevidence_refs: []\n",
+    "proposed_yaml": "id: pol_users_get_by_userId\nendpoint:\n  method: GET\n  path: /users/{userId}\nlabel: owner_or_admin\nparams:\n  object_param: userId\n  owner_lookup:\n    table: users\n    id_col: id\n    owner_col: id\n    tenant_col: org_id\n  roles:\n  - admin\n  allowed_membership: []\nconfidence: 0.95\nevidence: Caller owns the requested user or has admin bypass.\nstatus: ACTIVE\ncreated_at: '2026-10-11T16:04:22.746249Z'\nmode: observe\nversion: 2\nsource: reanalysis\nevidence_refs:\n- kind: code\n  ref: demo_with_admin.py#L77:get_user\n  snippet: \"    @app.get(\\\"/users/{userId}\\\", description=\\\"Intended policy: owner_or_admin;\\\n    \\ users.id\\\")\\n    def get_user(userId: str, current_user: Any = Depends(get_current_user))\\\n    \\ -> dict[str, Any]:\\n        if \\\"admin\\\" in current_user.roles:\\n          \\\n    \\  return fetch_one(\\\"SELECT * FROM users WHERE id = ?\\\", userId)\\n        if\\\n    \\ current_user.id == userId:\\n            return fetch_one(\\\"SELECT * FROM users\\\n    \\ WHERE id = ?\\\", userId)\\n        raise HTTPException(status_code=403, detail=\\\"\\\n    Forbidden\\\")\"\n",
+    "diff_summary": "Changed: label, params, confidence, evidence, evidence_refs",
+    "reason": "manual_review_observe_threshold",
+    "created_at": "2026-10-11T16:05:18.139119+00:00",
+    "status": "PENDING"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "repo": "fastapi-users/fastapi-users",
+  "commit": "e9c57ff7ff2fd385bb0f6f795b524e9736b64290",
+  "hashes": {
+    "commit.json": "353877ea7f593112481971fb11adf2de76d941735f1f132b0d6b7c626443f5a1",
+    "docs/usage/routes.md": "b077f8986a8baa3f9d2454abdf40582d2ddeb75c6592fedf516b0fc7e84b75d3",
+    "fastapi_users/manager.py": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c",
+    "fastapi_users/schemas.py": "9213551512dab3c9130574d8a058dd530aba608233554545cf53f4ba3a7594d5",
+    "fastapi_users/authentication/authenticator.py": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931",
+    "fastapi_users/db/base.py": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353",
+    "fastapi_users/router/users.py": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8",
+    "tests/test_router_users.py": "d0acefac16ce0bd9ffddd093b89f1278c35fd8616e42f769e79639012e9f3a2b"
+  }
+}

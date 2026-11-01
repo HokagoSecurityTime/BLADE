@@ -1,0 +1,1979 @@
+{
+ "groups": {
+  "base_qwen": {
+   "oas_code 합성 제외 macro-F1": {
+    "default": [
+     0.1967
+    ],
+    "stable": [
+     0.1988
+    ],
+    "default_mean": 0.1967,
+    "stable_mean": 0.1988,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas_code 합성 제외 구체 정밀도": {
+    "default": [
+     0.3533
+    ],
+    "stable": [
+     0.3508
+    ],
+    "default_mean": 0.3533,
+    "stable_mean": 0.3508,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas_code 합성 제외 구체 재현율": {
+    "default": [
+     0.3155
+    ],
+    "stable": [
+     0.3252
+    ],
+    "default_mean": 0.3155,
+    "stable_mean": 0.3252,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas_code 합성 제외 manual 비율": {
+    "default": [
+     0.0676
+    ],
+    "stable": [
+     0.0773
+    ],
+    "default_mean": 0.0676,
+    "stable_mean": 0.0773,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas_code 합성 포함 macro-F1": {
+    "default": [
+     0.6537
+    ],
+    "stable": [
+     0.6265
+    ],
+    "default_mean": 0.6537,
+    "stable_mean": 0.6265,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas_code public 오판(신, 건수)": {
+    "default": [
+     17
+    ],
+    "stable": [
+     15
+    ],
+    "default_mean": 17,
+    "stable_mean": 15,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas 주지표(160) macro-F1": {
+    "default": [
+     0.7066
+    ],
+    "stable": [
+     0.7579
+    ],
+    "default_mean": 0.7066,
+    "stable_mean": 0.7579,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas 합성 제외 macro-F1": {
+    "default": [
+     0.2867
+    ],
+    "stable": [
+     0.3244
+    ],
+    "default_mean": 0.2867,
+    "stable_mean": 0.3244,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas 합성 제외 구체 정밀도": {
+    "default": [
+     0.4247
+    ],
+    "stable": [
+     0.4471
+    ],
+    "default_mean": 0.4247,
+    "stable_mean": 0.4471,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas 주지표 manual 비율": {
+    "default": [
+     0.125
+    ],
+    "stable": [
+     0.1313
+    ],
+    "default_mean": 0.125,
+    "stable_mean": 0.1313,
+    "default_std": null,
+    "stable_std": null
+   },
+   "oas public 오판(신, 건수)": {
+    "default": [
+     15
+    ],
+    "stable": [
+     23
+    ],
+    "default_mean": 15,
+    "stable_mean": 23,
+    "default_std": null,
+    "stable_std": null
+   },
+   "supp oas_code macro-F1": {
+    "default": [
+     0.0476
+    ],
+    "stable": [
+     0.0679
+    ],
+    "default_mean": 0.0476,
+    "stable_mean": 0.0679,
+    "default_std": null,
+    "stable_std": null
+   },
+   "supp oas_code 정확도": {
+    "default": [
+     0.0991
+    ],
+    "stable": [
+     0.1396
+    ],
+    "default_mean": 0.0991,
+    "stable_mean": 0.1396,
+    "default_std": null,
+    "stable_std": null
+   },
+   "supp oas_code manual 비율": {
+    "default": [
+     0.0
+    ],
+    "stable": [
+     0.0
+    ],
+    "default_mean": 0.0,
+    "stable_mean": 0.0,
+    "default_std": null,
+    "stable_std": null
+   },
+   "supp oas macro-F1": {
+    "default": [
+     0.0348
+    ],
+    "stable": [
+     0.0356
+    ],
+    "default_mean": 0.0348,
+    "stable_mean": 0.0356,
+    "default_std": null,
+    "stable_std": null
+   },
+   "supp oas 정확도": {
+    "default": [
+     0.0586
+    ],
+    "stable": [
+     0.0631
+    ],
+    "default_mean": 0.0586,
+    "stable_mean": 0.0631,
+    "default_std": null,
+    "stable_std": null
+   },
+   "errors test_v30 oas": {
+    "default": {
+     "errors": 33,
+     "truncated": 0,
+     "other": 33,
+     "truncated_label_present": 0
+    },
+    "stable": {
+     "errors": 25,
+     "truncated": 0,
+     "other": 25,
+     "truncated_label_present": 0
+    }
+   },
+   "errors test_v30 oas_code": {
+    "default": {
+     "errors": 11,
+     "truncated": 2,
+     "other": 9,
+     "truncated_label_present": 2
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors supp oas": {
+    "default": {
+     "errors": 29,
+     "truncated": 4,
+     "other": 25,
+     "truncated_label_present": 4
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors supp oas_code": {
+    "default": {
+     "errors": 67,
+     "truncated": 64,
+     "other": 3,
+     "truncated_label_present": 64
+    },
+    "stable": {
+     "errors": 3,
+     "truncated": 3,
+     "other": 0,
+     "truncated_label_present": 3
+    }
+   },
+   "errors 전체 4종": {
+    "default": {
+     "errors": 140,
+     "truncated": 70,
+     "other": 70,
+     "truncated_label_present": 70
+    },
+    "stable": {
+     "errors": 28,
+     "truncated": 3,
+     "other": 25,
+     "truncated_label_present": 3
+    }
+   },
+   "verdict": {
+    "errors_default": 140,
+    "errors_stable": 28,
+    "errors_ok": true,
+    "precision_ok": false,
+    "macro_f1_ok": true,
+    "verdict": "채택 불가 (단일 run, std 없음)"
+   }
+  },
+  "lora_v2": {
+   "oas_code 합성 제외 macro-F1": {
+    "default": [
+     0.3368,
+     0.2999,
+     0.2594
+    ],
+    "stable": [
+     0.3162,
+     0.2938,
+     0.2654
+    ],
+    "default_mean": 0.2987,
+    "stable_mean": 0.2918,
+    "default_std": 0.03871395097377687,
+    "stable_std": 0.02545898662555128
+   },
+   "oas_code 합성 제외 구체 정밀도": {
+    "default": [
+     0.7481,
+     0.7295,
+     0.6863
+    ],
+    "stable": [
+     0.6277,
+     0.664,
+     0.6863
+    ],
+    "default_mean": 0.7213,
+    "stable_mean": 0.6593333333333333,
+    "default_std": 0.03170552002412197,
+    "stable_std": 0.029577412553050225
+   },
+   "oas_code 합성 제외 구체 재현율": {
+    "default": [
+     0.4757,
+     0.432,
+     0.3398
+    ],
+    "stable": [
+     0.4175,
+     0.4029,
+     0.3398
+    ],
+    "default_mean": 0.41583333333333333,
+    "stable_mean": 0.3867333333333333,
+    "default_std": 0.06937739785645852,
+    "stable_std": 0.04129580285372029
+   },
+   "oas_code 합성 제외 manual 비율": {
+    "default": [
+     0.3623,
+     0.4058,
+     0.4928
+    ],
+    "stable": [
+     0.2947,
+     0.372,
+     0.4831
+    ],
+    "default_mean": 0.4203,
+    "stable_mean": 0.38326666666666664,
+    "default_std": 0.06644734757685969,
+    "stable_std": 0.0947039773891959
+   },
+   "oas_code 합성 포함 macro-F1": {
+    "default": [
+     0.6664,
+     0.6511,
+     0.5955
+    ],
+    "stable": [
+     0.4874,
+     0.585,
+     0.5437
+    ],
+    "default_mean": 0.6376666666666667,
+    "stable_mean": 0.5387,
+    "default_std": 0.0373100969354588,
+    "stable_std": 0.04899173399666518
+   },
+   "oas_code public 오판(신, 건수)": {
+    "default": [
+     2,
+     1,
+     0
+    ],
+    "stable": [
+     2,
+     1,
+     0
+    ],
+    "default_mean": 1,
+    "stable_mean": 1,
+    "default_std": 1.0,
+    "stable_std": 1.0
+   },
+   "oas 주지표(160) macro-F1": {
+    "default": [
+     0.6866,
+     0.68,
+     0.6807
+    ],
+    "stable": [
+     0.668,
+     0.6624,
+     0.6653
+    ],
+    "default_mean": 0.6824333333333333,
+    "stable_mean": 0.6652333333333333,
+    "default_std": 0.0036253735439721537,
+    "stable_std": 0.002800595174839354
+   },
+   "oas 합성 제외 macro-F1": {
+    "default": [
+     0.2832,
+     0.3146,
+     0.3128
+    ],
+    "stable": [
+     0.2743,
+     0.3025,
+     0.3044
+    ],
+    "default_mean": 0.3035333333333333,
+    "stable_mean": 0.29373333333333335,
+    "default_std": 0.017632167573311378,
+    "stable_std": 0.016856551644192638
+   },
+   "oas 합성 제외 구체 정밀도": {
+    "default": [
+     0.8182,
+     0.7097,
+     0.75
+    ],
+    "stable": [
+     0.7727,
+     0.6562,
+     0.7143
+    ],
+    "default_mean": 0.7593,
+    "stable_mean": 0.7144,
+    "default_std": 0.05484459864015783,
+    "stable_std": 0.058250064377646855
+   },
+   "oas 주지표 manual 비율": {
+    "default": [
+     0.5875,
+     0.525,
+     0.55
+    ],
+    "stable": [
+     0.5875,
+     0.525,
+     0.55
+    ],
+    "default_mean": 0.5541666666666667,
+    "stable_mean": 0.5541666666666667,
+    "default_std": 0.03145764348029479,
+    "stable_std": 0.03145764348029479
+   },
+   "oas public 오판(신, 건수)": {
+    "default": [
+     0,
+     0,
+     0
+    ],
+    "stable": [
+     0,
+     0,
+     0
+    ],
+    "default_mean": 0,
+    "stable_mean": 0,
+    "default_std": 0.0,
+    "stable_std": 0.0
+   },
+   "supp oas_code macro-F1": {
+    "default": [
+     0.3736,
+     0.4068,
+     0.3819
+    ],
+    "stable": [
+     0.3866,
+     0.41,
+     0.3958
+    ],
+    "default_mean": 0.38743333333333335,
+    "stable_mean": 0.39746666666666663,
+    "default_std": 0.0172778277955689,
+    "stable_std": 0.011788695149732775
+   },
+   "supp oas_code 정확도": {
+    "default": [
+     0.3468,
+     0.3378,
+     0.3333
+    ],
+    "stable": [
+     0.3739,
+     0.3559,
+     0.3559
+    ],
+    "default_mean": 0.3393,
+    "stable_mean": 0.3619,
+    "default_std": 0.006873863542433766,
+    "stable_std": 0.010392304845413272
+   },
+   "supp oas_code manual 비율": {
+    "default": [
+     0.0721,
+     0.0811,
+     0.1126
+    ],
+    "stable": [
+     0.0631,
+     0.0676,
+     0.0811
+    ],
+    "default_mean": 0.0886,
+    "stable_mean": 0.0706,
+    "default_std": 0.02126617031813674,
+    "stable_std": 0.0093674969975976
+   },
+   "supp oas macro-F1": {
+    "default": [
+     0.1541,
+     0.2109,
+     0.2369
+    ],
+    "stable": [
+     0.1846,
+     0.2123,
+     0.2409
+    ],
+    "default_mean": 0.20063333333333333,
+    "stable_mean": 0.21259999999999998,
+    "default_std": 0.04234398816046186,
+    "stable_std": 0.02815119890874988
+   },
+   "supp oas 정확도": {
+    "default": [
+     0.1486,
+     0.1712,
+     0.2117
+    ],
+    "stable": [
+     0.1847,
+     0.1757,
+     0.2162
+    ],
+    "default_mean": 0.17716666666666667,
+    "stable_mean": 0.1922,
+    "default_std": 0.03197035084782982,
+    "stable_std": 0.02126617031813674
+   },
+   "errors test_v30 oas": {
+    "default": {
+     "errors": 1,
+     "truncated": 0,
+     "other": 1,
+     "truncated_label_present": 0
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors test_v30 oas_code": {
+    "default": {
+     "errors": 5,
+     "truncated": 1,
+     "other": 4,
+     "truncated_label_present": 1
+    },
+    "stable": {
+     "errors": 56,
+     "truncated": 56,
+     "other": 0,
+     "truncated_label_present": 56
+    }
+   },
+   "errors supp oas": {
+    "default": {
+     "errors": 2,
+     "truncated": 1,
+     "other": 1,
+     "truncated_label_present": 1
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors supp oas_code": {
+    "default": {
+     "errors": 4,
+     "truncated": 2,
+     "other": 2,
+     "truncated_label_present": 2
+    },
+    "stable": {
+     "errors": 1,
+     "truncated": 1,
+     "other": 0,
+     "truncated_label_present": 1
+    }
+   },
+   "errors 전체 4종": {
+    "default": {
+     "errors": 12,
+     "truncated": 4,
+     "other": 8,
+     "truncated_label_present": 4
+    },
+    "stable": {
+     "errors": 57,
+     "truncated": 57,
+     "other": 0,
+     "truncated_label_present": 57
+    }
+   },
+   "verdict": {
+    "errors_default": 12,
+    "errors_stable": 57,
+    "errors_ok": false,
+    "precision_ok": false,
+    "macro_f1_ok": true,
+    "verdict": "채택 불가"
+   }
+  },
+  "lora_v3b": {
+   "oas_code 합성 제외 macro-F1": {
+    "default": [
+     0.3579,
+     0.3309,
+     0.3259
+    ],
+    "stable": [
+     0.3463,
+     0.3166,
+     0.3254
+    ],
+    "default_mean": 0.33823333333333333,
+    "stable_mean": 0.32943333333333336,
+    "default_std": 0.017214335111567124,
+    "stable_std": 0.01525527231265746
+   },
+   "oas_code 합성 제외 구체 정밀도": {
+    "default": [
+     0.6686,
+     0.649,
+     0.6127
+    ],
+    "stable": [
+     0.6,
+     0.5779,
+     0.5682
+    ],
+    "default_mean": 0.6434333333333333,
+    "stable_mean": 0.5820333333333333,
+    "default_std": 0.028362710260716132,
+    "stable_std": 0.016297954881927135
+   },
+   "oas_code 합성 제외 구체 재현율": {
+    "default": [
+     0.568,
+     0.4757,
+     0.5146
+    ],
+    "stable": [
+     0.5097,
+     0.432,
+     0.4854
+    ],
+    "default_mean": 0.5194333333333333,
+    "stable_mean": 0.4757,
+    "default_std": 0.04633943604893494,
+    "stable_std": 0.03974783012945489
+   },
+   "oas_code 합성 제외 manual 비율": {
+    "default": [
+     0.1498,
+     0.256,
+     0.1449
+    ],
+    "stable": [
+     0.1498,
+     0.2319,
+     0.1498
+    ],
+    "default_mean": 0.18356666666666666,
+    "stable_mean": 0.17716666666666667,
+    "default_std": 0.06277693313099433,
+    "stable_std": 0.04740045710046828
+   },
+   "oas_code 합성 포함 macro-F1": {
+    "default": [
+     0.6884,
+     0.6124,
+     0.6435
+    ],
+    "stable": [
+     0.632,
+     0.577,
+     0.6179
+    ],
+    "default_mean": 0.6481,
+    "stable_mean": 0.6089666666666667,
+    "default_std": 0.03820824518346791,
+    "stable_std": 0.02856752235202302
+   },
+   "oas_code public 오판(신, 건수)": {
+    "default": [
+     0,
+     0,
+     0
+    ],
+    "stable": [
+     0,
+     0,
+     0
+    ],
+    "default_mean": 0,
+    "stable_mean": 0,
+    "default_std": 0.0,
+    "stable_std": 0.0
+   },
+   "oas 주지표(160) macro-F1": {
+    "default": [
+     0.6982,
+     0.6733,
+     0.7224
+    ],
+    "stable": [
+     0.6828,
+     0.6524,
+     0.6976
+    ],
+    "default_mean": 0.6979666666666667,
+    "stable_mean": 0.6776,
+    "default_std": 0.024550831622031342,
+    "stable_std": 0.023044305153334527
+   },
+   "oas 합성 제외 macro-F1": {
+    "default": [
+     0.3948,
+     0.3493,
+     0.4651
+    ],
+    "stable": [
+     0.3865,
+     0.3493,
+     0.4512
+    ],
+    "default_mean": 0.4030666666666667,
+    "stable_mean": 0.39566666666666667,
+    "default_std": 0.05834092331574239,
+    "stable_std": 0.051564748940854284
+   },
+   "oas 합성 제외 구체 정밀도": {
+    "default": [
+     0.5882,
+     0.7879,
+     0.6786
+    ],
+    "stable": [
+     0.5686,
+     0.7222,
+     0.6429
+    ],
+    "default_mean": 0.6849,
+    "stable_mean": 0.6445666666666666,
+    "default_std": 0.0999989499944875,
+    "stable_std": 0.07681356217057851
+   },
+   "oas 주지표 manual 비율": {
+    "default": [
+     0.4062,
+     0.5188,
+     0.375
+    ],
+    "stable": [
+     0.4062,
+     0.475,
+     0.375
+    ],
+    "default_mean": 0.43333333333333335,
+    "stable_mean": 0.41873333333333335,
+    "default_std": 0.07564240433337201,
+    "stable_std": 0.0511645710754359
+   },
+   "oas public 오판(신, 건수)": {
+    "default": [
+     0,
+     1,
+     0
+    ],
+    "stable": [
+     0,
+     1,
+     0
+    ],
+    "default_mean": 0.3333333333333333,
+    "stable_mean": 0.3333333333333333,
+    "default_std": 0.5773502691896257,
+    "stable_std": 0.5773502691896257
+   },
+   "supp oas_code macro-F1": {
+    "default": [
+     0.3951,
+     0.4395,
+     0.4232
+    ],
+    "stable": [
+     0.4251,
+     0.3692,
+     0.4386
+    ],
+    "default_mean": 0.4192666666666667,
+    "stable_mean": 0.41096666666666665,
+    "default_std": 0.02245981596837635,
+    "stable_std": 0.036795425440308935
+   },
+   "supp oas_code 정확도": {
+    "default": [
+     0.3378,
+     0.4099,
+     0.3694
+    ],
+    "stable": [
+     0.4009,
+     0.4054,
+     0.4144
+    ],
+    "default_mean": 0.3723666666666667,
+    "stable_mean": 0.4069,
+    "default_std": 0.0361414351310699,
+    "stable_std": 0.006873863542433766
+   },
+   "supp oas_code manual 비율": {
+    "default": [
+     0.0225,
+     0.0225,
+     0.0135
+    ],
+    "stable": [
+     0.018,
+     0.018,
+     0.0135
+    ],
+    "default_mean": 0.0195,
+    "stable_mean": 0.0165,
+    "default_std": 0.005196152422706632,
+    "stable_std": 0.0025980762113533154
+   },
+   "supp oas macro-F1": {
+    "default": [
+     0.2492,
+     0.208,
+     0.1965
+    ],
+    "stable": [
+     0.2823,
+     0.2285,
+     0.2034
+    ],
+    "default_mean": 0.2179,
+    "stable_mean": 0.23806666666666668,
+    "default_std": 0.027709745578045283,
+    "stable_std": 0.04031058587186911
+   },
+   "supp oas 정확도": {
+    "default": [
+     0.1937,
+     0.1802,
+     0.1982
+    ],
+    "stable": [
+     0.2387,
+     0.2162,
+     0.2072
+    ],
+    "default_mean": 0.1907,
+    "stable_mean": 0.2207,
+    "default_std": 0.009367496997597594,
+    "stable_std": 0.01622498073958795
+   },
+   "errors test_v30 oas": {
+    "default": {
+     "errors": 5,
+     "truncated": 2,
+     "other": 3,
+     "truncated_label_present": 2
+    },
+    "stable": {
+     "errors": 4,
+     "truncated": 4,
+     "other": 0,
+     "truncated_label_present": 4
+    }
+   },
+   "errors test_v30 oas_code": {
+    "default": {
+     "errors": 9,
+     "truncated": 1,
+     "other": 8,
+     "truncated_label_present": 1
+    },
+    "stable": {
+     "errors": 12,
+     "truncated": 12,
+     "other": 0,
+     "truncated_label_present": 12
+    }
+   },
+   "errors supp oas": {
+    "default": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors supp oas_code": {
+    "default": {
+     "errors": 12,
+     "truncated": 2,
+     "other": 10,
+     "truncated_label_present": 2
+    },
+    "stable": {
+     "errors": 3,
+     "truncated": 3,
+     "other": 0,
+     "truncated_label_present": 3
+    }
+   },
+   "errors 전체 4종": {
+    "default": {
+     "errors": 26,
+     "truncated": 5,
+     "other": 21,
+     "truncated_label_present": 5
+    },
+    "stable": {
+     "errors": 19,
+     "truncated": 19,
+     "other": 0,
+     "truncated_label_present": 19
+    }
+   },
+   "verdict": {
+    "errors_default": 26,
+    "errors_stable": 19,
+    "errors_ok": true,
+    "precision_ok": false,
+    "macro_f1_ok": true,
+    "verdict": "채택 불가"
+   }
+  },
+  "lora_v4": {
+   "oas_code 합성 제외 macro-F1": {
+    "default": [
+     0.3796,
+     0.3042,
+     0.3856
+    ],
+    "stable": [
+     0.3784,
+     0.3021,
+     0.3831
+    ],
+    "default_mean": 0.35646666666666665,
+    "stable_mean": 0.3545333333333333,
+    "default_std": 0.04536356834876784,
+    "stable_std": 0.04546936697748644
+   },
+   "oas_code 합성 제외 구체 정밀도": {
+    "default": [
+     0.838,
+     0.7874,
+     0.8077
+    ],
+    "stable": [
+     0.7945,
+     0.7444,
+     0.7949
+    ],
+    "default_mean": 0.8110333333333333,
+    "stable_mean": 0.7779333333333334,
+    "default_std": 0.02546415781708346,
+    "stable_std": 0.0290414072202663
+   },
+   "oas_code 합성 제외 구체 재현율": {
+    "default": [
+     0.5777,
+     0.4854,
+     0.6117
+    ],
+    "stable": [
+     0.5631,
+     0.4806,
+     0.6019
+    ],
+    "default_mean": 0.5582666666666667,
+    "stable_mean": 0.5485333333333333,
+    "default_std": 0.06535413784400598,
+    "stable_std": 0.06194806964977465
+   },
+   "oas_code 합성 제외 manual 비율": {
+    "default": [
+     0.2899,
+     0.3575,
+     0.2464
+    ],
+    "stable": [
+     0.2899,
+     0.3575,
+     0.2415
+    ],
+    "default_mean": 0.29793333333333333,
+    "stable_mean": 0.2963,
+    "default_std": 0.05598395603504036,
+    "stable_std": 0.05826422573071747
+   },
+   "oas_code 합성 포함 macro-F1": {
+    "default": [
+     0.7081,
+     0.6988,
+     0.7402
+    ],
+    "stable": [
+     0.6595,
+     0.637,
+     0.6973
+    ],
+    "default_mean": 0.7157,
+    "stable_mean": 0.6646,
+    "default_std": 0.021721187812824602,
+    "stable_std": 0.03047179023293513
+   },
+   "oas_code public 오판(신, 건수)": {
+    "default": [
+     1,
+     0,
+     0
+    ],
+    "stable": [
+     1,
+     0,
+     0
+    ],
+    "default_mean": 0.3333333333333333,
+    "stable_mean": 0.3333333333333333,
+    "default_std": 0.5773502691896257,
+    "stable_std": 0.5773502691896257
+   },
+   "oas 주지표(160) macro-F1": {
+    "default": [
+     0.7456,
+     0.7449,
+     0.6082
+    ],
+    "stable": [
+     0.7456,
+     0.712,
+     0.7511
+    ],
+    "default_mean": 0.6995666666666667,
+    "stable_mean": 0.7362333333333333,
+    "default_std": 0.0791266284719205,
+    "stable_std": 0.021166089230968823
+   },
+   "oas 합성 제외 macro-F1": {
+    "default": [
+     0.4514,
+     0.4565,
+     0.4817
+    ],
+    "stable": [
+     0.4514,
+     0.4438,
+     0.4817
+    ],
+    "default_mean": 0.4632,
+    "stable_mean": 0.4589666666666667,
+    "default_std": 0.016223131633565695,
+    "stable_std": 0.02005101826175753
+   },
+   "oas 합성 제외 구체 정밀도": {
+    "default": [
+     0.8444,
+     0.7708,
+     0.7593
+    ],
+    "stable": [
+     0.8444,
+     0.7292,
+     0.7593
+    ],
+    "default_mean": 0.7915,
+    "stable_mean": 0.7776333333333333,
+    "default_std": 0.0461721777697349,
+    "stable_std": 0.05974816594116792
+   },
+   "oas 주지표 manual 비율": {
+    "default": [
+     0.4437,
+     0.425,
+     0.3875
+    ],
+    "stable": [
+     0.4437,
+     0.425,
+     0.3875
+    ],
+    "default_mean": 0.41873333333333335,
+    "stable_mean": 0.41873333333333335,
+    "default_std": 0.028619282544000514,
+    "stable_std": 0.028619282544000514
+   },
+   "oas public 오판(신, 건수)": {
+    "default": [
+     0,
+     1,
+     0
+    ],
+    "stable": [
+     0,
+     1,
+     0
+    ],
+    "default_mean": 0.3333333333333333,
+    "stable_mean": 0.3333333333333333,
+    "default_std": 0.5773502691896257,
+    "stable_std": 0.5773502691896257
+   },
+   "supp oas_code macro-F1": {
+    "default": [
+     0.4159,
+     0.4757,
+     0.4534
+    ],
+    "stable": [
+     0.444,
+     0.4819,
+     0.4557
+    ],
+    "default_mean": 0.44833333333333336,
+    "stable_mean": 0.46053333333333335,
+    "default_std": 0.030220247075980932,
+    "stable_std": 0.0194067857548161
+   },
+   "supp oas_code 정확도": {
+    "default": [
+     0.3604,
+     0.3919,
+     0.3784
+    ],
+    "stable": [
+     0.4189,
+     0.4279,
+     0.4144
+    ],
+    "default_mean": 0.3769,
+    "stable_mean": 0.4204,
+    "default_std": 0.015803480629279124,
+    "stable_std": 0.006873863542433766
+   },
+   "supp oas_code manual 비율": {
+    "default": [
+     0.2793,
+     0.2387,
+     0.1802
+    ],
+    "stable": [
+     0.2072,
+     0.1667,
+     0.1036
+    ],
+    "default_mean": 0.23273333333333332,
+    "stable_mean": 0.15916666666666665,
+    "default_std": 0.049818704653306,
+    "stable_std": 0.05220922651537114
+   },
+   "supp oas macro-F1": {
+    "default": [
+     0.1901,
+     0.2249,
+     0.2163
+    ],
+    "stable": [
+     0.2119,
+     0.243,
+     0.2451
+    ],
+    "default_mean": 0.21043333333333333,
+    "stable_mean": 0.23333333333333334,
+    "default_std": 0.018126591884116916,
+    "stable_std": 0.018591485506363747
+   },
+   "supp oas 정확도": {
+    "default": [
+     0.2072,
+     0.2342,
+     0.2072
+    ],
+    "stable": [
+     0.2342,
+     0.2748,
+     0.2523
+    ],
+    "default_mean": 0.2162,
+    "stable_mean": 0.2537666666666667,
+    "default_std": 0.015588457268119893,
+    "stable_std": 0.020339698457286264
+   },
+   "errors test_v30 oas": {
+    "default": {
+     "errors": 8,
+     "truncated": 0,
+     "other": 8,
+     "truncated_label_present": 0
+    },
+    "stable": {
+     "errors": 0,
+     "truncated": 0,
+     "other": 0,
+     "truncated_label_present": 0
+    }
+   },
+   "errors test_v30 oas_code": {
+    "default": {
+     "errors": 14,
+     "truncated": 4,
+     "other": 10,
+     "truncated_label_present": 4
+    },
+    "stable": {
+     "errors": 3,
+     "truncated": 2,
+     "other": 1,
+     "truncated_label_present": 2
+    }
+   },
+   "errors supp oas": {
+    "default": {
+     "errors": 2,
+     "truncated": 0,
+     "other": 2,
+     "truncated_label_present": 0
+    },
+    "stable": {
+     "errors": 2,
+     "truncated": 2,
+     "other": 0,
+     "truncated_label_present": 2
+    }
+   },
+   "errors supp oas_code": {
+    "default": {
+     "errors": 7,
+     "truncated": 1,
+     "other": 6,
+     "truncated_label_present": 1
+    },
+    "stable": {
+     "errors": 1,
+     "truncated": 1,
+     "other": 0,
+     "truncated_label_present": 1
+    }
+   },
+   "errors 전체 4종": {
+    "default": {
+     "errors": 31,
+     "truncated": 5,
+     "other": 26,
+     "truncated_label_present": 5
+    },
+    "stable": {
+     "errors": 6,
+     "truncated": 5,
+     "other": 1,
+     "truncated_label_present": 5
+    }
+   },
+   "verdict": {
+    "errors_default": 31,
+    "errors_stable": 6,
+    "errors_ok": true,
+    "precision_ok": false,
+    "macro_f1_ok": true,
+    "verdict": "채택 불가"
+   }
+  }
+ },
+ "error_kinds": {
+  "default": {
+   "predictions_oas_base_qwen_runpod.jsonl": {
+    "rows": 269,
+    "errors": 33,
+    "truncated": 0,
+    "other": 33,
+    "truncated_label_present": 0,
+    "mean_ms": 613.1
+   },
+   "predictions_oas_code_base_qwen_runpod.jsonl": {
+    "rows": 265,
+    "errors": 11,
+    "truncated": 2,
+    "other": 9,
+    "truncated_label_present": 2,
+    "mean_ms": 853.3
+   },
+   "supp_predictions_oas_base_qwen_runpod.jsonl": {
+    "rows": 222,
+    "errors": 29,
+    "truncated": 4,
+    "other": 25,
+    "truncated_label_present": 4,
+    "mean_ms": 750.2
+   },
+   "supp_predictions_oas_code_base_qwen_runpod.jsonl": {
+    "rows": 222,
+    "errors": 67,
+    "truncated": 64,
+    "other": 3,
+    "truncated_label_present": 64,
+    "mean_ms": 1311.5
+   },
+   "predictions_oas_code_lora_v2_s42_runpod_final.jsonl": {
+    "rows": 265,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 739.8
+   },
+   "predictions_oas_lora_v2_s42_runpod_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 663.6
+   },
+   "supp_predictions_oas_code_lora_v2_s42_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 798.0
+   },
+   "supp_predictions_oas_lora_v2_s42_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 753.1
+   },
+   "predictions_oas_code_lora_v2_s43_runpod_final.jsonl": {
+    "rows": 265,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 780.5
+   },
+   "predictions_oas_lora_v2_s43_runpod_final.jsonl": {
+    "rows": 269,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 764.2
+   },
+   "supp_predictions_oas_code_lora_v2_s43_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 814.0
+   },
+   "supp_predictions_oas_lora_v2_s43_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 721.7
+   },
+   "predictions_oas_code_lora_v2_s44_runpod_final.jsonl": {
+    "rows": 265,
+    "errors": 3,
+    "truncated": 1,
+    "other": 2,
+    "truncated_label_present": 1,
+    "mean_ms": 814.8
+   },
+   "predictions_oas_lora_v2_s44_runpod_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 731.5
+   },
+   "supp_predictions_oas_code_lora_v2_s44_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 3,
+    "truncated": 2,
+    "other": 1,
+    "truncated_label_present": 2,
+    "mean_ms": 908.9
+   },
+   "supp_predictions_oas_lora_v2_s44_runpod_final.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 751.5
+   },
+   "predictions_oas_code_lora_v3a_s42_final.jsonl": {
+    "rows": 265,
+    "errors": 5,
+    "truncated": 1,
+    "other": 4,
+    "truncated_label_present": 1,
+    "mean_ms": 808.7
+   },
+   "predictions_oas_lora_v3a_s42_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 708.6
+   },
+   "predictions_oas_code_lora_v3a_s43_final.jsonl": {
+    "rows": 265,
+    "errors": 8,
+    "truncated": 0,
+    "other": 8,
+    "truncated_label_present": 0,
+    "mean_ms": 802.2
+   },
+   "predictions_oas_lora_v3a_s43_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 705.1
+   },
+   "predictions_oas_code_lora_v3a_s44_final.jsonl": {
+    "rows": 265,
+    "errors": 2,
+    "truncated": 1,
+    "other": 1,
+    "truncated_label_present": 1,
+    "mean_ms": 773.9
+   },
+   "predictions_oas_lora_v3a_s44_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 684.3
+   },
+   "predictions_oas_code_lora_v3b_s42_final.jsonl": {
+    "rows": 265,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 800.2
+   },
+   "predictions_oas_lora_v3b_s42_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 701.3
+   },
+   "supp_predictions_oas_code_lora_v3b_s42_final.jsonl": {
+    "rows": 222,
+    "errors": 3,
+    "truncated": 0,
+    "other": 3,
+    "truncated_label_present": 0,
+    "mean_ms": 813.3
+   },
+   "supp_predictions_oas_lora_v3b_s42_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 726.7
+   },
+   "predictions_oas_code_lora_v3b_s43_final.jsonl": {
+    "rows": 265,
+    "errors": 3,
+    "truncated": 0,
+    "other": 3,
+    "truncated_label_present": 0,
+    "mean_ms": 793.9
+   },
+   "predictions_oas_lora_v3b_s43_final.jsonl": {
+    "rows": 269,
+    "errors": 4,
+    "truncated": 2,
+    "other": 2,
+    "truncated_label_present": 2,
+    "mean_ms": 764.8
+   },
+   "supp_predictions_oas_code_lora_v3b_s43_final.jsonl": {
+    "rows": 222,
+    "errors": 5,
+    "truncated": 1,
+    "other": 4,
+    "truncated_label_present": 1,
+    "mean_ms": 872.2
+   },
+   "supp_predictions_oas_lora_v3b_s43_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 762.9
+   },
+   "predictions_oas_code_lora_v3b_s44_final.jsonl": {
+    "rows": 265,
+    "errors": 5,
+    "truncated": 0,
+    "other": 5,
+    "truncated_label_present": 0,
+    "mean_ms": 762.9
+   },
+   "predictions_oas_lora_v3b_s44_final.jsonl": {
+    "rows": 269,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 710.9
+   },
+   "supp_predictions_oas_code_lora_v3b_s44_final.jsonl": {
+    "rows": 222,
+    "errors": 4,
+    "truncated": 1,
+    "other": 3,
+    "truncated_label_present": 1,
+    "mean_ms": 893.1
+   },
+   "supp_predictions_oas_lora_v3b_s44_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 736.5
+   },
+   "predictions_oas_code_lora_v4_s42_final.jsonl": {
+    "rows": 265,
+    "errors": 7,
+    "truncated": 2,
+    "other": 5,
+    "truncated_label_present": 2,
+    "mean_ms": 839.4
+   },
+   "predictions_oas_lora_v4_s42_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 736.7
+   },
+   "supp_predictions_oas_code_lora_v4_s42_final.jsonl": {
+    "rows": 222,
+    "errors": 4,
+    "truncated": 0,
+    "other": 4,
+    "truncated_label_present": 0,
+    "mean_ms": 851.3
+   },
+   "supp_predictions_oas_lora_v4_s42_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 742.5
+   },
+   "predictions_oas_code_lora_v4_s43_final.jsonl": {
+    "rows": 265,
+    "errors": 7,
+    "truncated": 2,
+    "other": 5,
+    "truncated_label_present": 2,
+    "mean_ms": 835.9
+   },
+   "predictions_oas_lora_v4_s43_final.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 734.7
+   },
+   "supp_predictions_oas_code_lora_v4_s43_final.jsonl": {
+    "rows": 222,
+    "errors": 2,
+    "truncated": 1,
+    "other": 1,
+    "truncated_label_present": 1,
+    "mean_ms": 858.2
+   },
+   "supp_predictions_oas_lora_v4_s43_final.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 778.0
+   },
+   "predictions_oas_code_lora_v4_s44_final.jsonl": {
+    "rows": 265,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 753.3
+   },
+   "predictions_oas_lora_v4_s44_final.jsonl": {
+    "rows": 269,
+    "errors": 8,
+    "truncated": 0,
+    "other": 8,
+    "truncated_label_present": 0,
+    "mean_ms": 729.0
+   },
+   "supp_predictions_oas_code_lora_v4_s44_final.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 0,
+    "other": 1,
+    "truncated_label_present": 0,
+    "mean_ms": 812.5
+   },
+   "supp_predictions_oas_lora_v4_s44_final.jsonl": {
+    "rows": 222,
+    "errors": 2,
+    "truncated": 0,
+    "other": 2,
+    "truncated_label_present": 0,
+    "mean_ms": 726.2
+   }
+  },
+  "stable": {
+   "predictions_oas_base_qwen_runpod_stable.jsonl": {
+    "rows": 269,
+    "errors": 25,
+    "truncated": 0,
+    "other": 25,
+    "truncated_label_present": 0,
+    "mean_ms": 1882.4
+   },
+   "predictions_oas_code_base_qwen_runpod_stable.jsonl": {
+    "rows": 265,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2427.0
+   },
+   "supp_predictions_oas_base_qwen_runpod_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2038.4
+   },
+   "supp_predictions_oas_code_base_qwen_runpod_stable.jsonl": {
+    "rows": 222,
+    "errors": 3,
+    "truncated": 3,
+    "other": 0,
+    "truncated_label_present": 3,
+    "mean_ms": 3236.5
+   },
+   "predictions_oas_code_lora_v2_s42_runpod_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 31,
+    "truncated": 31,
+    "other": 0,
+    "truncated_label_present": 31,
+    "mean_ms": 5826.3
+   },
+   "predictions_oas_lora_v2_s42_runpod_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1943.9
+   },
+   "supp_predictions_oas_code_lora_v2_s42_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2349.7
+   },
+   "supp_predictions_oas_lora_v2_s42_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2078.0
+   },
+   "predictions_oas_code_lora_v2_s43_runpod_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 10,
+    "truncated": 10,
+    "other": 0,
+    "truncated_label_present": 10,
+    "mean_ms": 2653.1
+   },
+   "predictions_oas_lora_v2_s43_runpod_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2058.6
+   },
+   "supp_predictions_oas_code_lora_v2_s43_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2399.2
+   },
+   "supp_predictions_oas_lora_v2_s43_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1961.0
+   },
+   "predictions_oas_code_lora_v2_s44_runpod_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 15,
+    "truncated": 15,
+    "other": 0,
+    "truncated_label_present": 15,
+    "mean_ms": 3717.5
+   },
+   "predictions_oas_lora_v2_s44_runpod_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1988.4
+   },
+   "supp_predictions_oas_code_lora_v2_s44_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 2583.9
+   },
+   "supp_predictions_oas_lora_v2_s44_runpod_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2064.4
+   },
+   "predictions_oas_code_lora_v3b_s42_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 2345.4
+   },
+   "predictions_oas_lora_v3b_s42_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1903.4
+   },
+   "supp_predictions_oas_code_lora_v3b_s42_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2258.8
+   },
+   "supp_predictions_oas_lora_v3b_s42_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1921.1
+   },
+   "predictions_oas_code_lora_v3b_s43_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 11,
+    "truncated": 11,
+    "other": 0,
+    "truncated_label_present": 11,
+    "mean_ms": 2745.8
+   },
+   "predictions_oas_lora_v3b_s43_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 4,
+    "truncated": 4,
+    "other": 0,
+    "truncated_label_present": 4,
+    "mean_ms": 2122.7
+   },
+   "supp_predictions_oas_code_lora_v3b_s43_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 2470.5
+   },
+   "supp_predictions_oas_lora_v3b_s43_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2025.4
+   },
+   "predictions_oas_code_lora_v3b_s44_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2188.6
+   },
+   "predictions_oas_lora_v3b_s44_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1833.2
+   },
+   "supp_predictions_oas_code_lora_v3b_s44_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 2,
+    "truncated": 2,
+    "other": 0,
+    "truncated_label_present": 2,
+    "mean_ms": 2353.0
+   },
+   "supp_predictions_oas_lora_v3b_s44_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1965.2
+   },
+   "predictions_oas_code_lora_v4_s42_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 2393.2
+   },
+   "predictions_oas_lora_v4_s42_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1984.3
+   },
+   "supp_predictions_oas_code_lora_v4_s42_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2491.1
+   },
+   "supp_predictions_oas_lora_v4_s42_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 2,
+    "truncated": 2,
+    "other": 0,
+    "truncated_label_present": 2,
+    "mean_ms": 2262.4
+   },
+   "predictions_oas_code_lora_v4_s43_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2211.5
+   },
+   "predictions_oas_lora_v4_s43_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1947.6
+   },
+   "supp_predictions_oas_code_lora_v4_s43_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 1,
+    "truncated": 1,
+    "other": 0,
+    "truncated_label_present": 1,
+    "mean_ms": 2389.4
+   },
+   "supp_predictions_oas_lora_v4_s43_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2089.9
+   },
+   "predictions_oas_code_lora_v4_s44_final_stable.jsonl": {
+    "rows": 265,
+    "errors": 2,
+    "truncated": 1,
+    "other": 1,
+    "truncated_label_present": 1,
+    "mean_ms": 2254.6
+   },
+   "predictions_oas_lora_v4_s44_final_stable.jsonl": {
+    "rows": 269,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1902.0
+   },
+   "supp_predictions_oas_code_lora_v4_s44_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 2273.9
+   },
+   "supp_predictions_oas_lora_v4_s44_final_stable.jsonl": {
+    "rows": 222,
+    "errors": 0,
+    "truncated": 0,
+    "other": 0,
+    "truncated_label_present": 0,
+    "mean_ms": 1939.1
+   }
+  }
+ },
+ "criterion": "output errors decrease AND oas_code(synthetic excluded) concrete precision and macro-F1 do not drop by more than one seed-std (pre-fixed)"
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "observe",
+    "http_status": 200,
+    "verdict": "OBSERVE",
+    "would_block": true,
+    "slack_http_success": true,
+    "request_id": "77bd91c5-2bdc-4a16-9f2b-92988aa7c4c0",
+    "explanation": "BLADE 탐지 로그에 따르면, 요청은 owner_match 정책과 일치하지 않아 관찰 모드로 처리되었지만 실제로는 요청을 차단하지 않았습니다.",
+    "message": "[BLADE observe] blade_test_observe → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch\nBLADE 탐지 로그에 따르면, 요청은 owner_match 정책과 일치하지 않아 관찰 모드로 처리되었지만 실제로는 요청을 차단하지 않았습니다.",
+    "channel": "blade-alert"
+  },
+  {
+    "mode": "enforce",
+    "http_status": 403,
+    "verdict": "BLOCK",
+    "would_block": false,
+    "slack_http_success": true,
+    "request_id": "f1187e33-2219-40b3-aa02-6037e957d3ac",
+    "explanation": "요청이 적용된 인가 정책의 조건을 충족하지 않았습니다. 집행 모드에서 요청을 차단했습니다.",
+    "message": "[BLADE enforce] blade_test_enforce → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch\n요청이 적용된 인가 정책의 조건을 충족하지 않았습니다. 집행 모드에서 요청을 차단했습니다.",
+    "channel": "blade-alert"
+  }
+]

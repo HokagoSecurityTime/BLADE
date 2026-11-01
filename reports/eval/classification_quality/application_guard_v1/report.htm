@@ -1,0 +1,223 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>자동 적용 검증기</title><style>body{max-width:1200px;margin:40px auto;font:16px/1.7 system-ui}table{border-collapse:collapse}td,th{border:1px solid #bbb;padding:8px}</style><h1>원래 라벨 보존 · 자동 적용 검증기</h1>
+<p>기존 30건 × 두 입력 조건의 예측을 재사용했다. API 호출 0회. 라벨·confidence는 변경하지 않고 별도 guard 필드에 결과를 기록한다.</p>
+<table>
+<thead>
+<tr>
+<th>입력</th>
+<th style="text-align:right">의미 일치</th>
+<th style="text-align:right">필수 조건 누락/허용 확대</th>
+<th style="text-align:right">과도한 제한</th>
+<th style="text-align:right">보류/비정상 라벨</th>
+<th style="text-align:right">올바른 구체 라벨 오차단</th>
+<th style="text-align:right">틀린 구체 라벨 통과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">0/12</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">13</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">0/12</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table>
+<h2>판정 방식과 한계</h2>
+<p>코드에서 허용 조건을 제한된 AST 문법으로 추출하고, 라벨이 나타내는 조건과 64개 상태에서 비교한다. 제안은 허용하지만 코드가 거부하는 상태를 반례로 저장한다. 코드가 허용하지만 제안이 거부하는 경우도 별도로 차단한다. 정답 라벨은 차단 판정에 사용하지 않는다.</p>
+<p>이 결과는 15개 합성 정책 × 두 문법 변형의 개발 실험이다. 모든 조건이 확보되었다는 fixture 전제와 operator/admin 역할·소유자·그룹 바인딩을 사용한다. 외부 코드의 전체 호출 경로 확보나 실제 정책 파라미터 검증을 증명하지 않는다. 미지원 코드·확인되지 않은 입력 바인딩은 통과시키지 않는다.</p>
+<p>semantic_candidate_pass는 의미 동등성 검사 결과일 뿐이다. 실제 집행 바인딩을 검증하지 않았으므로 auto_apply_allowed는 전부 false다. 특히 현재 런타임의 membership 등급 비교는 대상 그룹 구성원 검사를 구현하지 않는다. 런타임 연결·정책 활성화는 하지 않았다. 구현된 검사와 의도된 정책의 일치도 별도 검증이 필요하다.</p>
+<h2>차단 반례</h2>
+<p>m=그룹 구성원, t=동일 테넌트, o=소유자, r=operator, a=admin, p=premium. 인증된 요청 상태의 비교이며 public은 별도의 명시적 익명 fixture이다.</p>
+<table>
+<thead>
+<tr>
+<th>입력</th>
+<th>ID</th>
+<th>원래 라벨</th>
+<th>차단 사유</th>
+<th>반례</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>boundary-10-0</td>
+<td>membership_required</td>
+<td>overrestriction</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: true, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-10-1</td>
+<td>membership_required</td>
+<td>overrestriction</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: true, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-09-0</td>
+<td>owner_or_admin</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: true, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-13-0</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-06-0</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-06-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-13-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-07-0</td>
+<td>owner_match</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: true, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code</td>
+<td>boundary-07-1</td>
+<td>owner_match</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: true, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-07-1</td>
+<td>owner_match</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: true, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-09-1</td>
+<td>owner_or_admin</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: true, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-10-0</td>
+<td>membership_required</td>
+<td>overrestriction</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: true, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-14-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-07-0</td>
+<td>owner_match</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: true, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-09-0</td>
+<td>owner_or_admin</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: true, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-11-0</td>
+<td>owner_or_admin</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: true, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-06-0</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-11-1</td>
+<td>owner_or_admin</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: true, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-08-0</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-13-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-10-1</td>
+<td>membership_required</td>
+<td>overrestriction</td>
+<td>{&quot;m&quot;: false, &quot;t&quot;: true, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-06-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-13-0</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+<tr>
+<td>code_conditions</td>
+<td>boundary-08-1</td>
+<td>membership_required</td>
+<td>missing_required_condition</td>
+<td>{&quot;m&quot;: true, &quot;t&quot;: false, &quot;o&quot;: false, &quot;r&quot;: false, &quot;a&quot;: false, &quot;p&quot;: false}</td>
+</tr>
+</tbody>
+</table>
+</html>

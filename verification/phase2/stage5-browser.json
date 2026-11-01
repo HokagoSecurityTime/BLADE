@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "local_webhook_messages": [
+    {
+      "text": "[BLADE enforce] test → GET /test · 정책 pol_test_get(owner_match) · notification_test",
+      "mrkdwn": false
+    }
+  ]
+}

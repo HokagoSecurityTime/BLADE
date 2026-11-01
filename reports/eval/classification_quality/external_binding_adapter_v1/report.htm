@@ -1,0 +1,114 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>외부 어댑터</title><style>body{max-width:1200px;margin:40px auto;font:16px/1.7 system-ui}table{border-collapse:collapse}td,th{border:1px solid #bbb;padding:8px}</style><h1>외부 코드 바인딩 어댑터 v1</h1>
+<p>기존 실험을 개발셋으로 사용했다. 새 독립 성능 평가가 아니다. API 재호출 없이 원래 예측을 보존했다.</p>
+<p>23개 중 8개 핸들러의 객체 바인딩·허용 조건을 추출했다. 나머지는 미확정이다. 원본 해시가 달라지면 실행을 거부한다. 범용 Python 파서가 아니라 검토한 고정 소스용 어댑터다.</p>
+<table>
+<thead>
+<tr>
+<th>조건</th>
+<th>검증 결과</th>
+<th style="text-align:right">건수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>oas</td>
+<td>unresolved_source</td>
+<td style="text-align:right">15</td>
+</tr>
+<tr>
+<td>oas</td>
+<td>prediction_validation_failed</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>oas</td>
+<td>missing_required_condition</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>oas</td>
+<td>equivalent</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>oas</td>
+<td>overrestriction</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>oas</td>
+<td>manual_or_invalid_label</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>oas_code</td>
+<td>unresolved_source</td>
+<td style="text-align:right">15</td>
+</tr>
+<tr>
+<td>oas_code</td>
+<td>missing_required_condition</td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td>oas_code</td>
+<td>equivalent</td>
+<td style="text-align:right">4</td>
+</tr>
+</tbody>
+</table>
+<h2>추출한 조건</h2>
+<table>
+<thead>
+<tr>
+<th>핸들러</th>
+<th>허용 조건</th>
+<th>객체 조회</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>items.read_item</td>
+<td><code>((True and not (((not admin) and (not owner)))))</code></td>
+<td><code>{'model': 'Item', 'parameter': 'id', 'variable': 'item', 'file': 'backend/app/api/routes/items.py', 'line': 53}</code></td>
+</tr>
+<tr>
+<td>items.update_item</td>
+<td><code>((True and not (((not admin) and (not owner)))))</code></td>
+<td><code>{'model': 'Item', 'parameter': 'id', 'variable': 'item', 'file': 'backend/app/api/routes/items.py', 'line': 86}</code></td>
+</tr>
+<tr>
+<td>items.delete_item</td>
+<td><code>((True and not (((not admin) and (not owner)))))</code></td>
+<td><code>{'model': 'Item', 'parameter': 'id', 'variable': 'item', 'file': 'backend/app/api/routes/items.py', 'line': 106}</code></td>
+</tr>
+<tr>
+<td>login.test_token</td>
+<td><code>(owner and (True))</code></td>
+<td><code>authenticated self</code></td>
+</tr>
+<tr>
+<td>users.read_user_me</td>
+<td><code>(owner and (True))</code></td>
+<td><code>authenticated self</code></td>
+</tr>
+<tr>
+<td>users.delete_user_me</td>
+<td><code>(owner and ((True and not (admin))))</code></td>
+<td><code>authenticated self</code></td>
+</tr>
+<tr>
+<td>users.read_user_by_id</td>
+<td><code>((True and owner) or ((True and not (owner)) and not ((not admin))))</code></td>
+<td><code>{'model': 'User', 'parameter': 'user_id', 'variable': 'user', 'file': 'backend/app/api/routes/users.py', 'line': 169}</code></td>
+</tr>
+<tr>
+<td>users.delete_user</td>
+<td><code>(((True and not ((not admin)))) and ((True and not (owner))))</code></td>
+<td><code>{'model': 'User', 'parameter': 'user_id', 'variable': 'user', 'file': 'backend/app/api/routes/users.py', 'line': 221}</code></td>
+</tr>
+</tbody>
+</table>
+<p>NOT superuser와 target != caller를 보존하며, 조기 반환은 OR 경로로 반영한다. 인증 사용자 반환을 그룹 membership으로 해석하지 않는다. role_required는 실제 역할 파라미터가 없어 미확정 처리한다.</p>
+<p>의미 통과와 실제 자동 적용은 다르다. 집행 설정·DB/JWT 통합 검증이 없어 auto_apply_allowed는 전부 false다. 코드의 현재 검사와 의도된 정책 일치를 입증하지 않는다. 기존 검증기·프롬프트·고정 test·런타임을 변경하지 않았다.</p>
+</html>

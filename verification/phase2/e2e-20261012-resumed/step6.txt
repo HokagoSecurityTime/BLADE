@@ -1,0 +1,10 @@
+POST http://127.0.0.1:63213/proposals/1/accept
+[["host", "127.0.0.1:63213"], ["content-length", "0"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:06:10 GMT"], ["server", "uvicorn"], ["content-length", "1064"], ["content-type", "application/json"]]
+
+{"id":"pol_users_get_by_userId","endpoint":{"method":"GET","path":"/users/{userId}"},"label":"owner_or_admin","params":{"object_param":"userId","owner_lookup":{"table":"users","id_col":"id","owner_col":"id","tenant_col":"org_id"},"roles":["admin"],"allowed_membership":[]},"confidence":0.95,"evidence":"The caller owns the requested user or has an explicit admin bypass.","status":"ACTIVE","created_at":"2026-10-12T03:57:17.737219Z","mode":"observe","version":2,"source":"reanalysis","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L77:get_user","snippet":"    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str, current_user: Any = Depends(get_current_user)) -> dict[str, Any]:\n        if \"admin\" in current_user.roles:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        if current_user.id == userId:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        raise HTTPException(status_code=403, detail=\"Forbidden\")"}]}
+

@@ -1,0 +1,455 @@
+{
+  "dataset": "blade-synthetic-holdout-v1",
+  "dataset_sha256": "e286aaaefc6c6b3ce369821226bbb3bfc4d2bfebf928c1bf70d1697051ae7d59",
+  "source_sha256": {
+    "pipeline\\classifier\\prompt.py": "76b6d48fcd72cac728cb5281ecb57b655f0c5901a6359a11e81928d317c8f39b",
+    "pipeline\\classifier\\llm.py": "09cb7880bd98847f54f4527717b824f402dc39f46ed98bbcd44e2f4bf378221e",
+    "pipeline\\classifier\\schema.py": "73af3b90b67da638623071c281bc5e715b6fe6648a6441399829df0108091d8e",
+    "pipeline\\classifier\\__init__.py": "d98bfcedf81bb8e7c196405caca3d492d96d5563be0310dabc6e9ad23564239a",
+    "pipeline\\parsers\\oas.py": "46b27c5f11fa415a9b9f3f6b825d4d98eb61a07e77a501f076e5f9bce0d168d9",
+    "pipeline\\parsers\\erd.py": "e14b5b6e1009614231fd10689366b0d96e72937f2e3b9783ca9b9ca187512abd",
+    "pipeline\\classifier\\evaluate.py": "d5b3283a7635f8abd7ed7a1e2e9f32c06fb760b90be4f0e29879cfbc55166a7d"
+  },
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "started_at": "2026-09-09T11:41:31.415425+00:00",
+  "completed": true,
+  "rows": [
+    {
+      "id": "public-version",
+      "method": "GET",
+      "path": "/service/version",
+      "expected": "public",
+      "actual": "public",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 81.85933100013062,
+      "result": {
+        "label": "public",
+        "confidence": 1.0,
+        "evidence": "Endpoint is deliberately available to anonymous callers.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "public-catalog",
+      "method": "GET",
+      "path": "/catalog/{sku}",
+      "expected": "public",
+      "actual": "public",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 16.985690699890256,
+      "result": {
+        "label": "public",
+        "confidence": 1.0,
+        "evidence": "Anonymous access is explicitly allowed for all product descriptions.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "role-audit",
+      "method": "GET",
+      "path": "/audit/export",
+      "expected": "role_required",
+      "actual": "role_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 15.137649999931455,
+      "result": {
+        "label": "role_required",
+        "confidence": 1.0,
+        "evidence": "Access requires the 'auditor' role.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [
+          "auditor"
+        ],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "role-moderation",
+      "method": "POST",
+      "path": "/moderation/reindex",
+      "expected": "role_required",
+      "actual": "role_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 16.386066699866205,
+      "result": {
+        "label": "role_required",
+        "confidence": 1.0,
+        "evidence": "Only users with the 'moderator' role can reindex.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [
+          "moderator"
+        ],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "membership-gold",
+      "method": "GET",
+      "path": "/learning/masterclass",
+      "expected": "membership_required",
+      "actual": "membership_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 15.565289500169456,
+      "result": {
+        "label": "membership_required",
+        "confidence": 0.8,
+        "evidence": "Access granted only to users with a gold subscription tier.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": [
+          "gold"
+        ]
+      }
+    },
+    {
+      "id": "membership-enterprise",
+      "method": "POST",
+      "path": "/analytics/bulk",
+      "expected": "membership_required",
+      "actual": "membership_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 15.28978220000863,
+      "result": {
+        "label": "membership_required",
+        "confidence": 0.8,
+        "evidence": "Access requires an 'enterprise' subscription tier.",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": [
+          "enterprise"
+        ]
+      }
+    },
+    {
+      "id": "owner-booking",
+      "method": "GET",
+      "path": "/bookings/{bookingId}",
+      "expected": "owner_match",
+      "actual": "owner_match",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 27.515093899797648,
+      "result": {
+        "label": "owner_match",
+        "confidence": 1.0,
+        "evidence": "Booking must belong to the caller.",
+        "object_param": "bookingId",
+        "owner_lookup": {
+          "table": "bookings",
+          "id_col": "id",
+          "owner_col": "owner_id",
+          "tenant_col": null
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "owner-query-fk",
+      "method": "GET",
+      "path": "/parcels",
+      "expected": "owner_match",
+      "actual": "owner_match",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 25.531602599658072,
+      "result": {
+        "label": "owner_match",
+        "confidence": 1.0,
+        "evidence": "Parcel sender must match the caller's sender_ref.",
+        "object_param": "parcel_key",
+        "owner_lookup": {
+          "table": "parcels",
+          "id_col": "id",
+          "owner_col": "sender_ref",
+          "tenant_col": null
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "tenant-project",
+      "method": "GET",
+      "path": "/projects/{projectId}",
+      "expected": "tenant_match",
+      "actual": "tenant_match",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 26.809394999872893,
+      "result": {
+        "label": "tenant_match",
+        "confidence": 0.9,
+        "evidence": "Requested project must belong to the caller's organization.",
+        "object_param": "projectId",
+        "owner_lookup": {
+          "table": "projects",
+          "id_col": "id",
+          "owner_col": null,
+          "tenant_col": "organization_id"
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "tenant-query-fk",
+      "method": "GET",
+      "path": "/folders",
+      "expected": "tenant_match",
+      "actual": "tenant_match",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 22.815495300106704,
+      "result": {
+        "label": "tenant_match",
+        "confidence": 1.0,
+        "evidence": "Folder must belong to the caller's tenant organization.",
+        "object_param": "folder_key",
+        "owner_lookup": {
+          "table": "folders",
+          "id_col": "id",
+          "owner_col": null,
+          "tenant_col": "division_ref"
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "owner-admin-draft",
+      "method": "DELETE",
+      "path": "/drafts/{draftId}",
+      "expected": "owner_or_admin",
+      "actual": "owner_or_admin",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 26.823418600019068,
+      "result": {
+        "label": "owner_or_admin",
+        "confidence": 0.9,
+        "evidence": "Requires author_id match or admin role.",
+        "object_param": "draftId",
+        "owner_lookup": {
+          "table": "drafts",
+          "id_col": "id",
+          "owner_col": "author_id",
+          "tenant_col": null
+        },
+        "roles": [
+          "admin"
+        ],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "owner-admin-query",
+      "method": "GET",
+      "path": "/tickets",
+      "expected": "owner_or_admin",
+      "actual": "owner_match",
+      "label_correct": false,
+      "params_correct": false,
+      "elapsed_seconds": 24.217438399791718,
+      "result": {
+        "label": "owner_match",
+        "confidence": 1.0,
+        "evidence": "Ticket requester can access their own ticket.",
+        "object_param": "ticket_key",
+        "owner_lookup": {
+          "table": "tickets",
+          "id_col": "id",
+          "owner_col": "requester_ref",
+          "tenant_col": null
+        },
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "review-unknown-owner",
+      "method": "GET",
+      "path": "/archives/{archiveId}",
+      "expected": "manual_review_required",
+      "actual": "manual_review_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 20.934792099986225,
+      "result": {
+        "label": "manual_review_required",
+        "confidence": 0.0,
+        "evidence": "Cannot identify ownership column in ERD",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    },
+    {
+      "id": "review-conflicting-fk",
+      "method": "GET",
+      "path": "/assets/{assetId}",
+      "expected": "manual_review_required",
+      "actual": "manual_review_required",
+      "label_correct": true,
+      "params_correct": true,
+      "elapsed_seconds": 26.68874889984727,
+      "result": {
+        "label": "manual_review_required",
+        "confidence": 0.0,
+        "evidence": "Cannot identify ownership column in ERD",
+        "object_param": null,
+        "owner_lookup": null,
+        "roles": [],
+        "allowed_membership": []
+      }
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "correct": 13,
+    "accuracy": 0.9285714285714286,
+    "manual_review_rate": 0.14285714285714285,
+    "automatic_accuracy": 0.9166666666666666,
+    "full_policy_accuracy": 0.9285714285714286,
+    "full_policy_support": 14,
+    "provider_failures": 0,
+    "mean_seconds": 25.89712820707687,
+    "p50_seconds": 22.815495300106704,
+    "p95_seconds": 81.85933100013062,
+    "per_label": {
+      "public": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "role_required": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "membership_required": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "tenant_match": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "owner_match": {
+        "support": 2,
+        "predicted": 3,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "owner_or_admin": {
+        "support": 2,
+        "predicted": 1,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "manual_review_required": {
+        "support": 2,
+        "predicted": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "confusion_matrix": {
+      "public": {
+        "public": 2,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 0,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "role_required": {
+        "public": 0,
+        "role_required": 2,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 0,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "membership_required": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 2,
+        "tenant_match": 0,
+        "owner_match": 0,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "tenant_match": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 2,
+        "owner_match": 0,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "owner_match": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 2,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "owner_or_admin": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 1,
+        "owner_or_admin": 1,
+        "manual_review_required": 0
+      },
+      "manual_review_required": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 0,
+        "owner_or_admin": 0,
+        "manual_review_required": 2
+      }
+    }
+  },
+  "finished_at": "2026-09-09T11:47:34.010762+00:00"
+}

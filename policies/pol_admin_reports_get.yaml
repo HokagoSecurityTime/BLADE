@@ -1,0 +1,15 @@
+id: pol_admin_reports_get
+endpoint:
+  method: GET
+  path: /admin/reports
+label: role_required
+params:
+  object_param: null
+  owner_lookup: null
+  roles:
+  - admin
+  allowed_membership: []
+confidence: 1.0
+evidence: Access requires a specific role as indicated by the endpoint path /admin/reports.
+status: PENDING
+created_at: '2026-09-09T10:21:41.331680Z'

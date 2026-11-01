@@ -1,0 +1,19 @@
+# LoRA v4 (data-v4, seed 42, final) merged into Qwen2.5-7B-Instruct (unquantized), GGUF Q4_K_M.
+# Build: training/lora/README_serve_v4.md. Copy this file next to the GGUF, then `ollama create blade-qwen-lora-v4 -f Modelfile.blade-qwen-lora-v4`.
+# TEMPLATE reproduces the adapter chat_template.jinja (Qwen2.5, no tools) for system + user turns, ending in the generation prompt.
+# Decoding matches run_train.py evaluate(): greedy (temperature 0), no repetition penalty, max 256 new tokens.
+FROM ./blade-qwen-lora-v4-Q4_K_M.gguf
+TEMPLATE """<|im_start|>system
+{{ if .System }}{{ .System }}{{ else }}You are Qwen, created by Alibaba Cloud. You are a helpful assistant.{{ end }}<|im_end|>
+{{ range .Messages }}{{ if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ .Content }}<|im_end|>
+{{ end }}{{ end }}<|im_start|>assistant
+"""
+PARAMETER temperature 0
+PARAMETER repeat_penalty 1
+PARAMETER num_predict 256
+PARAMETER num_ctx 8192
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"

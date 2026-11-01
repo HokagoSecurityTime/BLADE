@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-10-20T06:37:32.116620+00:00",
+  "input_sha256": "5766548a870f9779d0fe8e2c7adeab378092012095ce8d0b0858462ec033c75e",
+  "notes_sha256": "f6e66df08f3c2b471b3b49d0c8fb7b2cf5e8cb9f124930593ce406f4dd75f939",
+  "review_sha256": "0824ef81ed035fec298407d08ca8de8804d6f9e20d9b61fb0ccde49e232a7944",
+  "prompt_sha256": "ef07a89b6f9389ed2d22d88ddefd618b83d1a0ef2c5c71974e0d78824c03079b",
+  "prediction_sha256": {
+    "v2.6": "6dbba26170c42e945f2d70ee6f3c6fc149f1fbd8a03ca10d96cd1d45f7887889",
+    "v2.7": "11cfd8ad215ed9a876b9c4ef1272b203c8d39bbc9509e307522480e6b5f8c38a",
+    "v2.8": "901e45bdfea0e694ed08fbe6183fdda65c47569dd0d46cfbe6bc5b4667b549ad"
+  },
+  "reviewer": "Codex agent; exact backend model identifier unavailable",
+  "api_calls": 0,
+  "human_confirmed": false,
+  "blinding": "Individual predictions not opened during this review before notes were saved; prior aggregate distributions and conversation were visible. Not a fully blinded independent evaluation.",
+  "comparison_standard": "v2.8 for all versions; not performance under each historical standard"
+}

@@ -1,0 +1,911 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>남은 라우트 분석</title><style>body{max-width:1200px;margin:40px auto;padding:20px;font:16px/1.7 system-ui}td,th{border:1px solid #ccd;padding:10px}table{border-collapse:collapse}pre{white-space:pre-wrap;overflow-wrap:anywhere}details{margin:12px 0}</style><h1>남은 16개 라우트의 코드 기반 분류</h1>
+<p>분석 미지원 16건을 모두 같은 문제로 다루지 않고 요청 의미와 인증 의존성을 분리했다. 이것은 최종 7종 라벨 확정이 아니라 후속 추출 범위 결정이다.</p>
+<table>
+<thead>
+<tr>
+<th>유형</th>
+<th style="text-align:right">건수</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>caller_relation</td>
+<td style="text-align:right">5</td>
+<td>요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.</td>
+</tr>
+<tr>
+<td>public_read_candidate</td>
+<td style="text-align:right">5</td>
+<td>공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.</td>
+</tr>
+<tr>
+<td>creator_binding</td>
+<td style="text-align:right">2</td>
+<td>인증된 요청자를 새 레코드 작성자로 기록한다. 기존 객체 소유자 일치 검사와 구분한다.</td>
+</tr>
+<tr>
+<td>authentication_entry</td>
+<td style="text-align:right">2</td>
+<td>기존 토큰 없이 로그인 자격 증명 검증 또는 가입을 수행한다. 인증 전 진입과 무조건 요청 성공은 다르다.</td>
+</tr>
+<tr>
+<td>self_account</td>
+<td style="text-align:right">2</td>
+<td>인증된 사용자 객체를 응답·수정 대상으로 사용한다. 임의 대상 ID 비교와 다른 요청자 고정 방식이다.</td>
+</tr>
+</tbody>
+</table>
+<h2>라우트별 상태</h2>
+<table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>상대 경로</th>
+<th>핸들러</th>
+<th>인증</th>
+<th>유형</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/feed</td>
+<td>get_articles_for_user_feed</td>
+<td>required</td>
+<td>caller_relation</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/{slug}/favorite</td>
+<td>mark_article_as_favorite</td>
+<td>required</td>
+<td>caller_relation</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{slug}/favorite</td>
+<td>remove_article_from_favorites</td>
+<td>required</td>
+<td>caller_relation</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>list_articles</td>
+<td>optional</td>
+<td>public_read_candidate</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>create_new_article</td>
+<td>required</td>
+<td>creator_binding</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/{slug}</td>
+<td>retrieve_article_by_slug</td>
+<td>optional</td>
+<td>public_read_candidate</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/login</td>
+<td>login</td>
+<td>none_found</td>
+<td>authentication_entry</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>register</td>
+<td>none_found</td>
+<td>authentication_entry</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>list_comments_for_article</td>
+<td>optional</td>
+<td>public_read_candidate</td>
+</tr>
+<tr>
+<td>POST</td>
+<td></td>
+<td>create_comment_for_article</td>
+<td>required</td>
+<td>creator_binding</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/{username}</td>
+<td>retrieve_profile_by_username</td>
+<td>optional</td>
+<td>public_read_candidate</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/{username}/follow</td>
+<td>follow_for_user</td>
+<td>required</td>
+<td>caller_relation</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/{username}/follow</td>
+<td>unsubscribe_from_user</td>
+<td>required</td>
+<td>caller_relation</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>get_all_tags</td>
+<td>none_found</td>
+<td>public_read_candidate</td>
+</tr>
+<tr>
+<td>GET</td>
+<td></td>
+<td>retrieve_current_user</td>
+<td>required</td>
+<td>self_account</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td></td>
+<td>update_current_user</td>
+<td>required</td>
+<td>self_account</td>
+</tr>
+</tbody>
+</table>
+<h2>핵심 발견</h2>
+<ul>
+<li>인증만으로 역할 요구를 만들지 않는다. 생성자 기록은 기존 객체 소유권 검사와 다르다.</li>
+<li>본인 계정은 대상 객체를 인증 사용자로 고정하는 방식이다. 직접 비교문만 찾는 기존 추출기는 이를 놓친다.</li>
+<li>즐겨찾기·팔로우는 요청자의 관계 레코드가 보호 대상이다. 글·프로필 소유권으로 치환하면 의미가 바뀐다.</li>
+<li>공개 후보 5건 중 4건은 직접·간접 optional 인증 경로가 있고, tags는 인증 의존성이 발견되지 않았다. tags를 공개라고 확정하는 근거는 아직 부족하다.</li>
+<li>login/register에는 기존 토큰 요구가 없지만 login은 비밀번호를 검사한다. public이 모든 입력을 성공시킨다는 뜻은 아니다.</li>
+</ul>
+<h2>다음 구현 우선순위</h2>
+<ol>
+<li>self_account 2건의 요청자→수정 대상 바인딩을 추출하고 타인 ID 주입 차단을 격리 테스트한다.</li>
+<li>creator_binding 2건의 작성자 강제 귀속을 확인한다. 기존 객체 조건과 별도 저장한다.</li>
+<li>caller_relation 5건은 repository→SQL에서 요청자 키가 WHERE/INSERT에 어떻게 쓰이는지 추적한다. 대상 객체 소유권으로 자동 매핑하지 않는다.</li>
+<li>공개 후보는 실제 익명 요청과 유효·무효 토큰을 구분해 통합 검증한다.</li>
+</ol>
+<p>현재 단계에서 전체 서버·JWT·DB를 실행하지 않았다. 위 요청 의미 분류는 소스 검토이며, 지원되지 않는 모든 호출이 해소됐다는 뜻이 아니다. 라벨·데이터셋·런타임은 변경하지 않았다.</p>
+<p>출처: https://github.com/nsidnev/fastapi-realworld-example-app/tree/029eb7781c60d5f563ee8990a0cbfb79b244538c</p>
+<details><summary>get_articles_for_user_feed</summary><pre>{
+  &quot;handler&quot;: &quot;get_articles_for_user_feed&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/feed&quot;,
+  &quot;triage_group&quot;: &quot;caller_relation&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;get_articles_for_user_feed&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 22,
+    &quot;end&quot;: 44,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;22: @router.get(\n23:     \&quot;/feed\&quot;,\n24:     response_model=ListOfArticlesInResponse,\n25:     name=\&quot;articles:get-user-feed-articles\&quot;,\n26: )\n27: async def get_articles_for_user_feed(\n28:     limit: int = Query(DEFAULT_ARTICLES_LIMIT, ge=1),\n29:     offset: int = Query(DEFAULT_ARTICLES_OFFSET, ge=0),\n30:     user: User = Depends(get_current_user_authorizer()),\n31:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n32: ) -&gt; ListOfArticlesInResponse:\n33:     articles = await articles_repo.get_articles_for_user_feed(\n34:         user=user,\n35:         limit=limit,\n36:         offset=offset,\n37:     )\n38:     articles_for_response = [\n39:         ArticleForResponse(**article.dict()) for article in articles\n40:     ]\n41:     return ListOfArticlesInResponse(\n42:         articles=articles_for_response,\n43:         articles_count=len(articles),\n44:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/articles.py&quot;,
+      &quot;start&quot;: 214,
+      &quot;end&quot;: 235,
+      &quot;sha256&quot;: &quot;e4acfaea2b0155865c8a8ca688ae206a3f6959e5a650584ec54c1e04350d8afe&quot;,
+      &quot;code&quot;: &quot;214:     async def get_articles_for_user_feed(\n215:         self,\n216:         *,\n217:         user: User,\n218:         limit: int = 20,\n219:         offset: int = 0,\n220:     ) -&gt; List[Article]:\n221:         articles_rows = await queries.get_articles_for_feed(\n222:             self.connection,\n223:             follower_username=user.username,\n224:             limit=limit,\n225:             offset=offset,\n226:         )\n227:         return [\n228:             await self._get_article_from_db_record(\n229:                 article_row=article_row,\n230:                 slug=article_row[SLUG_ALIAS],\n231:                 author_username=article_row[AUTHOR_USERNAME_ALIAS],\n232:                 requested_user=user,\n233:             )\n234:             for article_row in articles_rows\n235:         ]&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>mark_article_as_favorite</summary><pre>{
+  &quot;handler&quot;: &quot;mark_article_as_favorite&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}/favorite&quot;,
+  &quot;triage_group&quot;: &quot;caller_relation&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_article_by_slug_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;mark_article_as_favorite&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 47,
+    &quot;end&quot;: 74,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;47: @router.post(\n48:     \&quot;/{slug}/favorite\&quot;,\n49:     response_model=ArticleInResponse,\n50:     name=\&quot;articles:mark-article-favorite\&quot;,\n51: )\n52: async def mark_article_as_favorite(\n53:     article: Article = Depends(get_article_by_slug_from_path),\n54:     user: User = Depends(get_current_user_authorizer()),\n55:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n56: ) -&gt; ArticleInResponse:\n57:     if not article.favorited:\n58:         await articles_repo.add_article_into_favorites(article=article, user=user)\n59: \n60:         return ArticleInResponse(\n61:             article=ArticleForResponse.from_orm(\n62:                 article.copy(\n63:                     update={\n64:                         \&quot;favorited\&quot;: True,\n65:                         \&quot;favorites_count\&quot;: article.favorites_count + 1,\n66:                     },\n67:                 ),\n68:             ),\n69:         )\n70: \n71:     raise HTTPException(\n72:         status_code=status.HTTP_400_BAD_REQUEST,\n73:         detail=strings.ARTICLE_IS_ALREADY_FAVORITED,\n74:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/articles.py&quot;,
+      &quot;start&quot;: 275,
+      &quot;end&quot;: 280,
+      &quot;sha256&quot;: &quot;e4acfaea2b0155865c8a8ca688ae206a3f6959e5a650584ec54c1e04350d8afe&quot;,
+      &quot;code&quot;: &quot;275:     async def add_article_into_favorites(self, *, article: Article, user: User) -&gt; None:\n276:         await queries.add_article_to_favorites(\n277:             self.connection,\n278:             username=user.username,\n279:             slug=article.slug,\n280:         )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>remove_article_from_favorites</summary><pre>{
+  &quot;handler&quot;: &quot;remove_article_from_favorites&quot;,
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}/favorite&quot;,
+  &quot;triage_group&quot;: &quot;caller_relation&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_article_by_slug_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;remove_article_from_favorites&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_common.py&quot;,
+    &quot;start&quot;: 77,
+    &quot;end&quot;: 104,
+    &quot;sha256&quot;: &quot;51ea1475c5d9cf30135a76081d6eb056f647a82ff5303dd97ca88e6813549f83&quot;,
+    &quot;code&quot;: &quot;77: @router.delete(\n78:     \&quot;/{slug}/favorite\&quot;,\n79:     response_model=ArticleInResponse,\n80:     name=\&quot;articles:unmark-article-favorite\&quot;,\n81: )\n82: async def remove_article_from_favorites(\n83:     article: Article = Depends(get_article_by_slug_from_path),\n84:     user: User = Depends(get_current_user_authorizer()),\n85:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n86: ) -&gt; ArticleInResponse:\n87:     if article.favorited:\n88:         await articles_repo.remove_article_from_favorites(article=article, user=user)\n89: \n90:         return ArticleInResponse(\n91:             article=ArticleForResponse.from_orm(\n92:                 article.copy(\n93:                     update={\n94:                         \&quot;favorited\&quot;: False,\n95:                         \&quot;favorites_count\&quot;: article.favorites_count - 1,\n96:                     },\n97:                 ),\n98:             ),\n99:         )\n100: \n101:     raise HTTPException(\n102:         status_code=status.HTTP_400_BAD_REQUEST,\n103:         detail=strings.ARTICLE_IS_NOT_FAVORITED,\n104:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/articles.py&quot;,
+      &quot;start&quot;: 282,
+      &quot;end&quot;: 292,
+      &quot;sha256&quot;: &quot;e4acfaea2b0155865c8a8ca688ae206a3f6959e5a650584ec54c1e04350d8afe&quot;,
+      &quot;code&quot;: &quot;282:     async def remove_article_from_favorites(\n283:         self,\n284:         *,\n285:         article: Article,\n286:         user: User,\n287:     ) -&gt; None:\n288:         await queries.remove_article_from_favorites(\n289:             self.connection,\n290:             username=user.username,\n291:             slug=article.slug,\n292:         )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>list_articles</summary><pre>{
+  &quot;handler&quot;: &quot;list_articles&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;public_read_candidate&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.&quot;,
+  &quot;authentication_state&quot;: &quot;optional&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;list_articles&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 30,
+    &quot;end&quot;: 50,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;30: @router.get(\&quot;\&quot;, response_model=ListOfArticlesInResponse, name=\&quot;articles:list-articles\&quot;)\n31: async def list_articles(\n32:     articles_filters: ArticlesFilters = Depends(get_articles_filters),\n33:     user: Optional[User] = Depends(get_current_user_authorizer(required=False)),\n34:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n35: ) -&gt; ListOfArticlesInResponse:\n36:     articles = await articles_repo.filter_articles(\n37:         tag=articles_filters.tag,\n38:         author=articles_filters.author,\n39:         favorited=articles_filters.favorited,\n40:         limit=articles_filters.limit,\n41:         offset=articles_filters.offset,\n42:         requested_user=user,\n43:     )\n44:     articles_for_response = [\n45:         ArticleForResponse.from_orm(article) for article in articles\n46:     ]\n47:     return ListOfArticlesInResponse(\n48:         articles=articles_for_response,\n49:         articles_count=len(articles),\n50:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/articles.py&quot;,
+      &quot;start&quot;: 101,
+      &quot;end&quot;: 212,
+      &quot;sha256&quot;: &quot;e4acfaea2b0155865c8a8ca688ae206a3f6959e5a650584ec54c1e04350d8afe&quot;,
+      &quot;code&quot;: &quot;101:     async def filter_articles(  # noqa: WPS211\n102:         self,\n103:         *,\n104:         tag: Optional[str] = None,\n105:         author: Optional[str] = None,\n106:         favorited: Optional[str] = None,\n107:         limit: int = 20,\n108:         offset: int = 0,\n109:         requested_user: Optional[User] = None,\n110:     ) -&gt; List[Article]:\n111:         query_params: List[Union[str, int]] = []\n112:         query_params_count = 0\n113: \n114:         # fmt: off\n115:         query = Query.from_(\n116:             articles,\n117:         ).select(\n118:             articles.id,\n119:             articles.slug,\n120:             articles.title,\n121:             articles.description,\n122:             articles.body,\n123:             articles.created_at,\n124:             articles.updated_at,\n125:             Query.from_(\n126:                 users,\n127:             ).where(\n128:                 users.id == articles.author_id,\n129:             ).select(\n130:                 users.username,\n131:             ).as_(\n132:                 AUTHOR_USERNAME_ALIAS,\n133:             ),\n134:         )\n135:         # fmt: on\n136: \n137:         if tag:\n138:             query_params.append(tag)\n139:             query_params_count += 1\n140: \n141:             # fmt: off\n142:             query = query.join(\n143:                 articles_to_tags,\n144:             ).on(\n145:                 (articles.id == articles_to_tags.article_id) &amp; (\n146:                     articles_to_tags.tag == Query.from_(\n147:                         tags_table,\n148:                     ).where(\n149:                         tags_table.tag == Parameter(query_params_count),\n150:                     ).select(\n151:                         tags_table.tag,\n152:                     )\n153:                 ),\n154:             )\n155:             # fmt: on\n156: \n157:         if author:\n158:             query_params.append(author)\n159:             query_params_count += 1\n160: \n161:             # fmt: off\n162:             query = query.join(\n163:                 users,\n164:             ).on(\n165:                 (articles.author_id == users.id) &amp; (\n166:                     users.id == Query.from_(\n167:                         users,\n168:                     ).where(\n169:                         users.username == Parameter(query_params_count),\n170:                     ).select(\n171:                         users.id,\n172:                     )\n173:                 ),\n174:             )\n175:             # fmt: on\n176: \n177:         if favorited:\n178:             query_params.append(favorited)\n179:             query_params_count += 1\n180: \n181:             # fmt: off\n182:             query = query.join(\n183:                 favorites,\n184:             ).on(\n185:                 (articles.id == favorites.article_id) &amp; (\n186:                     favorites.user_id == Query.from_(\n187:                         users,\n188:                     ).where(\n189:                         users.username == Parameter(query_params_count),\n190:                     ).select(\n191:                         users.id,\n192:                     )\n193:                 ),\n194:             )\n195:             # fmt: on\n196: \n197:         query = query.limit(Parameter(query_params_count + 1)).offset(\n198:             Parameter(query_params_count + 2),\n199:         )\n200:         query_params.extend([limit, offset])\n201: \n202:         articles_rows = await self.connection.fetch(query.get_sql(), *query_params)\n203: \n204:         return [\n205:             await self._get_article_from_db_record(\n206:                 article_row=article_row,\n207:                 slug=article_row[SLUG_ALIAS],\n208:                 author_username=article_row[AUTHOR_USERNAME_ALIAS],\n209:                 requested_user=requested_user,\n210:             )\n211:             for article_row in articles_rows\n212:         ]&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>create_new_article</summary><pre>{
+  &quot;handler&quot;: &quot;create_new_article&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;creator_binding&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;인증된 요청자를 새 레코드 작성자로 기록한다. 기존 객체 소유자 일치 검사와 구분한다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;create_new_article&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 53,
+    &quot;end&quot;: 79,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;53: @router.post(\n54:     \&quot;\&quot;,\n55:     status_code=status.HTTP_201_CREATED,\n56:     response_model=ArticleInResponse,\n57:     name=\&quot;articles:create-article\&quot;,\n58: )\n59: async def create_new_article(\n60:     article_create: ArticleInCreate = Body(..., embed=True, alias=\&quot;article\&quot;),\n61:     user: User = Depends(get_current_user_authorizer()),\n62:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n63: ) -&gt; ArticleInResponse:\n64:     slug = get_slug_for_article(article_create.title)\n65:     if await check_article_exists(articles_repo, slug):\n66:         raise HTTPException(\n67:             status_code=status.HTTP_400_BAD_REQUEST,\n68:             detail=strings.ARTICLE_ALREADY_EXISTS,\n69:         )\n70: \n71:     article = await articles_repo.create_article(\n72:         slug=slug,\n73:         title=article_create.title,\n74:         description=article_create.description,\n75:         body=article_create.body,\n76:         author=user,\n77:         tags=article_create.tags,\n78:     )\n79:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/articles.py&quot;,
+      &quot;start&quot;: 34,
+      &quot;end&quot;: 63,
+      &quot;sha256&quot;: &quot;e4acfaea2b0155865c8a8ca688ae206a3f6959e5a650584ec54c1e04350d8afe&quot;,
+      &quot;code&quot;: &quot;34:     async def create_article(  # noqa: WPS211\n35:         self,\n36:         *,\n37:         slug: str,\n38:         title: str,\n39:         description: str,\n40:         body: str,\n41:         author: User,\n42:         tags: Optional[Sequence[str]] = None,\n43:     ) -&gt; Article:\n44:         async with self.connection.transaction():\n45:             article_row = await queries.create_new_article(\n46:                 self.connection,\n47:                 slug=slug,\n48:                 title=title,\n49:                 description=description,\n50:                 body=body,\n51:                 author_username=author.username,\n52:             )\n53: \n54:             if tags:\n55:                 await self._tags_repo.create_tags_that_dont_exist(tags=tags)\n56:                 await self._link_article_with_tags(slug=slug, tags=tags)\n57: \n58:         return await self._get_article_from_db_record(\n59:             article_row=article_row,\n60:             slug=slug,\n61:             author_username=article_row[AUTHOR_USERNAME_ALIAS],\n62:             requested_user=author,\n63:         )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>retrieve_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_article_by_slug&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;triage_group&quot;: &quot;public_read_candidate&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.&quot;,
+  &quot;authentication_state&quot;: &quot;optional&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_article_by_slug_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/articles/articles_resource.py&quot;,
+    &quot;start&quot;: 82,
+    &quot;end&quot;: 86,
+    &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+    &quot;code&quot;: &quot;82: @router.get(\&quot;/{slug}\&quot;, response_model=ArticleInResponse, name=\&quot;articles:get-article\&quot;)\n83: async def retrieve_article_by_slug(\n84:     article: Article = Depends(get_article_by_slug_from_path),\n85: ) -&gt; ArticleInResponse:\n86:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+  },
+  &quot;repository_refs&quot;: [],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>login</summary><pre>{
+  &quot;handler&quot;: &quot;login&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/login&quot;,
+  &quot;triage_group&quot;: &quot;authentication_entry&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;기존 토큰 없이 로그인 자격 증명 검증 또는 가입을 수행한다. 인증 전 진입과 무조건 요청 성공은 다르다.&quot;,
+  &quot;authentication_state&quot;: &quot;none_found&quot;,
+  &quot;authentication_evidence&quot;: [],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/authentication.py&quot;,
+    &quot;start&quot;: 22,
+    &quot;end&quot;: 53,
+    &quot;sha256&quot;: &quot;f8712fe91435653c8cc35c66e0249277e8eb9db8cba33149a9af546d05938aad&quot;,
+    &quot;code&quot;: &quot;22: @router.post(\&quot;/login\&quot;, response_model=UserInResponse, name=\&quot;auth:login\&quot;)\n23: async def login(\n24:     user_login: UserInLogin = Body(..., embed=True, alias=\&quot;user\&quot;),\n25:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n26:     settings: AppSettings = Depends(get_app_settings),\n27: ) -&gt; UserInResponse:\n28:     wrong_login_error = HTTPException(\n29:         status_code=HTTP_400_BAD_REQUEST,\n30:         detail=strings.INCORRECT_LOGIN_INPUT,\n31:     )\n32: \n33:     try:\n34:         user = await users_repo.get_user_by_email(email=user_login.email)\n35:     except EntityDoesNotExist as existence_error:\n36:         raise wrong_login_error from existence_error\n37: \n38:     if not user.check_password(user_login.password):\n39:         raise wrong_login_error\n40: \n41:     token = jwt.create_access_token_for_user(\n42:         user,\n43:         str(settings.secret_key.get_secret_value()),\n44:     )\n45:     return UserInResponse(\n46:         user=UserWithToken(\n47:             username=user.username,\n48:             email=user.email,\n49:             bio=user.bio,\n50:             image=user.image,\n51:             token=token,\n52:         ),\n53:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/users.py&quot;,
+      &quot;start&quot;: 10,
+      &quot;end&quot;: 15,
+      &quot;sha256&quot;: &quot;81aa44c80794c78f08245fed90be373f62c0fd93bdd8951c3737846738f5bfef&quot;,
+      &quot;code&quot;: &quot;10:     async def get_user_by_email(self, *, email: str) -&gt; UserInDB:\n11:         user_row = await queries.get_user_by_email(self.connection, email=email)\n12:         if user_row:\n13:             return UserInDB(**user_row)\n14: \n15:         raise EntityDoesNotExist(\&quot;user with email {0} does not exist\&quot;.format(email))&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>register</summary><pre>{
+  &quot;handler&quot;: &quot;register&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;authentication_entry&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;기존 토큰 없이 로그인 자격 증명 검증 또는 가입을 수행한다. 인증 전 진입과 무조건 요청 성공은 다르다.&quot;,
+  &quot;authentication_state&quot;: &quot;none_found&quot;,
+  &quot;authentication_evidence&quot;: [],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/authentication.py&quot;,
+    &quot;start&quot;: 56,
+    &quot;end&quot;: 93,
+    &quot;sha256&quot;: &quot;f8712fe91435653c8cc35c66e0249277e8eb9db8cba33149a9af546d05938aad&quot;,
+    &quot;code&quot;: &quot;56: @router.post(\n57:     \&quot;\&quot;,\n58:     status_code=HTTP_201_CREATED,\n59:     response_model=UserInResponse,\n60:     name=\&quot;auth:register\&quot;,\n61: )\n62: async def register(\n63:     user_create: UserInCreate = Body(..., embed=True, alias=\&quot;user\&quot;),\n64:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n65:     settings: AppSettings = Depends(get_app_settings),\n66: ) -&gt; UserInResponse:\n67:     if await check_username_is_taken(users_repo, user_create.username):\n68:         raise HTTPException(\n69:             status_code=HTTP_400_BAD_REQUEST,\n70:             detail=strings.USERNAME_TAKEN,\n71:         )\n72: \n73:     if await check_email_is_taken(users_repo, user_create.email):\n74:         raise HTTPException(\n75:             status_code=HTTP_400_BAD_REQUEST,\n76:             detail=strings.EMAIL_TAKEN,\n77:         )\n78: \n79:     user = await users_repo.create_user(**user_create.dict())\n80: \n81:     token = jwt.create_access_token_for_user(\n82:         user,\n83:         str(settings.secret_key.get_secret_value()),\n84:     )\n85:     return UserInResponse(\n86:         user=UserWithToken(\n87:             username=user.username,\n88:             email=user.email,\n89:             bio=user.bio,\n90:             image=user.image,\n91:             token=token,\n92:         ),\n93:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/users.py&quot;,
+      &quot;start&quot;: 29,
+      &quot;end&quot;: 48,
+      &quot;sha256&quot;: &quot;81aa44c80794c78f08245fed90be373f62c0fd93bdd8951c3737846738f5bfef&quot;,
+      &quot;code&quot;: &quot;29:     async def create_user(\n30:         self,\n31:         *,\n32:         username: str,\n33:         email: str,\n34:         password: str,\n35:     ) -&gt; UserInDB:\n36:         user = UserInDB(username=username, email=email)\n37:         user.change_password(password)\n38: \n39:         async with self.connection.transaction():\n40:             user_row = await queries.create_new_user(\n41:                 self.connection,\n42:                 username=user.username,\n43:                 email=user.email,\n44:                 salt=user.salt,\n45:                 hashed_password=user.hashed_password,\n46:             )\n47: \n48:         return user.copy(update=dict(user_row))&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>list_comments_for_article</summary><pre>{
+  &quot;handler&quot;: &quot;list_comments_for_article&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;public_read_candidate&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.&quot;,
+  &quot;authentication_state&quot;: &quot;optional&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_article_by_slug_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;list_comments_for_article&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/comments.py&quot;,
+    &quot;start&quot;: 26,
+    &quot;end&quot;: 37,
+    &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+    &quot;code&quot;: &quot;26: @router.get(\n27:     \&quot;\&quot;,\n28:     response_model=ListOfCommentsInResponse,\n29:     name=\&quot;comments:get-comments-for-article\&quot;,\n30: )\n31: async def list_comments_for_article(\n32:     article: Article = Depends(get_article_by_slug_from_path),\n33:     user: Optional[User] = Depends(get_current_user_authorizer(required=False)),\n34:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n35: ) -&gt; ListOfCommentsInResponse:\n36:     comments = await comments_repo.get_comments_for_article(article=article, user=user)\n37:     return ListOfCommentsInResponse(comments=comments)&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/comments.py&quot;,
+      &quot;start&quot;: 42,
+      &quot;end&quot;: 59,
+      &quot;sha256&quot;: &quot;95f7d8807f65207cd83a3245e990aba7b04a3b2023ec8c0774c5073d4897aa6b&quot;,
+      &quot;code&quot;: &quot;42:     async def get_comments_for_article(\n43:         self,\n44:         *,\n45:         article: Article,\n46:         user: Optional[User] = None,\n47:     ) -&gt; List[Comment]:\n48:         comments_rows = await queries.get_comments_for_article_by_slug(\n49:             self.connection,\n50:             slug=article.slug,\n51:         )\n52:         return [\n53:             await self._get_comment_from_db_record(\n54:                 comment_row=comment_row,\n55:                 author_username=comment_row[\&quot;author_username\&quot;],\n56:                 requested_user=user,\n57:             )\n58:             for comment_row in comments_rows\n59:         ]&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>create_comment_for_article</summary><pre>{
+  &quot;handler&quot;: &quot;create_comment_for_article&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;creator_binding&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;인증된 요청자를 새 레코드 작성자로 기록한다. 기존 객체 소유자 일치 검사와 구분한다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_article_by_slug_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;create_comment_for_article&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/comments.py&quot;,
+    &quot;start&quot;: 40,
+    &quot;end&quot;: 57,
+    &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+    &quot;code&quot;: &quot;40: @router.post(\n41:     \&quot;\&quot;,\n42:     status_code=status.HTTP_201_CREATED,\n43:     response_model=CommentInResponse,\n44:     name=\&quot;comments:create-comment-for-article\&quot;,\n45: )\n46: async def create_comment_for_article(\n47:     comment_create: CommentInCreate = Body(..., embed=True, alias=\&quot;comment\&quot;),\n48:     article: Article = Depends(get_article_by_slug_from_path),\n49:     user: User = Depends(get_current_user_authorizer()),\n50:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n51: ) -&gt; CommentInResponse:\n52:     comment = await comments_repo.create_comment_for_article(\n53:         body=comment_create.body,\n54:         article=article,\n55:         user=user,\n56:     )\n57:     return CommentInResponse(comment=comment)&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/comments.py&quot;,
+      &quot;start&quot;: 61,
+      &quot;end&quot;: 78,
+      &quot;sha256&quot;: &quot;95f7d8807f65207cd83a3245e990aba7b04a3b2023ec8c0774c5073d4897aa6b&quot;,
+      &quot;code&quot;: &quot;61:     async def create_comment_for_article(\n62:         self,\n63:         *,\n64:         body: str,\n65:         article: Article,\n66:         user: User,\n67:     ) -&gt; Comment:\n68:         comment_row = await queries.create_new_comment(\n69:             self.connection,\n70:             body=body,\n71:             article_slug=article.slug,\n72:             author_username=user.username,\n73:         )\n74:         return await self._get_comment_from_db_record(\n75:             comment_row=comment_row,\n76:             author_username=comment_row[\&quot;author_username\&quot;],\n77:             requested_user=user,\n78:         )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>retrieve_profile_by_username</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_profile_by_username&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;/{username}&quot;,
+  &quot;triage_group&quot;: &quot;public_read_candidate&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.&quot;,
+  &quot;authentication_state&quot;: &quot;optional&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_profile_by_username_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 16,
+    &quot;end&quot;: 24,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;16: @router.get(\n17:     \&quot;/{username}\&quot;,\n18:     response_model=ProfileInResponse,\n19:     name=\&quot;profiles:get-profile\&quot;,\n20: )\n21: async def retrieve_profile_by_username(\n22:     profile: Profile = Depends(get_profile_by_username_from_path),\n23: ) -&gt; ProfileInResponse:\n24:     return ProfileInResponse(profile=profile)&quot;
+  },
+  &quot;repository_refs&quot;: [],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>follow_for_user</summary><pre>{
+  &quot;handler&quot;: &quot;follow_for_user&quot;,
+  &quot;method&quot;: &quot;POST&quot;,
+  &quot;relative_route&quot;: &quot;/{username}/follow&quot;,
+  &quot;triage_group&quot;: &quot;caller_relation&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_profile_by_username_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;follow_for_user&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 27,
+    &quot;end&quot;: 54,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;27: @router.post(\n28:     \&quot;/{username}/follow\&quot;,\n29:     response_model=ProfileInResponse,\n30:     name=\&quot;profiles:follow-user\&quot;,\n31: )\n32: async def follow_for_user(\n33:     profile: Profile = Depends(get_profile_by_username_from_path),\n34:     user: User = Depends(get_current_user_authorizer()),\n35:     profiles_repo: ProfilesRepository = Depends(get_repository(ProfilesRepository)),\n36: ) -&gt; ProfileInResponse:\n37:     if user.username == profile.username:\n38:         raise HTTPException(\n39:             status_code=HTTP_400_BAD_REQUEST,\n40:             detail=strings.UNABLE_TO_FOLLOW_YOURSELF,\n41:         )\n42: \n43:     if profile.following:\n44:         raise HTTPException(\n45:             status_code=HTTP_400_BAD_REQUEST,\n46:             detail=strings.USER_IS_ALREADY_FOLLOWED,\n47:         )\n48: \n49:     await profiles_repo.add_user_into_followers(\n50:         target_user=profile,\n51:         requested_user=user,\n52:     )\n53: \n54:     return ProfileInResponse(profile=profile.copy(update={\&quot;following\&quot;: True}))&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/profiles.py&quot;,
+      &quot;start&quot;: 50,
+      &quot;end&quot;: 61,
+      &quot;sha256&quot;: &quot;af5f5b9babd13b6d984f8d85f282e8c0884e28e4606ec6a0588e0bc28cc0f2be&quot;,
+      &quot;code&quot;: &quot;50:     async def add_user_into_followers(\n51:         self,\n52:         *,\n53:         target_user: UserLike,\n54:         requested_user: UserLike,\n55:     ) -&gt; None:\n56:         async with self.connection.transaction():\n57:             await queries.subscribe_user_to_another(\n58:                 self.connection,\n59:                 follower_username=requested_user.username,\n60:                 following_username=target_user.username,\n61:             )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>unsubscribe_from_user</summary><pre>{
+  &quot;handler&quot;: &quot;unsubscribe_from_user&quot;,
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{username}/follow&quot;,
+  &quot;triage_group&quot;: &quot;caller_relation&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;요청자의 즐겨찾기·팔로우 관계 또는 피드를 조작한다. 대상 글이나 다른 프로필의 소유자여야 한다는 뜻이 아니다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;optional&quot;,
+      &quot;via&quot;: &quot;get_profile_by_username_from_path&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer(required=False))&quot;
+    },
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;unsubscribe_from_user&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/profiles.py&quot;,
+    &quot;start&quot;: 57,
+    &quot;end&quot;: 84,
+    &quot;sha256&quot;: &quot;455d398bc084cc70a42a3105f519b4af22002792bd22076017fca28a9cf4e0f9&quot;,
+    &quot;code&quot;: &quot;57: @router.delete(\n58:     \&quot;/{username}/follow\&quot;,\n59:     response_model=ProfileInResponse,\n60:     name=\&quot;profiles:unsubscribe-from-user\&quot;,\n61: )\n62: async def unsubscribe_from_user(\n63:     profile: Profile = Depends(get_profile_by_username_from_path),\n64:     user: User = Depends(get_current_user_authorizer()),\n65:     profiles_repo: ProfilesRepository = Depends(get_repository(ProfilesRepository)),\n66: ) -&gt; ProfileInResponse:\n67:     if user.username == profile.username:\n68:         raise HTTPException(\n69:             status_code=HTTP_400_BAD_REQUEST,\n70:             detail=strings.UNABLE_TO_UNSUBSCRIBE_FROM_YOURSELF,\n71:         )\n72: \n73:     if not profile.following:\n74:         raise HTTPException(\n75:             status_code=HTTP_400_BAD_REQUEST,\n76:             detail=strings.USER_IS_NOT_FOLLOWED,\n77:         )\n78: \n79:     await profiles_repo.remove_user_from_followers(\n80:         target_user=profile,\n81:         requested_user=user,\n82:     )\n83: \n84:     return ProfileInResponse(profile=profile.copy(update={\&quot;following\&quot;: False}))&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/profiles.py&quot;,
+      &quot;start&quot;: 63,
+      &quot;end&quot;: 74,
+      &quot;sha256&quot;: &quot;af5f5b9babd13b6d984f8d85f282e8c0884e28e4606ec6a0588e0bc28cc0f2be&quot;,
+      &quot;code&quot;: &quot;63:     async def remove_user_from_followers(\n64:         self,\n65:         *,\n66:         target_user: UserLike,\n67:         requested_user: UserLike,\n68:     ) -&gt; None:\n69:         async with self.connection.transaction():\n70:             await queries.unsubscribe_user_from_another(\n71:                 self.connection,\n72:                 follower_username=requested_user.username,\n73:                 following_username=target_user.username,\n74:             )&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>get_all_tags</summary><pre>{
+  &quot;handler&quot;: &quot;get_all_tags&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;public_read_candidate&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;공개 조회 후보. optional 인증 또는 인증 의존성 없음과 핸들러를 대조했다. 실제 배포 공개 접근은 미확정.&quot;,
+  &quot;authentication_state&quot;: &quot;none_found&quot;,
+  &quot;authentication_evidence&quot;: [],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/tags.py&quot;,
+    &quot;start&quot;: 10,
+    &quot;end&quot;: 15,
+    &quot;sha256&quot;: &quot;92a8c0abd744834c84fffe81f09dddd6cf08886b2ff46437cba00602c879325e&quot;,
+    &quot;code&quot;: &quot;10: @router.get(\&quot;\&quot;, response_model=TagsInList, name=\&quot;tags:get-all\&quot;)\n11: async def get_all_tags(\n12:     tags_repo: TagsRepository = Depends(get_repository(TagsRepository)),\n13: ) -&gt; TagsInList:\n14:     tags = await tags_repo.get_all_tags()\n15:     return TagsInList(tags=tags)&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/tags.py&quot;,
+      &quot;start&quot;: 8,
+      &quot;end&quot;: 10,
+      &quot;sha256&quot;: &quot;9c57cdf46c665a56c5766325951ff38cccc1d774eff5be94c07c5a3aad171420&quot;,
+      &quot;code&quot;: &quot;8:     async def get_all_tags(self) -&gt; List[str]:\n9:         tags_row = await queries.get_all_tags(self.connection)\n10:         return [tag[0] for tag in tags_row]&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>retrieve_current_user</summary><pre>{
+  &quot;handler&quot;: &quot;retrieve_current_user&quot;,
+  &quot;method&quot;: &quot;GET&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;self_account&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;인증된 사용자 객체를 응답·수정 대상으로 사용한다. 임의 대상 ID 비교와 다른 요청자 고정 방식이다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;retrieve_current_user&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+    &quot;start&quot;: 18,
+    &quot;end&quot;: 35,
+    &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+    &quot;code&quot;: &quot;18: @router.get(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:get-current-user\&quot;)\n19: async def retrieve_current_user(\n20:     user: User = Depends(get_current_user_authorizer()),\n21:     settings: AppSettings = Depends(get_app_settings),\n22: ) -&gt; UserInResponse:\n23:     token = jwt.create_access_token_for_user(\n24:         user,\n25:         str(settings.secret_key.get_secret_value()),\n26:     )\n27:     return UserInResponse(\n28:         user=UserWithToken(\n29:             username=user.username,\n30:             email=user.email,\n31:             bio=user.bio,\n32:             image=user.image,\n33:             token=token,\n34:         ),\n35:     )&quot;
+  },
+  &quot;repository_refs&quot;: [],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details><details><summary>update_current_user</summary><pre>{
+  &quot;handler&quot;: &quot;update_current_user&quot;,
+  &quot;method&quot;: &quot;PUT&quot;,
+  &quot;relative_route&quot;: &quot;&quot;,
+  &quot;triage_group&quot;: &quot;self_account&quot;,
+  &quot;triage_origin&quot;: &quot;Codex static source review; not LLM API or universal rule&quot;,
+  &quot;reason&quot;: &quot;인증된 사용자 객체를 응답·수정 대상으로 사용한다. 임의 대상 ID 비교와 다른 요청자 고정 방식이다.&quot;,
+  &quot;authentication_state&quot;: &quot;required&quot;,
+  &quot;authentication_evidence&quot;: [
+    {
+      &quot;state&quot;: &quot;required&quot;,
+      &quot;via&quot;: &quot;update_current_user&quot;,
+      &quot;factory_ref&quot;: {
+        &quot;path&quot;: &quot;app/api/dependencies/authentication.py&quot;,
+        &quot;start&quot;: 35,
+        &quot;end&quot;: 36,
+        &quot;sha256&quot;: &quot;f3e625aaf2b069ed3ca1386ed4d11937bdc7112a5295c48c814c80fe981fc6cf&quot;,
+        &quot;code&quot;: &quot;35: def get_current_user_authorizer(*, required: bool = True) -&gt; Callable:  # type: ignore\n36:     return _get_current_user if required else _get_current_user_optional&quot;
+      },
+      &quot;dependency_expression&quot;: &quot;Depends(get_current_user_authorizer())&quot;
+    }
+  ],
+  &quot;handler_ref&quot;: {
+    &quot;path&quot;: &quot;app/api/routes/users.py&quot;,
+    &quot;start&quot;: 38,
+    &quot;end&quot;: 73,
+    &quot;sha256&quot;: &quot;b63f0dfe545d5dc9b199f48a4d3411c4421ab65b904e609bfe1b3a55481ecbf1&quot;,
+    &quot;code&quot;: &quot;38: @router.put(\&quot;\&quot;, response_model=UserInResponse, name=\&quot;users:update-current-user\&quot;)\n39: async def update_current_user(\n40:     user_update: UserInUpdate = Body(..., embed=True, alias=\&quot;user\&quot;),\n41:     current_user: User = Depends(get_current_user_authorizer()),\n42:     users_repo: UsersRepository = Depends(get_repository(UsersRepository)),\n43:     settings: AppSettings = Depends(get_app_settings),\n44: ) -&gt; UserInResponse:\n45:     if user_update.username and user_update.username != current_user.username:\n46:         if await check_username_is_taken(users_repo, user_update.username):\n47:             raise HTTPException(\n48:                 status_code=HTTP_400_BAD_REQUEST,\n49:                 detail=strings.USERNAME_TAKEN,\n50:             )\n51: \n52:     if user_update.email and user_update.email != current_user.email:\n53:         if await check_email_is_taken(users_repo, user_update.email):\n54:             raise HTTPException(\n55:                 status_code=HTTP_400_BAD_REQUEST,\n56:                 detail=strings.EMAIL_TAKEN,\n57:             )\n58: \n59:     user = await users_repo.update_user(user=current_user, **user_update.dict())\n60: \n61:     token = jwt.create_access_token_for_user(\n62:         user,\n63:         str(settings.secret_key.get_secret_value()),\n64:     )\n65:     return UserInResponse(\n66:         user=UserWithToken(\n67:             username=user.username,\n68:             email=user.email,\n69:             bio=user.bio,\n70:             image=user.image,\n71:             token=token,\n72:         ),\n73:     )&quot;
+  },
+  &quot;repository_refs&quot;: [
+    {
+      &quot;path&quot;: &quot;app/db/repositories/users.py&quot;,
+      &quot;start&quot;: 50,
+      &quot;end&quot;: 81,
+      &quot;sha256&quot;: &quot;81aa44c80794c78f08245fed90be373f62c0fd93bdd8951c3737846738f5bfef&quot;,
+      &quot;code&quot;: &quot;50:     async def update_user(  # noqa: WPS211\n51:         self,\n52:         *,\n53:         user: User,\n54:         username: Optional[str] = None,\n55:         email: Optional[str] = None,\n56:         password: Optional[str] = None,\n57:         bio: Optional[str] = None,\n58:         image: Optional[str] = None,\n59:     ) -&gt; UserInDB:\n60:         user_in_db = await self.get_user_by_username(username=user.username)\n61: \n62:         user_in_db.username = username or user_in_db.username\n63:         user_in_db.email = email or user_in_db.email\n64:         user_in_db.bio = bio or user_in_db.bio\n65:         user_in_db.image = image or user_in_db.image\n66:         if password:\n67:             user_in_db.change_password(password)\n68: \n69:         async with self.connection.transaction():\n70:             user_in_db.updated_at = await queries.update_user_by_username(\n71:                 self.connection,\n72:                 username=user.username,\n73:                 new_username=user_in_db.username,\n74:                 new_email=user_in_db.email,\n75:                 new_salt=user_in_db.salt,\n76:                 new_password=user_in_db.hashed_password,\n77:                 new_bio=user_in_db.bio,\n78:                 new_image=user_in_db.image,\n79:             )\n80: \n81:         return user_in_db&quot;
+    }
+  ],
+  &quot;unresolved&quot;: [
+    &quot;SQL execution and constraints&quot;,
+    &quot;deployed middleware/configuration&quot;,
+    &quot;end-to-end HTTP with real authentication&quot;
+  ],
+  &quot;final_label&quot;: null,
+  &quot;training_eligible&quot;: false
+}</pre></details></html>

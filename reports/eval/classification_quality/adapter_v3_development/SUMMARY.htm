@@ -1,0 +1,119 @@
+<!doctype html><html lang=ko><meta charset=utf-8><title>v3 종합 실험</title><style>body{max-width:1100px;margin:40px auto;font:16px/1.7 system-ui}td,th{padding:8px;border:1px solid grey}table{border-collapse:collapse}</style><h1>프롬프트 v2.9 / 어댑터 v3 종합 결과</h1>
+<h2>수행한 작업</h2>
+<ol>
+<li>개발 프로젝트의 미지원 15건을 원인별로 분류했다.</li>
+<li>엔드포인트 이름을 추가하지 않고 공통 Depends/import/인가 함수의 필수 역할 조건을 분석했다. ORM where와 반환 인자도 후보 근거로 추출하되 완전한 정책으로 승격하지 않았다.</li>
+<li>회귀 검증 후 어댑터·기존 분석 의존 코드·프롬프트 해시를 frozen.json에 고정했다.</li>
+<li>새 프로젝트 fastapi-users의 사용자 라우터 전체 5건을 선택해 동일 ID로 OAS/OAS+코드를 비교했다. 평가 중 고정 코드를 변경하지 않았다.</li>
+<li>LLM 분류와 어댑터 처리 범위·보류 손실을 분리해 보고했다.</li>
+</ol>
+<h2>미지원 15건</h2>
+<table>
+<thead>
+<tr>
+<th>분류</th>
+<th style="text-align:right">건수</th>
+<th>원인</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>공통 관리자 의존성</td>
+<td style="text-align:right">5</td>
+<td>분석 연결 누락; 이제 필수 역할 조건까지 추출</td>
+</tr>
+<tr>
+<td>자기 계정 수정·재인증</td>
+<td style="text-align:right">2</td>
+<td>객체 바인딩과 validation/callback 연결 미완성</td>
+</tr>
+<tr>
+<td>로그인·복구 시작·등록</td>
+<td style="text-align:right">3</td>
+<td>인증 진입 의미와 전체 접근 경로 확인 필요</td>
+</tr>
+<tr>
+<td>목록 행 필터링</td>
+<td style="text-align:right">1</td>
+<td>행별 정책과 endpoint 전체 라벨의 의미 차이</td>
+</tr>
+<tr>
+<td>객체 생성</td>
+<td style="text-align:right">1</td>
+<td>생성자 바인딩과 기존 객체 인가의 의미 차이</td>
+</tr>
+<tr>
+<td>비밀번호 재설정</td>
+<td style="text-align:right">1</td>
+<td>reset-token capability가 6종으로 표현되는지 미확정</td>
+</tr>
+<tr>
+<td>개발 전용 등록</td>
+<td style="text-align:right">1</td>
+<td>실제 배포 노출 범위 미확정</td>
+</tr>
+<tr>
+<td>익명 health</td>
+<td style="text-align:right">1</td>
+<td>전역/라우트 컨텍스트를 포함한 익명 검증 미구현</td>
+</tr>
+</tbody>
+</table>
+<p>개발 프로젝트: 완전 분석 <strong>8/23</strong>, 추가 필수 조건 부분 분석 <strong>5/23</strong>, 나머지 <strong>10/23</strong>. 13건 전부를 자동 적용 가능한 것으로 세지 않는다.</p>
+<h2>새 프로젝트 결과</h2>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th style="text-align:right">OAS 정적 투영본</th>
+<th style="text-align:right">OAS+코드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>에이전트 소스 검토 참조 일치</td>
+<td style="text-align:right">0/5</td>
+<td style="text-align:right">1/5</td>
+</tr>
+<tr>
+<td>macro-F1, 참조 support 있는 2종</td>
+<td style="text-align:right">0.0000</td>
+<td style="text-align:right">0.2500</td>
+</tr>
+<tr>
+<td>어댑터 완전 분석</td>
+<td style="text-align:right">0/5</td>
+<td style="text-align:right">0/5</td>
+</tr>
+<tr>
+<td>어댑터 필수 조건 부분 분석</td>
+<td style="text-align:right">0/5</td>
+<td style="text-align:right">0/5</td>
+</tr>
+<tr>
+<td>근거 연결 부족으로 검증 불가</td>
+<td style="text-align:right">5/5</td>
+<td style="text-align:right">5/5</td>
+</tr>
+<tr>
+<td>올바른 제안의 운영상 보류</td>
+<td style="text-align:right">0/0 (N/A)</td>
+<td style="text-align:right">1/1</td>
+</tr>
+</tbody>
+</table>
+<p>독립 프로젝트의 인증 의존성은 factory 내부에서 생성된다. 고정한 어댑터는 이를 추적하지 못했다. 지원 영역의 오차단율은 분모 0이므로 N/A다. OAS 조건의 public 1건은 인증 필수 조건에 어긋나지만, 어댑터가 그 누락을 특정해서 탐지한 것은 아니다. 모든 결과의 자동 적용은 차단됐다.</p>
+<p>코드 조건에서 자기 계정 조회·수정 두 건을 membership으로 오해했고, 관리자 전용 삭제를 owner_or_admin으로 선택했다. 코드가 있으면 반드시 좋아진다고 볼 수 없으며, 기존 개발 프로젝트 15/19 결과를 새 프로젝트 성능으로 일반화할 수 없다.</p>
+<h2>증거 수준과 한계</h2>
+<ul>
+<li>참조 라벨은 API 실행 전의 에이전트 소스 검토이며, 독립 사람 정답이 아니다.</li>
+<li>기본 라이브러리 구성만 평가했다. 실제 배포의 DB/backend/custom callback은 미확보다. 배포 정책 자체는 미확정이다.</li>
+<li>표본 5건·라벨 2종이다. tenant/membership/public 등 전체 6종 성능 평가가 아니다.</li>
+<li>OAS는 정적 투영본이며 라이브 서버 export가 아니다.</li>
+<li>원본 인증 함수 본문 로컬 검사 8건 통과, 전체 관련 pytest 53개 통과. HTTP/JWT/실DB 통합 검증은 아니다.</li>
+<li>추가 API 응답 10회, 입력 24,546토큰, 출력 730토큰. 기존 예측·고정 test·런타임·학습 데이터는 보존했다.</li>
+</ul>
+<h2>결론</h2>
+<p>공통 의존성 연결을 일부 일반화했지만 동적 factory에서는 아직 처리 범위가 0이다. 다음 개선은 factory 인자 전달과 반환된 dependency의 조건 연결이다. 이번 새 프로젝트를 그 개발에 쓰면 이후에는 개발셋이며, 다음 독립 검증은 다른 프로젝트에서 해야 한다. 자동 적용이나 전체 재라벨링을 진행할 근거는 아직 부족하다.</p>
+<p>자료: <a href="report.htm">개발 보고서</a>, <a href="../adapter_v3_holdout/report.htm">독립 평가 보고서</a>, <a href="frozen.json">고정 해시</a>.</p>
+</html>

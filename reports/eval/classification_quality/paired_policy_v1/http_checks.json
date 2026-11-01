@@ -1,0 +1,674 @@
+[
+  {
+    "id": "controlled-observatory:observations",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "checks": [
+      {
+        "actor": "anonymous",
+        "expected": 401,
+        "actual": 401,
+        "passed": true
+      },
+      {
+        "actor": "alice",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "bob",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "carol",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "dana",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      },
+      {
+        "actor": "erin",
+        "expected": 200,
+        "actual": 200,
+        "passed": true
+      },
+      {
+        "actor": "alice_south",
+        "expected": 403,
+        "actual": 403,
+        "passed": true
+      }
+    ],
+    "scope": "in-process ASGI HTTP; no real deployment/JWT validation"
+  }
+]

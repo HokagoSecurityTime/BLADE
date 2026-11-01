@@ -1,0 +1,7 @@
+{
+  "input_sha256": "665710fd02ba71cb37e80bfc02407c677431facecb9f6b9cb309f25c7a1a6787",
+  "reference_sha256": "9002dfde0421c50a01ab54d25e208faafcda7c9f6228a3bf8354cc9ea108f56e",
+  "oas_sha256": "0d93b7f13debb41073568ec223c7095cff13b8540fccffc69daa24acb0e12511",
+  "records": 23,
+  "frozen_before_model_execution": true
+}

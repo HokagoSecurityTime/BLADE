@@ -1,0 +1,14 @@
+{
+  "origin": "new controlled synthetic fixture; not external ground truth",
+  "created_before_predictions": true,
+  "policies": [
+    {"handlers": ["observations", "notebooks"], "label": "owner_match", "expression": "authenticated AND subject == object.owner", "allow": ["alice", "alice_south"], "deny": ["bob", "carol", "dana", "erin"], "implemented": ["actor", "load", "guard_a"]},
+    {"handlers": ["calibrations", "captures"], "label": "owner_or_admin", "expression": "authenticated AND (subject == object.owner OR role == admin)", "allow": ["alice", "alice_south", "dana"], "deny": ["bob", "carol", "erin"], "implemented": ["actor", "load", "guard_b"]},
+    {"handlers": ["allocations", "inventories"], "label": "tenant_match", "expression": "authenticated AND actor.tenant == object.tenant", "allow": ["alice", "bob", "erin"], "deny": ["carol", "dana", "alice_south"], "implemented": ["actor", "load", "guard_c"]},
+    {"handlers": ["queues", "relays"], "label": "role_required", "expression": "authenticated AND role == operator", "allow": ["erin"], "deny": ["alice", "bob", "carol", "dana", "alice_south"], "implemented": ["actor", "load", "guard_d"]},
+    {"handlers": ["spectra", "forecasts"], "label": "membership_required", "expression": "authenticated AND subscription plan == plus", "allow": ["carol", "erin"], "deny": ["alice", "bob", "dana", "alice_south"], "implemented": ["actor", "load", "guard_e"]},
+    {"handlers": ["catalog", "bulletins"], "label": "public", "expression": "anonymous read allowed", "allow": ["alice", "bob", "carol", "dana", "erin", "alice_south", "anonymous"], "deny": [], "implemented": ["load"]},
+    {"handlers": ["transfers"], "label": "manual_review_required", "expression": "authenticated AND owner match AND tenant match; cannot preserve both with one concrete label", "allow": ["alice"], "deny": ["bob", "carol", "dana", "erin", "alice_south"], "implemented": ["actor", "load", "guard_a", "guard_c"]},
+    {"handlers": ["reservations"], "label": "manual_review_required", "expression": "authenticated AND tenant match AND subscription plus; cannot preserve both with one concrete label", "allow": ["erin"], "deny": ["alice", "bob", "carol", "dana", "alice_south"], "implemented": ["actor", "load", "guard_c", "guard_e"]}
+  ]
+}

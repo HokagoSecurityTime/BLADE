@@ -1,0 +1,68 @@
+[
+  {
+    "item": "services",
+    "expected": "9000/8100/8080 listening; stdout/stderr logs",
+    "actual": "ready=True, logs=True",
+    "status": "PASS"
+  },
+  {
+    "item": "step1",
+    "expected": "7 PENDING policies",
+    "actual": "HTTP 200; policies=7",
+    "status": "PASS"
+  },
+  {
+    "item": "step2",
+    "expected": "7 approvals HTTP 200; ACTIVE list has 7",
+    "actual": "approvals=[200, 200, 200, 200, 200, 200, 200]; ACTIVE=7",
+    "status": "PASS"
+  },
+  {
+    "item": "step3",
+    "expected": "user_99 GET -> 403",
+    "actual": "403",
+    "status": "PASS"
+  },
+  {
+    "item": "backend_untouched",
+    "expected": "step3 403; backend log line delta=0",
+    "actual": "HTTP 403; 4 -> 4 lines",
+    "status": "PASS"
+  },
+  {
+    "item": "step4",
+    "expected": "user_77 GET -> 200",
+    "actual": "200",
+    "status": "PASS"
+  },
+  {
+    "item": "step5",
+    "expected": "DELETE 403; owner GET 200",
+    "actual": "403; 200",
+    "status": "PASS"
+  },
+  {
+    "item": "step6",
+    "expected": "no Authorization -> 403",
+    "actual": "403",
+    "status": "PASS"
+  },
+  {
+    "item": "step7",
+    "expected": "BLOCK >=3; step3/5/6 request IDs match",
+    "actual": "BLOCK=3; matched=True",
+    "status": "PASS"
+  },
+  {
+    "item": "break1",
+    "expected": "tampered sub with original signature -> 403",
+    "actual": "403",
+    "status": "PASS"
+  },
+  {
+    "item": "break2",
+    "expected": "non-5xx response; OBSERVE log",
+    "actual": "HTTP 404; OBSERVE=True",
+    "status": "PASS"
+  }
+]

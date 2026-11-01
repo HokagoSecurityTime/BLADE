@@ -1,0 +1,20 @@
+GET http://127.0.0.1:51639/orders/1042
+[["host", "127.0.0.1:51639"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"], ["authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMiIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTc4NDkyNn0.omHzy-budfV2LGKLEFzrQeKYWVEdqTOA6fjwFTzqlLo"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:02:06 GMT"], ["server", "uvicorn"], ["content-type", "application/json"], ["x-blade-request-id", "cd0ede80-7ba4-41e1-876e-e8c2cc8a566d"], ["x-blade-policy", "pol_orders_get_by_orderId"], ["content-length", "31"]]
+
+{"id":1042,"user_id":"user_77"}
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:02:05 GMT"], ["server", "uvicorn"], ["content-length", "307"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":null,"would_block":true}]
+

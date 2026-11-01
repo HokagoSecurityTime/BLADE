@@ -1,0 +1,1962 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "embed_model": "intfloat/multilingual-e5-small",
+  "controller": "demo_backend\\main.py",
+  "controller_enabled": "true",
+  "corpus_counts": {
+    "code": 10,
+    "idiom": 6,
+    "policy": 7,
+    "cve": 0
+  },
+  "results": [
+    {
+      "configuration": "off",
+      "results": [
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/public/health",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "health_public_health_get",
+            "tags": [],
+            "summary": "Health"
+          },
+          "expected": "public",
+          "classification": {
+            "label": "public",
+            "confidence": 1.0,
+            "evidence": "Controller has no authorization checks and returns a static response.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [],
+          "elapsed_sec": 115.89099999982864
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "get_order_orders__orderId__get",
+            "tags": [],
+            "summary": "Get Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "Order belongs to its user creator.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [],
+          "elapsed_sec": 35.40599999995902
+        },
+        {
+          "endpoint": {
+            "method": "DELETE",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "delete_order_orders__orderId__delete",
+            "tags": [],
+            "summary": "Delete Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.8,
+            "evidence": "The controller does not have explicit authorization checks, but the delete operation implies a need for administrative privileges.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [],
+          "elapsed_sec": 40.75
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/users/{userId}",
+            "path_params": [
+              "userId"
+            ],
+            "query_params": [],
+            "operation_id": "get_user_users__userId__get",
+            "tags": [],
+            "summary": "Get User"
+          },
+          "expected": "owner_or_admin",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.8,
+            "evidence": "The controller does not have an explicit authorization check, but the role column exists, implying a role-based access control is in place.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [],
+          "elapsed_sec": 36.39099999982864
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/admin/reports",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "reports_admin_reports_get",
+            "tags": [],
+            "summary": "Reports"
+          },
+          "expected": "role_required",
+          "classification": {
+            "label": "public",
+            "confidence": 0.9,
+            "evidence": "The controller has no authorization checks and does not involve any object or tenant-specific logic.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [],
+          "elapsed_sec": 32.79600000008941
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orgs/{orgId}/docs",
+            "path_params": [
+              "orgId"
+            ],
+            "query_params": [],
+            "operation_id": "org_docs_orgs__orgId__docs_get",
+            "tags": [],
+            "summary": "Org Docs"
+          },
+          "expected": "tenant_match",
+          "classification": {
+            "label": "tenant_match",
+            "confidence": 0.9,
+            "evidence": "The requested org must match the caller's tenant.",
+            "object_param": "orgId",
+            "owner_lookup": {
+              "table": "orgs",
+              "id_col": "id",
+              "owner_col": null,
+              "tenant_col": "id"
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [],
+          "elapsed_sec": 40.984999999869615
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/premium/content",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "premium_content_premium_content_get",
+            "tags": [],
+            "summary": "Premium Content"
+          },
+          "expected": "membership_required",
+          "classification": {
+            "label": "public",
+            "confidence": 0.9,
+            "evidence": "The controller function does not perform any authorization checks.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [],
+          "elapsed_sec": 28.04699999978766
+        }
+      ],
+      "correct": 3
+    },
+    {
+      "configuration": "code",
+      "results": [
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/public/health",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "health_public_health_get",
+            "tags": [],
+            "summary": "Health"
+          },
+          "expected": "public",
+          "classification": {
+            "label": "public",
+            "confidence": 1.0,
+            "evidence": "The health endpoint is explicitly intended to be public.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L56:health",
+              "snippet": "    @app.get(\"/public/health\", description=\"Intended policy: public\")\n    def health() -> dict[str, str]:\n        return {\"status\": \"ok\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 73.40700000012293
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "get_order_orders__orderId__get",
+            "tags": [],
+            "summary": "Get Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "Order belongs to its creator.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 96.71900000004098
+        },
+        {
+          "endpoint": {
+            "method": "DELETE",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "delete_order_orders__orderId__delete",
+            "tags": [],
+            "summary": "Delete Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "The caller owns the requested order or has explicit owner permissions.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L64:delete_order",
+                "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L64:delete_order",
+              "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 108.48400000017136
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/users/{userId}",
+            "path_params": [
+              "userId"
+            ],
+            "query_params": [],
+            "operation_id": "get_user_users__userId__get",
+            "tags": [],
+            "summary": "Get User"
+          },
+          "expected": "owner_or_admin",
+          "classification": {
+            "label": "owner_or_admin",
+            "confidence": 0.95,
+            "evidence": "The caller owns the requested user or has an explicit admin bypass.",
+            "object_param": "userId",
+            "owner_lookup": {
+              "table": "users",
+              "id_col": "id",
+              "owner_col": "id",
+              "tenant_col": "org_id"
+            },
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 107.32800000021234
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/admin/reports",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "reports_admin_reports_get",
+            "tags": [],
+            "summary": "Reports"
+          },
+          "expected": "role_required",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.9,
+            "evidence": "The endpoint is intended to be role_required with roles: [admin].",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L82:org_docs",
+                "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 102.31300000008196
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orgs/{orgId}/docs",
+            "path_params": [
+              "orgId"
+            ],
+            "query_params": [],
+            "operation_id": "org_docs_orgs__orgId__docs_get",
+            "tags": [],
+            "summary": "Org Docs"
+          },
+          "expected": "tenant_match",
+          "classification": {
+            "label": "manual_review_required",
+            "confidence": 0.0,
+            "evidence": "LLM unavailable: ollama transport failure after 3 attempts",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 183.43800000008196
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/premium/content",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "premium_content_premium_content_get",
+            "tags": [],
+            "summary": "Premium Content"
+          },
+          "expected": "membership_required",
+          "classification": {
+            "label": "membership_required",
+            "confidence": 0.9,
+            "evidence": "Access to premium content requires a 'premium' membership.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [
+              "premium"
+            ],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L87:premium_content",
+              "snippet": "    @app.get(\"/premium/content\", description=\"Intended policy: membership_required; allowed_membership: [premium]\")\n    def premium_content() -> dict[str, str]:\n        return {\"content\": \"Premium members content\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 76.71900000004098
+        }
+      ],
+      "correct": 6
+    },
+    {
+      "configuration": "code+idiom",
+      "results": [
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/public/health",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "health_public_health_get",
+            "tags": [],
+            "summary": "Health"
+          },
+          "expected": "public",
+          "classification": {
+            "label": "public",
+            "confidence": 1.0,
+            "evidence": "The health endpoint is explicitly intended to be public.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L56:health",
+              "snippet": "    @app.get(\"/public/health\", description=\"Intended policy: public\")\n    def health() -> dict[str, str]:\n        return {\"status\": \"ok\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 74.2960000000894
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "get_order_orders__orderId__get",
+            "tags": [],
+            "summary": "Get Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "Order belongs to its creator.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 96.82800000021234
+        },
+        {
+          "endpoint": {
+            "method": "DELETE",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "delete_order_orders__orderId__delete",
+            "tags": [],
+            "summary": "Delete Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "The caller owns the requested order or has explicit owner permissions.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L64:delete_order",
+                "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L64:delete_order",
+              "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 120.81199999991804
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/users/{userId}",
+            "path_params": [
+              "userId"
+            ],
+            "query_params": [],
+            "operation_id": "get_user_users__userId__get",
+            "tags": [],
+            "summary": "Get User"
+          },
+          "expected": "owner_or_admin",
+          "classification": {
+            "label": "owner_or_admin",
+            "confidence": 0.95,
+            "evidence": "The caller owns the requested user or has an explicit admin bypass.",
+            "object_param": "userId",
+            "owner_lookup": {
+              "table": "users",
+              "id_col": "id",
+              "owner_col": "id",
+              "tenant_col": "org_id"
+            },
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 112.5789999999106
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/admin/reports",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "reports_admin_reports_get",
+            "tags": [],
+            "summary": "Reports"
+          },
+          "expected": "role_required",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.9,
+            "evidence": "The endpoint is intended to be role_required with roles: [admin].",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L82:org_docs",
+                "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 96.95300000021234
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orgs/{orgId}/docs",
+            "path_params": [
+              "orgId"
+            ],
+            "query_params": [],
+            "operation_id": "org_docs_orgs__orgId__docs_get",
+            "tags": [],
+            "summary": "Org Docs"
+          },
+          "expected": "tenant_match",
+          "classification": {
+            "label": "manual_review_required",
+            "confidence": 0.0,
+            "evidence": "LLM unavailable: ollama transport failure after 3 attempts",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 183.43800000008196
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/premium/content",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "premium_content_premium_content_get",
+            "tags": [],
+            "summary": "Premium Content"
+          },
+          "expected": "membership_required",
+          "classification": {
+            "label": "membership_required",
+            "confidence": 0.9,
+            "evidence": "Access to premium content requires a 'premium' membership.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [
+              "premium"
+            ],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L87:premium_content",
+              "snippet": "    @app.get(\"/premium/content\", description=\"Intended policy: membership_required; allowed_membership: [premium]\")\n    def premium_content() -> dict[str, str]:\n        return {\"content\": \"Premium members content\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 58.7660000002943
+        }
+      ],
+      "correct": 6
+    },
+    {
+      "configuration": "code+idiom+policy",
+      "results": [
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/public/health",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "health_public_health_get",
+            "tags": [],
+            "summary": "Health"
+          },
+          "expected": "public",
+          "classification": {
+            "label": "public",
+            "confidence": 1.0,
+            "evidence": "The health endpoint is explicitly intended to be public.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L56:health",
+              "snippet": "    @app.get(\"/public/health\", description=\"Intended policy: public\")\n    def health() -> dict[str, str]:\n        return {\"status\": \"ok\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 56.92200000025332
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "get_order_orders__orderId__get",
+            "tags": [],
+            "summary": "Get Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "Order belongs to its creator.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 90.96799999987707
+        },
+        {
+          "endpoint": {
+            "method": "DELETE",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "delete_order_orders__orderId__delete",
+            "tags": [],
+            "summary": "Delete Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "The caller owns the requested order or has explicit owner permissions.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L64:delete_order",
+                "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L64:delete_order",
+              "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 100.10999999986961
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/users/{userId}",
+            "path_params": [
+              "userId"
+            ],
+            "query_params": [],
+            "operation_id": "get_user_users__userId__get",
+            "tags": [],
+            "summary": "Get User"
+          },
+          "expected": "owner_or_admin",
+          "classification": {
+            "label": "owner_or_admin",
+            "confidence": 0.95,
+            "evidence": "The caller owns the requested user or has an explicit admin bypass.",
+            "object_param": "userId",
+            "owner_lookup": {
+              "table": "users",
+              "id_col": "id",
+              "owner_col": "id",
+              "tenant_col": "org_id"
+            },
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 100.7339999997057
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/admin/reports",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "reports_admin_reports_get",
+            "tags": [],
+            "summary": "Reports"
+          },
+          "expected": "role_required",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.9,
+            "evidence": "The endpoint is intended to be role_required with roles: [admin].",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L82:org_docs",
+                "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 96.70300000021234
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orgs/{orgId}/docs",
+            "path_params": [
+              "orgId"
+            ],
+            "query_params": [],
+            "operation_id": "org_docs_orgs__orgId__docs_get",
+            "tags": [],
+            "summary": "Org Docs"
+          },
+          "expected": "tenant_match",
+          "classification": {
+            "label": "manual_review_required",
+            "confidence": 0.0,
+            "evidence": "LLM unavailable: ollama transport failure after 3 attempts",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 183.42199999978766
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/premium/content",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "premium_content_premium_content_get",
+            "tags": [],
+            "summary": "Premium Content"
+          },
+          "expected": "membership_required",
+          "classification": {
+            "label": "membership_required",
+            "confidence": 0.9,
+            "evidence": "Access to premium content requires a 'premium' membership.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [
+              "premium"
+            ],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L87:premium_content",
+              "snippet": "    @app.get(\"/premium/content\", description=\"Intended policy: membership_required; allowed_membership: [premium]\")\n    def premium_content() -> dict[str, str]:\n        return {\"content\": \"Premium members content\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 58.84400000004098
+        }
+      ],
+      "correct": 6
+    },
+    {
+      "configuration": "code+idiom+policy+cve",
+      "results": [
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/public/health",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "health_public_health_get",
+            "tags": [],
+            "summary": "Health"
+          },
+          "expected": "public",
+          "classification": {
+            "label": "public",
+            "confidence": 1.0,
+            "evidence": "The health endpoint is explicitly intended to be public.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L56:health",
+              "snippet": "    @app.get(\"/public/health\", description=\"Intended policy: public\")\n    def health() -> dict[str, str]:\n        return {\"status\": \"ok\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 56.95300000021234
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "get_order_orders__orderId__get",
+            "tags": [],
+            "summary": "Get Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "Order belongs to its creator.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 91.14099999982864
+        },
+        {
+          "endpoint": {
+            "method": "DELETE",
+            "path": "/orders/{orderId}",
+            "path_params": [
+              "orderId"
+            ],
+            "query_params": [],
+            "operation_id": "delete_order_orders__orderId__delete",
+            "tags": [],
+            "summary": "Delete Order"
+          },
+          "expected": "owner_match",
+          "classification": {
+            "label": "owner_match",
+            "confidence": 0.9,
+            "evidence": "The caller owns the requested order or has explicit owner permissions.",
+            "object_param": "orderId",
+            "owner_lookup": {
+              "table": "orders",
+              "id_col": "id",
+              "owner_col": "user_id",
+              "tenant_col": null
+            },
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L64:delete_order",
+                "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L60:get_order",
+                "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L64:delete_order",
+              "snippet": "    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 100.43800000008196
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/users/{userId}",
+            "path_params": [
+              "userId"
+            ],
+            "query_params": [],
+            "operation_id": "get_user_users__userId__get",
+            "tags": [],
+            "summary": "Get User"
+          },
+          "expected": "owner_or_admin",
+          "classification": {
+            "label": "owner_or_admin",
+            "confidence": 0.95,
+            "evidence": "The caller owns the requested user or has an explicit admin bypass.",
+            "object_param": "userId",
+            "owner_lookup": {
+              "table": "users",
+              "id_col": "id",
+              "owner_col": "id",
+              "tenant_col": "org_id"
+            },
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L72:get_user",
+                "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 100.6089999997057
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/admin/reports",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "reports_admin_reports_get",
+            "tags": [],
+            "summary": "Reports"
+          },
+          "expected": "role_required",
+          "classification": {
+            "label": "role_required",
+            "confidence": 0.9,
+            "evidence": "The endpoint is intended to be role_required with roles: [admin].",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [
+              "admin"
+            ],
+            "allowed_membership": [],
+            "evidence_refs": [
+              {
+                "kind": "code",
+                "ref": "main.py#L76:reports",
+                "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+              },
+              {
+                "kind": "code",
+                "ref": "main.py#L82:org_docs",
+                "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+              }
+            ]
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 96.79700000025332
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/orgs/{orgId}/docs",
+            "path_params": [
+              "orgId"
+            ],
+            "query_params": [],
+            "operation_id": "org_docs_orgs__orgId__docs_get",
+            "tags": [],
+            "summary": "Org Docs"
+          },
+          "expected": "tenant_match",
+          "classification": {
+            "label": "manual_review_required",
+            "confidence": 0.0,
+            "evidence": "LLM unavailable: ollama transport failure after 3 attempts",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [],
+            "evidence_refs": []
+          },
+          "correct": false,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L76:reports",
+              "snippet": "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"
+            }
+          ],
+          "elapsed_sec": 183.40599999995902
+        },
+        {
+          "endpoint": {
+            "method": "GET",
+            "path": "/premium/content",
+            "path_params": [],
+            "query_params": [],
+            "operation_id": "premium_content_premium_content_get",
+            "tags": [],
+            "summary": "Premium Content"
+          },
+          "expected": "membership_required",
+          "classification": {
+            "label": "membership_required",
+            "confidence": 0.9,
+            "evidence": "Access to premium content requires a 'premium' membership.",
+            "object_param": null,
+            "owner_lookup": null,
+            "roles": [],
+            "allowed_membership": [
+              "premium"
+            ],
+            "evidence_refs": []
+          },
+          "correct": true,
+          "retrieved": [
+            {
+              "kind": "code",
+              "ref": "main.py#L30:lifespan",
+              "snippet": "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L82:org_docs",
+              "snippet": "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L60:get_order",
+              "snippet": "    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L87:premium_content",
+              "snippet": "    @app.get(\"/premium/content\", description=\"Intended policy: membership_required; allowed_membership: [premium]\")\n    def premium_content() -> dict[str, str]:\n        return {\"content\": \"Premium members content\"}"
+            },
+            {
+              "kind": "code",
+              "ref": "main.py#L72:get_user",
+              "snippet": "    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)"
+            }
+          ],
+          "elapsed_sec": 58.561999999918044
+        }
+      ],
+      "correct": 6
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "2.8": {
+    "agreement": 5,
+    "n": 8,
+    "errors": 0,
+    "evidence_invalid": 0
+  },
+  "2.9": {
+    "agreement": 7,
+    "n": 8,
+    "errors": 0,
+    "evidence_invalid": 0
+  }
+}

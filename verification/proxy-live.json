@@ -1,0 +1,12 @@
+{
+  "user_99": {
+    "direct": 200,
+    "proxy": 403
+  },
+  "user_77": {
+    "direct": 200,
+    "proxy": 200
+  },
+  "missing_jwt": 401,
+  "detection_persisted": true
+}

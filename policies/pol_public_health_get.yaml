@@ -1,0 +1,14 @@
+id: pol_public_health_get
+endpoint:
+  method: GET
+  path: /public/health
+label: public
+params:
+  object_param: null
+  owner_lookup: null
+  roles: []
+  allowed_membership: []
+confidence: 1.0
+evidence: Health check endpoint is explicitly unrestricted.
+status: PENDING
+created_at: '2026-09-09T10:19:54.075695Z'

@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "container": "blade-phase2-detection-redis-1",
+  "container_id": "7770d75d93bdedf79761e6b5986bf9d5aff4ef6674ece8f33b34ae2b827b0510",
+  "appendonly": true,
+  "fsync": "everysec",
+  "persisted_after_kill": true,
+  "final_ping": "PONG",
+  "limitation": "Unflushed recent writes are not guaranteed"
+}

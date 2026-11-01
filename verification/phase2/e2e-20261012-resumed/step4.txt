@@ -1,0 +1,710 @@
+POST http://127.0.0.1:63213/policies/pol_orders_get_by_orderId/mode
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"], ["content-length", "18"], ["content-type", "application/json"]]
+
+{"mode":"enforce"}
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:07 GMT"], ["server", "uvicorn"], ["content-length", "1308"], ["content-type", "application/json"]]
+
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Order belongs to its creator.","status":"ACTIVE","created_at":"2026-10-12T03:51:32.127577Z","mode":"enforce","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L65:get_order","snippet":"    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"},{"kind":"code","ref":"demo_with_admin.py#L77:get_user","snippet":"    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str, current_user: Any = Depends(get_current_user)) -> dict[str, Any]:\n        if \"admin\" in current_user.roles:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        if current_user.id == userId:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        raise HTTPException(status_code=403, detail=\"Forbidden\")"}]}
+
+GET http://127.0.0.1:51639/orders/1042
+[["host", "127.0.0.1:51639"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"], ["authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMiIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTc4NDk4OX0.k04aJVma9LLrXcnYyRv8paLk7H7auc3f7v2b2Rz2q6I"]]
+
+
+
+HTTP 403
+[["x-blade-request-id", "50ab0045-d879-47e7-987c-4016f4ee31a4"], ["x-blade-policy", "pol_orders_get_by_orderId"], ["content-type", "application/json; charset=utf-8"], ["content-length", "118"], ["date", "Mon, 12 Oct 2026 04:03:09 GMT"], ["server", "Python/3.11 aiohttp/3.14.3"]]
+
+{"error": "forbidden", "policy_id": "pol_orders_get_by_orderId", "request_id": "50ab0045-d879-47e7-987c-4016f4ee31a4"}
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:08 GMT"], ["server", "uvicorn"], ["content-length", "526"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:08 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:09 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:09 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:09 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:09 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:10 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:10 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:10 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:11 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:11 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:11 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:11 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:12 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:12 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:12 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:14 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:14 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:14 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:15 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:15 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:15 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:15 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:16 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:16 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:16 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:17 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:17 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:17 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:17 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:18 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:18 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:18 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:19 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:19 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:19 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:20 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:20 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:20 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:20 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:21 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:21 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:21 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:22 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:22 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:22 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:23 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:23 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:23 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:23 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:24 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:24 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:24 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:25 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:25 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:25 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:26 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:26 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:26 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:26 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:27 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:27 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:27 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:28 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:28 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:28 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:29 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:29 GMT"], ["server", "uvicorn"], ["content-length", "831"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":null,"would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+
+GET http://127.0.0.1:63213/detections?limit=100
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"]]
+
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 04:03:29 GMT"], ["server", "uvicorn"], ["content-length", "1034"], ["content-type", "application/json"]]
+
+[{"ts":"2026-10-12T04:03:09.098804Z","request_id":"50ab0045-d879-47e7-987c-4016f4ee31a4","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"BLOCK","reason":"policy_mismatch","mode":"enforce","explanation":"BLADE 탐지 로그에 따르면, 요청자가 소유권과 일치하지 않아 정책과 맞지 않아 차단되었습니다. 이는 공격 의도를 추측하지 않으며, 실제 차단이 아닙니다.","would_block":false},{"ts":"2026-10-12T04:02:06.781682Z","request_id":"cd0ede80-7ba4-41e1-876e-e8c2cc8a566d","sub":"user_99","method":"GET","path":"/orders/1042","policy_id":"pol_orders_get_by_orderId","label":"owner_match","verdict":"OBSERVE","reason":"policy_mismatch","mode":"observe","explanation":"BLADE 탐지 로그에 따르면, 요청자는 주문 정보를 조회하려는 것으로 보이지만, 현재 정책과 일치하지 않아 실제 차단 대상이 아니지만 주의를 기울여야 할 상황입니다.","would_block":true}]
+

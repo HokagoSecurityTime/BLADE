@@ -1,0 +1,23 @@
+[
+  {
+    "ts": 1791777727.2195988,
+    "body": {
+      "text": "[BLADE observe] user_99 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch",
+      "mrkdwn": false
+    }
+  },
+  {
+    "ts": 1791777789.619348,
+    "body": {
+      "text": "[BLADE enforce] user_99 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch",
+      "mrkdwn": false
+    }
+  },
+  {
+    "ts": 1791778066.8070495,
+    "body": {
+      "text": "[BLADE enforce] user_99 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch",
+      "mrkdwn": false
+    }
+  }
+]

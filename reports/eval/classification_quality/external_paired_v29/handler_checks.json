@@ -1,0 +1,160 @@
+{
+  "checks": [
+    {
+      "id": "items.read_item",
+      "own": false,
+      "admin": false,
+      "status": 403,
+      "lookup": "target",
+      "denied_writes": false
+    },
+    {
+      "id": "items.read_item",
+      "own": false,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.read_item",
+      "own": true,
+      "admin": false,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.read_item",
+      "own": true,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.update_item",
+      "own": false,
+      "admin": false,
+      "status": 403,
+      "lookup": "target",
+      "denied_writes": false
+    },
+    {
+      "id": "items.update_item",
+      "own": false,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.update_item",
+      "own": true,
+      "admin": false,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.update_item",
+      "own": true,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.delete_item",
+      "own": false,
+      "admin": false,
+      "status": 403,
+      "lookup": "target",
+      "denied_writes": false
+    },
+    {
+      "id": "items.delete_item",
+      "own": false,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.delete_item",
+      "own": true,
+      "admin": false,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "items.delete_item",
+      "own": true,
+      "admin": true,
+      "status": 200,
+      "lookup": "target",
+      "denied_writes": null
+    },
+    {
+      "id": "users.read_user_by_id",
+      "own": false,
+      "admin": false,
+      "status": 403,
+      "lookup": "other"
+    },
+    {
+      "id": "users.read_user_by_id",
+      "own": false,
+      "admin": true,
+      "status": 200,
+      "lookup": "other"
+    },
+    {
+      "id": "users.read_user_by_id",
+      "own": true,
+      "admin": false,
+      "status": 200,
+      "lookup": "caller"
+    },
+    {
+      "id": "users.read_user_by_id",
+      "own": true,
+      "admin": true,
+      "status": 200,
+      "lookup": "caller"
+    },
+    {
+      "id": "dependency.get_current_active_superuser",
+      "admin": false,
+      "status": 403
+    },
+    {
+      "id": "dependency.get_current_active_superuser",
+      "admin": true,
+      "status": 200
+    },
+    {
+      "id": "users.read_user_me",
+      "admin": false,
+      "status": 200
+    },
+    {
+      "id": "users.read_user_me",
+      "admin": true,
+      "status": 200
+    },
+    {
+      "id": "users.delete_user_me",
+      "admin": false,
+      "status": 200
+    },
+    {
+      "id": "users.delete_user_me",
+      "admin": true,
+      "status": 403
+    }
+  ],
+  "passed": 22,
+  "scope": "original function bodies; mocked session/model, authenticated caller supplied; not full HTTP/JWT/SQL integration"
+}

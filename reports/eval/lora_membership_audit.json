@@ -1,0 +1,142 @@
+[
+  {
+    "id": "apisguru:zoom.us:patch:/accounts/{accountId}/phone/sip_trunk/trunks/{sipTrunkId}",
+    "decision": "불일치",
+    "reason": "Business/Enterprise 플랜",
+    "rationale": "description: Business or Enterprise Account.",
+    "description": "Update details of a SIP trunk that is assigned to a sub account.<br>\n\n**Scope**:<br>\n* `phone:master` <br>\n\n**Prerequisites**:<br>\nBusiness or Enterprise Account.<br>\n<br>**[Rate Limit Label](https://marketplace.zoom.us/docs/api-reference/rate-limits#rate-limits):** `Light`<br>\n\n"
+  },
+  {
+    "id": "apisguru:circuitsandbox.net:get:/conversations/{convId}/items",
+    "decision": "미확정",
+    "reason": "READ_CONVERSATIONS는 그룹 구성원 검사 아님",
+    "rationale": "description: Gets a list of conversation items.\nOauthScopes: READ_CONVERSATIONS",
+    "description": "Gets a list of conversation items.\nOauthScopes: READ_CONVERSATIONS"
+  },
+  {
+    "id": "apisguru:autodealerdata.com:get:/valuation",
+    "decision": "불일치",
+    "reason": "subscription tier 명시",
+    "rationale": "description: Date selection is restricted by your subscription tier, same as with the /listings2 endpoint.",
+    "description": "Premium. Provides the average, stdDev, and count, of the sale price and mileage of similar new or used vehicles based off the provided VIN \nand matching the provided other search criteria. This endpoint can be easily used to determine market values in arbitrary geographic locations (like a city)\nfor specific vehicles.\nSee /listings2 endpoint for documentation on location, vehicle, and time search parameters. \nDate selection is restricted by your subscription tier, same as with the /listings2 endpoint.\nOptionally restricts report to vehicles of the same model year. "
+  },
+  {
+    "id": "apisguru:gettyimages.com:get:/v3/images/{id}/same-series",
+    "decision": "미확정",
+    "reason": "API 키·토큰만 명시",
+    "rationale": "description: You'll need an API key and access token to use this resource.",
+    "description": "This endpoint will provide the list of images, if any exist, from the same series as the specified creative asset id. These images are typically from the same photo shoot. This functionality will not work for editorial assets.\n\nYou'll need an API key and access token to use this resource.\n\n## Working with Fields Sets\n\nFields sets are used in the **fields** request parameter to receive a suite of metadata fields. The following fields sets are available:\n\n#### Summary Fields Set\n\nThe **summary_set** query string parameter fields value represents a small batch of metadata fields that are often used to build\nsearch response results. The following fields are provided for every image in your result set when you include **summary_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"asset_family\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"thumb\"\n            }\n        ]\n        \"license_model\",\n        \"max_dimensions\",\n        \"title\"\n    ]\n}\n```\n\n#### Detail Fields Set\n\nThe **detail_set** query string parameter fields value represents a large batch of metadata fields that are often used to build a \ndetailed view of images. The following fields are provided for every image in your result set when you include **detail_set** in your request.\n\n```\n{\n    \"images\":\n    [\n        \"allowed_use\",\n        \"artist\",\n        \"asset_family\",\n        \"call_for_image\",\n        \"caption\",\n        \"collection_code\",\n        \"collection_id\",\n        \"collection_name\",\n        \"copyright\",\n        \"date_created\",\n        \"display_sizes\": \n        [\n            {\n                \"name\": \"comp\"\n            },\n            {\n                \"name\": \"preview\"\n            },\n            {\n                \"name\": \"thumb\"\n            }\n        ],\n        \"editorial_segments\",\n        \"event_ids\",\n        \"graphical_style\",\n        \"license_model\",\n        \"max_dimensions\",\n        \"orientation\",\n        \"product_types\",\n        \"quality_rank\",\n        \"referral_destinations\",\n        \"title\"\n    ]\n}\n```\n\n#### Display Fields Set\n\nThe **display_set** query string parameter fields value represents the fields that provide you with URLs for the low resolution files \nthat are most frequently used to build a UI displaying search results. The following fields are provided for every image in your result\nset when you include **display_set** in your request.\n\nThe URI provided is subject to change at any time and must be used as-is with no modification.\n\n```\n{\n    \"images\":\n    [\n        \"display_sizes\": \n        [\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"comp\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"preview\",\n                \"uri\": \"<link>\"\n            },\n            {\n                \"is_watermarked\": <boolean>,\n                \"name\": \"thumb\",\n                \"uri\": \"<link>\"\n            }\n        ]\n    ]\n}\n```\n"
+  },
+  {
+    "id": "apisguru:flat.io:get:/scores/{score}",
+    "decision": "미확정",
+    "reason": "문서 read ACL, 그룹 관계 미명시",
+    "rationale": "description: The currently authenticated user must have at least a read access to the document to use this API call.",
+    "description": "Get the details of a score identified by the `score` parameter in the URL.\nThe currently authenticated user must have at least a read access to the document to use this API call.\n"
+  },
+  {
+    "id": "apisguru:dracoon.team:get:/v4/nodes",
+    "decision": "미확정",
+    "reason": "인증·노드 ACL, 그룹 관계 미명시",
+    "rationale": "description: Authenticated user.",
+    "description": "### Description:  \nProvides a hierarchical list of file system nodes (rooms, folders or files) of a given parent that are accessible by the current user.\n\n### Precondition:\nAuthenticated user.\n\n### Postcondition:\nList of nodes is returned.\n\n### Further Information:\n`EncryptionInfo` is **NOT** provided.\n\n### Filtering:\nAll filter fields are connected via logical conjunction (**AND**)  \nFilter string syntax: `FIELD_NAME:OPERATOR:VALUE[:VALUE...]`  \n\n<details style=\"padding-left: 10px\">\n<summary style=\"cursor: pointer; outline: none\"><strong>Example</strong></summary>\n\n`type:eq:room:folder|perm:eq:read`  \nGet nodes where type equals (`room` **OR** `folder`) **AND** user has `read` permissions.\n\n</details>\n\n### Filtering options:\n<details style=\"padding: 10px; background-color: #F6F7F8; border: 1px solid #AAA; border-radius: 5px;\">\n<summary style=\"cursor: pointer; outline: none\"><strong>Expand</strong></summary>\n\n| `FIELD_NAME` | Filter Description | `OPERATOR` | Operator Description | `VALUE` |\n| :--- | :--- | :--- | :--- | :--- |\n| `type` | Node type filter | `eq` | Node type equals value.<br>Multiple values are allowed and will be connected via logical disjunction (**OR**).<br>e.g. `type:eq:room:folder` | <ul><li>`room`</li><li>`folder`</li><li>`file`</li></ul> |\n| `perm` | Permission filter | `eq` | Permission equals value.<br>Multiple values are allowed and will be connected via logical disjunction (**OR**).<br>e.g. `perm:eq:read:create:delete` | <ul><li>`manage`</li><li>`read`</li><li>`change`</li><li>`create`</li><li>`delete`</li><li>`manageDownloadShare`</li><li>`manageUploadShare`</li><li>`canReadRecycleBin`</li><li>`canRestoreRecycleBin`</li><li>`canDeleteRecycleBin`</li></ul> |\n| `childPerm` | Same as `perm`, but less restrictive (applies to child nodes only).<br>Child nodes of the parent node which do not meet the filter condition<br>are **NOT** returned. | `eq` | cf. `perm` | cf. `perm` |\n| `name` | Node name filter | `cn, eq` | Node name contains / equals value. | `search String` |\n| `encrypted` | Node encryption status filter | `eq` |  | `true or false` |\n| `branchVersion` | Node branch version filter | `ge, le` | Branch version is greater / less equals than value.<br>Multiple operator values are allowed and will be connected via logical conjunction (**AND**).<br>e.g. `branchVersion:ge:1423280937404`&#124;`branchVersion:le:1523280937404` | `version number` |\n| `timestampCreation` | Creation timestamp filter | `ge, le` | Creation timestamp is greater / less equals than value.<br>Multiple operator values are allowed and will be connected via logical conjunction (**AND**).<br>e.g. `timestampCreation:ge:2016-12-31T23:00:00.123`&#124;<br>`timestampCreation:le:2018-01-01T11:00:00.540` | `Date (yyyy-MM-dd)` |\n| `timestampModification` | Modification timestamp filter | `ge, le` | Modification timestamp is greater / less equals than value.<br>Multiple operator values are allowed and will be connected via logical conjunction (**AND**).<br>e.g. `timestampModification:ge:2016-12-31T23:00:00.123`&#124;<br>`timestampModification:le:2018-01-01T11:00:00.540` | `Date (yyyy-MM-dd)` |\n| `referenceId`           | Reference ID filter               | `eq` | Reference ID equals value.   | `Integer ` |\n</details>\n\n---\n\n### Sorting:\nSort string syntax: `FIELD_NAME:ORDER`  \n`ORDER` can be `asc` or `desc`.  \nMultiple sort criteria are possible.  \nFields are connected via logical conjunction **AND**.  \nNodes are sorted by type first, then by sent sort string.  \n\n<details style=\"padding-left: 10px\">\n<summary style=\"cursor: pointer; outline: none\"><strong>Example</strong></summary>\n\n`name:desc|fileType:asc`  \nSort by `name` descending **AND** `fileType` ascending.\n\n</details>\n\n### Sorting options:\n<details style=\"padding: 10px; background-color: #F6F7F8; border: 1px solid #AAA; border-radius: 5px;\">\n<summary style=\"cursor: pointer; outline: none\"><strong>Expand</strong></summary>\n\n| `FIELD_NAME` | Description |\n| :--- | :--- |\n| `name` | Node name |\n| `createdAt` | Creation date |\n| `createdBy` | Creator first name, last name |\n| `updatedAt` | Last modification date |\n| `updatedBy` | Last modifier first name, last name |\n| `fileType` | File type (extension) |\n| `classification` | Classification ID:<ul><li>1 - public</li><li>2 - internal</li><li>3 - confidential</li><li>4 - strictly confidential</li></ul> |\n| `size` | Node size |\n| `cntDeletedVersions` | Number of deleted versions of this file / folder (**NOT** recursive; for files and folders only) |\n| `timestampCreation` | Creation timestamp |\n| `timestampModification` | Modification timestamp |\n\n</details>\n\n### Deprecated sorting options:\n<details style=\"padding: 10px; background-color: #F6F7F8; border: 1px solid #AAA; border-radius: 5px;\">\n<summary style=\"cursor: pointer; outline: none\"><strong>Expand</strong></summary>\n\n| `FIELD_NAME` | Description |\n| :--- | :--- |\n| <del>`cntChildren`</del> | Number of direct children (**NOT** recursive; for rooms and folders only) |\n\n</details>"
+  },
+  {
+    "id": "apisguru:circuitsandbox.net:post:/conversations/group/{convId}/participants",
+    "decision": "일치",
+    "reason": "이미 해당 conversation 구성원인 사용자만 허용",
+    "rationale": "description: This operation can only be performed by a user who is already a member of the conversation",
+    "description": "Adds one or more participants to the given group conversation. This operation can only be performed by a user who is already a member of the conversation.\nOauthScopes: WRITE_CONVERSATIONS, MANAGE_CONVERSATIONS"
+  },
+  {
+    "id": "apisguru:circuitsandbox.net:get:/conversations/{convId}/conversationdetails",
+    "decision": "미확정",
+    "reason": "conference 조회 scope만 명시",
+    "rationale": "description: OauthScopes: READ_CONVERSATIONS",
+    "description": "Gets the conference details of the given conversation. Conference details include the URL, which is used to join the conference through a web or mobile application, as well as the dial-in phone numbers and conference PIN, which are used to join the conference by phone.\nOauthScopes: READ_CONVERSATIONS"
+  },
+  {
+    "id": "apisguru:twitter.com:get:/2/lists/{id}/members",
+    "decision": "미확정",
+    "reason": "조회 대상이 멤버 목록이지 요청자 구성원 요구가 아님",
+    "rationale": "description: Returns a list of Users that are members of a List by the provided List ID.",
+    "description": "Returns a list of Users that are members of a List by the provided List ID."
+  },
+  {
+    "id": "apisguru:circuitsandbox.net:get:/conversations/label/{labelId}",
+    "decision": "미확정",
+    "reason": "조회 scope만 명시",
+    "rationale": "description: OauthScopes: READ_CONVERSATIONS",
+    "description": "Returns conversations with matching labels and paginated \nOauthScopes: READ_CONVERSATIONS"
+  },
+  {
+    "id": "apisguru:signl4.com:post:/alerts/{alertId}/close",
+    "decision": "미확정",
+    "reason": "teamId 필드만 있음",
+    "rationale": "description: ; security_state: declared; schema_fields: teamId",
+    "description": null
+  },
+  {
+    "id": "apisguru:billingo.hu:post:/documents/{id}/create-from-proforma",
+    "decision": "미확정",
+    "reason": "문서 변환 설명만 있음",
+    "rationale": "description: Create a new document from proforma. Returns a document object if the create is succeded.",
+    "description": "Create a new document from proforma. Returns a document object if the create is succeded."
+  },
+  {
+    "id": "apisguru:zuora.com:get:/objects/jobs/{id}",
+    "decision": "미확정",
+    "reason": "기능 permission, 그룹 관계 미명시",
+    "rationale": "description: Only the users that have the \"View Custom Objects\" permission can retrieve custom object bulk jobs.",
+    "description": "Retrieves the custom object bulk job details by job ID.\n\nOnly the users that have the \"View Custom Objects\" permission can retrieve custom object bulk jobs. See [Platform Permissions](https://knowledgecenter.zuora.com/Billing/Tenant_Management/A_Administrator_Settings/User_Roles/h_Platform_Roles#Platform_Permissions) for more information.\n"
+  },
+  {
+    "id": "apisguru:zoom.us:get:/accounts/{accountId}/billing",
+    "decision": "불일치",
+    "reason": "Pro 이상 유료 계정",
+    "rationale": "description: Only master accounts can use this API; description: Pro or a higher paid account with master account option enabled.",
+    "description": "Get [billing information](https://support.zoom.us/hc/en-us/articles/201363263-About-Billing) of a sub account.<br><br>Only master accounts can use this API. Zoom allows only [approved partners](https://marketplace.zoom.us/docs/api-reference/master-account-apis) to use master APIs and manage sub accounts' billing information. Email the partner programs team at **partner-success@zoom.us** for more details.<br>\n\n**Prerequisites:**\n* Pro or a higher paid account with master account option enabled. <br>\n\n**Scope**:`billing:master`<br>\n**[Rate Limit Label](https://marketplace.zoom.us/docs/api-reference/rate-limits#rate-limits):** `Medium`<br>\n\n"
+  },
+  {
+    "id": "apisguru:daniweb.com:post:/conversations/{ID}/searches",
+    "decision": "미확정",
+    "reason": "메시지 검색 설명만 있음",
+    "rationale": "description: Fetch messages authored from within specified conversations that match a query string passed in as a search parameter along with their relevancy score.; security_state: declared",
+    "description": "Fetch messages authored from within specified conversations that match a query string passed in as a search parameter along with their relevancy score."
+  },
+  {
+    "id": "apisguru:dracoon.team:get:/v4/nodes/deleted_nodes/{deleted_node_id}",
+    "decision": "미확정",
+    "reason": "room 접근 ACL, 그룹 구성원 관계 미명시",
+    "rationale": "description: User can access parent room and has read recycle bin permissions.",
+    "description": "### Description:  \nGet metadata of a deleted node.\n\n### Precondition:\nUser can access parent room and has <span style='padding: 3px; background-color: #F6F7F8; border: 1px solid #000; border-radius: 5px; display: inline;'>&#128275; read recycle bin</span> permissions.\n\n### Postcondition:\nRequested deleted node is returned.\n\n### Further Information:\nNone."
+  },
+  {
+    "id": "apisguru:stream-io-api.com:post:/channels/{type}/{id}/call",
+    "decision": "미확정",
+    "reason": "CreateCall/ReadChannel 기능 권한",
+    "rationale": "description: Required permissions: - CreateCall - ReadChannel",
+    "description": "Creates a call\n\nRequired permissions:\n- CreateCall\n- ReadChannel\n"
+  },
+  {
+    "id": "apisguru:vonage.com:get:/accounts/{account_id}/call-logs",
+    "decision": "미확정",
+    "reason": "your account는 그룹 구성원 검사 아님",
+    "rationale": "description: Retrieve call logs for your account",
+    "description": "Retrieve call logs for your account"
+  },
+  {
+    "id": "copper_wallet_subscription_0",
+    "decision": "불일치",
+    "reason": "합성 premium plan 조건",
+    "rationale": "A premium plan is required.",
+    "description": null
+  },
+  {
+    "id": "apisguru:signl4.com:post:/alerts/{alertId}/acknowledge",
+    "decision": "미확정",
+    "reason": "teamId 필드만 있음",
+    "rationale": "description: ; security_state: declared; schema_fields: teamId",
+    "description": null
+  }
+]

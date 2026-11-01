@@ -1,0 +1,107 @@
+[
+  {
+    "id": "items.read_items",
+    "category": "collection_semantics",
+    "analysis_gap": false,
+    "label_semantics_gap": true,
+    "scope_gap": false
+  },
+  {
+    "id": "items.create_item",
+    "category": "creation_semantics",
+    "analysis_gap": false,
+    "label_semantics_gap": true,
+    "scope_gap": false
+  },
+  {
+    "id": "login.login_access_token",
+    "category": "authentication_entry",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "login.recover_password",
+    "category": "authentication_entry",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.register_user",
+    "category": "authentication_entry",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "login.reset_password",
+    "category": "capability_semantics",
+    "analysis_gap": false,
+    "label_semantics_gap": true,
+    "scope_gap": false
+  },
+  {
+    "id": "private.create_user",
+    "category": "deployment_scope",
+    "analysis_gap": false,
+    "label_semantics_gap": false,
+    "scope_gap": true
+  },
+  {
+    "id": "login.recover_password_html_content",
+    "category": "shared_role_dependency",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.read_users",
+    "category": "shared_role_dependency",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.create_user",
+    "category": "shared_role_dependency",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.update_user",
+    "category": "shared_role_dependency",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "utils.test_email",
+    "category": "shared_role_dependency",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.update_user_me",
+    "category": "self_binding_and_validation",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "users.update_password_me",
+    "category": "self_binding_and_validation",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  },
+  {
+    "id": "utils.health_check",
+    "category": "anonymous_health",
+    "analysis_gap": true,
+    "label_semantics_gap": false,
+    "scope_gap": false
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "elapsed_sec": 15.985000000102445,
+  "count": 1,
+  "expected": "owner_or_admin",
+  "actual": "manual_review_required",
+  "controller": "tests/fixtures/controllers/demo_with_admin.py",
+  "passed": false
+}

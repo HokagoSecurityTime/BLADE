@@ -1,0 +1,119 @@
+# ===== BLADE .gitignore (Codex 원본 유지 + 인수 시 보강 2026-10-21) =====
+
+# --- 비밀정보 ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
+
+# --- 가상환경·캐시·빌드 ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.python/
+.cache/
+.chroma/
+*.egg-info/
+node_modules/
+dashboard/node_modules/
+dashboard/dist/
+verification/phase2/ui-dist/
+verification/phase2/tmp*/
+
+# --- 설치 파일·바이너리·미디어 ---
+*.exe
+*.msi
+*.dll
+*.pyd
+*.whl
+*.mp4
+OllamaSetup.exe
+python-installer.exe
+python311-setup.exe
+.ollama/
+verification/video_tools/
+verification/video-review/
+
+# --- 모델 가중치·LoRA 어댑터 ---
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
+checkpoints/
+training/checkpoints/
+training/models/
+adapters/
+training/lora/runs/
+training/lora/adapter/
+training/lora/checkpoints/
+
+# --- 대용량 원시 데이터 (APIs.guru 원본, 공개 취약 API 클론, LLM 원시 응답 대량 파일) ---
+datasets/blade/raw/openapi-directory/
+datasets/blade/raw/vuln_apis/
+datasets/blade/processed/apisguru_labeled_v*_openai.jsonl
+datasets/blade/processed/*.partial.jsonl
+datasets/blade/processed/apisguru_enriched_v2.jsonl
+datasets/blade/processed/train_before_v6.jsonl
+datasets/blade/processed/apisguru_manual_pool.jsonl
+corpus/
+
+# --- 벡터 인덱스·DB·로그 ---
+.rag_*/
+**/.rag_*/
+verification/phase2/*-index/
+verification/phase2/*/chroma/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+logs/
+verification/ollama-pull.log
+demo.db
+blade.db
+detections.jsonl
+
+# --- 대량 LLM 원시 응답 (추적 제외) ---
+reports/eval/classification_quality/prompt_*_full/raw_responses.jsonl
+
+# --- 실제 오픈소스 프로젝트 클론 (정적 분석 전용, 경로·커밋만 기록) ---
+datasets/blade/raw/opensource/
+reports/eval/data_v2/*/raw_responses.jsonl
+
+# LoRA 학습 로그(소형)는 평가 근거로 추적
+!reports/eval/lora_v*/logs/
+!reports/eval/lora_v*/*/logs/
+
+# --- test_v31_supp: 코드 본문 비공개(Flowise enterprise/ 상용 라이선스, 라이선스 미선언 출처). 공개는 manifest(링크·커밋)만 ---
+datasets/blade/processed/data_v4/test_v31_supp.jsonl
+datasets/blade/processed/data_v4/test_v31_supp_candidates.jsonl
+training/lora/data_v4/test_v31_supp_inputs.jsonl
+review/test_v31_supp_review*.xlsx
+review/test_v31_supp_spotcheck.xlsx
+data/raw_v4/flowise/candidates.jsonl
+data/raw_v4/multitenant_lab/candidates.jsonl
+data/raw_v4/generic_university/candidates.jsonl
+reports/eval/lora_v4/**/predictions_*supp*.jsonl
+reports/eval/lora_v4/**/supp_predictions_*.jsonl
+# --- RunPod export 원본(어댑터 1GB) ---
+reports/blade_v3_export/
+reports/eval/stable_decoding/**/supp_predictions_*.jsonl
+
+# --- data-v5: NodeBB(GPL-3.0) 코드 본문(controller_text)이 든 파일은 비공개. 공개는 manifest(id·저장소·커밋·고정 링크·label)만 ---
+data/raw_v5_train/nodebb/candidates.jsonl
+datasets/blade/processed/data_v5/candidates_train_v5.jsonl
+datasets/blade/processed/data_v5/train_v5_rule_labeled.jsonl
+datasets/blade/processed/data_v5/train_v5_selected.jsonl
+datasets/blade/processed/data_v5/train_v5_pool.jsonl
+datasets/blade/processed/train_v5.jsonl
+datasets/blade/processed/val_v5.jsonl
+training/lora/data_v5/train_sft_v5.jsonl
+training/lora/data_v5/val_sft_v5.jsonl
+review/v5_train_review*.xlsx
+reports/eval/stable_decoding/raw/
+reports/eval/lora_v5/**/supp_predictions_*.jsonl
+training/lora/data_v5/test_v31_supp_inputs.jsonl

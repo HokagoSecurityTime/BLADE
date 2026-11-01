@@ -1,0 +1,17 @@
+{
+  "records": 100,
+  "labels": {
+    "tenant_match": 5,
+    "role_required": 20,
+    "owner_match": 24,
+    "manual_review_required": 37,
+    "public": 3,
+    "membership_required": 10,
+    "owner_or_admin": 1
+  },
+  "label_errors": 0,
+  "evidence_invalid": 1,
+  "manual_count": 37,
+  "accuracy": null,
+  "human_review_pending": true
+}

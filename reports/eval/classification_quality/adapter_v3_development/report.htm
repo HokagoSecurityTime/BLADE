@@ -1,0 +1,47 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><h1>어댑터 v3 개발 결과</h1>
+<p>전체 의미 분석 8/23건을 유지하고, 공통 역할 의존성의 필수 조건만 추가로 5건 추출했다. 부분 조건을 전체 검증 성공으로 세지 않는다. 나머지 10건은 의미·호출 연결·배포 범위가 미확정이다.</p>
+<table>
+<thead>
+<tr>
+<th>미지원 분류</th>
+<th style="text-align:right">건수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>collection_semantics</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>creation_semantics</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>authentication_entry</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td>capability_semantics</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>deployment_scope</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>shared_role_dependency</td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td>self_binding_and_validation</td>
+<td style="text-align:right">2</td>
+</tr>
+<tr>
+<td>anonymous_health</td>
+<td style="text-align:right">1</td>
+</tr>
+</tbody>
+</table>
+<p>엔드포인트 이름을 추가하지 않고 Depends import→함수→역할 거부 조건 구조를 분석한다. ORM where 및 반환 인자도 위치와 함께 추출하지만, 라이브러리·인증 바인딩이 검증되지 않으면 후보 근거로만 남긴다. 목록 행 필터링·생성자 바인딩·reset token을 억지로 6종에 매핑하지 않는다.</p>
+<p>새 프로젝트 평가 전에 adapter_v3.py와 기존 완전 분석 경로·프롬프트 해시를 고정한다. 기존 프로젝트는 개발셋이다.</p>
+</html>

@@ -1,0 +1,420 @@
+{
+  "configuration": "a",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "rag": true,
+  "controller": true,
+  "prompt_version": "v2.0",
+  "prompt_sha256": "c3c774e3907207a3b4e10d6800078ce9c5c604b39cb7b5be884e1c8d8ba7d3e4",
+  "test_sha256": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+  "runner_sha256": "c3b3ea8b1efc2c68a46ab801cc5b2eaea1899299d75c207d64558e4f878865ad",
+  "corpus_sha256": "0f28fc32da23453caa21be98e6e16d88ef72ef535b3641b1e7ff110130c1c7ee",
+  "corpus_counts": {
+    "idiom": 6
+  },
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "total": 253,
+  "recording_version": 1,
+  "input_overlay_sha256": null,
+  "state": "complete",
+  "updated_at": "2026-10-20T00:57:13.391208+00:00",
+  "metrics": {
+    "completed": 253,
+    "per_label": {
+      "public": {
+        "precision": 0.4098360655737705,
+        "recall": 0.390625,
+        "f1": 0.4,
+        "support": 64
+      },
+      "role_required": {
+        "precision": 0.4,
+        "recall": 0.08163265306122448,
+        "f1": 0.13559322033898302,
+        "support": 49
+      },
+      "membership_required": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6
+      },
+      "tenant_match": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6
+      },
+      "owner_match": {
+        "precision": 0.14285714285714285,
+        "recall": 0.05357142857142857,
+        "f1": 0.0779220779220779,
+        "support": 112
+      },
+      "owner_or_admin": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      },
+      "manual_review_required": {
+        "precision": 0.007194244604316547,
+        "recall": 0.14285714285714285,
+        "f1": 0.0136986301369863,
+        "support": 7
+      }
+    },
+    "confusion_matrix": {
+      "public": {
+        "public": 25,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 33
+      },
+      "role_required": {
+        "public": 19,
+        "role_required": 4,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 20
+      },
+      "membership_required": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "tenant_match": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "owner_match": {
+        "public": 16,
+        "role_required": 6,
+        "membership_required": 1,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 83
+      },
+      "owner_or_admin": {
+        "public": 1,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 2
+      },
+      "manual_review_required": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 1
+      }
+    },
+    "macro_f1": 0.08960198977114962,
+    "manual_ratio": 0.549407114624506,
+    "mean_inference_ms": 1793.3826782591568,
+    "errors": {
+      "invalid_model_output_schema": 5
+    },
+    "erd_context": {
+      "missing": 211,
+      "available": 42
+    },
+    "controller_status": {
+      "source_present_but_runtime_handler_unmapped": 212,
+      "parsed_current_handler": 37,
+      "source_unavailable": 4
+    },
+    "rag_nonempty": 253
+  },
+  "diagnostic_metrics": {
+    "recorded": 253,
+    "missing_trace": 0,
+    "raw": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.3511450381679389,
+          "recall": 0.71875,
+          "f1": 0.47179487179487184,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.45454545454545453,
+          "recall": 0.10204081632653061,
+          "f1": 0.16666666666666669,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.3333333333333333,
+          "recall": 0.1875,
+          "f1": 0.24000000000000005,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 46,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 9,
+          "owner_or_admin": 1,
+          "manual_review_required": 8
+        },
+        "role_required": {
+          "public": 30,
+          "role_required": 5,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 7,
+          "owner_or_admin": 1,
+          "manual_review_required": 6
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 53,
+          "role_required": 6,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 21,
+          "owner_or_admin": 2,
+          "manual_review_required": 29
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 8,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "manual_review_required": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        }
+      },
+      "macro_f1": 0.12549450549450553,
+      "manual_ratio": 0.16996047430830039,
+      "mean_inference_ms": 1793.3826782591568,
+      "errors": {
+        "invalid_model_output_schema": 5
+      },
+      "erd_context": {
+        "missing": 211,
+        "available": 42
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 212,
+        "parsed_current_handler": 37,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "final": {
+      "completed": 253,
+      "per_label": {
+        "public": {
+          "precision": 0.4098360655737705,
+          "recall": 0.390625,
+          "f1": 0.4,
+          "support": 64
+        },
+        "role_required": {
+          "precision": 0.4,
+          "recall": 0.08163265306122448,
+          "f1": 0.13559322033898302,
+          "support": 49
+        },
+        "membership_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "tenant_match": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6
+        },
+        "owner_match": {
+          "precision": 0.14285714285714285,
+          "recall": 0.05357142857142857,
+          "f1": 0.0779220779220779,
+          "support": 112
+        },
+        "owner_or_admin": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9
+        },
+        "manual_review_required": {
+          "precision": 0.007194244604316547,
+          "recall": 0.14285714285714285,
+          "f1": 0.0136986301369863,
+          "support": 7
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 25,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 33
+        },
+        "role_required": {
+          "public": 19,
+          "role_required": 4,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 20
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 0
+        },
+        "owner_match": {
+          "public": 16,
+          "role_required": 6,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 83
+        },
+        "owner_or_admin": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 2
+        },
+        "manual_review_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 6,
+          "owner_or_admin": 0,
+          "manual_review_required": 1
+        }
+      },
+      "macro_f1": 0.08960198977114962,
+      "manual_ratio": 0.549407114624506,
+      "mean_inference_ms": 1793.3826782591568,
+      "errors": {
+        "invalid_model_output_schema": 5
+      },
+      "erd_context": {
+        "missing": 211,
+        "available": 42
+      },
+      "controller_status": {
+        "source_present_but_runtime_handler_unmapped": 212,
+        "parsed_current_handler": 37,
+        "source_unavailable": 4
+      },
+      "rag_nonempty": 253
+    },
+    "invalid_raw_labels": 0,
+    "changed": 96,
+    "correct_to_wrong": 37,
+    "wrong_to_correct": 1,
+    "validation_events": {
+      "Caller-attribute/public policy conflicts with object lookup": 2,
+      "confidence_below_0.7": 112,
+      "Missing or unknown object parameter/owner lookup": 7,
+      "Unknown lookup table or id column": 13,
+      "json_or_schema_invalid": 5
+    }
+  }
+}

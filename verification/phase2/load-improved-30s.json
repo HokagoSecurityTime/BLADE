@@ -1,0 +1,21 @@
+{
+  "duration_sec": 30.0,
+  "redis_url": "redis://127.0.0.1:16382/8",
+  "results": [
+    {
+      "phase": 1,
+      "concurrency": 50,
+      "cache": "cold",
+      "requests": 6054,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 194.37059992924333,
+      "p95_ms": 541.280800011009,
+      "p99_ms": 804.4916000217199,
+      "elapsed_sec": 30.08443110017106,
+      "throughput_rps": 201.23365403993222,
+      "detections_expected": 6054,
+      "detections_recorded": 603
+    }
+  ]
+}

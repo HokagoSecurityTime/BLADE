@@ -1,0 +1,18 @@
+{
+  "files": {
+    "training/experiments/adapter_v3.py": "88d4ceb89adfa433a5e9cee6ea5e5892886e6c4a3f8fec4b5fe34bc15e0b2d3a",
+    "training/experiments/external_orm_adapter.py": "af4bcebe104ac30f64fd75d012291bb9bdf023b3e263bf36d111a00f5e6a5788",
+    "training/experiments/external_binding_adapter_v2.py": "0665d25f27b34df4b09089c99a428cf782a2655882a0bff585f59c60291b2c45",
+    "training/experiments/external_binding_adapter.py": "cede82d5b47aa67da10cffc3b0b6e67796ce423d6d4525d312f284bd9bcdfd94",
+    "training/data/prompts/policy_label_v2.9.md": "f748510fea456603e2b2fbb77f99cff4fa583444968a301a430218b54731b518"
+  },
+  "independent_project": "fastapi-users/fastapi-users",
+  "selection": "all decorated handlers in router/users.py; fixed before source inspection",
+  "model": "gpt-4o-mini",
+  "conditions": [
+    "oas",
+    "oas_code"
+  ],
+  "repeats": 1,
+  "reference": "pre-prediction agent source review; unresolved excluded, not manual ground truth"
+}

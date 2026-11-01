@@ -1,0 +1,74 @@
+# Use with: docker compose -f docker-compose.yml -f docker-compose.phase2.yml up -d --build
+# Kept separate so the original Phase 1 deployment and wiring checks remain unchanged.
+services:
+  demo-backend:
+    image: blade:phase2-runtime
+  dashboard:
+    image: blade-dashboard:phase2
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --save, "", --appendonly, "no"]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  admin-api:
+    image: blade:phase2
+    build:
+      context: .
+      args:
+        BLADE_EXTRAS: "[controller,rag]"
+    environment:
+      BLADE_PHASE2_ENABLED: "true"
+      BLADE_REDIS_URL: redis://redis:6379/0
+      BLADE_REDIS_ENABLED: ${BLADE_REDIS_ENABLED:-true}
+      BLADE_CHROMA_PATH: /rag
+      BLADE_DETECTION_STREAM_NAMESPACE: ${BLADE_DETECTION_STREAM_NAMESPACE:-blade}
+      BLADE_DETECTION_REDIS_URL: redis://detection-redis:6379/0
+      BLADE_MODEL_CACHE: /models
+    volumes:
+      - rag-data:/rag
+      - model-cache:/models
+  proxy:
+    image: blade:phase2-runtime
+    environment:
+      BLADE_PHASE2_ENABLED: "true"
+      BLADE_DETECTION_STREAM_NAMESPACE: ${BLADE_DETECTION_STREAM_NAMESPACE:-blade}
+      BLADE_DETECTION_REDIS_URL: redis://detection-redis:6379/0
+      BLADE_REDIS_URL: redis://redis:6379/0
+      BLADE_REDIS_ENABLED: ${BLADE_REDIS_ENABLED:-true}
+  detection-redis:
+    image: redis:7-alpine
+    command: [redis-server, --save, "", --appendonly, "yes", --appendfsync, everysec]
+    volumes: ["detection-redis-data:/data"]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  alerts:
+    image: blade:phase2
+    build:
+      context: .
+      args:
+        BLADE_EXTRAS: "[controller,rag]"
+    command: [python, -m, admin_api.workers]
+    environment:
+      BLADE_PHASE2_ENABLED: "true"
+      BLADE_ADMIN_DB: /data/blade.db
+      BLADE_ADMIN_URL: http://admin-api:8100
+      BLADE_CHROMA_PATH: /rag
+      BLADE_MODEL_CACHE: /models
+      BLADE_OLLAMA_URL: ${BLADE_DOCKER_OLLAMA_URL:-http://host.docker.internal:11434}
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    env_file: .env
+    volumes:
+      - admin-data:/data
+      - rag-data:/rag
+      - model-cache:/models
+
+volumes:
+  detection-redis-data:
+  rag-data:
+  model-cache:

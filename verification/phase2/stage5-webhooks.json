@@ -1,0 +1,42 @@
+[
+  {
+    "method": "POST",
+    "path": "/slack",
+    "body": {
+      "text": "[BLADE enforce] user_99 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch\n테스트 예시: 타인의 주문 요청이 차단되었습니다.",
+      "mrkdwn": false
+    },
+    "response_status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/discord",
+    "body": {
+      "content": "[BLADE enforce] user_99 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch\n테스트 예시: 타인의 주문 요청이 차단되었습니다.",
+      "allowed_mentions": {
+        "parse": []
+      }
+    },
+    "response_status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/slack",
+    "body": {
+      "text": "[BLADE observe] user_88 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch",
+      "mrkdwn": false
+    },
+    "response_status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/discord",
+    "body": {
+      "content": "[BLADE observe] user_88 → GET /orders/1042 · 정책 pol_orders_get_by_orderId(owner_match) · policy_mismatch",
+      "allowed_mentions": {
+        "parse": []
+      }
+    },
+    "response_status": 200
+  }
+]

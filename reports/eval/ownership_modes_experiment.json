@@ -1,0 +1,161 @@
+{
+  "api_calls": 0,
+  "cases": [
+    {
+      "name": "owned object",
+      "mode": "object_lookup",
+      "expected": "allow",
+      "actual": {
+        "status": "allow"
+      }
+    },
+    {
+      "name": "other object",
+      "mode": "object_lookup",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "missing id",
+      "mode": "object_lookup",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "missing owner",
+      "mode": "object_lookup",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "own subject resource",
+      "mode": "subject_resource",
+      "expected": "allow",
+      "actual": {
+        "status": "allow"
+      }
+    },
+    {
+      "name": "missing subject resource",
+      "mode": "subject_resource",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "create assigns owner",
+      "mode": "create_owner",
+      "expected": "allow",
+      "actual": {
+        "status": "allow",
+        "write": {
+          "title": "draft",
+          "principal": "alice"
+        }
+      }
+    },
+    {
+      "name": "create matching owner",
+      "mode": "create_owner",
+      "expected": "allow",
+      "actual": {
+        "status": "allow",
+        "write": {
+          "principal": "alice"
+        }
+      }
+    },
+    {
+      "name": "create forged owner",
+      "mode": "create_owner",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "create null owner",
+      "mode": "create_owner",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "collection excludes other/missing owner",
+      "mode": "owner_collection",
+      "expected": "allow",
+      "actual": {
+        "status": "allow",
+        "result": [
+          {
+            "principal": "alice"
+          }
+        ]
+      }
+    },
+    {
+      "name": "object_lookup unauthenticated",
+      "mode": "object_lookup",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "subject_resource unauthenticated",
+      "mode": "subject_resource",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "create_owner unauthenticated",
+      "mode": "create_owner",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "owner_collection unauthenticated",
+      "mode": "owner_collection",
+      "expected": "deny",
+      "actual": {
+        "status": "deny"
+      }
+    },
+    {
+      "name": "subject_resource no backend adapter",
+      "mode": "subject_resource",
+      "expected": "unsupported",
+      "actual": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "name": "create_owner no backend adapter",
+      "mode": "create_owner",
+      "expected": "unsupported",
+      "actual": {
+        "status": "unsupported"
+      }
+    },
+    {
+      "name": "owner_collection no backend adapter",
+      "mode": "owner_collection",
+      "expected": "unsupported",
+      "actual": {
+        "status": "unsupported"
+      }
+    }
+  ]
+}

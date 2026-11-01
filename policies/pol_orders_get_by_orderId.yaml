@@ -1,0 +1,18 @@
+id: pol_orders_get_by_orderId
+endpoint:
+  method: GET
+  path: /orders/{orderId}
+label: owner_match
+params:
+  object_param: orderId
+  owner_lookup:
+    table: orders
+    id_col: id
+    owner_col: user_id
+    tenant_col: null
+  roles: []
+  allowed_membership: []
+confidence: 1.0
+evidence: Order retrieval requires matching user_id.
+status: PENDING
+created_at: '2026-09-09T10:20:21.481648Z'

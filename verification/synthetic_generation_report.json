@@ -1,0 +1,24 @@
+{
+  "total": 84,
+  "services": {
+    "quill_blog": 14,
+    "orbit_tickets": 14,
+    "folio_wiki": 14,
+    "copper_wallet": 14,
+    "campus_records": 14,
+    "beacon_iot": 14
+  },
+  "known_vulnerable": 30,
+  "runtime_validation": {
+    "docker_builds": 6,
+    "framework_exports": 6,
+    "http_checks": 336,
+    "failures": 0
+  },
+  "known_biases": [
+    "All endpoints are GET handlers.",
+    "Six domains share the same seven authorization templates.",
+    "Fixed in-memory objects and fixture bearer tokens; not production authentication.",
+    "DDL is generated from the shared dataclass model, not native ORM migration tooling."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "calls": 84,
+  "records": 42,
+  "conditions": [
+    "oas",
+    "oas_code"
+  ],
+  "system_prompt_tokens": 2393,
+  "input_tokens_total": 215945,
+  "output_tokens_assumed": 10920,
+  "usd_no_cache": 0.0389,
+  "usd_if_system_prefix_cached": 0.024,
+  "evidence_correction_retries": "up to +1 call per record when evidence_fields invalid",
+  "pricing_usd_per_million": {
+    "input": 0.15,
+    "cached_input": 0.075,
+    "output": 0.6
+  },
+  "prompt_sha256": "d2dc8377c28830c7dfdefe297c63a0ff1623eb5036d1e3ae3c31b38e2dea2fc5",
+  "inputs_sha256": "a7b3b87cb08bf143b852966eea678d04b95491758d1e2d1cd2482a2f00d52517"
+}

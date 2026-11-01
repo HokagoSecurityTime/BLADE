@@ -1,0 +1,138 @@
+{
+  "code": {
+    "correct": 21,
+    "n": 30,
+    "macro_f1": 0.7904761904761904,
+    "per_label": {
+      "public": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "role_required": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "membership_required": {
+        "precision": 0.25,
+        "recall": 1.0,
+        "f1": 0.4,
+        "support": 2
+      },
+      "tenant_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "owner_match": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 2
+      },
+      "owner_or_admin": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "support": 2
+      },
+      "manual_review_required": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "support": 18
+      }
+    },
+    "compound_count": 16,
+    "compound_concrete_count": 7,
+    "compound_concrete_ids": [
+      "boundary-06-0",
+      "boundary-06-1",
+      "boundary-07-0",
+      "boundary-07-1",
+      "boundary-09-0",
+      "boundary-10-0",
+      "boundary-10-1"
+    ],
+    "label_errors": 0,
+    "evidence_invalid": 0,
+    "responses": 30,
+    "input_tokens": 41013,
+    "output_tokens": 1856
+  },
+  "code_conditions": {
+    "correct": 15,
+    "n": 30,
+    "macro_f1": 0.6800104657247514,
+    "per_label": {
+      "public": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "role_required": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "membership_required": {
+        "precision": 0.18181818181818182,
+        "recall": 1.0,
+        "f1": 0.3076923076923077,
+        "support": 2
+      },
+      "tenant_match": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 2
+      },
+      "owner_match": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 2
+      },
+      "owner_or_admin": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "support": 2
+      },
+      "manual_review_required": {
+        "precision": 1.0,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857,
+        "support": 18
+      }
+    },
+    "compound_count": 16,
+    "compound_concrete_count": 13,
+    "compound_concrete_ids": [
+      "boundary-06-0",
+      "boundary-06-1",
+      "boundary-07-0",
+      "boundary-07-1",
+      "boundary-08-0",
+      "boundary-08-1",
+      "boundary-09-0",
+      "boundary-09-1",
+      "boundary-10-0",
+      "boundary-10-1",
+      "boundary-11-0",
+      "boundary-11-1",
+      "boundary-14-1"
+    ],
+    "label_errors": 0,
+    "evidence_invalid": 0,
+    "responses": 31,
+    "input_tokens": 43432,
+    "output_tokens": 1905
+  }
+}

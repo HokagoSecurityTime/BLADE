@@ -1,0 +1,795 @@
+{
+ "definition": "보조 지표: 세 test 셋 합산 채점 (test_v30 oas_code 합성 제외 207 + test_v31_supp oas_code 222 + test_v5 oas_code 283 = 712건).\n사용자 결정 2026-10-31 (C-5 수용·마무리 3항). 주지표(test_v30 207)는 바꾸지 않으며 이 합산은 보조 지표로만 표기한다.\n\n정의\n- 7-class 채점(manual_review_required도 class). macro-F1은 합산 셋에서 정답 support > 0인 label의 F1 평균(712건에는 7 label 모두 support가 있다).\n- 정확도 = 예측 label == 정답 label 비율(출력 오류는 오답).\n- 구체 정밀도·재현율(eval_v30.py concrete()와 같은 정의): 정답이 구체 label인 건만 대상. 응답 = 예측이 manual도 출력 오류도 아닌 건.\n  정밀도 = 응답 중 정답 일치 / 응답 수, 재현율 = 정답 일치 / 정답 구체 건수, 응답률 = 응답 수 / 정답 구체 건수.\n- 모델: base 1회, LoRA v4·v5 각 seed 42·43·44 (평균 ± 표본 표준편차). 기존 예측 파일을 다시 읽어 채점하며 재추론은 없다.\n- 동결 파일 해시 검증: test_v30(data_v1_guard), test_v31_supp(803d9149…), test_v5(test_v5_manifest.json 57fd384f… → 7b8e4a94…).\n",
+ "truth_hashes": {
+  "test_v30": "9bd47216575afc602b03afa20e617308dd9a97476c94e67a117eb17009afd5e2",
+  "test_v31_supp": "803d914902c7ca2042fd15d4a7852d42e71828e58d4ae4d3ac791fb868e63395",
+  "test_v5": "7b8e4a940967ec474e0d5dbf6dcdbd6b7e04be439599c2a684664d6b9393fd9c",
+  "test_v5_manifest": "57fd384f46e89e905209e627a7ff7fb9f312e22a7bed222639e91a80bd05fccd"
+ },
+ "results": [
+  {
+   "group": "base",
+   "model": "base_qwen_runpod",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v4/base_qwen_runpod/eval/predictions_oas_code_base_qwen_runpod.jsonl",
+    "test_v31_supp": "reports/eval/lora_v4/base_qwen_runpod/eval/supp_predictions_oas_code_base_qwen_runpod.jsonl",
+    "test_v5": "reports/eval/lora_v5/base_qwen_runpod/eval/v5test_predictions_oas_code_base_qwen_runpod.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.1475,
+    "supported_labels": 7,
+    "accuracy": 0.2753,
+    "manual_ratio": 0.0197,
+    "output_errors": 111,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 502,
+     "answer_rate": 0.8149,
+     "precision": 0.3884,
+     "recall": 0.3166
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.3722,
+      "recall": 0.8481,
+      "f1": 0.5174
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.3111,
+      "recall": 0.6402,
+      "f1": 0.4187
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.3889,
+      "recall": 0.0435,
+      "f1": 0.0782
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.0714,
+      "recall": 0.0104,
+      "f1": 0.0182
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.1967,
+     "accuracy": 0.3188,
+     "manual_ratio": 0.0676,
+     "output_errors": 9,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 184,
+      "answer_rate": 0.8932,
+      "precision": 0.3533,
+      "recall": 0.3155
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.0476,
+     "accuracy": 0.0991,
+     "manual_ratio": 0.0,
+     "output_errors": 67,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 128,
+      "answer_rate": 0.6667,
+      "precision": 0.1719,
+      "recall": 0.1146
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.2377,
+     "accuracy": 0.3816,
+     "manual_ratio": 0.0,
+     "output_errors": 35,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 190,
+      "answer_rate": 0.8716,
+      "precision": 0.5684,
+      "recall": 0.4954
+     }
+    }
+   }
+  },
+  {
+   "group": "v4",
+   "model": "lora_v4_s42_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v4/lora_v4_s42/eval/predictions_oas_code_lora_v4_s42_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v4/lora_v4_s42/eval/supp_predictions_oas_code_lora_v4_s42_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v4_s42/eval/v5test_predictions_oas_code_lora_v4_s42_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.4695,
+    "supported_labels": 7,
+    "accuracy": 0.5183,
+    "manual_ratio": 0.2612,
+    "output_errors": 12,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 462,
+     "answer_rate": 0.75,
+     "precision": 0.7056,
+     "recall": 0.5292
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.8511,
+      "recall": 0.5063,
+      "f1": 0.6349
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.6424,
+      "recall": 0.5132,
+      "f1": 0.5706
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.4842,
+      "recall": 0.5227,
+      "f1": 0.5027
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.0909,
+      "f1": 0.1667
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.716,
+      "recall": 0.7516,
+      "f1": 0.7333
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.3617,
+      "recall": 0.3864,
+      "f1": 0.3736
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.2312,
+      "recall": 0.4479,
+      "f1": 0.305
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.3796,
+     "accuracy": 0.5797,
+     "manual_ratio": 0.2899,
+     "output_errors": 5,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 142,
+      "answer_rate": 0.6893,
+      "precision": 0.838,
+      "recall": 0.5777
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.4159,
+     "accuracy": 0.3604,
+     "manual_ratio": 0.2793,
+     "output_errors": 4,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 136,
+      "answer_rate": 0.7083,
+      "precision": 0.5221,
+      "recall": 0.3698
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.5992,
+     "accuracy": 0.5972,
+     "manual_ratio": 0.2261,
+     "output_errors": 3,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 184,
+      "answer_rate": 0.844,
+      "precision": 0.7391,
+      "recall": 0.6239
+     }
+    }
+   }
+  },
+  {
+   "group": "v4",
+   "model": "lora_v4_s43_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v4/lora_v4_s43/eval/predictions_oas_code_lora_v4_s43_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v4/lora_v4_s43/eval/supp_predictions_oas_code_lora_v4_s43_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v4_s43/eval/v5test_predictions_oas_code_lora_v4_s43_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.4565,
+    "supported_labels": 7,
+    "accuracy": 0.4916,
+    "manual_ratio": 0.2598,
+    "output_errors": 10,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 455,
+     "answer_rate": 0.7386,
+     "precision": 0.6989,
+     "recall": 0.5162
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.8125,
+      "recall": 0.3291,
+      "f1": 0.4685
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.6467,
+      "recall": 0.5132,
+      "f1": 0.5723
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.4737,
+      "recall": 0.5114,
+      "f1": 0.4918
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.2182,
+      "f1": 0.3582
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.7101,
+      "recall": 0.7453,
+      "f1": 0.7273
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.3051,
+      "recall": 0.4091,
+      "f1": 0.3495
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.173,
+      "recall": 0.3333,
+      "f1": 0.2278
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.3042,
+     "accuracy": 0.4879,
+     "manual_ratio": 0.3575,
+     "output_errors": 6,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 127,
+      "answer_rate": 0.6165,
+      "precision": 0.7874,
+      "recall": 0.4854
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.4757,
+     "accuracy": 0.3919,
+     "manual_ratio": 0.2387,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 144,
+      "answer_rate": 0.75,
+      "precision": 0.5556,
+      "recall": 0.4167
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.5676,
+     "accuracy": 0.5724,
+     "manual_ratio": 0.2049,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 184,
+      "answer_rate": 0.844,
+      "precision": 0.75,
+      "recall": 0.633
+     }
+    }
+   }
+  },
+  {
+   "group": "v4",
+   "model": "lora_v4_s44_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v4/lora_v4_s44/eval/predictions_oas_code_lora_v4_s44_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v4/lora_v4_s44/eval/supp_predictions_oas_code_lora_v4_s44_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v4_s44/eval/v5test_predictions_oas_code_lora_v4_s44_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.4815,
+    "supported_labels": 7,
+    "accuracy": 0.5295,
+    "manual_ratio": 0.2121,
+    "output_errors": 5,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 496,
+     "answer_rate": 0.8052,
+     "precision": 0.6895,
+     "recall": 0.5552
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.875,
+      "recall": 0.5316,
+      "f1": 0.6614
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.6071,
+      "recall": 0.5397,
+      "f1": 0.5714
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.5227,
+      "recall": 0.5227,
+      "f1": 0.5227
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 0.9091,
+      "recall": 0.1818,
+      "f1": 0.303
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.6598,
+      "recall": 0.795,
+      "f1": 0.7211
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.2979,
+      "recall": 0.3182,
+      "f1": 0.3077
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.2318,
+      "recall": 0.3646,
+      "f1": 0.2834
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.3856,
+     "accuracy": 0.6135,
+     "manual_ratio": 0.2464,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 156,
+      "answer_rate": 0.7573,
+      "precision": 0.8077,
+      "recall": 0.6117
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.4534,
+     "accuracy": 0.3784,
+     "manual_ratio": 0.1802,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 158,
+      "answer_rate": 0.8229,
+      "precision": 0.4873,
+      "recall": 0.401
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.58,
+     "accuracy": 0.5866,
+     "manual_ratio": 0.212,
+     "output_errors": 4,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 182,
+      "answer_rate": 0.8349,
+      "precision": 0.7637,
+      "recall": 0.6376
+     }
+    }
+   }
+  },
+  {
+   "group": "v5",
+   "model": "lora_v5_s42_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v5/lora_v5_s42/eval/predictions_oas_code_lora_v5_s42_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v5/lora_v5_s42/eval/supp_predictions_oas_code_lora_v5_s42_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v5_s42/eval/v5test_predictions_oas_code_lora_v5_s42_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.5026,
+    "supported_labels": 7,
+    "accuracy": 0.5618,
+    "manual_ratio": 0.2121,
+    "output_errors": 5,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 495,
+     "answer_rate": 0.8036,
+     "precision": 0.7374,
+     "recall": 0.5925
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.7324,
+      "recall": 0.6582,
+      "f1": 0.6933
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.7065,
+      "recall": 0.6878,
+      "f1": 0.6971
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.5054,
+      "recall": 0.5341,
+      "f1": 0.5193
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.1091,
+      "f1": 0.1967
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.7517,
+      "recall": 0.677,
+      "f1": 0.7124
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.3684,
+      "recall": 0.4773,
+      "f1": 0.4158
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.2318,
+      "recall": 0.3646,
+      "f1": 0.2834
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.3661,
+     "accuracy": 0.5604,
+     "manual_ratio": 0.256,
+     "output_errors": 4,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 150,
+      "answer_rate": 0.7282,
+      "precision": 0.7667,
+      "recall": 0.5583
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.4725,
+     "accuracy": 0.4009,
+     "manual_ratio": 0.2342,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 147,
+      "answer_rate": 0.7656,
+      "precision": 0.5578,
+      "recall": 0.4271
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.6661,
+     "accuracy": 0.689,
+     "manual_ratio": 0.1625,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 198,
+      "answer_rate": 0.9083,
+      "precision": 0.8485,
+      "recall": 0.7706
+     }
+    }
+   }
+  },
+  {
+   "group": "v5",
+   "model": "lora_v5_s43_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v5/lora_v5_s43/eval/predictions_oas_code_lora_v5_s43_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v5/lora_v5_s43/eval/supp_predictions_oas_code_lora_v5_s43_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v5_s43/eval/v5test_predictions_oas_code_lora_v5_s43_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.5341,
+    "supported_labels": 7,
+    "accuracy": 0.5857,
+    "manual_ratio": 0.1896,
+    "output_errors": 1,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 515,
+     "answer_rate": 0.836,
+     "precision": 0.7417,
+     "recall": 0.6201
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.8438,
+      "recall": 0.6835,
+      "f1": 0.7552
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.6287,
+      "recall": 0.672,
+      "f1": 0.6496
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.6383,
+      "recall": 0.6818,
+      "f1": 0.6593
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.1273,
+      "f1": 0.2258
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.7517,
+      "recall": 0.6957,
+      "f1": 0.7226
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.3667,
+      "recall": 0.5,
+      "f1": 0.4231
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.2593,
+      "recall": 0.3646,
+      "f1": 0.303
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.386,
+     "accuracy": 0.5797,
+     "manual_ratio": 0.2899,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 147,
+      "answer_rate": 0.7136,
+      "precision": 0.8095,
+      "recall": 0.5777
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.5149,
+     "accuracy": 0.464,
+     "manual_ratio": 0.1441,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 167,
+      "answer_rate": 0.8698,
+      "precision": 0.5689,
+      "recall": 0.4948
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.6836,
+     "accuracy": 0.6855,
+     "manual_ratio": 0.1519,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 201,
+      "answer_rate": 0.922,
+      "precision": 0.8358,
+      "recall": 0.7706
+     }
+    }
+   }
+  },
+  {
+   "group": "v5",
+   "model": "lora_v5_s44_final",
+   "files": {
+    "test_v30_207": "reports/eval/lora_v5/lora_v5_s44/eval/predictions_oas_code_lora_v5_s44_final.jsonl",
+    "test_v31_supp": "reports/eval/lora_v5/lora_v5_s44/eval/supp_predictions_oas_code_lora_v5_s44_final.jsonl",
+    "test_v5": "reports/eval/lora_v5/lora_v5_s44/eval/v5test_predictions_oas_code_lora_v5_s44_final.jsonl"
+   },
+   "combined": {
+    "records": 712,
+    "macro_f1": 0.5252,
+    "supported_labels": 7,
+    "accuracy": 0.5646,
+    "manual_ratio": 0.236,
+    "output_errors": 5,
+    "concrete": {
+     "n_truth_concrete": 616,
+     "answered": 483,
+     "answer_rate": 0.7841,
+     "precision": 0.7516,
+     "recall": 0.5893
+    },
+    "per_label": {
+     "public": {
+      "support": 79,
+      "precision": 0.8276,
+      "recall": 0.6076,
+      "f1": 0.7007
+     },
+     "role_required": {
+      "support": 189,
+      "precision": 0.7083,
+      "recall": 0.6296,
+      "f1": 0.6667
+     },
+     "membership_required": {
+      "support": 88,
+      "precision": 0.593,
+      "recall": 0.5795,
+      "f1": 0.5862
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.1636,
+      "f1": 0.2812
+     },
+     "owner_match": {
+      "support": 161,
+      "precision": 0.7568,
+      "recall": 0.6957,
+      "f1": 0.7249
+     },
+     "owner_or_admin": {
+      "support": 44,
+      "precision": 0.3429,
+      "recall": 0.5455,
+      "f1": 0.4211
+     },
+     "manual_review_required": {
+      "support": 96,
+      "precision": 0.2321,
+      "recall": 0.4062,
+      "f1": 0.2955
+     }
+    }
+   },
+   "per_set": {
+    "test_v30_207": {
+     "records": 207,
+     "macro_f1": 0.3711,
+     "accuracy": 0.5652,
+     "manual_ratio": 0.2995,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 143,
+      "answer_rate": 0.6942,
+      "precision": 0.8112,
+      "recall": 0.5631
+     }
+    },
+    "test_v31_supp": {
+     "records": 222,
+     "macro_f1": 0.4677,
+     "accuracy": 0.3919,
+     "manual_ratio": 0.2432,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 144,
+      "answer_rate": 0.75,
+      "precision": 0.5556,
+      "recall": 0.4167
+     }
+    },
+    "test_v5": {
+     "records": 283,
+     "macro_f1": 0.6985,
+     "accuracy": 0.6996,
+     "manual_ratio": 0.1837,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 196,
+      "answer_rate": 0.8991,
+      "precision": 0.852,
+      "recall": 0.7661
+     }
+    }
+   }
+  }
+ ]
+}

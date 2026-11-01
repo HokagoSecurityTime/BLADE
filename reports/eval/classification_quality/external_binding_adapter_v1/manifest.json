@@ -1,0 +1,10 @@
+{
+  "api_calls": 0,
+  "input_hashes": {
+    "C:\\BLADE\\reports\\eval\\classification_quality\\external_paired_v29\\predictions.jsonl": "4fbbbf616dfb808f3ebdc61ff3d01815a7b5887b866f8506f1865478b8b9ba27",
+    "C:\\BLADE\\datasets\\blade\\processed\\test.jsonl": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+    "C:\\BLADE\\training\\experiments\\application_guard.py": "f77246fc336ac4d7e06e04c77bb665706065dc57f5096e8ad8e29e357860856e"
+  },
+  "adapter_sha256": "cede82d5b47aa67da10cffc3b0b6e67796ce423d6d4525d312f284bd9bcdfd94",
+  "scope": "development on previously evaluated project"
+}

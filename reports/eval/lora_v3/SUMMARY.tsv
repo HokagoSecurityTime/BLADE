@@ -1,0 +1,8 @@
+run	steps	minutes	train_loss	oas_rows	oas_parse_err	oas_code_rows	oas_code_parse_err	status
+lora_v2_s42_runpod	300	33.0	0.2198	269	0	265	1	done
+lora_v3a_s42	351	39.8	0.2103	269	0	265	5	done
+lora_v3a_s43	351	39.7	0.2059	269	0	265	8	done
+lora_v3a_s44	351	39.9	0.2105	269	0	265	2	done
+lora_v3b_s42	297	33.7	0.2283	269	0	265	1	done
+lora_v3b_s43	297	33.7	0.2257	269	4	265	3	done
+lora_v3b_s44	297	33.9	0.2249	269	1	265	5	done

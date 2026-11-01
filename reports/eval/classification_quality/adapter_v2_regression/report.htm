@@ -1,0 +1,67 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>어댑터 v2</title><h1>어댑터 v2 회귀 검증</h1>
+<p>프롬프트는 v2.9 그대로다. v1의 기존 변형 10건을 재사용한 개발 검증이며 독립 평가가 아니다.</p>
+<p>정확한 추출 7건 / 잘못된 추출 0건 / 보류 3건. API 호출 0회.</p>
+<table>
+<thead>
+<tr>
+<th>사례</th>
+<th>결과</th>
+<th>보류 사유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>owner_or_admin</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>owner_and_admin</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>owner_not_admin</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>admin_early_return</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>masked_404</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>helper_guard</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+<tr>
+<td>assert_guard</td>
+<td>held</td>
+<td>assert execution mode unverified</td>
+</tr>
+<tr>
+<td>unknown_tenant</td>
+<td>held</td>
+<td>unknown condition: item.tenant_id != current_user.tenant_id</td>
+</tr>
+<tr>
+<td>alias_owner</td>
+<td>held</td>
+<td>unsupported statement: Assign</td>
+</tr>
+<tr>
+<td>nested_guard</td>
+<td>equivalent</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>404 인가 거부와 전달된 helper의 인자 연결을 보존한다. 미해결 호출·대입은 보류한다. assert는 Python 최적화 실행에서 사라질 수 있어 기본적으로 보류하며, 활성화가 확인된 테스트에서만 해석한다.</p>
+<p><strong>제약:</strong> 실제 ORM 핸들러 전체 호출 연결은 아직 미지원이다. v2는 이를 보류하며 v1의 8건 지원을 유지했다고 주장하지 않는다. 단독 extract 호출도 원본 해시를 확인한다. helper 소스는 명시적으로 전달해야 하며 자동 import 해석은 미구현이다. 외부 독립 실험 전에 ORM/호출 그래프 지원을 별도로 추가해야 한다. 자동 적용은 하지 않는다.</p>
+</html>

@@ -1,0 +1,248 @@
+{
+  "before": {
+    "n": 31,
+    "correct": 3,
+    "concrete_n": 22,
+    "concrete_correct": 3,
+    "labels": {
+      "manual_review_required": 9,
+      "owner_match": 2,
+      "owner_or_admin": 1,
+      "role_required": 11,
+      "membership_required": 8
+    },
+    "evidence_invalid": 0
+  },
+  "after": {
+    "n": 31,
+    "correct": 3,
+    "concrete_n": 17,
+    "concrete_correct": 2,
+    "labels": {
+      "manual_review_required": 14,
+      "owner_match": 2,
+      "membership_required": 7,
+      "role_required": 8
+    },
+    "evidence_invalid": 0
+  },
+  "transitions": [
+    {
+      "id": "apisguru:deutschebahn.com:get:/providernetworks/{providernetworkUID}/rentalobjects/{rentalObjectUID}",
+      "human": "public",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "path: /providernetworks/{providernetworkUID}/rentalobjects/{rentalObjectUID}; security_state: unknown"
+    },
+    {
+      "id": "apisguru:illumidesk.com:get:/v1/teams/{team}/billing/invoices/{id}/",
+      "human": "tenant_match",
+      "before": "owner_match",
+      "after": "owner_match",
+      "rationale": "path: /v1/teams/{team}/billing/invoices/{id}/; description: Get an invoice; owner_cols: customer"
+    },
+    {
+      "id": "apisguru:zoom.us:get:/accounts/{accountId}/lock_settings",
+      "human": "role_required",
+      "before": "owner_or_admin",
+      "after": "membership_required",
+      "rationale": "path: /accounts/{accountId}/lock_settings; description: Account Locked Settings allow you turn settings on or off for all users in your account. No user except the account admin or account owner can change these settings; security_state: declared"
+    },
+    {
+      "id": "apisguru:gerermesaffaires.com:patch:/spaces/{id}",
+      "human": "manual_review_required",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "security: [{\"gma_auth\": [\"collaborator\", \"owner\", \"robot\"]}]; description: Modify a Space (except private); security_state: declared"
+    },
+    {
+      "id": "apisguru:slack.com:get:/admin.conversations.getConversationPrefs",
+      "human": "role_required",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "security: [{\"slackAuth\": [\"admin.conversations:read\"]}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:billingo.hu:post:/documents/{id}/create-from-proforma",
+      "human": "tenant_match",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "path: /documents/{id}/create-from-proforma; description: Create a new document from proforma; tenant_cols: organization"
+    },
+    {
+      "id": "apisguru:nebl.io:get:/ntp1/transactioninfo/{txid}",
+      "human": "public",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: unknown; path: /ntp1/transactioninfo/{txid}"
+    },
+    {
+      "id": "apisguru:trakt.tv:post:/users/{id}/lists/{list_id}/items/reorder",
+      "human": "owner_match",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "method: POST; path: /users/{id}/lists/{list_id}/items/reorder; security_state: declared"
+    },
+    {
+      "id": "apisguru:openbanking.org.uk:get:/accounts/{AccountId}/product",
+      "human": "owner_match",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "path: /accounts/{AccountId}/product; security: [{\"PSUOAuth2Security\": [\"accounts\"]}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:microsoft.com:post:/{projectId}/classify/iterations/{publishedName}/image",
+      "human": "manual_review_required",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "path: /{projectId}/classify/iterations/{publishedName}/image; security_state: declared; tenant_cols: project"
+    },
+    {
+      "id": "apisguru:velopayments.com:get:/v1/webhooks",
+      "human": "tenant_match",
+      "before": "membership_required",
+      "after": "manual_review_required",
+      "rationale": "security: [{\"OAuth2\": []}]; security_state: declared; description: List the details about the webhooks for the given payor."
+    },
+    {
+      "id": "apisguru:bitbucket.org:put:/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}",
+      "human": "membership_required",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "path: /repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations/{annotationId}; security_state: unknown"
+    },
+    {
+      "id": "apisguru:slmonitor.com:post:/api/v2.1/companies/{companyId}/users/{uniqueUserId}/checkin-audio",
+      "human": "tenant_match",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "path: /api/v2.1/companies/{companyId}/users/{uniqueUserId}/checkin-audio; tenant_cols: company; security_state: declared"
+    },
+    {
+      "id": "apisguru:vtex.local:post:/api/catalog/pvt/collection/{collectionId}/position",
+      "human": "role_required",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "security: [{\"appKey\": [], \"appToken\": []}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:amazonaws.com:get:/workspaces/{workspaceId}/alertmanager/definition",
+      "human": "tenant_match",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; description: Describes an alert manager definition."
+    },
+    {
+      "id": "apisguru:hetzner.cloud:get:/datacenters/{id}",
+      "human": "public",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: unknown; path: /datacenters/{id}; description: Returns a specific Datacenter object."
+    },
+    {
+      "id": "apisguru:netboxdemo.com:put:/circuits/circuit-terminations/{id}/",
+      "human": "role_required",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; tenant_cols: site"
+    },
+    {
+      "id": "apisguru:api2cart.com:get:/account.cart.list.json",
+      "human": "owner_match",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; description: Get list of carts; security: [{\"api_key\": []}]"
+    },
+    {
+      "id": "apisguru:microsoft.com:post:/{projectId}/classify/iterations/{publishedName}/url",
+      "human": "manual_review_required",
+      "before": "membership_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; tenant_cols: project; description: Supplemental source OAS context indicates service information."
+    },
+    {
+      "id": "apisguru:twinehealth.com:get:/oauth/token/{id}/groups",
+      "human": "manual_review_required",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "security: [{\"OAuth2\": [\"group\", \"organization\"]}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:rebilly.com:get:/credentials/{id}",
+      "human": "tenant_match",
+      "before": "role_required",
+      "after": "owner_match",
+      "rationale": "owner_cols: customerId; path: /credentials/{id}; security_state: declared"
+    },
+    {
+      "id": "apisguru:appcenter.ms:patch:/v0.1/apps/{owner_name}/{app_name}/builds/{build_id}",
+      "human": "membership_required",
+      "before": "role_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; description: Cancels a build; path: /v0.1/apps/{owner_name}/{app_name}/builds/{build_id}"
+    },
+    {
+      "id": "apisguru:visma.net:get:/api/v3/SalesOrders/{type}/{orderId}/discounts",
+      "human": "tenant_match",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; security: [{\"oauth2\": [\"read\"]}]"
+    },
+    {
+      "id": "apisguru:appwrite.io:put:/teams/{teamId}",
+      "human": "owner_match",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "description: Only team owners have write access for this resource; security: [{\"JWT\": [], \"Project\": []}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:circuitsandbox.net:put:/conversations/community/{convId}",
+      "human": "membership_required",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "path: /conversations/community/{convId}; description: Updates the information of the given community; security: [{\"oauth\": [\"ALL\", \"WRITE_CONVERSATIONS\", \"MANAGE_CONVERSATIONS\"]}]; owner_cols: [creatorId]"
+    },
+    {
+      "id": "apisguru:clicksend.com:post:/lists/{list_id}/contacts",
+      "human": "owner_match",
+      "before": "membership_required",
+      "after": "membership_required",
+      "rationale": "path: /lists/{list_id}/contacts; description: at least one of them must be specified; tenant_cols: organization_name"
+    },
+    {
+      "id": "apisguru:configcat.com:post:/v1/environments/{environmentId}/settings/{settingId}/integrationLinks/{integrationLinkType}/{key}",
+      "human": "tenant_match",
+      "before": "role_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; description: Supplemental source OAS context; path: /v1/environments/{environmentId}/settings/{settingId}/integrationLinks/{integrationLinkType}/{key}"
+    },
+    {
+      "id": "apisguru:shutterstock.com:patch:/v2/catalog/collections/{collection_id}",
+      "human": "owner_match",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "security: [{\"customer_accessCode\": [\"collections.view\", \"collections.edit\"]}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:aiception.com:get:/face/{taskId}",
+      "human": "owner_match",
+      "before": "owner_match",
+      "after": "manual_review_required",
+      "rationale": "security_state: declared; path: /face/{taskId}; description: Gets the face task."
+    },
+    {
+      "id": "apisguru:appwrite.io:put:/storage/files/{fileId}",
+      "human": "owner_match",
+      "before": "role_required",
+      "after": "role_required",
+      "rationale": "description: Only users with write permissions have access to update this resource; security: [{\"JWT\": [], \"Project\": []}]; security_state: declared"
+    },
+    {
+      "id": "apisguru:parliament.uk:get:/api/v1/Bills/{billId}/NewsArticles",
+      "human": "public",
+      "before": "manual_review_required",
+      "after": "manual_review_required",
+      "rationale": "security_state: unknown; path: /api/v1/Bills/{billId}/NewsArticles; description: Returns a list of news articles for a Bill."
+    }
+  ]
+}

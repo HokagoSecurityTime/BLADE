@@ -1,0 +1,803 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>조건 추출 실험</title><style>body{max-width:1200px;margin:40px auto;font:16px/1.7 system-ui;padding:20px}table{border-collapse:collapse;display:block;overflow:auto}td,th{border:1px solid #ccc;padding:10px}pre{white-space:pre-wrap}details{margin:12px 0}</style><h1>검사 조건 추출·라벨 매핑 실험</h1>
+<p>기존 v2.8 프롬프트와 런타임을 바꾸지 않은 제한적 Python 정적 분석 실험이다. 추가 API 호출은 0회다.</p>
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th style="text-align:right">합성 계약 일치 / 14</th>
+<th style="text-align:right">macro-F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기존 v2.8 LLM + 코드</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">0.5333</td>
+</tr>
+<tr>
+<td>조건 추출 + 규칙 매핑</td>
+<td style="text-align:right">14</td>
+<td style="text-align:right">1.0000</td>
+</tr>
+</tbody>
+</table>
+<p>추출한 조건식의 허용/거부 결과: 84/84 계약 검사 일치. 기존 HTTP 98개 검사는 별도 기록에 보존했다. 조건식 검사와 라벨 매핑 점수를 구분한다.</p>
+<h2>처리 방식</h2>
+<ul>
+<li>HTTPException(403) 거부 조건을 논리적으로 반전하여 허용식을 만든다. <code>not owner AND not admin</code>은 <code>owner OR admin</code>이다.</li>
+<li>순서대로 호출한 두 검사 함수는 AND로 결합한다. owner와 tenant, tenant와 subscription 조건을 하나로 버리지 않는다.</li>
+<li>반환 객체의 owner 필드만으로는 조건을 만들지 않는다. 인증(401)과 객체 부재(404)는 인가 조건과 분리한다.</li>
+<li>근거 경로·해시·줄번호·원래 거부식과 허용식을 predictions.json에 기록한다.</li>
+<li>지원하지 않는 제어 흐름·함수 호출·외부 프레임워크는 보류한다. 불확실한 의도를 구현에서 만들어내지 않는다.</li>
+</ul>
+<h2>적용 범위와 한계</h2>
+<p>이 추출기는 현재 개발 합성 코드의 Python/HTTPException 및 sub·owner·tenant·role·plan 필드 관례에 맞춘 제한적 구현이다. 일반 변수 별칭, 메서드 호출, DB query 필터, 동적 dispatch, 전역 middleware를 검증하는 범용 분석기가 아니다. 외부 Django 4건은 지원 범위 밖이며 미확정 상태를 유지한다. 기존 14건을 보고 개발했으므로 독립 정확도나 새 모델 성능으로 보고하지 않는다. OAS-only는 명시적 공개 근거 외에 구체 조건을 추측하지 않는 것이 원칙이다. 새 외부 프로젝트와 독립 표본의 검증이 여전히 필요하다.</p>
+<h2>개별 결과</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>라벨</th>
+<th>사유</th>
+<th>추출 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>controlled-observatory:observations</td>
+<td>owner_match</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:notebooks</td>
+<td>owner_match</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:calibrations</td>
+<td>owner_or_admin</td>
+<td>explicit_owner_or_admin</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:captures</td>
+<td>owner_or_admin</td>
+<td>explicit_owner_or_admin</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:allocations</td>
+<td>tenant_match</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:inventories</td>
+<td>tenant_match</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:queues</td>
+<td>role_required</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:relays</td>
+<td>role_required</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:spectra</td>
+<td>membership_required</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:forecasts</td>
+<td>membership_required</td>
+<td>single_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:catalog</td>
+<td>public</td>
+<td>explicit_anonymous_evidence</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:bulletins</td>
+<td>public</td>
+<td>explicit_anonymous_evidence</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:transfers</td>
+<td>manual_review_required</td>
+<td>compound_or_unrepresentable_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>controlled-observatory:reservations</td>
+<td>manual_review_required</td>
+<td>compound_or_unrepresentable_condition</td>
+<td>지원 범위 내</td>
+</tr>
+<tr>
+<td>realworld-django:GET:/articles/{slug}</td>
+<td>manual_review_required</td>
+<td>unsupported_or_incomplete_code</td>
+<td>non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, handler_unresolved</td>
+</tr>
+<tr>
+<td>realworld-django:PUT:/articles/{slug}</td>
+<td>manual_review_required</td>
+<td>unsupported_or_incomplete_code</td>
+<td>non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, handler_unresolved</td>
+</tr>
+<tr>
+<td>realworld-django:DELETE:/articles/{slug}/comments/{id}</td>
+<td>manual_review_required</td>
+<td>unsupported_or_incomplete_code</td>
+<td>non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, handler_unresolved</td>
+</tr>
+<tr>
+<td>realworld-django:GET:/tags</td>
+<td>manual_review_required</td>
+<td>unsupported_or_incomplete_code</td>
+<td>non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, non_top_level_or_incomplete_excerpt, handler_unresolved</td>
+</tr>
+</tbody>
+</table>
+<details><summary>controlled-observatory:observations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:observations&quot;,
+  &quot;label&quot;: &quot;owner_match&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;owner_equal&quot;,
+      &quot;value&quot;: null,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 34,
+        &quot;rejection&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;load&quot;,
+      &quot;observations&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:notebooks</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:notebooks&quot;,
+  &quot;label&quot;: &quot;owner_match&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;owner_equal&quot;,
+      &quot;value&quot;: null,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 34,
+        &quot;rejection&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;load&quot;,
+      &quot;notebooks&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:calibrations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:calibrations&quot;,
+  &quot;label&quot;: &quot;owner_or_admin&quot;,
+  &quot;reason&quot;: &quot;explicit_owner_or_admin&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;or&quot;,
+      &quot;args&quot;: [
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        },
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;role&quot;,
+          &quot;value&quot;: &quot;admin&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;
+        }
+      ]
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 39,
+        &quot;rejection&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;] and user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;or&quot;,
+          &quot;args&quot;: [
+            {
+              &quot;op&quot;: &quot;atom&quot;,
+              &quot;kind&quot;: &quot;owner_equal&quot;,
+              &quot;value&quot;: null,
+              &quot;comparison&quot;: &quot;eq&quot;,
+              &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+            },
+            {
+              &quot;op&quot;: &quot;atom&quot;,
+              &quot;kind&quot;: &quot;role&quot;,
+              &quot;value&quot;: &quot;admin&quot;,
+              &quot;comparison&quot;: &quot;eq&quot;,
+              &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;
+            }
+          ]
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;calibrations&quot;,
+      &quot;guard_b&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:captures</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:captures&quot;,
+  &quot;label&quot;: &quot;owner_or_admin&quot;,
+  &quot;reason&quot;: &quot;explicit_owner_or_admin&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;or&quot;,
+      &quot;args&quot;: [
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        },
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;role&quot;,
+          &quot;value&quot;: &quot;admin&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;
+        }
+      ]
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 39,
+        &quot;rejection&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;] and user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;or&quot;,
+          &quot;args&quot;: [
+            {
+              &quot;op&quot;: &quot;atom&quot;,
+              &quot;kind&quot;: &quot;owner_equal&quot;,
+              &quot;value&quot;: null,
+              &quot;comparison&quot;: &quot;eq&quot;,
+              &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+            },
+            {
+              &quot;op&quot;: &quot;atom&quot;,
+              &quot;kind&quot;: &quot;role&quot;,
+              &quot;value&quot;: &quot;admin&quot;,
+              &quot;comparison&quot;: &quot;eq&quot;,
+              &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;admin&#x27;&quot;
+            }
+          ]
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;captures&quot;,
+      &quot;guard_b&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:allocations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:allocations&quot;,
+  &quot;label&quot;: &quot;tenant_match&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;tenant_equal&quot;,
+      &quot;value&quot;: null,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 44,
+        &quot;rejection&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;allocations&quot;,
+      &quot;guard_c&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:inventories</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:inventories&quot;,
+  &quot;label&quot;: &quot;tenant_match&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;tenant_equal&quot;,
+      &quot;value&quot;: null,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 44,
+        &quot;rejection&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_c&quot;,
+      &quot;inventories&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:queues</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:queues&quot;,
+  &quot;label&quot;: &quot;role_required&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;role&quot;,
+      &quot;value&quot;: &quot;operator&quot;,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 49,
+        &quot;rejection&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;role&quot;,
+          &quot;value&quot;: &quot;operator&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_d&quot;,
+      &quot;load&quot;,
+      &quot;queues&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:relays</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:relays&quot;,
+  &quot;label&quot;: &quot;role_required&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;role&quot;,
+      &quot;value&quot;: &quot;operator&quot;,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 49,
+        &quot;rejection&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;role&quot;,
+          &quot;value&quot;: &quot;operator&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;role&#x27;] != &#x27;operator&#x27;&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_d&quot;,
+      &quot;load&quot;,
+      &quot;relays&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:spectra</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:spectra&quot;,
+  &quot;label&quot;: &quot;membership_required&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;subscription&quot;,
+      &quot;value&quot;: &quot;plus&quot;,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 54,
+        &quot;rejection&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;subscription&quot;,
+          &quot;value&quot;: &quot;plus&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;,
+      &quot;spectra&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:forecasts</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:forecasts&quot;,
+  &quot;label&quot;: &quot;membership_required&quot;,
+  &quot;reason&quot;: &quot;single_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;atom&quot;,
+      &quot;kind&quot;: &quot;subscription&quot;,
+      &quot;value&quot;: &quot;plus&quot;,
+      &quot;comparison&quot;: &quot;eq&quot;,
+      &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 54,
+        &quot;rejection&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;subscription&quot;,
+          &quot;value&quot;: &quot;plus&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;forecasts&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:catalog</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:catalog&quot;,
+  &quot;label&quot;: &quot;public&quot;,
+  &quot;reason&quot;: &quot;explicit_anonymous_evidence&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;catalog&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:bulletins</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:bulletins&quot;,
+  &quot;label&quot;: &quot;public&quot;,
+  &quot;reason&quot;: &quot;explicit_anonymous_evidence&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;bulletins&quot;,
+      &quot;load&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:transfers</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:transfers&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;compound_or_unrepresentable_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;and&quot;,
+      &quot;args&quot;: [
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        },
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        }
+      ]
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 34,
+        &quot;rejection&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;owner_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;sub&#x27;] != item[&#x27;owner&#x27;]&quot;
+        }
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 44,
+        &quot;rejection&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_a&quot;,
+      &quot;guard_c&quot;,
+      &quot;load&quot;,
+      &quot;transfers&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>controlled-observatory:reservations</summary><pre>{
+  &quot;id&quot;: &quot;controlled-observatory:reservations&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;compound_or_unrepresentable_condition&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: {
+      &quot;op&quot;: &quot;and&quot;,
+      &quot;args&quot;: [
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        },
+        {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;subscription&quot;,
+          &quot;value&quot;: &quot;plus&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+        }
+      ]
+    },
+    &quot;authentication&quot;: true,
+    &quot;evidence&quot;: [
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 44,
+        &quot;rejection&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;tenant_equal&quot;,
+          &quot;value&quot;: null,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;tenant&#x27;] != item[&#x27;tenant&#x27;]&quot;
+        }
+      },
+      {
+        &quot;path&quot;: &quot;training/experiments/paired_policy_fixture.py&quot;,
+        &quot;sha256&quot;: &quot;945a055fa90a2ca28ded8b839bdb25f012b1718f41740be077842983bce9178f&quot;,
+        &quot;line&quot;: 54,
+        &quot;rejection&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;,
+        &quot;allow&quot;: {
+          &quot;op&quot;: &quot;atom&quot;,
+          &quot;kind&quot;: &quot;subscription&quot;,
+          &quot;value&quot;: &quot;plus&quot;,
+          &quot;comparison&quot;: &quot;eq&quot;,
+          &quot;source_expression&quot;: &quot;user[&#x27;plan&#x27;] != &#x27;plus&#x27;&quot;
+        }
+      }
+    ],
+    &quot;issues&quot;: [],
+    &quot;functions&quot;: [
+      &quot;actor&quot;,
+      &quot;guard_c&quot;,
+      &quot;guard_e&quot;,
+      &quot;load&quot;,
+      &quot;reservations&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>realworld-django:GET:/articles/{slug}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:GET:/articles/{slug}&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;unsupported_or_incomplete_code&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>realworld-django:PUT:/articles/{slug}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:PUT:/articles/{slug}&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;unsupported_or_incomplete_code&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>realworld-django:DELETE:/articles/{slug}/comments/{id}</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:DELETE:/articles/{slug}/comments/{id}&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;unsupported_or_incomplete_code&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details><details><summary>realworld-django:GET:/tags</summary><pre>{
+  &quot;id&quot;: &quot;realworld-django:GET:/tags&quot;,
+  &quot;label&quot;: &quot;manual_review_required&quot;,
+  &quot;reason&quot;: &quot;unsupported_or_incomplete_code&quot;,
+  &quot;extraction&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;non_top_level_or_incomplete_excerpt&quot;,
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;elapsed_ms&quot;: 0
+}</pre></details></html>

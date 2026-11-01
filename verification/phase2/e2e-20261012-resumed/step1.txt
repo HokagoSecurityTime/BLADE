@@ -1,0 +1,444 @@
+POST http://127.0.0.1:63213/generate
+[["host", "127.0.0.1:63213"], ["accept", "*/*"], ["accept-encoding", "gzip, deflate"], ["connection", "keep-alive"], ["user-agent", "python-httpx/0.28.1"], ["content-length", "13775"], ["content-type", "multipart/form-data; boundary=627c492bd1a1d2219a5d46f859dcaf37"]]
+
+--627c492bd1a1d2219a5d46f859dcaf37
+Content-Disposition: form-data; name="oas"; filename="openapi.json"
+Content-Type: application/json
+
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BLADE vulnerable demo",
+    "description": "Intentionally performs no authentication or authorization checks.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/public/health": {
+      "get": {
+        "summary": "Health",
+        "description": "Intended policy: public",
+        "operationId": "health_public_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Public Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "summary": "Get Order",
+        "description": "Intended policy: owner_match; orders.user_id",
+        "operationId": "get_order_orders__orderId__get",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Orderid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Order Orders  Orderid  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Order",
+        "description": "Intended policy: owner_match; orders.user_id",
+        "operationId": "delete_order_orders__orderId__delete",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Orderid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Delete Order Orders  Orderid  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get User",
+        "description": "Intended policy: owner_or_admin; users.id",
+        "operationId": "get_user_users__userId__get",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Userid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get User Users  Userid  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reports": {
+      "get": {
+        "summary": "Reports",
+        "description": "Intended policy: role_required; roles: [admin]",
+        "operationId": "reports_admin_reports_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "type": "object",
+                  "title": "Response Reports Admin Reports Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orgs/{orgId}/docs": {
+      "get": {
+        "summary": "Org Docs",
+        "description": "Intended policy: tenant_match; orgs.id",
+        "operationId": "org_docs_orgs__orgId__docs_get",
+        "parameters": [
+          {
+            "name": "orgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Orgid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Org Docs Orgs  Orgid  Docs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/premium/content": {
+      "get": {
+        "summary": "Premium Content",
+        "description": "Intended policy: membership_required; allowed_membership: [premium]",
+        "operationId": "premium_content_premium_content_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Premium Content Premium Content Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
+
+--627c492bd1a1d2219a5d46f859dcaf37
+Content-Disposition: form-data; name="erd"; filename="schema.sql"
+Content-Type: application/octet-stream
+
+CREATE TABLE IF NOT EXISTS orgs (
+    id TEXT PRIMARY KEY
+);
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    org_id TEXT NOT NULL REFERENCES orgs(id),
+    role TEXT NOT NULL,
+    membership TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES users(id)
+);
+
+--627c492bd1a1d2219a5d46f859dcaf37
+Content-Disposition: form-data; name="controller"; filename="demo_with_admin.py"
+Content-Type: text/x-python
+
+# Static fixture: only get_user gains owner/admin authorization.
+"""Intentionally vulnerable demo: no authentication or authorization checks.
+
+The documented policies describe intended enforcement by the future BLADE proxy.
+This backend deliberately permits BOLA, admin, tenant and membership bypasses.
+"""
+
+import sqlite3
+from collections.abc import Iterator
+from contextlib import asynccontextmanager, contextmanager
+from pathlib import Path
+from typing import Any, AsyncIterator
+
+from fastapi import FastAPI, HTTPException, Depends
+
+
+def get_current_user() -> Any:
+    raise RuntimeError("Static analysis fixture only; not a running demo backend")
+
+
+def create_app(db_path: str | Path = "demo.db") -> FastAPI:
+    database = Path(db_path)
+
+    @contextmanager
+    def connection() -> Iterator[sqlite3.Connection]:
+        conn = sqlite3.connect(database)
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys = ON")
+        try:
+            with conn:
+                yield conn
+        finally:
+            conn.close()
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        with connection() as conn:
+            conn.executescript(Path(__file__).with_name("schema.sql").read_text(encoding="utf-8"))
+            conn.executemany("INSERT OR IGNORE INTO orgs(id) VALUES (?)", [("org_1",), ("org_2",)])
+            conn.executemany(
+                "INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)",
+                [("user_77", "org_1", "user", "basic"),
+                 ("user_99", "org_2", "user", "basic"),
+                 ("admin_1", "org_1", "admin", "premium")],
+            )
+            conn.executemany("INSERT OR IGNORE INTO orders(id, user_id) VALUES (?, ?)",
+                             [(1042, "user_77"), (2001, "user_99")])
+        yield
+
+    app = FastAPI(title="BLADE vulnerable demo", lifespan=lifespan,
+                  description="Intentionally performs no authentication or authorization checks.")
+
+    def fetch_one(query: str, identifier: str | int) -> dict[str, Any]:
+        with connection() as conn:
+            row = conn.execute(query, (identifier,)).fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail="Resource not found")
+        return dict(row)
+
+    # Intentionally NO authorization in any endpoint below, even with a JWT header.
+    @app.get("/public/health", description="Intended policy: public")
+    def health() -> dict[str, str]:
+        return {"status": "ok"}
+
+    @app.get("/orders/{orderId}", description="Intended policy: owner_match; orders.user_id")
+    def get_order(orderId: int) -> dict[str, Any]:
+        return fetch_one("SELECT * FROM orders WHERE id = ?", orderId)
+
+    @app.delete("/orders/{orderId}", description="Intended policy: owner_match; orders.user_id")
+    def delete_order(orderId: int) -> dict[str, Any]:
+        with connection() as conn:
+            cursor = conn.execute("DELETE FROM orders WHERE id = ?", (orderId,))
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Resource not found")
+        return {"deleted": orderId}
+
+    @app.get("/users/{userId}", description="Intended policy: owner_or_admin; users.id")
+    def get_user(userId: str, current_user: Any = Depends(get_current_user)) -> dict[str, Any]:
+        if "admin" in current_user.roles:
+            return fetch_one("SELECT * FROM users WHERE id = ?", userId)
+        if current_user.id == userId:
+            return fetch_one("SELECT * FROM users WHERE id = ?", userId)
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    @app.get("/admin/reports", description="Intended policy: role_required; roles: [admin]")
+    def reports() -> dict[str, int]:
+        with connection() as conn:
+            count = conn.execute("SELECT COUNT(*) FROM orders").fetchone()[0]
+        return {"order_count": count}
+
+    @app.get("/orgs/{orgId}/docs", description="Intended policy: tenant_match; orgs.id")
+    def org_docs(orgId: str) -> dict[str, Any]:
+        org = fetch_one("SELECT * FROM orgs WHERE id = ?", orgId)
+        return {"org_id": org["id"], "docs": [{"title": f"Internal documentation for {orgId}"}]}
+
+    @app.get("/premium/content", description="Intended policy: membership_required; allowed_membership: [premium]")
+    def premium_content() -> dict[str, str]:
+        return {"content": "Premium members content"}
+
+    return app
+
+
+app = create_app()
+
+--627c492bd1a1d2219a5d46f859dcaf37--
+
+
+HTTP 200
+[["date", "Mon, 12 Oct 2026 03:46:33 GMT"], ["server", "uvicorn"], ["content-length", "8030"], ["content-type", "application/json"]]
+
+[{"id":"pol_public_health_get","endpoint":{"method":"GET","path":"/public/health"},"label":"public","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Health check endpoint is explicitly intended to be public.","status":"PENDING","created_at":"2026-10-12T03:49:48.837852Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]},{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Order belongs to its creator.","status":"PENDING","created_at":"2026-10-12T03:51:32.127577Z","mode":"observe","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L65:get_order","snippet":"    @app.get(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def get_order(orderId: int) -> dict[str, Any]:\n        return fetch_one(\"SELECT * FROM orders WHERE id = ?\", orderId)"},{"kind":"code","ref":"demo_with_admin.py#L77:get_user","snippet":"    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str, current_user: Any = Depends(get_current_user)) -> dict[str, Any]:\n        if \"admin\" in current_user.roles:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        if current_user.id == userId:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        raise HTTPException(status_code=403, detail=\"Forbidden\")"}]},{"id":"pol_orders_delete_by_orderId","endpoint":{"method":"DELETE","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"The caller owns the requested order or has explicit admin bypass, but none is present here.","status":"PENDING","created_at":"2026-10-12T03:54:28.669616Z","mode":"observe","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L69:delete_order","snippet":"    @app.delete(\"/orders/{orderId}\", description=\"Intended policy: owner_match; orders.user_id\")\n    def delete_order(orderId: int) -> dict[str, Any]:\n        with connection() as conn:\n            cursor = conn.execute(\"DELETE FROM orders WHERE id = ?\", (orderId,))\n            if cursor.rowcount == 0:\n                raise HTTPException(status_code=404, detail=\"Resource not found\")\n        return {\"deleted\": orderId}"},{"kind":"code","ref":"demo_with_admin.py#L77:get_user","snippet":"    @app.get(\"/users/{userId}\", description=\"Intended policy: owner_or_admin; users.id\")\n    def get_user(userId: str, current_user: Any = Depends(get_current_user)) -> dict[str, Any]:\n        if \"admin\" in current_user.roles:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        if current_user.id == userId:\n            return fetch_one(\"SELECT * FROM users WHERE id = ?\", userId)\n        raise HTTPException(status_code=403, detail=\"Forbidden\")"}]},{"id":"pol_users_get_by_userId","endpoint":{"method":"GET","path":"/users/{userId}"},"label":"owner_or_admin","params":{"object_param":"userId","owner_lookup":{"table":"users","id_col":"id","owner_col":"id","tenant_col":"org_id"},"roles":["admin"],"allowed_membership":[]},"confidence":0.95,"evidence":"The caller owns the requested user or has an explicit admin bypass.","status":"PENDING","created_at":"2026-10-12T03:57:17.737219Z","mode":"observe","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L91:org_docs","snippet":"    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"},{"kind":"code","ref":"demo_with_admin.py#L35:lifespan","snippet":"    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"}]},{"id":"pol_admin_reports_get","endpoint":{"method":"GET","path":"/admin/reports"},"label":"role_required","params":{"object_param":null,"owner_lookup":null,"roles":["admin"],"allowed_membership":[]},"confidence":0.9,"evidence":"The endpoint is intended to be role_required with roles: [admin].","status":"PENDING","created_at":"2026-10-12T03:59:05.060449Z","mode":"observe","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L85:reports","snippet":"    @app.get(\"/admin/reports\", description=\"Intended policy: role_required; roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection() as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n        return {\"order_count\": count}"},{"kind":"code","ref":"demo_with_admin.py#L91:org_docs","snippet":"    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"}]},{"id":"pol_orgs_docs_get_by_orgId","endpoint":{"method":"GET","path":"/orgs/{orgId}/docs"},"label":"tenant_match","params":{"object_param":"orgId","owner_lookup":{"table":"orgs","id_col":"id","owner_col":null,"tenant_col":"id"},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Requested org must match caller tenant.","status":"PENDING","created_at":"2026-10-12T04:00:52.618328Z","mode":"observe","version":1,"source":"llm","evidence_refs":[{"kind":"code","ref":"demo_with_admin.py#L91:org_docs","snippet":"    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match; orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"},{"kind":"code","ref":"demo_with_admin.py#L35:lifespan","snippet":"    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n            conn.executemany(\n                \"INSERT OR IGNORE INTO users(id, org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\", \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\", \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"}]},{"id":"pol_premium_content_get","endpoint":{"method":"GET","path":"/premium/content"},"label":"membership_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":["premium"]},"confidence":0.9,"evidence":"Access requires a premium membership.","status":"PENDING","created_at":"2026-10-12T04:02:06.261831Z","mode":"observe","version":1,"source":"llm","evidence_refs":[]}]
+

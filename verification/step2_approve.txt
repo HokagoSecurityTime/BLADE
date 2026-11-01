@@ -1,0 +1,159 @@
+
+===== 2026-09-13T12:18:49.814638+00:00 REQUEST =====
+POST /policies/pol_public_health_get/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 326
+content-type: application/json
+
+{"id":"pol_public_health_get","endpoint":{"method":"GET","path":"/public/health"},"label":"public","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Health check endpoint is explicitly unrestricted.","status":"ACTIVE","created_at":"2026-09-13T12:16:12.222970Z"}
+
+===== 2026-09-13T12:18:49.828838+00:00 REQUEST =====
+POST /policies/pol_orders_get_by_orderId/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 404
+content-type: application/json
+
+{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Order retrieval requires matching user_id.","status":"ACTIVE","created_at":"2026-09-13T12:16:39.811527Z"}
+
+===== 2026-09-13T12:18:49.843152+00:00 REQUEST =====
+POST /policies/pol_orders_delete_by_orderId/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 415
+content-type: application/json
+
+{"id":"pol_orders_delete_by_orderId","endpoint":{"method":"DELETE","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Order deletion requires ownership of the order.","status":"ACTIVE","created_at":"2026-09-13T12:17:07.977553Z"}
+
+===== 2026-09-13T12:18:49.857971+00:00 REQUEST =====
+POST /policies/pol_users_get_by_userId/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 335
+content-type: application/json
+
+{"id":"pol_users_get_by_userId","endpoint":{"method":"GET","path":"/users/{userId}"},"label":"manual_review_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":0.0,"evidence":"Cannot identify ownership column in ERD","status":"ACTIVE","created_at":"2026-09-13T12:17:36.649124Z"}
+
+===== 2026-09-13T12:18:49.872540+00:00 REQUEST =====
+POST /policies/pol_admin_reports_get/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 372
+content-type: application/json
+
+{"id":"pol_admin_reports_get","endpoint":{"method":"GET","path":"/admin/reports"},"label":"role_required","params":{"object_param":null,"owner_lookup":null,"roles":["admin"],"allowed_membership":[]},"confidence":1.0,"evidence":"Access requires a specific role as indicated by the endpoint path /admin/reports.","status":"ACTIVE","created_at":"2026-09-13T12:17:59.943131Z"}
+
+===== 2026-09-13T12:18:49.886848+00:00 REQUEST =====
+POST /policies/pol_orgs_docs_get_by_orgId/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 395
+content-type: application/json
+
+{"id":"pol_orgs_docs_get_by_orgId","endpoint":{"method":"GET","path":"/orgs/{orgId}/docs"},"label":"tenant_match","params":{"object_param":"orgId","owner_lookup":{"table":"orgs","id_col":"id","owner_col":null,"tenant_col":"id"},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Requested org must match caller tenant.","status":"ACTIVE","created_at":"2026-09-13T12:18:27.951386Z"}
+
+===== 2026-09-13T12:18:49.901869+00:00 REQUEST =====
+POST /policies/pol_premium_content_get/approve HTTP/1.1
+Host: 127.0.0.1:8100
+Content-Length: 0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 356
+content-type: application/json
+
+{"id":"pol_premium_content_get","endpoint":{"method":"GET","path":"/premium/content"},"label":"membership_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":["premium"]},"confidence":0.8,"evidence":"Access restricted to users with 'premium' membership.","status":"ACTIVE","created_at":"2026-09-13T12:18:49.782735Z"}
+
+===== 2026-09-13T12:18:49.915063+00:00 REQUEST =====
+GET /policies?status=ACTIVE HTTP/1.1
+Host: 127.0.0.1:8100
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+date: Sun, 13 Sep 2026 12:18:49 GMT
+server: uvicorn
+content-length: 2611
+content-type: application/json
+
+[{"id":"pol_admin_reports_get","endpoint":{"method":"GET","path":"/admin/reports"},"label":"role_required","params":{"object_param":null,"owner_lookup":null,"roles":["admin"],"allowed_membership":[]},"confidence":1.0,"evidence":"Access requires a specific role as indicated by the endpoint path /admin/reports.","status":"ACTIVE","created_at":"2026-09-13T12:17:59.943131Z"},{"id":"pol_orders_delete_by_orderId","endpoint":{"method":"DELETE","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Order deletion requires ownership of the order.","status":"ACTIVE","created_at":"2026-09-13T12:17:07.977553Z"},{"id":"pol_orders_get_by_orderId","endpoint":{"method":"GET","path":"/orders/{orderId}"},"label":"owner_match","params":{"object_param":"orderId","owner_lookup":{"table":"orders","id_col":"id","owner_col":"user_id","tenant_col":null},"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Order retrieval requires matching user_id.","status":"ACTIVE","created_at":"2026-09-13T12:16:39.811527Z"},{"id":"pol_orgs_docs_get_by_orgId","endpoint":{"method":"GET","path":"/orgs/{orgId}/docs"},"label":"tenant_match","params":{"object_param":"orgId","owner_lookup":{"table":"orgs","id_col":"id","owner_col":null,"tenant_col":"id"},"roles":[],"allowed_membership":[]},"confidence":0.9,"evidence":"Requested org must match caller tenant.","status":"ACTIVE","created_at":"2026-09-13T12:18:27.951386Z"},{"id":"pol_premium_content_get","endpoint":{"method":"GET","path":"/premium/content"},"label":"membership_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":["premium"]},"confidence":0.8,"evidence":"Access restricted to users with 'premium' membership.","status":"ACTIVE","created_at":"2026-09-13T12:18:49.782735Z"},{"id":"pol_public_health_get","endpoint":{"method":"GET","path":"/public/health"},"label":"public","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":1.0,"evidence":"Health check endpoint is explicitly unrestricted.","status":"ACTIVE","created_at":"2026-09-13T12:16:12.222970Z"},{"id":"pol_users_get_by_userId","endpoint":{"method":"GET","path":"/users/{userId}"},"label":"manual_review_required","params":{"object_param":null,"owner_lookup":null,"roles":[],"allowed_membership":[]},"confidence":0.0,"evidence":"Cannot identify ownership column in ERD","status":"ACTIVE","created_at":"2026-09-13T12:17:36.649124Z"}]

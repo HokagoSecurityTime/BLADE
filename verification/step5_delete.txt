@@ -1,0 +1,44 @@
+
+===== 2026-09-13T12:18:56.404719+00:00 REQUEST =====
+DELETE /orders/1042 HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMiIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc4OTQ3NDQ4N30.wB0-_4zaniWea1laTd99oE2PzvLuapqBPvRhlsiARwM
+
+
+
+===== RESPONSE =====
+HTTP/1.1 403 Forbidden
+X-Blade-Request-Id: 62a27a03-7c50-470d-9d5c-21b139ffbec6
+X-Blade-Policy: pol_orders_delete_by_orderId
+Content-Type: application/json; charset=utf-8
+Content-Length: 121
+Date: Sun, 13 Sep 2026 12:18:56 GMT
+Server: Python/3.11 aiohttp/3.14.3
+
+{"error": "forbidden", "policy_id": "pol_orders_delete_by_orderId", "request_id": "62a27a03-7c50-470d-9d5c-21b139ffbec6"}
+
+===== 2026-09-13T12:18:56.406606+00:00 REQUEST =====
+GET /orders/1042 HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzc3Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc4OTQ3NDQ4N30.uDphzO5lAqqYT_kUFq3gs5eSYFe9sVBcwSbtH7GGaqA
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+Date: Sun, 13 Sep 2026 12:18:55 GMT
+Server: uvicorn
+Content-Type: application/json
+X-Blade-Request-Id: 941f308a-526f-48fb-9f46-5f2e122c5c32
+X-Blade-Policy: pol_orders_get_by_orderId
+Content-Length: 31
+
+{"id":1042,"user_id":"user_77"}

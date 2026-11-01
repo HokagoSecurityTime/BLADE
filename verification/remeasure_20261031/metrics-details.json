@@ -1,0 +1,83 @@
+{
+  "run_utc": "2026-10-30T17:01:13.679100+00:00",
+  "command": [
+    "C:\\BLADE\\.python\\python.exe",
+    "C:\\BLADE\\scripts\\attack_sim.py",
+    "-n",
+    "20",
+    "--prepare-demo",
+    "--proxy",
+    "http://127.0.0.1:8080",
+    "--admin",
+    "http://127.0.0.1:8100",
+    "--output",
+    "C:\\BLADE\\verification\\metrics-proxy.json"
+  ],
+  "exit_code": 0,
+  "attack_sim_sha256": "e84571c73319d6f75eaf1569892f58bb2ae1b73c34de9f43fb810bf8d6daebaf",
+  "attack_sim_unchanged": true,
+  "policies_restored": true,
+  "direct_count": 280,
+  "direct_non_200": 0,
+  "direct_p50_ms": 3.0817000661045313,
+  "direct_p95_ms": 4.014400066807866,
+  "p95_difference_ms": 2.644199877977371,
+  "classification": [
+    {
+      "id": "pol_admin_reports_get",
+      "method": "GET",
+      "path": "/admin/reports",
+      "predicted": "role_required",
+      "expected": "role_required",
+      "correct": true
+    },
+    {
+      "id": "pol_orders_delete_by_orderId",
+      "method": "DELETE",
+      "path": "/orders/{orderId}",
+      "predicted": "owner_match",
+      "expected": "owner_match",
+      "correct": true
+    },
+    {
+      "id": "pol_orders_get_by_orderId",
+      "method": "GET",
+      "path": "/orders/{orderId}",
+      "predicted": "owner_match",
+      "expected": "owner_match",
+      "correct": true
+    },
+    {
+      "id": "pol_orgs_docs_get_by_orgId",
+      "method": "GET",
+      "path": "/orgs/{orgId}/docs",
+      "predicted": "tenant_match",
+      "expected": "tenant_match",
+      "correct": true
+    },
+    {
+      "id": "pol_premium_content_get",
+      "method": "GET",
+      "path": "/premium/content",
+      "predicted": "membership_required",
+      "expected": "membership_required",
+      "correct": true
+    },
+    {
+      "id": "pol_public_health_get",
+      "method": "GET",
+      "path": "/public/health",
+      "predicted": "public",
+      "expected": "public",
+      "correct": true
+    },
+    {
+      "id": "pol_users_get_by_userId",
+      "method": "GET",
+      "path": "/users/{userId}",
+      "predicted": "manual_review_required",
+      "expected": "owner_or_admin",
+      "correct": false
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0,
+  "ids": [
+    "controlled-observatory:observations",
+    "controlled-observatory:notebooks",
+    "controlled-observatory:calibrations",
+    "controlled-observatory:captures",
+    "controlled-observatory:allocations",
+    "controlled-observatory:inventories",
+    "controlled-observatory:queues",
+    "controlled-observatory:relays",
+    "controlled-observatory:spectra",
+    "controlled-observatory:forecasts",
+    "controlled-observatory:catalog",
+    "controlled-observatory:bulletins",
+    "controlled-observatory:transfers",
+    "controlled-observatory:reservations",
+    "realworld-django:GET:/articles/{slug}",
+    "realworld-django:PUT:/articles/{slug}",
+    "realworld-django:DELETE:/articles/{slug}/comments/{id}",
+    "realworld-django:GET:/tags"
+  ],
+  "input_sha256": "1f22e9fb13b593bed10fa5d898e6534700bd76d456d6b013337a02159ab3b786",
+  "prompt_sha256": "ef07a89b6f9389ed2d22d88ddefd618b83d1a0ef2c5c71974e0d78824c03079b",
+  "design_sha256": "5ee42f2fdec584b306ec826cc90892402ac3f4123afe64b589eb58bd27c51a47"
+}

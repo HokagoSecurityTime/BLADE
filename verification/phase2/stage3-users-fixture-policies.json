@@ -1,0 +1,31 @@
+[
+  {
+    "id": "pol_users_get_by_userId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/users/{userId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "userId",
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "id",
+        "owner_col": "id",
+        "tenant_col": "org_id"
+      },
+      "roles": [
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.95,
+    "evidence": "The caller owns the requested user or has an explicit admin bypass.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:12:16.938331Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  }
+]

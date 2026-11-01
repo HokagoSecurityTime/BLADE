@@ -1,0 +1,590 @@
+[
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "erin",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:observations",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "erin",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:notebooks",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "dana",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "erin",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:calibrations",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "dana",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "erin",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:captures",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "bob",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:allocations",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "bob",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:inventories",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "alice",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:queues",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "alice",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:relays",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "alice",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "carol",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:spectra",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "alice",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "carol",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:forecasts",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "bob",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "carol",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "dana",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:catalog",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "bob",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "carol",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "dana",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:bulletins",
+    "actor": "alice_south",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "alice",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "erin",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:transfers",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "alice",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "bob",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "carol",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "dana",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "erin",
+    "expected": true,
+    "actual": true,
+    "passed": true
+  },
+  {
+    "id": "controlled-observatory:reservations",
+    "actor": "alice_south",
+    "expected": false,
+    "actual": false,
+    "passed": true
+  }
+]

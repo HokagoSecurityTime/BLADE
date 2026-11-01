@@ -1,0 +1,174 @@
+[
+  {
+    "id": "pol_public_health_get",
+    "endpoint": {
+      "method": "GET",
+      "path": "/public/health"
+    },
+    "label": "public",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [],
+      "allowed_membership": []
+    },
+    "confidence": 1.0,
+    "evidence": "The endpoint is a health/liveness probe, which is unrestricted.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:00:10.910287Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_orders_get_by_orderId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/orders/{orderId}"
+    },
+    "label": "owner_match",
+    "params": {
+      "object_param": "orderId",
+      "owner_lookup": {
+        "table": "orders",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "roles": [],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "Order retrieval is filtered by the user who owns the order.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:00:44.161622Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_orders_delete_by_orderId",
+    "endpoint": {
+      "method": "DELETE",
+      "path": "/orders/{orderId}"
+    },
+    "label": "role_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.8,
+    "evidence": "Code only permits users with 'admin' role to access orders directly.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:01:20.349750Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_users_get_by_userId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/users/{userId}"
+    },
+    "label": "role_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.8,
+    "evidence": "User can only access their own profile unless they are an admin.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:01:53.490095Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_admin_reports_get",
+    "endpoint": {
+      "method": "GET",
+      "path": "/admin/reports"
+    },
+    "label": "role_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "The endpoint requires an admin role to access reports.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:02:26.439394Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_orgs_docs_get_by_orgId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/orgs/{orgId}/docs"
+    },
+    "label": "tenant_match",
+    "params": {
+      "object_param": "orgId",
+      "owner_lookup": {
+        "table": "orgs",
+        "id_col": "id",
+        "owner_col": null,
+        "tenant_col": "id"
+      },
+      "roles": [],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "Caller must belong to the requested organization.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:03:00.781878Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_premium_content_get",
+    "endpoint": {
+      "method": "GET",
+      "path": "/premium/content"
+    },
+    "label": "membership_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [],
+      "allowed_membership": [
+        "premium"
+      ]
+    },
+    "confidence": 0.8,
+    "evidence": "Access requires a premium membership tier.",
+    "status": "PENDING",
+    "created_at": "2026-10-08T05:03:33.121162Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  }
+]

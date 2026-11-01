@@ -1,0 +1,34 @@
+{
+  "2.6": {
+    "labels": {
+      "manual_review_required": 42,
+      "owner_or_admin": 2,
+      "role_required": 4,
+      "owner_match": 2
+    },
+    "label_errors": 0,
+    "evidence_invalid": 0
+  },
+  "2.7": {
+    "labels": {
+      "public": 14,
+      "role_required": 14,
+      "manual_review_required": 12,
+      "owner_match": 7,
+      "owner_or_admin": 3
+    },
+    "label_errors": 0,
+    "evidence_invalid": 1
+  },
+  "2.8": {
+    "labels": {
+      "public": 17,
+      "owner_or_admin": 11,
+      "owner_match": 10,
+      "role_required": 2,
+      "manual_review_required": 10
+    },
+    "label_errors": 0,
+    "evidence_invalid": 0
+  }
+}

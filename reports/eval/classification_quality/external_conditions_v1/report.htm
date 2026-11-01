@@ -1,0 +1,238 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>외부 조건 검증</title><style>body{max-width:1100px;margin:40px auto;font:16px/1.7 system-ui}td,th{padding:10px;border:1px solid #ccc}pre{white-space:pre-wrap}details{margin:15px 0}</style><h1>새 외부 프로젝트 조건 추출 검증</h1>
+<p>기존 합성 14/14를 외부 성능으로 일반화할 수 없다는 점을 확인했다. 고정 추출기는 새 프로젝트 3개 라우트를 모두 지원하지 못했다.</p>
+<p>출처: https://github.com/nsidnev/fastapi-realworld-example-app/tree/029eb7781c60d5f563ee8990a0cbfb79b244538c</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>기존 추출기 지원</td>
+<td>0/3 라우트</td>
+</tr>
+<tr>
+<td>라우트→권한 의존성→서비스 비교 연결</td>
+<td>3/3 확인</td>
+</tr>
+<tr>
+<td>실제 원본 비교 함수 단위 검사</td>
+<td>12/12 통과</td>
+</tr>
+<tr>
+<td>서로 다른 비교 함수</td>
+<td>2개 (article·comment)</td>
+</tr>
+<tr>
+<td>전체 서버·DB·상위 테스트 실행</td>
+<td>미실행</td>
+</tr>
+<tr>
+<td>최종 엔드포인트 정답</td>
+<td>미확정</td>
+</tr>
+</tbody>
+</table>
+<h2>확인한 근거</h2>
+<p>PUT article·DELETE article·DELETE comment는 데코레이터 Depends에서 권한 검사로 연결된다. 검사는 작성자 username과 요청자 username의 동일성을 검사하는 원본 함수가 false이면 403을 발생시킨다. 같은 커밋의 상위 테스트에도 타인 수정·삭제 거부가 명시돼 있다.</p>
+<p>원본 파일은 수정하지 않았다. 단위 실행은 import·annotation·기본값 실행을 제외하고, 호출이 없는 단일 속성 비교 return 본문만 검증 후 실행했다. 객체는 SimpleNamespace 대역이다. 따라서 JWT·DB·HTTP 요청 전체를 검증한 결과가 아니다. 12개 검사는 3개 라우트×4개 입력이며 article 비교 함수는 두 라우트에서 공유하므로 독립 12개 정책 사례가 아니다.</p>
+<h2>지원하지 못한 원인과 다음 구현 범위</h2>
+<p>기존 추출기는 동기 함수, 함수 인자 Depends, sub/owner 딕셔너리 비교만 제한적으로 처리했다. 새 소스는 async 라우트, 데코레이터 dependencies, 별도 모듈 함수, author.username 속성 비교를 사용한다. 우선 이 연결을 별도 어댑터로 다뤄야 하며, 이름만 owner_match로 치환하면 안 된다. 이번 탐색의 조건 후보와 기존 추출기 예측은 분리했다. 아직 범용 추출기 지원 확장이나 LLM 정확도 개선을 입증한 것은 아니다.</p>
+<p>이 외부 사례는 owner 계열에 한정된다. tenant·membership 등 나머지 유형의 외부 검증은 남아 있다. 런타임·기존 프롬프트·고정 test는 변경하지 않았다.</p>
+<details><summary>update_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;update_article_by_slug&quot;,
+  &quot;method&quot;: &quot;PUT&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;route_dependency_edge&quot;: [
+    &quot;update_article_by_slug&quot;,
+    &quot;check_article_modification_permissions&quot;,
+    &quot;check_user_can_modify_article&quot;
+  ],
+  &quot;original_extractor&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;implemented_allow_expression&quot;: &quot;article.author.username == user.username&quot;,
+  &quot;proposed_condition_label&quot;: &quot;owner_match&quot;,
+  &quot;condition_proposal_basis&quot;: &quot;exact original predicate + connected 403 dependency; not inferred from resource name&quot;,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;authentication factory&quot;,
+    &quot;repository retrieval&quot;,
+    &quot;global middleware&quot;,
+    &quot;full integration execution&quot;
+  ],
+  &quot;excerpts&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/routes/articles/articles_resource.py&quot;,
+      &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+      &quot;start&quot;: 89,
+      &quot;end&quot;: 106,
+      &quot;code&quot;: &quot;89: @router.put(\n90:     \&quot;/{slug}\&quot;,\n91:     response_model=ArticleInResponse,\n92:     name=\&quot;articles:update-article\&quot;,\n93:     dependencies=[Depends(check_article_modification_permissions)],\n94: )\n95: async def update_article_by_slug(\n96:     article_update: ArticleInUpdate = Body(..., embed=True, alias=\&quot;article\&quot;),\n97:     current_article: Article = Depends(get_article_by_slug_from_path),\n98:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n99: ) -&gt; ArticleInResponse:\n100:     slug = get_slug_for_article(article_update.title) if article_update.title else None\n101:     article = await articles_repo.update_article(\n102:         article=current_article,\n103:         slug=slug,\n104:         **article_update.dict(),\n105:     )\n106:     return ArticleInResponse(article=ArticleForResponse.from_orm(article))&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/dependencies/articles.py&quot;,
+      &quot;sha256&quot;: &quot;ebf8577282e1173be6808cbeec9cc39ca79ca91275aa1623134b2e328bfc6101&quot;,
+      &quot;start&quot;: 51,
+      &quot;end&quot;: 59,
+      &quot;code&quot;: &quot;51: def check_article_modification_permissions(\n52:     current_article: Article = Depends(get_article_by_slug_from_path),\n53:     user: User = Depends(get_current_user_authorizer()),\n54: ) -&gt; None:\n55:     if not check_user_can_modify_article(current_article, user):\n56:         raise HTTPException(\n57:             status_code=status.HTTP_403_FORBIDDEN,\n58:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n59:         )&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/services/articles.py&quot;,
+      &quot;sha256&quot;: &quot;60e458e628bb6a1f211332d7ae39591f90442b4b2e0597ee40bc67f5ca4a7357&quot;,
+      &quot;start&quot;: 22,
+      &quot;end&quot;: 23,
+      &quot;code&quot;: &quot;22: def check_user_can_modify_article(article: Article, user: User) -&gt; bool:\n23:     return article.author.username == user.username&quot;
+    }
+  ],
+  &quot;upstream_tests&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/tests/test_api/test_routes/test_articles.py&quot;,
+      &quot;sha256&quot;: &quot;829cc29dbad5ed7e51ca11b69edce92bc02f104d435af48f1b68608a84be8ef5&quot;,
+      &quot;start&quot;: 127,
+      &quot;end&quot;: 158,
+      &quot;code&quot;: &quot;127: @pytest.mark.parametrize(\n128:     \&quot;api_method, route_name\&quot;,\n129:     ((\&quot;PUT\&quot;, \&quot;articles:update-article\&quot;), (\&quot;DELETE\&quot;, \&quot;articles:delete-article\&quot;)),\n130: )\n131: async def test_user_can_not_modify_article_that_is_not_authored_by_him(\n132:     app: FastAPI,\n133:     authorized_client: AsyncClient,\n134:     pool: Pool,\n135:     api_method: str,\n136:     route_name: str,\n137: ) -&gt; None:\n138:     async with pool.acquire() as connection:\n139:         users_repo = UsersRepository(connection)\n140:         user = await users_repo.create_user(\n141:             username=\&quot;test_author\&quot;, email=\&quot;author@email.com\&quot;, password=\&quot;password\&quot;\n142:         )\n143:         articles_repo = ArticlesRepository(connection)\n144:         await articles_repo.create_article(\n145:             slug=\&quot;test-slug\&quot;,\n146:             title=\&quot;Test Slug\&quot;,\n147:             description=\&quot;Slug for tests\&quot;,\n148:             body=\&quot;Test \&quot; * 100,\n149:             author=user,\n150:             tags=[\&quot;tests\&quot;, \&quot;testing\&quot;, \&quot;pytest\&quot;],\n151:         )\n152: \n153:     response = await authorized_client.request(\n154:         api_method,\n155:         app.url_path_for(route_name, slug=\&quot;test-slug\&quot;),\n156:         json={\&quot;article\&quot;: {\&quot;title\&quot;: \&quot;Updated Title\&quot;}},\n157:     )\n158:     assert response.status_code == status.HTTP_403_FORBIDDEN&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/tests/test_api/test_routes/test_articles.py&quot;,
+      &quot;sha256&quot;: &quot;829cc29dbad5ed7e51ca11b69edce92bc02f104d435af48f1b68608a84be8ef5&quot;,
+      &quot;start&quot;: 161,
+      &quot;end&quot;: 174,
+      &quot;code&quot;: &quot;161: async def test_user_can_delete_his_article(\n162:     app: FastAPI,\n163:     authorized_client: AsyncClient,\n164:     test_article: Article,\n165:     pool: Pool,\n166: ) -&gt; None:\n167:     await authorized_client.delete(\n168:         app.url_path_for(\&quot;articles:delete-article\&quot;, slug=test_article.slug)\n169:     )\n170: \n171:     async with pool.acquire() as connection:\n172:         articles_repo = ArticlesRepository(connection)\n173:         with pytest.raises(EntityDoesNotExist):\n174:             await articles_repo.get_article_by_slug(slug=test_article.slug)&quot;
+    }
+  ],
+  &quot;upstream_tests_executed&quot;: false
+}</pre></details><details><summary>delete_article_by_slug</summary><pre>{
+  &quot;handler&quot;: &quot;delete_article_by_slug&quot;,
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{slug}&quot;,
+  &quot;route_dependency_edge&quot;: [
+    &quot;delete_article_by_slug&quot;,
+    &quot;check_article_modification_permissions&quot;,
+    &quot;check_user_can_modify_article&quot;
+  ],
+  &quot;original_extractor&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;implemented_allow_expression&quot;: &quot;article.author.username == user.username&quot;,
+  &quot;proposed_condition_label&quot;: &quot;owner_match&quot;,
+  &quot;condition_proposal_basis&quot;: &quot;exact original predicate + connected 403 dependency; not inferred from resource name&quot;,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;authentication factory&quot;,
+    &quot;repository retrieval&quot;,
+    &quot;global middleware&quot;,
+    &quot;full integration execution&quot;
+  ],
+  &quot;excerpts&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/routes/articles/articles_resource.py&quot;,
+      &quot;sha256&quot;: &quot;81001cd8fb5c6f09e49a149ae7ecbf06f4ac6a1e9985b86e6f7763c9c8600f9f&quot;,
+      &quot;start&quot;: 109,
+      &quot;end&quot;: 120,
+      &quot;code&quot;: &quot;109: @router.delete(\n110:     \&quot;/{slug}\&quot;,\n111:     status_code=status.HTTP_204_NO_CONTENT,\n112:     name=\&quot;articles:delete-article\&quot;,\n113:     dependencies=[Depends(check_article_modification_permissions)],\n114:     response_class=Response,\n115: )\n116: async def delete_article_by_slug(\n117:     article: Article = Depends(get_article_by_slug_from_path),\n118:     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),\n119: ) -&gt; None:\n120:     await articles_repo.delete_article(article=article)&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/dependencies/articles.py&quot;,
+      &quot;sha256&quot;: &quot;ebf8577282e1173be6808cbeec9cc39ca79ca91275aa1623134b2e328bfc6101&quot;,
+      &quot;start&quot;: 51,
+      &quot;end&quot;: 59,
+      &quot;code&quot;: &quot;51: def check_article_modification_permissions(\n52:     current_article: Article = Depends(get_article_by_slug_from_path),\n53:     user: User = Depends(get_current_user_authorizer()),\n54: ) -&gt; None:\n55:     if not check_user_can_modify_article(current_article, user):\n56:         raise HTTPException(\n57:             status_code=status.HTTP_403_FORBIDDEN,\n58:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n59:         )&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/services/articles.py&quot;,
+      &quot;sha256&quot;: &quot;60e458e628bb6a1f211332d7ae39591f90442b4b2e0597ee40bc67f5ca4a7357&quot;,
+      &quot;start&quot;: 22,
+      &quot;end&quot;: 23,
+      &quot;code&quot;: &quot;22: def check_user_can_modify_article(article: Article, user: User) -&gt; bool:\n23:     return article.author.username == user.username&quot;
+    }
+  ],
+  &quot;upstream_tests&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/tests/test_api/test_routes/test_articles.py&quot;,
+      &quot;sha256&quot;: &quot;829cc29dbad5ed7e51ca11b69edce92bc02f104d435af48f1b68608a84be8ef5&quot;,
+      &quot;start&quot;: 127,
+      &quot;end&quot;: 158,
+      &quot;code&quot;: &quot;127: @pytest.mark.parametrize(\n128:     \&quot;api_method, route_name\&quot;,\n129:     ((\&quot;PUT\&quot;, \&quot;articles:update-article\&quot;), (\&quot;DELETE\&quot;, \&quot;articles:delete-article\&quot;)),\n130: )\n131: async def test_user_can_not_modify_article_that_is_not_authored_by_him(\n132:     app: FastAPI,\n133:     authorized_client: AsyncClient,\n134:     pool: Pool,\n135:     api_method: str,\n136:     route_name: str,\n137: ) -&gt; None:\n138:     async with pool.acquire() as connection:\n139:         users_repo = UsersRepository(connection)\n140:         user = await users_repo.create_user(\n141:             username=\&quot;test_author\&quot;, email=\&quot;author@email.com\&quot;, password=\&quot;password\&quot;\n142:         )\n143:         articles_repo = ArticlesRepository(connection)\n144:         await articles_repo.create_article(\n145:             slug=\&quot;test-slug\&quot;,\n146:             title=\&quot;Test Slug\&quot;,\n147:             description=\&quot;Slug for tests\&quot;,\n148:             body=\&quot;Test \&quot; * 100,\n149:             author=user,\n150:             tags=[\&quot;tests\&quot;, \&quot;testing\&quot;, \&quot;pytest\&quot;],\n151:         )\n152: \n153:     response = await authorized_client.request(\n154:         api_method,\n155:         app.url_path_for(route_name, slug=\&quot;test-slug\&quot;),\n156:         json={\&quot;article\&quot;: {\&quot;title\&quot;: \&quot;Updated Title\&quot;}},\n157:     )\n158:     assert response.status_code == status.HTTP_403_FORBIDDEN&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/tests/test_api/test_routes/test_articles.py&quot;,
+      &quot;sha256&quot;: &quot;829cc29dbad5ed7e51ca11b69edce92bc02f104d435af48f1b68608a84be8ef5&quot;,
+      &quot;start&quot;: 161,
+      &quot;end&quot;: 174,
+      &quot;code&quot;: &quot;161: async def test_user_can_delete_his_article(\n162:     app: FastAPI,\n163:     authorized_client: AsyncClient,\n164:     test_article: Article,\n165:     pool: Pool,\n166: ) -&gt; None:\n167:     await authorized_client.delete(\n168:         app.url_path_for(\&quot;articles:delete-article\&quot;, slug=test_article.slug)\n169:     )\n170: \n171:     async with pool.acquire() as connection:\n172:         articles_repo = ArticlesRepository(connection)\n173:         with pytest.raises(EntityDoesNotExist):\n174:             await articles_repo.get_article_by_slug(slug=test_article.slug)&quot;
+    }
+  ],
+  &quot;upstream_tests_executed&quot;: false
+}</pre></details><details><summary>delete_comment_from_article</summary><pre>{
+  &quot;handler&quot;: &quot;delete_comment_from_article&quot;,
+  &quot;method&quot;: &quot;DELETE&quot;,
+  &quot;relative_route&quot;: &quot;/{comment_id}&quot;,
+  &quot;route_dependency_edge&quot;: [
+    &quot;delete_comment_from_article&quot;,
+    &quot;check_comment_modification_permissions&quot;,
+    &quot;check_user_can_modify_comment&quot;
+  ],
+  &quot;original_extractor&quot;: {
+    &quot;conditions&quot;: null,
+    &quot;authentication&quot;: false,
+    &quot;evidence&quot;: [],
+    &quot;issues&quot;: [
+      &quot;handler_unresolved&quot;
+    ]
+  },
+  &quot;implemented_allow_expression&quot;: &quot;comment.author.username == user.username&quot;,
+  &quot;proposed_condition_label&quot;: &quot;owner_match&quot;,
+  &quot;condition_proposal_basis&quot;: &quot;exact original predicate + connected 403 dependency; not inferred from resource name&quot;,
+  &quot;endpoint_final_label&quot;: null,
+  &quot;unresolved&quot;: [
+    &quot;authentication factory&quot;,
+    &quot;repository retrieval&quot;,
+    &quot;global middleware&quot;,
+    &quot;full integration execution&quot;
+  ],
+  &quot;excerpts&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/routes/comments.py&quot;,
+      &quot;sha256&quot;: &quot;cb68c031cfa295a9e868f34341e4c22e6918960df7646f870aec11d591c997fb&quot;,
+      &quot;start&quot;: 60,
+      &quot;end&quot;: 71,
+      &quot;code&quot;: &quot;60: @router.delete(\n61:     \&quot;/{comment_id}\&quot;,\n62:     status_code=status.HTTP_204_NO_CONTENT,\n63:     name=\&quot;comments:delete-comment-from-article\&quot;,\n64:     dependencies=[Depends(check_comment_modification_permissions)],\n65:     response_class=Response,\n66: )\n67: async def delete_comment_from_article(\n68:     comment: Comment = Depends(get_comment_by_id_from_path),\n69:     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),\n70: ) -&gt; None:\n71:     await comments_repo.delete_comment(comment=comment)&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/api/dependencies/comments.py&quot;,
+      &quot;sha256&quot;: &quot;ba856a769f1adc5e5f4106d03c857202d23e3d7861a44e60192f0b5c188b6756&quot;,
+      &quot;start&quot;: 39,
+      &quot;end&quot;: 47,
+      &quot;code&quot;: &quot;39: def check_comment_modification_permissions(\n40:     comment: Comment = Depends(get_comment_by_id_from_path),\n41:     user: User = Depends(authentication.get_current_user_authorizer()),\n42: ) -&gt; None:\n43:     if not check_user_can_modify_comment(comment, user):\n44:         raise HTTPException(\n45:             status_code=status.HTTP_403_FORBIDDEN,\n46:             detail=strings.USER_IS_NOT_AUTHOR_OF_ARTICLE,\n47:         )&quot;
+    },
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/app/services/comments.py&quot;,
+      &quot;sha256&quot;: &quot;1e5796ff77223beaa3c998ad4da72908b0bacb8bafe861526f9a1b70a8a7073c&quot;,
+      &quot;start&quot;: 5,
+      &quot;end&quot;: 6,
+      &quot;code&quot;: &quot;5: def check_user_can_modify_comment(comment: Comment, user: User) -&gt; bool:\n6:     return comment.author.username == user.username&quot;
+    }
+  ],
+  &quot;upstream_tests&quot;: [
+    {
+      &quot;path&quot;: &quot;datasets/blade/raw/external_conditions_v1/tests/test_api/test_routes/test_comments.py&quot;,
+      &quot;sha256&quot;: &quot;59ab3f6f17c8c226027e41958706d95b17b0d5f97d58d4b1a0256f4fc663e5fc&quot;,
+      &quot;start&quot;: 61,
+      &quot;end&quot;: 82,
+      &quot;code&quot;: &quot;61: async def test_user_can_not_delete_not_authored_comment(\n62:     app: FastAPI, authorized_client: AsyncClient, test_article: Article, pool: Pool\n63: ) -&gt; None:\n64:     async with pool.acquire() as connection:\n65:         users_repo = UsersRepository(connection)\n66:         user = await users_repo.create_user(\n67:             username=\&quot;test_author\&quot;, email=\&quot;author@email.com\&quot;, password=\&quot;password\&quot;\n68:         )\n69:         comments_repo = CommentsRepository(connection)\n70:         comment = await comments_repo.create_comment_for_article(\n71:             body=\&quot;tmp\&quot;, article=test_article, user=user\n72:         )\n73: \n74:     forbidden_response = await authorized_client.delete(\n75:         app.url_path_for(\n76:             \&quot;comments:delete-comment-from-article\&quot;,\n77:             slug=test_article.slug,\n78:             comment_id=str(comment.id_),\n79:         )\n80:     )\n81: \n82:     assert forbidden_response.status_code == status.HTTP_403_FORBIDDEN&quot;
+    }
+  ],
+  &quot;upstream_tests_executed&quot;: false
+}</pre></details></html>

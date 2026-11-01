@@ -1,0 +1,143 @@
+{
+  "configuration": "c",
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "rag": false,
+  "controller": false,
+  "prompt_version": "v2.0",
+  "prompt_sha256": "c3c774e3907207a3b4e10d6800078ce9c5c604b39cb7b5be884e1c8d8ba7d3e4",
+  "test_sha256": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+  "runner_sha256": "de0b48809edffb79c5ca7cb91141db099d216368d95bd88dba5a8795a6e20d3b",
+  "corpus_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "corpus_counts": {
+    "idiom": 0
+  },
+  "embedding_model": null,
+  "total": 253,
+  "state": "complete",
+  "updated_at": "2026-10-19T20:52:54.633206+00:00",
+  "metrics": {
+    "completed": 253,
+    "per_label": {
+      "public": {
+        "precision": 0.35947712418300654,
+        "recall": 0.859375,
+        "f1": 0.5069124423963134,
+        "support": 64
+      },
+      "role_required": {
+        "precision": 0.43137254901960786,
+        "recall": 0.4489795918367347,
+        "f1": 0.43999999999999995,
+        "support": 49
+      },
+      "membership_required": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6
+      },
+      "tenant_match": {
+        "precision": 1.0,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857,
+        "support": 6
+      },
+      "owner_match": {
+        "precision": 0.15,
+        "recall": 0.05357142857142857,
+        "f1": 0.07894736842105263,
+        "support": 112
+      },
+      "owner_or_admin": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      },
+      "manual_review_required": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7
+      }
+    },
+    "confusion_matrix": {
+      "public": {
+        "public": 55,
+        "role_required": 2,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 1
+      },
+      "role_required": {
+        "public": 21,
+        "role_required": 22,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "membership_required": {
+        "public": 0,
+        "role_required": 1,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 5,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "tenant_match": {
+        "public": 0,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 1,
+        "owner_match": 5,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      },
+      "owner_match": {
+        "public": 75,
+        "role_required": 25,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 6
+      },
+      "owner_or_admin": {
+        "public": 1,
+        "role_required": 1,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 1
+      },
+      "manual_review_required": {
+        "public": 1,
+        "role_required": 0,
+        "membership_required": 0,
+        "tenant_match": 0,
+        "owner_match": 6,
+        "owner_or_admin": 0,
+        "manual_review_required": 0
+      }
+    },
+    "macro_f1": 0.18736772807595026,
+    "manual_ratio": 0.03162055335968379,
+    "mean_inference_ms": 12947.076222531243,
+    "errors": {},
+    "erd_context": {
+      "missing": 211,
+      "available": 42
+    },
+    "controller_status": {
+      "disabled": 253
+    },
+    "rag_nonempty": 0
+  }
+}

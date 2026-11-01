@@ -1,0 +1,15 @@
+{
+  "oas": {
+    "unresolved_source": 15,
+    "prediction_validation_failed": 1,
+    "missing_required_condition": 2,
+    "equivalent": 1,
+    "overrestriction": 2,
+    "manual_or_invalid_label": 2
+  },
+  "oas_code": {
+    "unresolved_source": 15,
+    "missing_required_condition": 4,
+    "equivalent": 4
+  }
+}

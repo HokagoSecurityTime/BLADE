@@ -1,0 +1,22 @@
+{
+  "code": {
+    "equivalent": 12,
+    "missing_required_condition": 7,
+    "overrestriction": 2,
+    "unsupported_code": 0,
+    "manual_or_invalid_label": 9,
+    "correct_concrete": 12,
+    "correct_concrete_blocked": 0,
+    "wrong_concrete_passed": 0
+  },
+  "code_conditions": {
+    "equivalent": 12,
+    "missing_required_condition": 13,
+    "overrestriction": 2,
+    "unsupported_code": 0,
+    "manual_or_invalid_label": 3,
+    "correct_concrete": 12,
+    "correct_concrete_blocked": 0,
+    "wrong_concrete_passed": 0
+  }
+}

@@ -1,0 +1,38 @@
+name: blade-synthetic
+services:
+  quill_blog:
+    build:
+      context: datasets/blade/raw/synthetic/quill_blog
+    ports:
+    - 127.0.0.1:18080:8080
+    restart: 'no'
+  orbit_tickets:
+    build:
+      context: datasets/blade/raw/synthetic/orbit_tickets
+    ports:
+    - 127.0.0.1:18081:8080
+    restart: 'no'
+  folio_wiki:
+    build:
+      context: datasets/blade/raw/synthetic/folio_wiki
+    ports:
+    - 127.0.0.1:18082:8080
+    restart: 'no'
+  copper_wallet:
+    build:
+      context: datasets/blade/raw/synthetic/copper_wallet
+    ports:
+    - 127.0.0.1:18083:8080
+    restart: 'no'
+  campus_records:
+    build:
+      context: datasets/blade/raw/synthetic/campus_records
+    ports:
+    - 127.0.0.1:18084:8080
+    restart: 'no'
+  beacon_iot:
+    build:
+      context: datasets/blade/raw/synthetic/beacon_iot
+    ports:
+    - 127.0.0.1:18085:8080
+    restart: 'no'

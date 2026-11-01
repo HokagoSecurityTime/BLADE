@@ -1,0 +1,20 @@
+{
+  "stage": "q",
+  "prompt_version": "policy-label-v3.0",
+  "prompt_sha256": "d2dc8377c28830c7dfdefe297c63a0ff1623eb5036d1e3ae3c31b38e2dea2fc5",
+  "inputs_sha256": "a7b3b87cb08bf143b852966eea678d04b95491758d1e2d1cd2482a2f00d52517",
+  "implementation_sha256": "3921dab9582b8ac6e4a5978fa47ddce619650ed9471a0d1709a45d8dd2daddb2",
+  "guard_sha256": "f77246fc336ac4d7e06e04c77bb665706065dc57f5096e8ad8e29e357860856e",
+  "model": "gpt-4o-mini",
+  "temperature": 0,
+  "seed": 42,
+  "conditions": [
+    "oas",
+    "oas_code"
+  ],
+  "human_corrections_used": false,
+  "test_files_read": false,
+  "started_at": "2026-10-21T08:16:41.683642+00:00",
+  "completed_at": "2026-10-21T08:17:18.065697+00:00",
+  "prompt_sha256_after": "d2dc8377c28830c7dfdefe297c63a0ff1623eb5036d1e3ae3c31b38e2dea2fc5"
+}

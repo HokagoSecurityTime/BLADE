@@ -1,0 +1,22 @@
+
+===== 2026-09-13T12:18:56.357327+00:00 REQUEST =====
+GET /orders/1042 HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+User-Agent: python-httpx/0.28.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzc3Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc4OTQ3NDQ4N30.uDphzO5lAqqYT_kUFq3gs5eSYFe9sVBcwSbtH7GGaqA
+
+
+
+===== RESPONSE =====
+HTTP/1.1 200 OK
+Date: Sun, 13 Sep 2026 12:18:55 GMT
+Server: uvicorn
+Content-Type: application/json
+X-Blade-Request-Id: 4a95344a-0a37-4fcc-8bd7-341246ab9f48
+X-Blade-Policy: pol_orders_get_by_orderId
+Content-Length: 31
+
+{"id":1042,"user_id":"user_77"}

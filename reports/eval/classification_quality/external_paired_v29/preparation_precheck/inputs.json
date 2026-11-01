@@ -1,0 +1,1269 @@
+[
+  {
+    "id": "items.read_items",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/items/",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/items/",
+        "path_params": [],
+        "query_params": [
+          "skip",
+          "limit"
+        ],
+        "summary": "Read Items",
+        "description": "Retrieve items.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "count",
+          "created_at",
+          "data",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/items/",
+        "path_params": [],
+        "query_params": [
+          "skip",
+          "limit"
+        ],
+        "summary": "Read Items",
+        "description": "Retrieve items.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/items.py:13-45\n@router.get(\"/\", response_model=ItemsPublic)\ndef read_items(\n    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100\n) -> Any:\n    \"\"\"\n    Retrieve items.\n    \"\"\"\n\n    if current_user.is_superuser:\n        count_statement = select(func.count()).select_from(Item)\n        count = session.exec(count_statement).one()\n        statement = (\n            select(Item).order_by(col(Item.created_at).desc()).offset(skip).limit(limit)\n        )\n        items = session.exec(statement).all()\n    else:\n        count_statement = (\n            select(func.count())\n            .select_from(Item)\n            .where(Item.owner_id == current_user.id)\n        )\n        count = session.exec(count_statement).one()\n        statement = (\n            select(Item)\n            .where(Item.owner_id == current_user.id)\n            .order_by(col(Item.created_at).desc())\n            .offset(skip)\n            .limit(limit)\n        )\n        items = session.exec(statement).all()\n\n    items_public = [ItemPublic.model_validate(item) for item in items]\n    return ItemsPublic(data=items_public, count=count)\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:97-100\nclass ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:103-105\nclass ItemsPublic(SQLModel):\n    data: list[ItemPublic]\n    count: int\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "count",
+          "created_at",
+          "data",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def read_items(\n    session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "items.read_item",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/items/{id}",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Read Item",
+        "description": "Get item by ID.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Read Item",
+        "description": "Get item by ID.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/items.py:48-58\n@router.get(\"/{id}\", response_model=ItemPublic)\ndef read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\n    \"\"\"\n    Get item by ID.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    return item\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:97-100\nclass ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\n    \"\"\"\n    Get item by ID.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    return item\n\n",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "items.create_item",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/items/",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/items/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create Item",
+        "description": "Create new item.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/items/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create Item",
+        "description": "Create new item.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/items.py:61-72\n@router.post(\"/\", response_model=ItemPublic)\ndef create_item(\n    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate\n) -> Any:\n    \"\"\"\n    Create new item.\n    \"\"\"\n    item = Item.model_validate(item_in, update={\"owner_id\": current_user.id})\n    session.add(item)\n    session.commit()\n    session.refresh(item)\n    return item\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:76-77\nclass ItemCreate(ItemBase):\n    pass\n\nFILE backend/app/models.py:97-100\nclass ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def create_item(\n    *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "items.update_item",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "PUT",
+    "path": "/api/v1/items/{id}",
+    "inputs": {
+      "oas": {
+        "method": "PUT",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Update Item",
+        "description": "Update an item.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "PUT",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Update Item",
+        "description": "Update an item.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/items.py:75-96\n@router.put(\"/{id}\", response_model=ItemPublic)\ndef update_item(\n    *,\n    session: SessionDep,\n    current_user: CurrentUser,\n    id: uuid.UUID,\n    item_in: ItemUpdate,\n) -> Any:\n    \"\"\"\n    Update an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    update_dict = item_in.model_dump(exclude_unset=True)\n    item.sqlmodel_update(update_dict)\n    session.add(item)\n    session.commit()\n    session.refresh(item)\n    return item\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:97-100\nclass ItemPublic(ItemBase):\n    id: uuid.UUID\n    owner_id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:81-83\nclass ItemUpdate(SQLModel):\n    title: str | None = Field(default=None, min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "description",
+          "id",
+          "owner_id",
+          "title"
+        ],
+        "owner_cols": [
+          "owner_id"
+        ],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def update_item(\n    *,\n    session: SessionDep,\n    current_user: CurrentUser,\n    id: uuid.UUID,\n    item_in: ItemUpdate,",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "items.delete_item",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "DELETE",
+    "path": "/api/v1/items/{id}",
+    "inputs": {
+      "oas": {
+        "method": "DELETE",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Delete Item",
+        "description": "Delete an item.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "DELETE",
+        "path": "/api/v1/items/{id}",
+        "path_params": [
+          "id"
+        ],
+        "query_params": [],
+        "summary": "Delete Item",
+        "description": "Delete an item.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/items.py:99-113\n@router.delete(\"/{id}\")\ndef delete_item(\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    session.delete(item)\n    session.commit()\n    return Message(message=\"Item deleted successfully\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def delete_item(\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "login.login_access_token",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/login/access-token",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/login/access-token",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Login Access Token",
+        "description": "OAuth2 compatible token login, get an access token for future requests",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "access_token",
+          "token_type"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/login/access-token",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Login Access Token",
+        "description": "OAuth2 compatible token login, get an access token for future requests\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/login.py:23-42\n@router.post(\"/login/access-token\")\ndef login_access_token(\n    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]\n) -> Token:\n    \"\"\"\n    OAuth2 compatible token login, get an access token for future requests\n    \"\"\"\n    user = crud.authenticate(\n        session=session, email=form_data.username, password=form_data.password\n    )\n    if not user:\n        raise HTTPException(status_code=400, detail=\"Incorrect email or password\")\n    elif not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)\n    return Token(\n        access_token=security.create_access_token(\n            user.id, expires_delta=access_token_expires\n        )\n    )\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:114-116\nclass Token(SQLModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "access_token",
+          "token_type"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def login_access_token(\n    session: SessionDep, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]",
+    "requires_auth": false,
+    "has_super_dependency": false
+  },
+  {
+    "id": "login.test_token",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/login/test-token",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/login/test-token",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Test Token",
+        "description": "Test access token",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/login/test-token",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Test Token",
+        "description": "Test access token\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/login.py:45-50\n@router.post(\"/login/test-token\", response_model=UserPublic)\ndef test_token(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Test access token\n    \"\"\"\n    return current_user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def test_token(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Test access token\n    \"\"\"\n    return current_user\n\n",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "login.recover_password",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/password-recovery/{email}",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/password-recovery/{email}",
+        "path_params": [
+          "email"
+        ],
+        "query_params": [],
+        "summary": "Recover Password",
+        "description": "Password Recovery",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/password-recovery/{email}",
+        "path_params": [
+          "email"
+        ],
+        "query_params": [],
+        "summary": "Recover Password",
+        "description": "Password Recovery\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/login.py:53-74\n@router.post(\"/password-recovery/{email}\")\ndef recover_password(email: str, session: SessionDep) -> Message:\n    \"\"\"\n    Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    # Always return the same response to prevent email enumeration attacks\n    # Only send email if user actually exists\n    if user:\n        password_reset_token = generate_password_reset_token(email=email)\n        email_data = generate_reset_password_email(\n            email_to=user.email, email=email, token=password_reset_token\n        )\n        send_email(\n            email_to=user.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return Message(\n        message=\"If that email is registered, we sent a password recovery link\"\n    )\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/crud.py:34-39\ndef get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n\n\nFILE backend/app/utils.py:34-38\ndef send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",\n\nFILE backend/app/utils.py:70-86\ndef generate_reset_password_email(email_to: str, email: str, token: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Password recovery for user {email}\"\n    link = f\"{settings.FRONTEND_HOST}/reset-password?token={token}\"\n    html_content = render_email_template(\n        template_name=\"reset_password.html\",\n        context={\n            \"project_name\": settings.PROJECT_NAME,\n            \"username\": email,\n            \"email\": email_to,\n            \"valid_hours\": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,\n            \"link\": link,\n        },\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n\n\nFILE backend/app/utils.py:105-117\ndef generate_password_reset_token(email: str) -> str:\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\n    now = datetime.now(UTC)\n    expires = now + delta\n    exp = expires.timestamp()\n    encoded_jwt = jwt.encode(\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\n        settings.SECRET_KEY,\n        algorithm=security.ALGORITHM,\n    )\n    return encoded_jwt\n\n\n\nFILE backend/app/utils.py:25-33\ndef render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def recover_password(email: str, session: SessionDep) -> Message:\n    \"\"\"\n    Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    # Always return the same response to prevent email enumeration attacks\n    # Only send email if user actually exists\n    if user:\n        password_reset_token = generate_password_reset_token(email=email)\n        email_data = generate_reset_password_email(\n            email_to=user.email, email=email, token=password_reset_token\n        )\n        send_email(\n            email_to=user.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return Message(\n        message=\"If that email is registered, we sent a password recovery link\"\n    )\n\n",
+    "requires_auth": false,
+    "has_super_dependency": false
+  },
+  {
+    "id": "login.reset_password",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/reset-password/",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/reset-password/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Reset Password",
+        "description": "Reset password",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/reset-password/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Reset Password",
+        "description": "Reset password\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/login.py:77-97\n@router.post(\"/reset-password/\")\ndef reset_password(session: SessionDep, body: NewPassword) -> Message:\n    \"\"\"\n    Reset password\n    \"\"\"\n    email = verify_password_reset_token(token=body.token)\n    if not email:\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    user = crud.get_user_by_email(session=session, email=email)\n    if not user:\n        # Don't reveal that the user doesn't exist - use same error as invalid token\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    elif not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    user_in_update = UserUpdate(password=body.new_password)\n    crud.update_user(\n        session=session,\n        db_user=user,\n        user_in=user_in_update,\n    )\n    return Message(message=\"Password updated successfully\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/crud.py:20-33\ndef update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:\n    user_data = user_in.model_dump(exclude_unset=True)\n    extra_data = {}\n    if \"password\" in user_data:\n        password = user_data[\"password\"]\n        hashed_password = get_password_hash(password)\n        extra_data[\"hashed_password\"] = hashed_password\n    db_user.sqlmodel_update(user_data, update=extra_data)\n    session.add(db_user)\n    session.commit()\n    session.refresh(db_user)\n    return db_user\n\n\n\nFILE backend/app/crud.py:34-39\ndef get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n\n\nFILE backend/app/utils.py:118-125\ndef verify_password_reset_token(token: str) -> str | None:\n    try:\n        decoded_token = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        return str(decoded_token[\"sub\"])\n    except InvalidTokenError:\n        return None\n\nFILE backend/app/core/security.py:35-36\ndef get_password_hash(password: str) -> str:\n    return password_hash.hash(password)\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:124-126\nclass NewPassword(SQLModel):\n    token: str\n    new_password: str = Field(min_length=8, max_length=128)\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:32-37\nclass UserUpdate(SQLModel):\n    email: EmailStr | None = Field(default=None, max_length=255)\n    is_active: bool | None = None\n    is_superuser: bool | None = None\n    full_name: str | None = Field(default=None, max_length=255)\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def reset_password(session: SessionDep, body: NewPassword) -> Message:\n    \"\"\"\n    Reset password\n    \"\"\"\n    email = verify_password_reset_token(token=body.token)\n    if not email:\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    user = crud.get_user_by_email(session=session, email=email)\n    if not user:\n        # Don't reveal that the user doesn't exist - use same error as invalid token\n        raise HTTPException(status_code=400, detail=\"Invalid token\")\n    elif not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    user_in_update = UserUpdate(password=body.new_password)\n    crud.update_user(\n        session=session,\n        db_user=user,\n        user_in=user_in_update,\n    )\n    return Message(message=\"Password updated successfully\")\n\n",
+    "requires_auth": false,
+    "has_super_dependency": false
+  },
+  {
+    "id": "login.recover_password_html_content",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/password-recovery-html-content/{email}",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/password-recovery-html-content/{email}",
+        "path_params": [
+          "email"
+        ],
+        "query_params": [],
+        "summary": "Recover Password Html Content",
+        "description": "HTML Content for Password Recovery",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/password-recovery-html-content/{email}",
+        "path_params": [
+          "email"
+        ],
+        "query_params": [],
+        "summary": "Recover Password Html Content",
+        "description": "HTML Content for Password Recovery\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/login.py:100-123\n@router.post(\n    \"/password-recovery-html-content/{email}\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_class=HTMLResponse,\n)\ndef recover_password_html_content(email: str, session: SessionDep) -> Any:\n    \"\"\"\n    HTML Content for Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    if not user:\n        raise HTTPException(\n            status_code=404,\n            detail=\"The user with this username does not exist in the system.\",\n        )\n    password_reset_token = generate_password_reset_token(email=email)\n    email_data = generate_reset_password_email(\n        email_to=user.email, email=email, token=password_reset_token\n    )\n\n    return HTMLResponse(\n        content=email_data.html_content, headers={\"subject:\": email_data.subject}\n    )\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/crud.py:34-39\ndef get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n\n\nFILE backend/app/utils.py:70-86\ndef generate_reset_password_email(email_to: str, email: str, token: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Password recovery for user {email}\"\n    link = f\"{settings.FRONTEND_HOST}/reset-password?token={token}\"\n    html_content = render_email_template(\n        template_name=\"reset_password.html\",\n        context={\n            \"project_name\": settings.PROJECT_NAME,\n            \"username\": email,\n            \"email\": email_to,\n            \"valid_hours\": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,\n            \"link\": link,\n        },\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n\n\nFILE backend/app/utils.py:105-117\ndef generate_password_reset_token(email: str) -> str:\n    delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)\n    now = datetime.now(UTC)\n    expires = now + delta\n    exp = expires.timestamp()\n    encoded_jwt = jwt.encode(\n        {\"exp\": exp, \"nbf\": now, \"sub\": email},\n        settings.SECRET_KEY,\n        algorithm=security.ALGORITHM,\n    )\n    return encoded_jwt\n\n\n\nFILE backend/app/utils.py:25-33\ndef render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def recover_password_html_content(email: str, session: SessionDep) -> Any:\n    \"\"\"\n    HTML Content for Password Recovery\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=email)\n\n    if not user:\n        raise HTTPException(\n            status_code=404,\n            detail=\"The user with this username does not exist in the system.\",\n        )\n    password_reset_token = generate_password_reset_token(email=email)\n    email_data = generate_reset_password_email(\n        email_to=user.email, email=email, token=password_reset_token\n    )\n\n    return HTMLResponse(\n        content=email_data.html_content, headers={\"subject:\": email_data.subject}\n    )",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "private.create_user",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/private/users/",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/private/users/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create User",
+        "description": "Create a new user.",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/private/users/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create User",
+        "description": "Create a new user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/private.py:23-38\n@router.post(\"/users/\", response_model=UserPublic)\ndef create_user(user_in: PrivateUserCreate, session: SessionDep) -> Any:\n    \"\"\"\n    Create a new user.\n    \"\"\"\n\n    user = User(\n        email=user_in.email,\n        full_name=user_in.full_name,\n        hashed_password=get_password_hash(user_in.password),\n    )\n\n    session.add(user)\n    session.commit()\n\n    return user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/core/security.py:35-36\ndef get_password_hash(password: str) -> str:\n    return password_hash.hash(password)\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def create_user(user_in: PrivateUserCreate, session: SessionDep) -> Any:\n    \"\"\"\n    Create a new user.\n    \"\"\"\n\n    user = User(\n        email=user_in.email,\n        full_name=user_in.full_name,\n        hashed_password=get_password_hash(user_in.password),\n    )\n\n    session.add(user)\n    session.commit()\n\n    return user",
+    "requires_auth": false,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.read_users",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/users/",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/users/",
+        "path_params": [],
+        "query_params": [
+          "skip",
+          "limit"
+        ],
+        "summary": "Read Users",
+        "description": "Retrieve users.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "count",
+          "created_at",
+          "data",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/users/",
+        "path_params": [],
+        "query_params": [
+          "skip",
+          "limit"
+        ],
+        "summary": "Read Users",
+        "description": "Retrieve users.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:32-51\n@router.get(\n    \"/\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_model=UsersPublic,\n)\ndef read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:\n    \"\"\"\n    Retrieve users.\n    \"\"\"\n\n    count_statement = select(func.count()).select_from(User)\n    count = session.exec(count_statement).one()\n\n    statement = (\n        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)\n    )\n    users = session.exec(statement).all()\n\n    users_public = [UserPublic.model_validate(user) for user in users]\n    return UsersPublic(data=users_public, count=count)\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:64-66\nclass UsersPublic(SQLModel):\n    data: list[UserPublic]\n    count: int",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "count",
+          "created_at",
+          "data",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:\n    \"\"\"\n    Retrieve users.\n    \"\"\"\n\n    count_statement = select(func.count()).select_from(User)\n    count = session.exec(count_statement).one()\n\n    statement = (\n        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)\n    )\n    users = session.exec(statement).all()\n\n    users_public = [UserPublic.model_validate(user) for user in users]\n    return UsersPublic(data=users_public, count=count)\n\n",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "users.create_user",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/users/",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/users/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create User",
+        "description": "Create new user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/users/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Create User",
+        "description": "Create new user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:54-78\n@router.post(\n    \"/\", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic\n)\ndef create_user(*, session: SessionDep, user_in: UserCreate) -> Any:\n    \"\"\"\n    Create new user.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system.\",\n        )\n\n    user = crud.create_user(session=session, user_create=user_in)\n    if settings.emails_enabled and user_in.email:\n        email_data = generate_new_account_email(\n            email_to=user_in.email, username=user_in.email, password=user_in.password\n        )\n        send_email(\n            email_to=user_in.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/crud.py:10-19\ndef create_user(*, session: Session, user_create: UserCreate) -> User:\n    db_obj = User.model_validate(\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\n    )\n    session.add(db_obj)\n    session.commit()\n    session.refresh(db_obj)\n    return db_obj\n\n\n\nFILE backend/app/crud.py:34-39\ndef get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n\n\nFILE backend/app/utils.py:34-38\ndef send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",\n\nFILE backend/app/utils.py:87-88\ndef generate_new_account_email(\n    email_to: str, username: str, password: str\n\nFILE backend/app/core/security.py:35-36\ndef get_password_hash(password: str) -> str:\n    return password_hash.hash(password)\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:21-22\nclass UserCreate(UserBase):\n    password: str = Field(min_length=8, max_length=128)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def create_user(*, session: SessionDep, user_in: UserCreate) -> Any:\n    \"\"\"\n    Create new user.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system.\",\n        )\n\n    user = crud.create_user(session=session, user_create=user_in)\n    if settings.emails_enabled and user_in.email:\n        email_data = generate_new_account_email(\n            email_to=user_in.email, username=user_in.email, password=user_in.password\n        )\n        send_email(\n            email_to=user_in.email,\n            subject=email_data.subject,\n            html_content=email_data.html_content,\n        )\n    return user\n\n",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "users.update_user_me",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "PATCH",
+    "path": "/api/v1/users/me",
+    "inputs": {
+      "oas": {
+        "method": "PATCH",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Update User Me",
+        "description": "Update own user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "PATCH",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Update User Me",
+        "description": "Update own user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:81-100\n@router.patch(\"/me\", response_model=UserPublic)\ndef update_user_me(\n    *, session: SessionDep, user_in: UserUpdateMe, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Update own user.\n    \"\"\"\n\n    if user_in.email:\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\n        if existing_user and existing_user.id != current_user.id:\n            raise HTTPException(\n                status_code=409, detail=\"User with this email already exists\"\n            )\n    user_data = user_in.model_dump(exclude_unset=True)\n    current_user.sqlmodel_update(user_data)\n    session.add(current_user)\n    session.commit()\n    session.refresh(current_user)\n    return current_user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:40-42\nclass UserUpdateMe(SQLModel):\n    full_name: str | None = Field(default=None, max_length=255)\n    email: EmailStr | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def update_user_me(\n    *, session: SessionDep, user_in: UserUpdateMe, current_user: CurrentUser",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.update_password_me",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "PATCH",
+    "path": "/api/v1/users/me/password",
+    "inputs": {
+      "oas": {
+        "method": "PATCH",
+        "path": "/api/v1/users/me/password",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Update Password Me",
+        "description": "Update own password.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "PATCH",
+        "path": "/api/v1/users/me/password",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Update Password Me",
+        "description": "Update own password.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:103-121\n@router.patch(\"/me/password\", response_model=Message)\ndef update_password_me(\n    *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Update own password.\n    \"\"\"\n    verified, _ = verify_password(body.current_password, current_user.hashed_password)\n    if not verified:\n        raise HTTPException(status_code=400, detail=\"Incorrect password\")\n    if body.current_password == body.new_password:\n        raise HTTPException(\n            status_code=400, detail=\"New password cannot be the same as the current one\"\n        )\n    hashed_password = get_password_hash(body.new_password)\n    current_user.hashed_password = hashed_password\n    session.add(current_user)\n    session.commit()\n    return Message(message=\"Password updated successfully\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:45-47\nclass UpdatePassword(SQLModel):\n    current_password: str = Field(min_length=8, max_length=128)\n    new_password: str = Field(min_length=8, max_length=128)\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def update_password_me(\n    *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.read_user_me",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/users/me",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Read User Me",
+        "description": "Get current user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Read User Me",
+        "description": "Get current user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:124-129\n@router.get(\"/me\", response_model=UserPublic)\ndef read_user_me(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Get current user.\n    \"\"\"\n    return current_user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def read_user_me(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Get current user.\n    \"\"\"\n    return current_user\n\n",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.delete_user_me",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "DELETE",
+    "path": "/api/v1/users/me",
+    "inputs": {
+      "oas": {
+        "method": "DELETE",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Delete User Me",
+        "description": "Delete own user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "DELETE",
+        "path": "/api/v1/users/me",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Delete User Me",
+        "description": "Delete own user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:132-143\n@router.delete(\"/me\", response_model=Message)\ndef delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\n    \"\"\"\n    Delete own user.\n    \"\"\"\n    if current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    session.delete(current_user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\n    \"\"\"\n    Delete own user.\n    \"\"\"\n    if current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    session.delete(current_user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")\n\n",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.register_user",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/users/signup",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/users/signup",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Register User",
+        "description": "Create new user without the need to be logged in.",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/users/signup",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Register User",
+        "description": "Create new user without the need to be logged in.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:146-159\n@router.post(\"/signup\", response_model=UserPublic)\ndef register_user(session: SessionDep, user_in: UserRegister) -> Any:\n    \"\"\"\n    Create new user without the need to be logged in.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system\",\n        )\n    user_create = UserCreate.model_validate(user_in)\n    user = crud.create_user(session=session, user_create=user_create)\n    return user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/crud.py:10-19\ndef create_user(*, session: Session, user_create: UserCreate) -> User:\n    db_obj = User.model_validate(\n        user_create, update={\"hashed_password\": get_password_hash(user_create.password)}\n    )\n    session.add(db_obj)\n    session.commit()\n    session.refresh(db_obj)\n    return db_obj\n\n\n\nFILE backend/app/crud.py:34-39\ndef get_user_by_email(*, session: Session, email: str) -> User | None:\n    statement = select(User).where(User.email == email)\n    session_user = session.exec(statement).first()\n    return session_user\n\n\n\nFILE backend/app/core/security.py:35-36\ndef get_password_hash(password: str) -> str:\n    return password_hash.hash(password)\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:21-22\nclass UserCreate(UserBase):\n    password: str = Field(min_length=8, max_length=128)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:25-28\nclass UserRegister(SQLModel):\n    email: EmailStr = Field(max_length=255)\n    password: str = Field(min_length=8, max_length=128)\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def register_user(session: SessionDep, user_in: UserRegister) -> Any:\n    \"\"\"\n    Create new user without the need to be logged in.\n    \"\"\"\n    user = crud.get_user_by_email(session=session, email=user_in.email)\n    if user:\n        raise HTTPException(\n            status_code=400,\n            detail=\"The user with this email already exists in the system\",\n        )\n    user_create = UserCreate.model_validate(user_in)\n    user = crud.create_user(session=session, user_create=user_create)\n    return user\n\n",
+    "requires_auth": false,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.read_user_by_id",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/users/{user_id}",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Read User By Id",
+        "description": "Get a specific user by id.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Read User By Id",
+        "description": "Get a specific user by id.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:162-179\n@router.get(\"/{user_id}\", response_model=UserPublic)\ndef read_user_by_id(\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Get a specific user by id.\n    \"\"\"\n    user = session.get(User, user_id)\n    if user == current_user:\n        return user\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403,\n            detail=\"The user doesn't have enough privileges\",\n        )\n    if user is None:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    return user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def read_user_by_id(\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser",
+    "requires_auth": true,
+    "has_super_dependency": false
+  },
+  {
+    "id": "users.update_user",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "PATCH",
+    "path": "/api/v1/users/{user_id}",
+    "inputs": {
+      "oas": {
+        "method": "PATCH",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Update User",
+        "description": "Update a user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "PATCH",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Update User",
+        "description": "Update a user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:182-211\n@router.patch(\n    \"/{user_id}\",\n    dependencies=[Depends(get_current_active_superuser)],\n    response_model=UserPublic,\n)\ndef update_user(\n    *,\n    session: SessionDep,\n    user_id: uuid.UUID,\n    user_in: UserUpdate,\n) -> Any:\n    \"\"\"\n    Update a user.\n    \"\"\"\n\n    db_user = session.get(User, user_id)\n    if not db_user:\n        raise HTTPException(\n            status_code=404,\n            detail=\"The user with this id does not exist in the system\",\n        )\n    if user_in.email:\n        existing_user = crud.get_user_by_email(session=session, email=user_in.email)\n        if existing_user and existing_user.id != user_id:\n            raise HTTPException(\n                status_code=409, detail=\"User with this email already exists\"\n            )\n\n    db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)\n    return db_user\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:59-61\nclass UserPublic(UserBase):\n    id: uuid.UUID\n    created_at: datetime | None = None\n\nFILE backend/app/models.py:32-37\nclass UserUpdate(SQLModel):\n    email: EmailStr | None = Field(default=None, max_length=255)\n    is_active: bool | None = None\n    is_superuser: bool | None = None\n    full_name: str | None = Field(default=None, max_length=255)\n    password: str | None = Field(default=None, min_length=8, max_length=128)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "created_at",
+          "email",
+          "full_name",
+          "id",
+          "is_active",
+          "is_superuser"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def update_user(\n    *,\n    session: SessionDep,\n    user_id: uuid.UUID,\n    user_in: UserUpdate,",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "users.delete_user",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "DELETE",
+    "path": "/api/v1/users/{user_id}",
+    "inputs": {
+      "oas": {
+        "method": "DELETE",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Delete User",
+        "description": "Delete a user.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "DELETE",
+        "path": "/api/v1/users/{user_id}",
+        "path_params": [
+          "user_id"
+        ],
+        "query_params": [],
+        "summary": "Delete User",
+        "description": "Delete a user.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/users.py:214-232\n@router.delete(\"/{user_id}\", dependencies=[Depends(get_current_active_superuser)])\ndef delete_user(\n    session: SessionDep, current_user: CurrentUser, user_id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete a user.\n    \"\"\"\n    user = session.get(User, user_id)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if user == current_user:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    statement = delete(Item).where(col(Item.owner_id) == user_id)\n    session.exec(statement)\n    session.delete(user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/api/deps.py:21-25\ndef get_db() -> Generator[Session]:\n    with Session(engine) as session:\n        yield session\n\n\n\nFILE backend/app/models.py:87-93\nclass Item(ItemBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    owner_id: uuid.UUID = Field(\n        foreign_key=\"user.id\", nullable=False, ondelete=\"CASCADE\"\n    )\n    owner: User | None = Relationship(back_populates=\"items\")\n\nFILE backend/app/models.py:70-72\nclass ItemBase(SQLModel):\n    title: str = Field(min_length=1, max_length=255)\n    description: str | None = Field(default=None, max_length=255)\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def delete_user(\n    session: SessionDep, current_user: CurrentUser, user_id: uuid.UUID",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "utils.test_email",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "POST",
+    "path": "/api/v1/utils/test-email/",
+    "inputs": {
+      "oas": {
+        "method": "POST",
+        "path": "/api/v1/utils/test-email/",
+        "path_params": [],
+        "query_params": [
+          "email_to"
+        ],
+        "summary": "Test Email",
+        "description": "Test emails.",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "POST",
+        "path": "/api/v1/utils/test-email/",
+        "path_params": [],
+        "query_params": [
+          "email_to"
+        ],
+        "summary": "Test Email",
+        "description": "Test emails.\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/utils.py:11-26\n@router.post(\n    \"/test-email/\",\n    dependencies=[Depends(get_current_active_superuser)],\n    status_code=201,\n)\ndef test_email(email_to: EmailStr) -> Message:\n    \"\"\"\n    Test emails.\n    \"\"\"\n    email_data = generate_test_email(email_to=email_to)\n    send_email(\n        email_to=email_to,\n        subject=email_data.subject,\n        html_content=email_data.html_content,\n    )\n    return Message(message=\"Test email sent\")\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)\n\nFILE backend/app/api/deps.py:30-48\ndef get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n\n\nFILE backend/app/api/deps.py:27-27\nTokenDep = Annotated[str, Depends(reusable_oauth2)]\n\nFILE backend/app/api/deps.py:49-49\nCurrentUser = Annotated[User, Depends(get_current_user)]\n\nFILE backend/app/api/deps.py:52-57\ndef get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user\n\nFILE backend/app/utils.py:34-38\ndef send_email(\n    *,\n    email_to: str,\n    subject: str = \"\",\n    html_content: str = \"\",\n\nFILE backend/app/utils.py:60-69\ndef generate_test_email(email_to: str) -> EmailData:\n    project_name = settings.PROJECT_NAME\n    subject = f\"{project_name} - Test email\"\n    html_content = render_email_template(\n        template_name=\"test_email.html\",\n        context={\"project_name\": settings.PROJECT_NAME, \"email\": email_to},\n    )\n    return EmailData(html_content=html_content, subject=subject)\n\n\n\nFILE backend/app/utils.py:25-33\ndef render_email_template(*, template_name: str, context: dict[str, Any]) -> str:\n    template_str = (\n        Path(__file__).parent / \"email-templates\" / template_name\n    ).read_text()\n    template: Template = Template(template_str)\n    html_content = template.render(context)\n    return html_content\n\n\n\nFILE backend/app/models.py:109-110\nclass Message(SQLModel):\n    message: str\n\nFILE backend/app/models.py:120-121\nclass TokenPayload(SQLModel):\n    sub: str | None = None\n\nFILE backend/app/models.py:51-55\nclass User(UserBase, table=True):\n    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)\n    hashed_password: str\n    created_at: datetime | None = Field(default_factory=get_datetime_utc)\n    items: list[Item] = Relationship(back_populates=\"owner\", cascade_delete=True)\n\nFILE backend/app/models.py:13-17\nclass UserBase(SQLModel):\n    email: EmailStr = Field(unique=True, index=True, max_length=255)\n    is_active: bool = True\n    is_superuser: bool = False\n    full_name: str | None = Field(default=None, max_length=255)",
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ],
+        "security_state": "declared",
+        "schema_fields": [
+          "message"
+        ],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "def test_email(email_to: EmailStr) -> Message:\n    \"\"\"\n    Test emails.\n    \"\"\"\n    email_data = generate_test_email(email_to=email_to)\n    send_email(\n        email_to=email_to,\n        subject=email_data.subject,\n        html_content=email_data.html_content,\n    )\n    return Message(message=\"Test email sent\")\n\n",
+    "requires_auth": true,
+    "has_super_dependency": true
+  },
+  {
+    "id": "utils.health_check",
+    "service": "fastapi/full-stack-fastapi-template",
+    "method": "GET",
+    "path": "/api/v1/utils/health-check/",
+    "inputs": {
+      "oas": {
+        "method": "GET",
+        "path": "/api/v1/utils/health-check/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Health Check",
+        "description": "",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [],
+        "owner_cols": [],
+        "tenant_cols": []
+      },
+      "oas_code": {
+        "method": "GET",
+        "path": "/api/v1/utils/health-check/",
+        "path_params": [],
+        "query_params": [],
+        "summary": "Health Check",
+        "description": "\n\nSource evidence (original code, not policy annotations):\nFILE backend/app/api/routes/utils.py:29-31\n@router.get(\"/health-check/\")\nasync def health_check() -> bool:\n    return True\n\nFILE backend/app/api/main.py:1-14\nfrom fastapi import APIRouter\n\nfrom app.api.routes import items, login, private, users, utils\nfrom app.core.config import settings\n\napi_router = APIRouter()\napi_router.include_router(login.router)\napi_router.include_router(users.router)\napi_router.include_router(utils.router)\napi_router.include_router(items.router)\n\n\nif settings.FASTAPI_ENV == \"development\":\n    api_router.include_router(private.router)\n\nFILE backend/app/main.py:1-36\nfrom pathlib import Path\n\nimport sentry_sdk\nfrom fastapi import FastAPI\nfrom fastapi.routing import APIRoute\nfrom starlette.middleware.cors import CORSMiddleware\n\nfrom app.api.main import api_router\nfrom app.core.config import settings\n\nFRONTEND_DIR = Path(__file__).parent / \"frontend\"\n\n\ndef custom_generate_unique_id(route: APIRoute) -> str:\n    return f\"{route.tags[0]}-{route.name}\"\n\n\nif settings.SENTRY_DSN and settings.FASTAPI_ENV != \"development\":\n    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)\n\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    generate_unique_id_function=custom_generate_unique_id,\n)\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[settings.FRONTEND_HOST],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\napp.include_router(api_router, prefix=settings.API_V1_STR)\napp.frontend(\"/\", directory=FRONTEND_DIR)",
+        "security": null,
+        "security_state": "unknown",
+        "schema_fields": [],
+        "owner_cols": [],
+        "tenant_cols": []
+      }
+    },
+    "raw_handler_source": "async def health_check() -> bool:\n    return True",
+    "requires_auth": false,
+    "has_super_dependency": false
+  }
+]

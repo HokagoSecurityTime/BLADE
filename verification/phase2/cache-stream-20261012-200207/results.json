@@ -1,0 +1,10 @@
+{
+  "redis_tracking": true,
+  "remote_update_invalidated": true,
+  "cross_proxy_clear": true,
+  "ttl_preserved": true,
+  "transient_db_failure_retried": true,
+  "sent_with_replays": 300,
+  "stored_unique": 100,
+  "stream_pending": 0
+}

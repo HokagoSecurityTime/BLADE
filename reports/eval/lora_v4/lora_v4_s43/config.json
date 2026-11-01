@@ -1,0 +1,33 @@
+{
+  "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+  "max_seq_len": 4096,
+  "lora_r": 16,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "epochs": 3,
+  "lr": 0.0002,
+  "batch": 2,
+  "grad_acc": 4,
+  "warmup_steps": 10,
+  "weight_decay": 0.01,
+  "lr_scheduler": "cosine",
+  "save_steps": 30,
+  "eval_steps": 30,
+  "eval_max_new_tokens": 256,
+  "eval_batch": 8,
+  "prompt_version": "policy-label-v3.0.1",
+  "data": "v4",
+  "seed": 43,
+  "train_file": "train_sft_v4.jsonl",
+  "val_file": "val_sft_v4.jsonl",
+  "tag": "lora_v4_s43_final"
+}

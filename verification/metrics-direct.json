@@ -1,0 +1,1962 @@
+[
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 4.205200122669339
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.745900070294738
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.7135000564157963
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.43460014462471
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.987300045788288
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.617600141093135
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.4393999483436346
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.4838000535964966
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.3848998825997114
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.4037000257521868
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.5424999184906483
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.7679000049829483
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.4794999044388533
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.5136000476777554
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.568199997767806
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.3519000969827175
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.2351001389324665
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 3.3353001344949007
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 3.565700026229024
+  },
+  {
+    "label": "public",
+    "kind": "normal",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 4.30140015669167
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 3.5909998696297407
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 3.7640000227838755
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.8548999689519405
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.3756001610308886
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.5035999715328217
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.45789997279644
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.5247999001294374
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.5514999870210886
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.3316999431699514
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.3625001776963472
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.459099981933832
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.8045999351888895
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.8478000313043594
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.6521000545471907
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.7007998432964087
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.555999904870987
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.592899836599827
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.625599969178438
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 2.8548999689519405
+  },
+  {
+    "label": "public",
+    "kind": "attack",
+    "path": "/public/health",
+    "status": 200,
+    "latency_ms": 3.1869998201727867
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.53939994238317
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.056999994441867
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.460500156506896
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.8151999469846487
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.067099954932928
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.1856000423431396
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.2015000469982624
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.9126000590622425
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.8765001334249973
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.9648998752236366
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.8661000542342663
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.0052000656723976
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.998200012370944
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.9650998767465353
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.925100037828088
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.7924999594688416
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.012700006365776
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.287100000306964
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.3698000479489565
+  },
+  {
+    "label": "role_required",
+    "kind": "normal",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.283899975940585
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.9583999421447515
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.702699974179268
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.828200114890933
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.528799930587411
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.5914001744240522
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.6996999513357878
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.713700057938695
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.6253999676555395
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.5695001240819693
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.5705997832119465
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.6988000608980656
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.8728998731821775
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.9734999407082796
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.092499915510416
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.018799936398864
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.7110001537948847
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.8397999703884125
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 2.840599976480007
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.101699985563755
+  },
+  {
+    "label": "role_required",
+    "kind": "attack",
+    "path": "/admin/reports",
+    "status": 200,
+    "latency_ms": 3.4336999524384737
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.587700029835105
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.3653998505324125
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.391000045463443
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.434799913316965
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.7348999865353107
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.0227999668568373
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.5140000507235527
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.195800120010972
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.9187001530081034
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.8363000601530075
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.382999984547496
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.3330000694841146
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.438700059428811
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.712199930101633
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.8423999901860952
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.532999962568283
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.6459998916834593
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.701000077649951
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.848300151526928
+  },
+  {
+    "label": "membership_required",
+    "kind": "normal",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.4007000029087067
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.6893001049757004
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.444599987939
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.9573000501841307
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.195999888703227
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.500699996948242
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.2361000776290894
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.1146002002060413
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.0962000600993633
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.8729999903589487
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.1099000480026007
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.9183998703956604
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.5412999093532562
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.7306999545544386
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.8619999065995216
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.3068000338971615
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.9444999527186155
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.7668001130223274
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.0261999927461147
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 2.980699995532632
+  },
+  {
+    "label": "membership_required",
+    "kind": "attack",
+    "path": "/premium/content",
+    "status": 200,
+    "latency_ms": 3.173000179231167
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 4.590200027450919
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.4185999538749456
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.3756999764591455
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.3948998898267746
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.903900109231472
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.7058999985456467
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.8260000981390476
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6881000958383083
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6106000877916813
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.8085000813007355
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6395998429507017
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6072999462485313
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.974499948322773
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.5993000492453575
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.278000047430396
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.2175001688301563
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.534700023010373
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6932000182569027
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.5317000690847635
+  },
+  {
+    "label": "tenant_match",
+    "kind": "normal",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.5363999884575605
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.8065000660717487
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.7868999168276787
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6414000894874334
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.5563999079167843
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.3635001853108406
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.587399911135435
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6632000226527452
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.2055999618023634
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.8767000660300255
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.945000072941184
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.557199914008379
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.4631000123918056
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.117399988695979
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.447200171649456
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 3.329100087285042
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.713599940761924
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.742100041359663
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.6632999069988728
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.977499971166253
+  },
+  {
+    "label": "tenant_match",
+    "kind": "attack",
+    "path": "/orgs/org_1/docs",
+    "status": 200,
+    "latency_ms": 2.5162999518215656
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.5798999704420567
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.6123998686671257
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.3851999323815107
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.794100135564804
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.1864000484347343
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.4149999264627695
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.0143000185489655
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.848000032827258
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.649000147357583
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.0308999121189117
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.4713998902589083
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 11.413899948820472
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.1859001610428095
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.7834000065922737
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.4129000268876553
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.7142999935895205
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.039799863472581
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.873999997973442
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.5615000631660223
+  },
+  {
+    "label": "owner_match",
+    "kind": "normal",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.8609998989850283
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.6408000849187374
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.4850000627338886
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.5338998530060053
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.9556001536548138
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.207199973985553
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.9742999467998743
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.675600117072463
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.548699965700507
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.6899001095443964
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.7364001143723726
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.876899903640151
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 4.104099934920669
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 3.5649000201374292
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.565099857747555
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.840599976480007
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.8269998729228973
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.6312998961657286
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.6187999173998833
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.5774999521672726
+  },
+  {
+    "label": "owner_match",
+    "kind": "attack",
+    "path": "/orders/1042",
+    "status": 200,
+    "latency_ms": 2.8953999280929565
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.027600167319179
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.2993000242859125
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.5918000396341085
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.3698000479489565
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.028100054711103
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.84019997343421
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.650100039318204
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.695599803701043
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9277000576257706
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.678799908608198
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.864799927920103
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0366999562829733
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.125400049611926
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0493999365717173
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.139300039038062
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.954700030386448
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0427000019699335
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.3456000965088606
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.2368998508900404
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.0126999374479055
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.112700069323182
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.95890006236732
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.800100017338991
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.959500066936016
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.872900106012821
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.900599967688322
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.03900009021163
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9690000228583813
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0260998755693436
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.8521001804620028
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9011000879108906
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.8907000087201595
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.109200159087777
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.285699989646673
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.245500149205327
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.930500078946352
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0192998237907887
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.084199968725443
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0288000125437975
+  },
+  {
+    "label": "owner_or_admin",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9064000118523836
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.93329986743629
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.839399967342615
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9441998340189457
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.00879986025393
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.961199963465333
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.869199961423874
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.7703000232577324
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.839999971911311
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0414999928325415
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.8334999699145555
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.10260003991425
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9418000485748053
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.9172999784350395
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0338000506162643
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.7924999594688416
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.7083999011665583
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.866600174456835
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.7310000732541084
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.093699924647808
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "normal",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0029001645743847
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.7340999115258455
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.079399863258004
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.974200062453747
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.751300111413002
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.0921001452952623
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.4463999327272177
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.164099995046854
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 2.858199877664447
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.37680010125041
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.267900086939335
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.019699826836586
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.302300116047263
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.3352000173181295
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.311099881306291
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.292000085115433
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.862899960950017
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.7513000424951315
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.662500064820051
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 4.332699812948704
+  },
+  {
+    "label": "manual_review_required",
+    "kind": "attack",
+    "path": "/users/user_77",
+    "status": 200,
+    "latency_ms": 3.718300024047494
+  }
+]

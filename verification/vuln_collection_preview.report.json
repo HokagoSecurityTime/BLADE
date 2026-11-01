@@ -1,0 +1,37 @@
+{
+  "total": 275,
+  "services": {
+    "VAmPI": {
+      "endpoints": 14,
+      "mapped": 14,
+      "signals_parsed": 14,
+      "known_vulnerable": 0
+    },
+    "crAPI": {
+      "endpoints": 54,
+      "mapped": 32,
+      "signals_parsed": 0,
+      "known_vulnerable": 0
+    },
+    "juice-shop": {
+      "endpoints": 109,
+      "mapped": 108,
+      "signals_parsed": 108,
+      "known_vulnerable": 0
+    },
+    "Pixi": {
+      "endpoints": 64,
+      "mapped": 60,
+      "signals_parsed": 58,
+      "known_vulnerable": 0
+    },
+    "DVWS-node": {
+      "endpoints": 34,
+      "mapped": 34,
+      "signals_parsed": 34,
+      "known_vulnerable": 0
+    }
+  },
+  "labels_generated": 0,
+  "note": "Static collection preview only. Handler review and ground-truth confirmation outstanding."
+}

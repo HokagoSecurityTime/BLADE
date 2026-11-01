@@ -1,0 +1,320 @@
+{
+  "cases": [
+    {
+      "id": "group_access",
+      "label": "membership_required"
+    },
+    {
+      "id": "tenant_access",
+      "label": "tenant_match"
+    },
+    {
+      "id": "role_access",
+      "label": "role_required"
+    },
+    {
+      "id": "owner_access",
+      "label": "owner_match"
+    },
+    {
+      "id": "owner_admin_access",
+      "label": "owner_or_admin"
+    },
+    {
+      "id": "public_access",
+      "label": "public"
+    },
+    {
+      "id": "group_tenant_access",
+      "label": "manual_review_required"
+    },
+    {
+      "id": "subscription_access",
+      "label": "manual_review_required"
+    }
+  ],
+  "checks": [
+    {
+      "case": "group_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "group_access",
+      "actor": "bob",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "group_access",
+      "actor": "carol",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "group_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "group_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "tenant_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "tenant_access",
+      "actor": "bob",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "tenant_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "tenant_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "tenant_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "role_access",
+      "actor": "alice",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "role_access",
+      "actor": "bob",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "role_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "role_access",
+      "actor": "dana",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "role_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "owner_access",
+      "actor": "bob",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_admin_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "owner_admin_access",
+      "actor": "bob",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_admin_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_admin_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "owner_admin_access",
+      "actor": "erin",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "public_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "public_access",
+      "actor": "bob",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "public_access",
+      "actor": "carol",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "public_access",
+      "actor": "dana",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "public_access",
+      "actor": "erin",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "group_tenant_access",
+      "actor": "alice",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "group_tenant_access",
+      "actor": "bob",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "group_tenant_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "group_tenant_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "group_tenant_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "subscription_access",
+      "actor": "alice",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "subscription_access",
+      "actor": "bob",
+      "expected": true,
+      "actual": true,
+      "passed": true
+    },
+    {
+      "case": "subscription_access",
+      "actor": "carol",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "subscription_access",
+      "actor": "dana",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    },
+    {
+      "case": "subscription_access",
+      "actor": "erin",
+      "expected": false,
+      "actual": false,
+      "passed": true
+    }
+  ],
+  "anonymous_public_check": true,
+  "meaning": "target-group membership, not subscription tier"
+}

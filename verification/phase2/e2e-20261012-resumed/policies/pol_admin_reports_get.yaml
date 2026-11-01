@@ -1,0 +1,31 @@
+id: pol_admin_reports_get
+endpoint:
+  method: GET
+  path: /admin/reports
+label: role_required
+params:
+  object_param: null
+  owner_lookup: null
+  roles:
+  - admin
+  allowed_membership: []
+confidence: 0.9
+evidence: 'The endpoint is intended to be role_required with roles: [admin].'
+status: ACTIVE
+created_at: '2026-10-12T03:59:05.060449Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs:
+- kind: code
+  ref: demo_with_admin.py#L85:reports
+  snippet: "    @app.get(\"/admin/reports\", description=\"Intended policy: role_required;\
+    \ roles: [admin]\")\n    def reports() -> dict[str, int]:\n        with connection()\
+    \ as conn:\n            count = conn.execute(\"SELECT COUNT(*) FROM orders\").fetchone()[0]\n\
+    \        return {\"order_count\": count}"
+- kind: code
+  ref: demo_with_admin.py#L91:org_docs
+  snippet: "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match;\
+    \ orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"\
+    SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"\
+    id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"

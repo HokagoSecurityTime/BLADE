@@ -1,0 +1,42 @@
+{
+  "metrics": {
+    "v2.6": {
+      "agreement_count": 39,
+      "total": 100,
+      "supported_subset_count": 10,
+      "supported_subset_agreement": 5,
+      "concrete_on_insufficient": 51,
+      "label_errors": 0
+    },
+    "v2.7": {
+      "agreement_count": 23,
+      "total": 100,
+      "supported_subset_count": 10,
+      "supported_subset_agreement": 3,
+      "concrete_on_insufficient": 61,
+      "label_errors": 0
+    },
+    "v2.8": {
+      "agreement_count": 25,
+      "total": 100,
+      "supported_subset_count": 10,
+      "supported_subset_agreement": 3,
+      "concrete_on_insufficient": 59,
+      "label_errors": 0
+    }
+  },
+  "ai_distribution": {
+    "manual_review_required": 88,
+    "tenant_match": 1,
+    "public": 2,
+    "role_required": 2,
+    "owner_match": 7
+  },
+  "review_status": {
+    "input_insufficient": 79,
+    "standard_ambiguity": 9,
+    "supported_proposal": 10,
+    "weak_proposal": 2
+  },
+  "ground_truth_metrics": null
+}

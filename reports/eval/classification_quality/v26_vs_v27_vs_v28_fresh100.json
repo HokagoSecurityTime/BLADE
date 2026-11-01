@@ -1,0 +1,42 @@
+{
+  "counts": {
+    "v2.6": {
+      "tenant_match": 5,
+      "role_required": 20,
+      "owner_match": 24,
+      "manual_review_required": 37,
+      "public": 3,
+      "membership_required": 10,
+      "owner_or_admin": 1
+    },
+    "v2.7": {
+      "role_required": 57,
+      "manual_review_required": 21,
+      "membership_required": 3,
+      "public": 16,
+      "owner_match": 2,
+      "tenant_match": 1
+    },
+    "v2.8": {
+      "tenant_match": 5,
+      "role_required": 19,
+      "manual_review_required": 22,
+      "public": 32,
+      "owner_match": 14,
+      "membership_required": 6,
+      "owner_or_admin": 2
+    }
+  },
+  "errors": {
+    "v2.6": 0,
+    "v2.7": 0,
+    "v2.8": 0
+  },
+  "evidence_invalid": {
+    "v2.6": 1,
+    "v2.7": 0,
+    "v2.8": 1
+  },
+  "changed_from_v27": 49,
+  "accuracy": null
+}

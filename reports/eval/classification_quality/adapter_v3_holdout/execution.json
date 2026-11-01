@@ -1,0 +1,8 @@
+{
+  "input_sha256": "31627c424c138fe9969a1147ef452afd9ec86ac19653fa5dc74e501e44c4c1b7",
+  "references_sha256": "d9fbb68aa66cae97ad58de2fb0499a6131713780032ad3937edf3e54381ca4c9",
+  "frozen_sha256": "b31ea627956c605aa68b0ad12dcb6cdc348a417d87a573247ac62c51426f074f",
+  "model": "gpt-4o-mini",
+  "temperature": 0,
+  "experiment_sha256": "02a8ed7fb22de0d4589327a42942d49e7eaf7b544190ac3f05b87565a4a24a58"
+}

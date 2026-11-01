@@ -1,0 +1,31 @@
+{
+  "dimension": 384,
+  "elapsed_sec": 12.82799999974668,
+  "retrieved": [
+    {
+      "kind": "idiom",
+      "ref": "idioms/fastapi.md#1",
+      "snippet": "# FastAPI Depends: 호출자와 객체 소유권\n\nDepends(get_current_user)는 호출자 인증 근거다. 이것만으로 public이나 owner_match가 결정되지는 않는다. 객체 조회의 소유자 비교와 결합해야 한다.\n\n```python\n@app.get('/invoices/{invoice_id}')\ndef read_invoice(invoice_id: int, current_user=Depends(get_current_user)):\n    invoice = db.get(Invoice, invoice_id)\n    if invoice.owner_id != current_user.id:\n        raise HTTPException(403)\n    return invoice\n```\n\nowner_id 비교는 owner_match 신호다. 먼저 admin 역할이면 반환하는 분기가 있다면 owner_or_admin 후보이며, ERD에서 실제 컬럼을 확인해야 한다. 이 예시는 대상 서비스에 관리자 우회가 있다는 증거가 아니다."
+    },
+    {
+      "kind": "idiom",
+      "ref": "idioms/rails.md#1",
+      "snippet": "# Rails current_user 스코프\n\n```ruby\ndef show\n  @invoice = current_user.invoices.find(params[:id])\nend\n```\n\ncurrent_user 관계로 제한된 조회는 owner_match 신호다. current_organization.documents 같은 조직 스코프는 tenant_match 후보. 관계가 매핑되는 FK를 ERD에서 확인한다. current_user.admin? 우회 분기가 없다면 관리자 우회를 발명하지 않는다."
+    },
+    {
+      "kind": "idiom",
+      "ref": "idioms/spring.md#1",
+      "snippet": "# Spring PreAuthorize와 역할·소유권\n\n메서드의 PreAuthorize 조건을 확인한다. hasRole만 있는 호출자 역할 검사와 객체 인가 조건을 구분한다.\n\n```java\n@PreAuthorize(\"hasRole('ADMIN')\")\npublic Report report() { return reports.summary(); }\n\n@PreAuthorize(\"#ownerId == authentication.name or hasRole('ADMIN')\")\npublic Profile profile(String ownerId) { return profiles.find(ownerId); }\n```\n\n첫 사례는 role_required, 두 번째는 실제 프로필 식별자와 호출자의 대응이 확인되면 owner_or_admin이다. 단순 어노테이션 존재만으로 조회 컬럼을 만들지 않는다."
+    },
+    {
+      "kind": "idiom",
+      "ref": "idioms/django.md#1",
+      "snippet": "# Django get_queryset와 객체 권한\n\nqueryset을 request.user로 제한하면 개인 소유 객체 필터다. permission_classes의 인증 검사만으로 소유권 필터를 추정하지 않는다.\n\n```python\nclass InvoiceViewSet(ModelViewSet):\n    permission_classes = [IsAuthenticated]\n    def get_queryset(self):\n        return Invoice.objects.filter(owner=self.request.user)\n```\n\nowner_match 후보. 조직 필터 organization=request.user.organization이면 tenant_match 후보. is_staff 분기를 실제로 허용하는 경우에만 owner_or_admin을 고려한다."
+    },
+    {
+      "kind": "idiom",
+      "ref": "idioms/express.md#1",
+      "snippet": "# Express middleware와 핸들러의 비교\n\n```javascript\nrouter.get('/files/:fileId', authenticate, async (req, res) => {\n  const file = await files.get(req.params.fileId);\n  if (file.owner_id !== req.user.id) return res.sendStatus(403);\n  return res.json(file);\n});\n```\n\nauthenticate는 호출자 확인, owner_id 비교는 owner_match다. 관리자가 소유자 비교를 건너뛰는 실제 분기가 있어야 owner_or_admin이다. 등급 premium 비교는 membership_required이며 admin 역할과 다르다."
+    }
+  ]
+}

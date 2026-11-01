@@ -1,0 +1,272 @@
+[
+  {
+    "id": "boundary-00-0",
+    "target": "membership_required",
+    "formula": "m",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    return m\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships"
+  },
+  {
+    "id": "boundary-00-1",
+    "target": "membership_required",
+    "formula": "m",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    if not (m):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships"
+  },
+  {
+    "id": "boundary-01-0",
+    "target": "tenant_match",
+    "formula": "t",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    t = actor['tenant_id'] == resource['tenant_id']\n    return t\n",
+    "extracted": "actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-01-1",
+    "target": "tenant_match",
+    "formula": "t",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not (t):\n        return False\n    return True\n",
+    "extracted": "actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-02-0",
+    "target": "owner_match",
+    "formula": "o",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    o = actor['id'] == resource['owner_id']\n    return o\n",
+    "extracted": "actor['id'] == resource['owner_id']"
+  },
+  {
+    "id": "boundary-02-1",
+    "target": "owner_match",
+    "formula": "o",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    o = actor['id'] == resource['owner_id']\n    if not (o):\n        return False\n    return True\n",
+    "extracted": "actor['id'] == resource['owner_id']"
+  },
+  {
+    "id": "boundary-03-0",
+    "target": "role_required",
+    "formula": "r",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    r = 'operator' in actor['roles']\n    return r\n",
+    "extracted": "'operator' in actor['roles']"
+  },
+  {
+    "id": "boundary-03-1",
+    "target": "role_required",
+    "formula": "r",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    r = 'operator' in actor['roles']\n    if not (r):\n        return False\n    return True\n",
+    "extracted": "'operator' in actor['roles']"
+  },
+  {
+    "id": "boundary-04-0",
+    "target": "owner_or_admin",
+    "formula": "o or a",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    return o or a\n",
+    "extracted": "actor['id'] == resource['owner_id'] or 'admin' in actor['roles']"
+  },
+  {
+    "id": "boundary-04-1",
+    "target": "owner_or_admin",
+    "formula": "o or a",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    if not (o or a):\n        return False\n    return True\n",
+    "extracted": "actor['id'] == resource['owner_id'] or 'admin' in actor['roles']"
+  },
+  {
+    "id": "boundary-05-0",
+    "target": "public",
+    "formula": "True",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    \"\"\"Anonymous access is explicitly permitted.\"\"\"\n    return True\n",
+    "extracted": "True"
+  },
+  {
+    "id": "boundary-05-1",
+    "target": "public",
+    "formula": "True",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    \"\"\"Anonymous access is explicitly permitted.\"\"\"\n    if not (True):\n        return False\n    return True\n",
+    "extracted": "True"
+  },
+  {
+    "id": "boundary-06-0",
+    "target": "manual_review_required",
+    "formula": "m and t",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    t = actor['tenant_id'] == resource['tenant_id']\n    return m and t\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-06-1",
+    "target": "manual_review_required",
+    "formula": "m and t",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not (m and t):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-07-0",
+    "target": "manual_review_required",
+    "formula": "o and t",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    o = actor['id'] == resource['owner_id']\n    t = actor['tenant_id'] == resource['tenant_id']\n    return o and t\n",
+    "extracted": "actor['id'] == resource['owner_id'] and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-07-1",
+    "target": "manual_review_required",
+    "formula": "o and t",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    o = actor['id'] == resource['owner_id']\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not (o and t):\n        return False\n    return True\n",
+    "extracted": "actor['id'] == resource['owner_id'] and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-08-0",
+    "target": "manual_review_required",
+    "formula": "m and r",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    r = 'operator' in actor['roles']\n    return m and r\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and 'operator' in actor['roles']"
+  },
+  {
+    "id": "boundary-08-1",
+    "target": "manual_review_required",
+    "formula": "m and r",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    r = 'operator' in actor['roles']\n    if not (m and r):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and 'operator' in actor['roles']"
+  },
+  {
+    "id": "boundary-09-0",
+    "target": "manual_review_required",
+    "formula": "(o or a) and t",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    t = actor['tenant_id'] == resource['tenant_id']\n    return (o or a) and t\n",
+    "extracted": "(actor['id'] == resource['owner_id'] or 'admin' in actor['roles']) and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-09-1",
+    "target": "manual_review_required",
+    "formula": "(o or a) and t",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not ((o or a) and t):\n        return False\n    return True\n",
+    "extracted": "(actor['id'] == resource['owner_id'] or 'admin' in actor['roles']) and actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-10-0",
+    "target": "manual_review_required",
+    "formula": "m or t",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    t = actor['tenant_id'] == resource['tenant_id']\n    return m or t\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships or actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-10-1",
+    "target": "manual_review_required",
+    "formula": "m or t",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not (m or t):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships or actor['tenant_id'] == resource['tenant_id']"
+  },
+  {
+    "id": "boundary-11-0",
+    "target": "manual_review_required",
+    "formula": "o and a",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    return o and a\n",
+    "extracted": "actor['id'] == resource['owner_id'] and 'admin' in actor['roles']"
+  },
+  {
+    "id": "boundary-11-1",
+    "target": "manual_review_required",
+    "formula": "o and a",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    a = 'admin' in actor['roles']\n    o = actor['id'] == resource['owner_id']\n    if not (o and a):\n        return False\n    return True\n",
+    "extracted": "actor['id'] == resource['owner_id'] and 'admin' in actor['roles']"
+  },
+  {
+    "id": "boundary-12-0",
+    "target": "manual_review_required",
+    "formula": "m and o",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    o = actor['id'] == resource['owner_id']\n    return m and o\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['id'] == resource['owner_id']"
+  },
+  {
+    "id": "boundary-12-1",
+    "target": "manual_review_required",
+    "formula": "m and o",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    o = actor['id'] == resource['owner_id']\n    if not (m and o):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['id'] == resource['owner_id']"
+  },
+  {
+    "id": "boundary-13-0",
+    "target": "manual_review_required",
+    "formula": "p",
+    "variant": 0,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    p = actor['subscription'] == 'premium'\n    return p\n",
+    "extracted": "actor['subscription'] == 'premium'"
+  },
+  {
+    "id": "boundary-13-1",
+    "target": "manual_review_required",
+    "formula": "p",
+    "variant": 1,
+    "compound": false,
+    "source": "def access(actor, resource, memberships):\n    p = actor['subscription'] == 'premium'\n    if not (p):\n        return False\n    return True\n",
+    "extracted": "actor['subscription'] == 'premium'"
+  },
+  {
+    "id": "boundary-14-0",
+    "target": "manual_review_required",
+    "formula": "m and t and r",
+    "variant": 0,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    r = 'operator' in actor['roles']\n    t = actor['tenant_id'] == resource['tenant_id']\n    return m and t and r\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['tenant_id'] == resource['tenant_id'] and ('operator' in actor['roles'])"
+  },
+  {
+    "id": "boundary-14-1",
+    "target": "manual_review_required",
+    "formula": "m and t and r",
+    "variant": 1,
+    "compound": true,
+    "source": "def access(actor, resource, memberships):\n    m = (actor['id'], resource['group_id']) in memberships\n    r = 'operator' in actor['roles']\n    t = actor['tenant_id'] == resource['tenant_id']\n    if not (m and t and r):\n        return False\n    return True\n",
+    "extracted": "(actor['id'], resource['group_id']) in memberships and actor['tenant_id'] == resource['tenant_id'] and ('operator' in actor['roles'])"
+  }
+]

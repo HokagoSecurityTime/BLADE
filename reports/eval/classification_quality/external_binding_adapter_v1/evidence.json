@@ -1,0 +1,371 @@
+{
+  "items.read_items": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "items.read_item": {
+    "status": "extracted",
+    "allow": "((True and not (((not admin) and (not owner)))))",
+    "lookup": {
+      "model": "Item",
+      "parameter": "id",
+      "variable": "item",
+      "file": "backend/app/api/routes/items.py",
+      "line": 53
+    },
+    "self_bound": false,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "Item.owner_id == current_user.id",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 49,
+        "end": 60,
+        "code": "def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:\n    \"\"\"\n    Get item by ID.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    return item\n\n",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "items.create_item": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "items.update_item": {
+    "status": "extracted",
+    "allow": "((True and not (((not admin) and (not owner)))))",
+    "lookup": {
+      "model": "Item",
+      "parameter": "id",
+      "variable": "item",
+      "file": "backend/app/api/routes/items.py",
+      "line": 86
+    },
+    "self_bound": false,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "Item.owner_id == current_user.id",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 76,
+        "end": 98,
+        "code": "def update_item(\n    *,\n    session: SessionDep,\n    current_user: CurrentUser,\n    id: uuid.UUID,\n    item_in: ItemUpdate,\n) -> Any:\n    \"\"\"\n    Update an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    update_dict = item_in.model_dump(exclude_unset=True)\n    item.sqlmodel_update(update_dict)\n    session.add(item)\n    session.commit()\n    session.refresh(item)\n    return item\n\n",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "items.delete_item": {
+    "status": "extracted",
+    "allow": "((True and not (((not admin) and (not owner)))))",
+    "lookup": {
+      "model": "Item",
+      "parameter": "id",
+      "variable": "item",
+      "file": "backend/app/api/routes/items.py",
+      "line": 106
+    },
+    "self_bound": false,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "Item.owner_id == current_user.id",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/items.py",
+        "start": 100,
+        "end": 113,
+        "code": "def delete_item(\n    session: SessionDep, current_user: CurrentUser, id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete an item.\n    \"\"\"\n    item = session.get(Item, id)\n    if not item:\n        raise HTTPException(status_code=404, detail=\"Item not found\")\n    if not current_user.is_superuser and (item.owner_id != current_user.id):\n        raise HTTPException(status_code=403, detail=\"Not enough permissions\")\n    session.delete(item)\n    session.commit()\n    return Message(message=\"Item deleted successfully\")",
+        "sha256": "7f0fa55d1f7b02188c4abd4f88aa6db92fe03de38258b765ed050ec72032b410"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "login.login_access_token": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "login.test_token": {
+    "status": "extracted",
+    "allow": "(owner and (True))",
+    "lookup": null,
+    "self_bound": true,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "target user equals caller",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/login.py",
+        "start": 46,
+        "end": 52,
+        "code": "def test_token(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Test access token\n    \"\"\"\n    return current_user\n\n",
+        "sha256": "3c7f7c395b74cea54e505a16052679614b4fd92325d88b761385df8d952af642"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "login.recover_password": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "login.reset_password": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "login.recover_password_html_content": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "private.create_user": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.read_users": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.create_user": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.update_user_me": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.update_password_me": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.read_user_me": {
+    "status": "extracted",
+    "allow": "(owner and (True))",
+    "lookup": null,
+    "self_bound": true,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "target user equals caller",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 125,
+        "end": 131,
+        "code": "def read_user_me(current_user: CurrentUser) -> Any:\n    \"\"\"\n    Get current user.\n    \"\"\"\n    return current_user\n\n",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "users.delete_user_me": {
+    "status": "extracted",
+    "allow": "(owner and ((True and not (admin))))",
+    "lookup": null,
+    "self_bound": true,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "target user equals caller",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 133,
+        "end": 145,
+        "code": "def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:\n    \"\"\"\n    Delete own user.\n    \"\"\"\n    if current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    session.delete(current_user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")\n\n",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "users.register_user": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.read_user_by_id": {
+    "status": "extracted",
+    "allow": "((True and owner) or ((True and not (owner)) and not ((not admin))))",
+    "lookup": {
+      "model": "User",
+      "parameter": "user_id",
+      "variable": "user",
+      "file": "backend/app/api/routes/users.py",
+      "line": 169
+    },
+    "self_bound": false,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "target user equals caller",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 163,
+        "end": 181,
+        "code": "def read_user_by_id(\n    user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser\n) -> Any:\n    \"\"\"\n    Get a specific user by id.\n    \"\"\"\n    user = session.get(User, user_id)\n    if user == current_user:\n        return user\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403,\n            detail=\"The user doesn't have enough privileges\",\n        )\n    if user is None:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    return user\n\n",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "users.update_user": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "users.delete_user": {
+    "status": "extracted",
+    "allow": "(((True and not ((not admin)))) and ((True and not (owner))))",
+    "lookup": {
+      "model": "User",
+      "parameter": "user_id",
+      "variable": "user",
+      "file": "backend/app/api/routes/users.py",
+      "line": 221
+    },
+    "self_bound": false,
+    "caller_binding": "CurrentUser -> get_current_user -> JWT sub -> session.get(User, token_data.sub)",
+    "admin_binding": "current_user.is_superuser",
+    "owner_binding": "target user equals caller",
+    "source_refs": [
+      {
+        "file": "backend/app/api/routes/users.py",
+        "start": 215,
+        "end": 232,
+        "code": "def delete_user(\n    session: SessionDep, current_user: CurrentUser, user_id: uuid.UUID\n) -> Message:\n    \"\"\"\n    Delete a user.\n    \"\"\"\n    user = session.get(User, user_id)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if user == current_user:\n        raise HTTPException(\n            status_code=403, detail=\"Super users are not allowed to delete themselves\"\n        )\n    statement = delete(Item).where(col(Item.owner_id) == user_id)\n    session.exec(statement)\n    session.delete(user)\n    session.commit()\n    return Message(message=\"User deleted successfully\")",
+        "sha256": "566f253330d75bdbf04f2fd59b380dd2c51041d931bd7af6b2064ee66ea96e6d"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 30,
+        "end": 48,
+        "code": "def get_current_user(session: SessionDep, token: TokenDep) -> User:\n    try:\n        payload = jwt.decode(\n            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]\n        )\n        token_data = TokenPayload(**payload)\n    except InvalidTokenError, ValidationError:\n        raise HTTPException(\n            status_code=status.HTTP_403_FORBIDDEN,\n            detail=\"Could not validate credentials\",\n        )\n    user = session.get(User, token_data.sub)\n    if not user:\n        raise HTTPException(status_code=404, detail=\"User not found\")\n    if not user.is_active:\n        raise HTTPException(status_code=400, detail=\"Inactive user\")\n    return user\n\n",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      },
+      {
+        "file": "backend/app/api/deps.py",
+        "start": 52,
+        "end": 57,
+        "code": "def get_current_active_superuser(current_user: CurrentUser) -> User:\n    if not current_user.is_superuser:\n        raise HTTPException(\n            status_code=403, detail=\"The user doesn't have enough privileges\"\n        )\n    return current_user",
+        "sha256": "84c30966b3b862c643009c14146d1924dec50be5b0efb9f56798e2fda5189daa"
+      }
+    ],
+    "preconditions": [
+      "authenticated active user",
+      "target exists"
+    ],
+    "limitations": [
+      "Pinned reviewed handlers only",
+      "DB/JWT and global deployment not verified",
+      "implemented policy, not proof of intended policy"
+    ]
+  },
+  "utils.test_email": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  },
+  "utils.health_check": {
+    "status": "unresolved",
+    "reason": "handler_not_audited"
+  }
+}

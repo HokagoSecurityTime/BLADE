@@ -1,0 +1,2545 @@
+{
+  "test_sha256": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+  "counts": {
+    "VAmPI:erd_added": 12,
+    "VAmPI:source_files_mapped": 12,
+    "VAmPI:handler_unmapped": 12,
+    "crAPI:erd_added": 47,
+    "crAPI:source_files_mapped": 53,
+    "crAPI:handler_unmapped": 53,
+    "juice-shop:erd_added": 69,
+    "juice-shop:source_files_mapped": 69,
+    "juice-shop:handler_parsed": 66,
+    "juice-shop:handler_unmapped": 3,
+    "Pixi:erd_added": 52,
+    "Pixi:source_files_mapped": 48,
+    "Pixi:handler_parsed": 44,
+    "Pixi:handler_unmapped": 8,
+    "DVWS-node:erd_added": 25,
+    "DVWS-node:source_files_mapped": 25,
+    "DVWS-node:handler_unmapped": 25
+  },
+  "catalog": [
+    {
+      "service": "VAmPI",
+      "table": "books",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "book_title",
+        "secret_content",
+        "user_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/books_model.py",
+          "line": 8,
+          "sha256": "7ce1a15c9ccb78b4bba3eb8ffb2ba2f3596feb5170c59bcdc05467a827706e44",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/books_model.py",
+          "line": 9,
+          "sha256": "7ce1a15c9ccb78b4bba3eb8ffb2ba2f3596feb5170c59bcdc05467a827706e44",
+          "column": "book_title"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/books_model.py",
+          "line": 10,
+          "sha256": "7ce1a15c9ccb78b4bba3eb8ffb2ba2f3596feb5170c59bcdc05467a827706e44",
+          "column": "secret_content"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/books_model.py",
+          "line": 12,
+          "sha256": "7ce1a15c9ccb78b4bba3eb8ffb2ba2f3596feb5170c59bcdc05467a827706e44",
+          "column": "user_id"
+        }
+      ]
+    },
+    {
+      "service": "VAmPI",
+      "table": "users",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "username",
+        "password",
+        "email",
+        "admin"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/user_model.py",
+          "line": 13,
+          "sha256": "fed3c2a628f6a475f52bae6bfce84cd6f2356486b1ac5451d2093f7ad609385d",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/user_model.py",
+          "line": 14,
+          "sha256": "fed3c2a628f6a475f52bae6bfce84cd6f2356486b1ac5451d2093f7ad609385d",
+          "column": "username"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/user_model.py",
+          "line": 15,
+          "sha256": "fed3c2a628f6a475f52bae6bfce84cd6f2356486b1ac5451d2093f7ad609385d",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/user_model.py",
+          "line": 16,
+          "sha256": "fed3c2a628f6a475f52bae6bfce84cd6f2356486b1ac5451d2093f7ad609385d",
+          "column": "email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/VAmPI/models/user_model.py",
+          "line": 17,
+          "sha256": "fed3c2a628f6a475f52bae6bfce84cd6f2356486b1ac5451d2093f7ad609385d",
+          "column": "admin"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Addresses",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "fullName",
+        "mobileNum",
+        "zipCode",
+        "streetAddress",
+        "city",
+        "state",
+        "country"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 33,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 36,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 41,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "fullName"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 44,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "mobileNum"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 52,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "zipCode"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 58,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "streetAddress"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 64,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "city"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 65,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "state"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/address.ts",
+          "line": 66,
+          "sha256": "343720420be93a87e09f6f47c283b310912e687edc129fb3f21060953841843f",
+          "column": "country"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 25,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Baskets",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "coupon",
+        "UserId"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basket.ts",
+          "line": 30,
+          "sha256": "90e6dc3a5e7518a11a8886bf866da2f250dbab77f9c66fb7676b289da6b5fe2e",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basket.ts",
+          "line": 35,
+          "sha256": "90e6dc3a5e7518a11a8886bf866da2f250dbab77f9c66fb7676b289da6b5fe2e",
+          "column": "coupon"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basket.ts",
+          "line": 36,
+          "sha256": "90e6dc3a5e7518a11a8886bf866da2f250dbab77f9c66fb7676b289da6b5fe2e",
+          "column": "UserId"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 33,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "BasketItems",
+      "kind": "relational",
+      "columns": [
+        "ProductId",
+        "BasketId",
+        "id",
+        "quantity"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basketitem.ts",
+          "line": 28,
+          "sha256": "94b790cb8dd2e514bb29c93c37af946a59fedf5e6445a6f0eaa5aadd4e516c4c",
+          "column": "ProductId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basketitem.ts",
+          "line": 31,
+          "sha256": "94b790cb8dd2e514bb29c93c37af946a59fedf5e6445a6f0eaa5aadd4e516c4c",
+          "column": "BasketId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basketitem.ts",
+          "line": 34,
+          "sha256": "94b790cb8dd2e514bb29c93c37af946a59fedf5e6445a6f0eaa5aadd4e516c4c",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/basketitem.ts",
+          "line": 39,
+          "sha256": "94b790cb8dd2e514bb29c93c37af946a59fedf5e6445a6f0eaa5aadd4e516c4c",
+          "column": "quantity"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Captchas",
+      "kind": "relational",
+      "columns": [
+        "captchaId",
+        "captcha",
+        "answer"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/captcha.ts",
+          "line": 26,
+          "sha256": "a2aeeadf5b8684cb8e3bdc4d3d7db5e0c3c192e8471e79c80bfcc186826dfdf0",
+          "column": "captchaId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/captcha.ts",
+          "line": 29,
+          "sha256": "a2aeeadf5b8684cb8e3bdc4d3d7db5e0c3c192e8471e79c80bfcc186826dfdf0",
+          "column": "captcha"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/captcha.ts",
+          "line": 30,
+          "sha256": "a2aeeadf5b8684cb8e3bdc4d3d7db5e0c3c192e8471e79c80bfcc186826dfdf0",
+          "column": "answer"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Cards",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "fullName",
+        "cardNum",
+        "expMonth",
+        "expYear"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 29,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 32,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 37,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "fullName"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 38,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "cardNum"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 46,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "expMonth"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/card.ts",
+          "line": 54,
+          "sha256": "ea2c4ee650901e2ae65580a7cba927208bc6356c36364f639d08271df00d7629",
+          "column": "expYear"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 49,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Challenges",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "key",
+        "name",
+        "category",
+        "tags",
+        "description",
+        "difficulty",
+        "mitigationUrl",
+        "solved",
+        "disabledEnv",
+        "tutorialOrder",
+        "codingChallengeStatus",
+        "hasCodingChallenge"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 158,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 163,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "key"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 167,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 168,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "category"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 169,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "tags"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 170,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "description"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 171,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "difficulty"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 172,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "mitigationUrl"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 173,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "solved"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 174,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "disabledEnv"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 175,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "tutorialOrder"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 176,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "codingChallengeStatus"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challenge.ts",
+          "line": 177,
+          "sha256": "15f63fbe069fb0e7ace4e964ab320d91f75f5b6f7c907caf659daed8e013bf78",
+          "column": "hasCodingChallenge"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "ChallengeDependencies",
+      "kind": "relational",
+      "columns": [
+        "ChallengeId",
+        "id",
+        "name",
+        "documentation",
+        "key",
+        "missing"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 30,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "ChallengeId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 33,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 38,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 41,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "documentation"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 44,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "key"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/challengeDependency.ts",
+          "line": 47,
+          "sha256": "c5a055771b94875ea57cac1c26525f9cc77f0b7f5f07bb654c043fe998a7bba6",
+          "column": "missing"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Complaints",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "message",
+        "file"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/complaint.ts",
+          "line": 28,
+          "sha256": "7a20b5293413f420dfd7c0d8603431b773effe3c468de11afd9642f80f6521dd",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/complaint.ts",
+          "line": 31,
+          "sha256": "7a20b5293413f420dfd7c0d8603431b773effe3c468de11afd9642f80f6521dd",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/complaint.ts",
+          "line": 36,
+          "sha256": "7a20b5293413f420dfd7c0d8603431b773effe3c468de11afd9642f80f6521dd",
+          "column": "message"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/complaint.ts",
+          "line": 37,
+          "sha256": "7a20b5293413f420dfd7c0d8603431b773effe3c468de11afd9642f80f6521dd",
+          "column": "file"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 57,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Deliveries",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name",
+        "price",
+        "deluxePrice",
+        "eta",
+        "icon"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 30,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 35,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 36,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "price"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 37,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "deluxePrice"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 38,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "eta"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/delivery.ts",
+          "line": 39,
+          "sha256": "663e90254b768c39f0f54dce3963f4331b97562a7f79efc0e59ba706eca29810",
+          "column": "icon"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Feedbacks",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "comment",
+        "rating"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/feedback.ts",
+          "line": 31,
+          "sha256": "f40b8c6d2da9bfc940cd771c0b85443c9a2dbab5fe02c5537e65c5c4eda03f74",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/feedback.ts",
+          "line": 34,
+          "sha256": "f40b8c6d2da9bfc940cd771c0b85443c9a2dbab5fe02c5537e65c5c4eda03f74",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/feedback.ts",
+          "line": 39,
+          "sha256": "f40b8c6d2da9bfc940cd771c0b85443c9a2dbab5fe02c5537e65c5c4eda03f74",
+          "column": "comment"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/feedback.ts",
+          "line": 54,
+          "sha256": "f40b8c6d2da9bfc940cd771c0b85443c9a2dbab5fe02c5537e65c5c4eda03f74",
+          "column": "rating"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 65,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Hints",
+      "kind": "relational",
+      "columns": [
+        "ChallengeId",
+        "id",
+        "text",
+        "order",
+        "unlocked"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/hint.ts",
+          "line": 29,
+          "sha256": "2eee44bfb7d64b32119f38ce11227ac937fd2dd2c096ffbae87638f78f3d5cf3",
+          "column": "ChallengeId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/hint.ts",
+          "line": 32,
+          "sha256": "2eee44bfb7d64b32119f38ce11227ac937fd2dd2c096ffbae87638f78f3d5cf3",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/hint.ts",
+          "line": 37,
+          "sha256": "2eee44bfb7d64b32119f38ce11227ac937fd2dd2c096ffbae87638f78f3d5cf3",
+          "column": "text"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/hint.ts",
+          "line": 40,
+          "sha256": "2eee44bfb7d64b32119f38ce11227ac937fd2dd2c096ffbae87638f78f3d5cf3",
+          "column": "order"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/hint.ts",
+          "line": 47,
+          "sha256": "2eee44bfb7d64b32119f38ce11227ac937fd2dd2c096ffbae87638f78f3d5cf3",
+          "column": "unlocked"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "ImageCaptchas",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "image",
+        "answer",
+        "UserId",
+        "createdAt"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/imageCaptcha.ts",
+          "line": 29,
+          "sha256": "b6786f353e703851d5a7afdb437ba52681911a4d8fc3375d6d522b873becfca3",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/imageCaptcha.ts",
+          "line": 34,
+          "sha256": "b6786f353e703851d5a7afdb437ba52681911a4d8fc3375d6d522b873becfca3",
+          "column": "image"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/imageCaptcha.ts",
+          "line": 35,
+          "sha256": "b6786f353e703851d5a7afdb437ba52681911a4d8fc3375d6d522b873becfca3",
+          "column": "answer"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/imageCaptcha.ts",
+          "line": 36,
+          "sha256": "b6786f353e703851d5a7afdb437ba52681911a4d8fc3375d6d522b873becfca3",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/imageCaptcha.ts",
+          "line": 37,
+          "sha256": "b6786f353e703851d5a7afdb437ba52681911a4d8fc3375d6d522b873becfca3",
+          "column": "createdAt"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 71,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Memories",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "caption",
+        "imagePath"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/memory.ts",
+          "line": 28,
+          "sha256": "ad606a5f6a206c923eb11e82830b8379e00c1e5c1d2f2937ad0a0812b751a0a6",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/memory.ts",
+          "line": 31,
+          "sha256": "ad606a5f6a206c923eb11e82830b8379e00c1e5c1d2f2937ad0a0812b751a0a6",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/memory.ts",
+          "line": 36,
+          "sha256": "ad606a5f6a206c923eb11e82830b8379e00c1e5c1d2f2937ad0a0812b751a0a6",
+          "column": "caption"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/memory.ts",
+          "line": 37,
+          "sha256": "ad606a5f6a206c923eb11e82830b8379e00c1e5c1d2f2937ad0a0812b751a0a6",
+          "column": "imagePath"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 77,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "PrivacyRequests",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "UserId",
+        "deletionRequested"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/privacyRequests.ts",
+          "line": 26,
+          "sha256": "5bf8bab8bddf7fff7f73ce5389e764e19d4f5de738c7aa8393c70737e172386d",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/privacyRequests.ts",
+          "line": 31,
+          "sha256": "5bf8bab8bddf7fff7f73ce5389e764e19d4f5de738c7aa8393c70737e172386d",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/privacyRequests.ts",
+          "line": 34,
+          "sha256": "5bf8bab8bddf7fff7f73ce5389e764e19d4f5de738c7aa8393c70737e172386d",
+          "column": "deletionRequested"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Products",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "deluxePrice",
+        "image",
+        "alternateImages"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 45,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 50,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 51,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "description"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 64,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "price"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 65,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "deluxePrice"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 66,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "image"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/product.ts",
+          "line": 67,
+          "sha256": "5caf3edbd38a5027fa2bcd5e562d40e39df44b253b9937a0a87c401674d55c79",
+          "column": "alternateImages"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Quantities",
+      "kind": "relational",
+      "columns": [
+        "ProductId",
+        "id",
+        "quantity",
+        "limitPerUser"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/quantity.ts",
+          "line": 28,
+          "sha256": "0e5ef89908cb58f7f89669a4d3b7669a1972a393dfd47f7cb5e3fb5eb13868d4",
+          "column": "ProductId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/quantity.ts",
+          "line": 31,
+          "sha256": "0e5ef89908cb58f7f89669a4d3b7669a1972a393dfd47f7cb5e3fb5eb13868d4",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/quantity.ts",
+          "line": 36,
+          "sha256": "0e5ef89908cb58f7f89669a4d3b7669a1972a393dfd47f7cb5e3fb5eb13868d4",
+          "column": "quantity"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/quantity.ts",
+          "line": 42,
+          "sha256": "0e5ef89908cb58f7f89669a4d3b7669a1972a393dfd47f7cb5e3fb5eb13868d4",
+          "column": "limitPerUser"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "ProductId",
+          "table": "Products",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 101,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Recycles",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "AddressId",
+        "id",
+        "quantity",
+        "isPickup",
+        "date"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 30,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 33,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "AddressId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 36,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 41,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "quantity"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 42,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "isPickup"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/recycle.ts",
+          "line": 43,
+          "sha256": "f42a5bccb4158437b0a23cdb355ac1da3f9c28eb63ebbf47de5e6fe62ac10d72",
+          "column": "date"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 109,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        },
+        {
+          "column": "AddressId",
+          "table": "Addresses",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 116,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "SecurityAnswers",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "SecurityQuestionId",
+        "id",
+        "answer"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityAnswer.ts",
+          "line": 29,
+          "sha256": "57fcf5a4b22dfb4f699d7eae7f22dd55b925eb95ff3c44696f553e4e363d8f07",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityAnswer.ts",
+          "line": 33,
+          "sha256": "57fcf5a4b22dfb4f699d7eae7f22dd55b925eb95ff3c44696f553e4e363d8f07",
+          "column": "SecurityQuestionId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityAnswer.ts",
+          "line": 37,
+          "sha256": "57fcf5a4b22dfb4f699d7eae7f22dd55b925eb95ff3c44696f553e4e363d8f07",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityAnswer.ts",
+          "line": 42,
+          "sha256": "57fcf5a4b22dfb4f699d7eae7f22dd55b925eb95ff3c44696f553e4e363d8f07",
+          "column": "answer"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 124,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        },
+        {
+          "column": "SecurityQuestionId",
+          "table": "SecurityQuestions",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 129,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "SecurityQuestions",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "question"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityQuestion.ts",
+          "line": 26,
+          "sha256": "fa19a773a80288d2a0cfbecbd8cfbe5a413c234448428bdb157e125ad135c2cb",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/securityQuestion.ts",
+          "line": 31,
+          "sha256": "fa19a773a80288d2a0cfbecbd8cfbe5a413c234448428bdb157e125ad135c2cb",
+          "column": "question"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Users",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "username",
+        "email",
+        "password",
+        "role",
+        "deluxeToken",
+        "lastLoginIp",
+        "profileImage",
+        "totpSecret",
+        "isActive"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 39,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 44,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "username"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 56,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 70,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 76,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "role"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 97,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "deluxeToken"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 101,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "lastLoginIp"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 105,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "profileImage"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 109,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "totpSecret"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/user.ts",
+          "line": 113,
+          "sha256": "f37ffb849e2126ceda0eaff862181484f534af9d363a1fcd6b42616a1aec0b28",
+          "column": "isActive"
+        }
+      ]
+    },
+    {
+      "service": "juice-shop",
+      "table": "Wallets",
+      "kind": "relational",
+      "columns": [
+        "UserId",
+        "id",
+        "balance"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/wallet.ts",
+          "line": 27,
+          "sha256": "cb9135499c0d6d48e4b3091a6f662ea87b6e2e918f9028c9573e6604b5294e29",
+          "column": "UserId"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/wallet.ts",
+          "line": 30,
+          "sha256": "cb9135499c0d6d48e4b3091a6f662ea87b6e2e918f9028c9573e6604b5294e29",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/juice-shop/models/wallet.ts",
+          "line": 35,
+          "sha256": "cb9135499c0d6d48e4b3091a6f662ea87b6e2e918f9028c9573e6604b5294e29",
+          "column": "balance"
+        }
+      ],
+      "foreign_keys": [
+        {
+          "column": "UserId",
+          "table": "Users",
+          "ref_column": "id",
+          "provenance": {
+            "file": "datasets/blade/raw/vuln_apis/juice-shop/models/relations.ts",
+            "line": 137,
+            "sha256": "9b3ad5f0d338c66b084f089690e51b6e52d96878c372671177d66de1090c2bd8"
+          }
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "otp_token",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "new_email",
+        "old_email",
+        "email_token",
+        "status"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangeEmailRequest.java",
+          "line": 19,
+          "sha256": "64a3ef1ad483e6c44adee181b99e18058ebaa21bddc1a2dfecf9ab9ca7d8ee12",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangeEmailRequest.java",
+          "line": 28,
+          "sha256": "64a3ef1ad483e6c44adee181b99e18058ebaa21bddc1a2dfecf9ab9ca7d8ee12",
+          "column": "new_email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangeEmailRequest.java",
+          "line": 31,
+          "sha256": "64a3ef1ad483e6c44adee181b99e18058ebaa21bddc1a2dfecf9ab9ca7d8ee12",
+          "column": "old_email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangeEmailRequest.java",
+          "line": 34,
+          "sha256": "64a3ef1ad483e6c44adee181b99e18058ebaa21bddc1a2dfecf9ab9ca7d8ee12",
+          "column": "email_token"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangeEmailRequest.java",
+          "line": 37,
+          "sha256": "64a3ef1ad483e6c44adee181b99e18058ebaa21bddc1a2dfecf9ab9ca7d8ee12",
+          "column": "status"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "otp_phoneNumberChange",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "new_phone",
+        "old_phone",
+        "otp",
+        "status"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangePhoneRequest.java",
+          "line": 5,
+          "sha256": "d580a8c2478a261d0b0c0c5a75a893930ecaa177411415a82702a17df1ff4591",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangePhoneRequest.java",
+          "line": 13,
+          "sha256": "d580a8c2478a261d0b0c0c5a75a893930ecaa177411415a82702a17df1ff4591",
+          "column": "new_phone"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangePhoneRequest.java",
+          "line": 16,
+          "sha256": "d580a8c2478a261d0b0c0c5a75a893930ecaa177411415a82702a17df1ff4591",
+          "column": "old_phone"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangePhoneRequest.java",
+          "line": 19,
+          "sha256": "d580a8c2478a261d0b0c0c5a75a893930ecaa177411415a82702a17df1ff4591",
+          "column": "otp"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ChangePhoneRequest.java",
+          "line": 22,
+          "sha256": "d580a8c2478a261d0b0c0c5a75a893930ecaa177411415a82702a17df1ff4591",
+          "column": "status"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "otp",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "otp",
+        "status",
+        "count"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/Otp.java",
+          "line": 18,
+          "sha256": "f357caf5620f362598b6d8dd167cd1feb4cc6faeaa26333f09801391671ebfc6",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/Otp.java",
+          "line": 27,
+          "sha256": "f357caf5620f362598b6d8dd167cd1feb4cc6faeaa26333f09801391671ebfc6",
+          "column": "otp"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/Otp.java",
+          "line": 29,
+          "sha256": "f357caf5620f362598b6d8dd167cd1feb4cc6faeaa26333f09801391671ebfc6",
+          "column": "status"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/Otp.java",
+          "line": 30,
+          "sha256": "f357caf5620f362598b6d8dd167cd1feb4cc6faeaa26333f09801391671ebfc6",
+          "column": "count"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "profile_Video",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "video_name",
+        "user_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ProfileVideo.java",
+          "line": 20,
+          "sha256": "c5295f56581507d1a2f7c6d48d7a095b1697fbc42db564b42705ec2b293d79c9",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ProfileVideo.java",
+          "line": 28,
+          "sha256": "c5295f56581507d1a2f7c6d48d7a095b1697fbc42db564b42705ec2b293d79c9",
+          "column": "video_name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/ProfileVideo.java",
+          "line": 32,
+          "sha256": "c5295f56581507d1a2f7c6d48d7a095b1697fbc42db564b42705ec2b293d79c9",
+          "column": "user_id"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "user_login",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "email",
+        "password",
+        "number",
+        "code"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/User.java",
+          "line": 20,
+          "sha256": "ab5fad4ef1e1dd6366ab55911b0323af7d3a604fc3206a8d118bddfb3d7e76cd",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/User.java",
+          "line": 33,
+          "sha256": "ab5fad4ef1e1dd6366ab55911b0323af7d3a604fc3206a8d118bddfb3d7e76cd",
+          "column": "email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/User.java",
+          "line": 35,
+          "sha256": "ab5fad4ef1e1dd6366ab55911b0323af7d3a604fc3206a8d118bddfb3d7e76cd",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/User.java",
+          "line": 36,
+          "sha256": "ab5fad4ef1e1dd6366ab55911b0323af7d3a604fc3206a8d118bddfb3d7e76cd",
+          "column": "number"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/User.java",
+          "line": 47,
+          "sha256": "ab5fad4ef1e1dd6366ab55911b0323af7d3a604fc3206a8d118bddfb3d7e76cd",
+          "column": "code"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "user_details",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name",
+        "status"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/UserDetails.java",
+          "line": 20,
+          "sha256": "8089ce9769028e55043d39b7e44c22af043818a34d4de7a58932d4a23175ef16",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/UserDetails.java",
+          "line": 32,
+          "sha256": "8089ce9769028e55043d39b7e44c22af043818a34d4de7a58932d4a23175ef16",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/UserDetails.java",
+          "line": 34,
+          "sha256": "8089ce9769028e55043d39b7e44c22af043818a34d4de7a58932d4a23175ef16",
+          "column": "status"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_company",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleCompany.java",
+          "line": 19,
+          "sha256": "d9bd617e40ff48b963249f338ad765a3ab40be70d81473a4c441a8949dba14ec",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleCompany.java",
+          "line": 28,
+          "sha256": "d9bd617e40ff48b963249f338ad765a3ab40be70d81473a4c441a8949dba14ec",
+          "column": "name"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_details",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "uuid",
+        "pincode",
+        "vin",
+        "year",
+        "status",
+        "vehicle_model_id",
+        "location_id",
+        "owner_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 24,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 33,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "uuid"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 36,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "pincode"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 38,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "vin"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 39,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "year"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 40,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "status"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 42,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "vehicle_model_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 46,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "location_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleDetails.java",
+          "line": 50,
+          "sha256": "27cf903d67323d50fae863393e6ef896596f8b45160bd72db04face255f35bb2",
+          "column": "owner_id"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_location",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "latitude",
+        "longitude"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleLocation.java",
+          "line": 18,
+          "sha256": "7e89eacee89d4674f2e3a39983212e512782623335382e9aaa481be847965513",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleLocation.java",
+          "line": 27,
+          "sha256": "7e89eacee89d4674f2e3a39983212e512782623335382e9aaa481be847965513",
+          "column": "latitude"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleLocation.java",
+          "line": 29,
+          "sha256": "7e89eacee89d4674f2e3a39983212e512782623335382e9aaa481be847965513",
+          "column": "longitude"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_model",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "model",
+        "vehicle_img"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleModel.java",
+          "line": 20,
+          "sha256": "0cab9b2109c868f1138e07ac89d937a3b6beb5168eb52defa2f04b3717e03ad0",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleModel.java",
+          "line": 29,
+          "sha256": "0cab9b2109c868f1138e07ac89d937a3b6beb5168eb52defa2f04b3717e03ad0",
+          "column": "model"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/identity/src/main/java/com/crapi/entity/VehicleModel.java",
+          "line": 32,
+          "sha256": "0cab9b2109c868f1138e07ac89d937a3b6beb5168eb52defa2f04b3717e03ad0",
+          "column": "vehicle_img"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "mechanic",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "mechanic_code",
+        "user_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 34,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 35,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "mechanic_code"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 36,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "user_id"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "service_request",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "mechanic_id",
+        "vehicle_id",
+        "problem_details",
+        "created_on",
+        "updated_on",
+        "status"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 51,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 52,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "mechanic_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 53,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "vehicle_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 54,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "problem_details"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 55,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "created_on"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 56,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "updated_on"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 64,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "status"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "service_comment",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "service_request_id",
+        "comment",
+        "created_on"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 81,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 82,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "service_request_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 83,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "comment"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/mechanic/models.py",
+          "line": 84,
+          "sha256": "a9a09455b0fcf16d1d21bdea07938cf23c4c5672638dd539ad31bbdd03c9dbce",
+          "column": "created_on"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "product",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name",
+        "price",
+        "image_url"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 36,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 37,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 38,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "price"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 39,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "image_url"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "order",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "user_id",
+        "product_id",
+        "quantity",
+        "transaction_id",
+        "created_on",
+        "status"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 54,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 55,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "user_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 56,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "product_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 57,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "quantity"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 58,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "transaction_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 59,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "created_on"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 66,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "status"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "coupons",
+      "kind": "relational",
+      "columns": [
+        "coupon_code",
+        "amount"
+      ],
+      "primary": [
+        "coupon_code"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 83,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "coupon_code"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 84,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "amount"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "applied_coupon",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "user_id",
+        "coupon_code"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 100,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 101,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "user_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/shop/models.py",
+          "line": 102,
+          "sha256": "6c14f74cf1b701a1c7c367c8ac1adf1230b4211486654cfc16f6dfa0f494c13d",
+          "column": "coupon_code"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "user_login",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "created_on",
+        "email",
+        "jwt_token",
+        "number",
+        "password",
+        "role"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 32,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 33,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "created_on"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 34,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 35,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "jwt_token"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 36,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "number"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 37,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 46,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "role"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "user_details",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "available_credit",
+        "name",
+        "status",
+        "user_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 62,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 63,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "available_credit"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 64,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 65,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "status"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 66,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "user_id"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_company",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "name"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 82,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 83,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "name"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_model",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "fuel_type",
+        "model",
+        "vehicle_img",
+        "vehiclecompany_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 99,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 100,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "fuel_type"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 101,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "model"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 102,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "vehicle_img"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 103,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "vehiclecompany_id"
+        }
+      ]
+    },
+    {
+      "service": "crAPI",
+      "table": "vehicle_details",
+      "kind": "relational",
+      "columns": [
+        "id",
+        "pincode",
+        "vin",
+        "year",
+        "vehicle_model_id",
+        "owner_id",
+        "status",
+        "location_id"
+      ],
+      "primary": [
+        "id"
+      ],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 119,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 120,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "pincode"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 121,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "vin"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 122,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "year"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 123,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "vehicle_model_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 124,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "owner_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 125,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "status"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/crAPI/services/workshop/crapi/user/models.py",
+          "line": 126,
+          "sha256": "1a16884e0fb536584a040bf62dd1c5a3308f869af0cbcc4270f0c70671c909b1",
+          "column": "location_id"
+        }
+      ]
+    },
+    {
+      "service": "DVWS-node",
+      "table": "Notes",
+      "kind": "mongo_model_fields",
+      "columns": [
+        "_id",
+        "name",
+        "body",
+        "created_date",
+        "type",
+        "user"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 15,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 16,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 20,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "body"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 24,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "created_date"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 28,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "type"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/note.js",
+          "line": 35,
+          "sha256": "b5f440b9eb3a1573092b776d6d380b6948d1c89b359d11991b44be27b5ac50d9",
+          "column": "user"
+        }
+      ]
+    },
+    {
+      "service": "DVWS-node",
+      "table": "User",
+      "kind": "mongo_model_fields",
+      "columns": [
+        "username",
+        "password",
+        "admin",
+        "bio"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/user.js",
+          "line": 16,
+          "sha256": "206c60d8d3d9fb01dacdc31503c8088ea1108f4f4838180a204daae9679c971e",
+          "column": "username"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/user.js",
+          "line": 22,
+          "sha256": "206c60d8d3d9fb01dacdc31503c8088ea1108f4f4838180a204daae9679c971e",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/user.js",
+          "line": 27,
+          "sha256": "206c60d8d3d9fb01dacdc31503c8088ea1108f4f4838180a204daae9679c971e",
+          "column": "admin"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/DVWS-node/src/models/user.js",
+          "line": 31,
+          "sha256": "206c60d8d3d9fb01dacdc31503c8088ea1108f4f4838180a204daae9679c971e",
+          "column": "bio"
+        }
+      ]
+    },
+    {
+      "service": "Pixi",
+      "table": "users",
+      "kind": "mongo_insert_fields",
+      "columns": [
+        "_id",
+        "email",
+        "password",
+        "name",
+        "pic",
+        "account_balance",
+        "is_admin",
+        "all_pictures"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 126,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 127,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "email"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 128,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "password"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 129,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 130,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "pic"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 131,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "account_balance"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 132,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "is_admin"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 133,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "all_pictures"
+        }
+      ]
+    },
+    {
+      "service": "Pixi",
+      "table": "loves",
+      "kind": "mongo_insert_fields",
+      "columns": [
+        "user_id",
+        "picture_id",
+        "amount"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 332,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "user_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 333,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "picture_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 334,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "amount"
+        }
+      ]
+    },
+    {
+      "service": "Pixi",
+      "table": "likes",
+      "kind": "mongo_insert_fields",
+      "columns": [
+        "user_id",
+        "picture_id"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 389,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "user_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 390,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "picture_id"
+        }
+      ]
+    },
+    {
+      "service": "Pixi",
+      "table": "pictures",
+      "kind": "mongo_insert_fields",
+      "columns": [
+        "_id",
+        "title",
+        "image_url",
+        "name",
+        "filename",
+        "description",
+        "creator_id",
+        "money_made",
+        "likes",
+        "created_date"
+      ],
+      "primary": [],
+      "provenance": [
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 456,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 457,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "title"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 458,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "image_url"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 459,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "name"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 460,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "filename"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 461,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "description"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 462,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "creator_id"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 463,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "money_made"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 464,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "likes"
+        },
+        {
+          "file": "datasets/blade/raw/vuln_apis/Pixi/api/api.js",
+          "line": 465,
+          "sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d",
+          "column": "created_date"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "TEXT is a type-neutral carrier; real database types/constraints are not reconstructed.",
+    "Mongo entries are logical model/insert field inventories, not relational tables or verified collection names for Mongoose.",
+    "Only explicit Sequelize FK relationships are retained; no implicit columns, naming aliases or authorization checks invented.",
+    "Java/Go/Flask unsupported handlers remain missing in runtime prompts.",
+    "crAPI community Mongo mapping remains unavailable; no guessed schema injected."
+  ]
+}

@@ -1,0 +1,11 @@
+run	log	steps	minutes	train_loss	oas_rows	oas_parse_err	oas_code_rows	oas_code_parse_err	supp_oas_parse_err	supp_oas_code_parse_err	status
+base_qwen_runpod	run_stable.log				269	25	265	0	0	3	done
+lora_v2_s42_runpod	run_stable.log				269	0	265	31	0	0	done
+lora_v2_s43_runpod	run_stable.log				269	0	265	10	0	0	done
+lora_v2_s44_runpod	run_stable.log				269	0	265	15	0	1	done
+lora_v3b_s42	run_stable.log				269	0	265	1	0	0	done
+lora_v3b_s43	run_stable.log				269	4	265	11	0	1	done
+lora_v3b_s44	run_stable.log				269	0	265	0	0	2	done
+lora_v4_s42	run_stable.log				269	0	265	1	2	0	done
+lora_v4_s43	run_stable.log				269	0	265	0	0	1	done
+lora_v4_s44	run_stable.log				269	0	265	2	0	0	done

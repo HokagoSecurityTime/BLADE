@@ -1,0 +1,900 @@
+{
+  "api_calls": 0,
+  "inspected": 21,
+  "correct_label_rejected": 18,
+  "all_failures_without_supported_parameter": 21,
+  "correct_without_supported_parameter": 18,
+  "correct_missing_lookup": 0,
+  "correct_null_object_param": 18,
+  "correct_methods": {
+    "GET": 6,
+    "POST": 11,
+    "PUT": 1
+  },
+  "correct_lookup_table_and_id_exist": 18,
+  "input_sha256": {
+    "datasets\\blade\\processed\\test.jsonl": "bd22c2580c2ddc2154974f76aa9e7aa2ca30bc6f8434e4960f3d3966093977fa",
+    "reports\\eval\\context\\source_overlay.jsonl": "507154e104bd602b0e97ec00920f0cf152986d6e162ff5b845fd15d1d1e93c4f",
+    "reports\\eval\\enriched_recorded\\a_gpt-4o-mini_v2.0_recorded.partial.jsonl": "b4da71e3067e6817c714ed4fe0e9bcc5e35df056e5b97c4fed0549ec9353246c",
+    "pipeline\\classifier\\__init__.py": "b5b3c75991fab8e195aca16bd7687b4e0adc4ee8208cf9e671e9fe6bb19327e8",
+    "pipeline\\classifier\\schema.py": "1f9f2f4752f43af2603313f445b936a8a576449cf716f47c35316c9dd7339ae7"
+  },
+  "records": [
+    {
+      "id": "759eb32d69ab1820e44d",
+      "service": "VAmPI",
+      "method": "GET",
+      "path": "/me",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "id",
+        "owner_col": null,
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "api_views/users.py",
+          "start_line": 28,
+          "end_line": 42
+        }
+      ],
+      "raw_evidence": "The request retrieves the currently logged in user, confirming ownership.",
+      "replay_matches": true
+    },
+    {
+      "id": "ff8c5eda79000fa6687f",
+      "service": "VAmPI",
+      "method": "POST",
+      "path": "/books/v1",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "books",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "description": "Add new book with title and secret content only available to the user who added it.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "book_title": {
+                  "type": "string",
+                  "example": "book99"
+                },
+                "secret": {
+                  "type": "string",
+                  "example": "pass1secret"
+                }
+              }
+            }
+          }
+        },
+        "required": true
+      },
+      "source_locations": [
+        {
+          "file": "api_views/books.py",
+          "start_line": 17,
+          "end_line": 42
+        }
+      ],
+      "raw_evidence": "The requested book is owned by the user adding it.",
+      "replay_matches": true
+    },
+    {
+      "id": "c917e3e10dce94cc245c",
+      "service": "crAPI",
+      "method": "POST",
+      "path": "/identity/api/v2/user/pictures",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "profile_Video",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "source_locations": [
+        {
+          "file": "services/identity/src/main/java/com/crapi/controller/ProfileController.java",
+          "start_line": 60,
+          "end_line": 70
+        }
+      ],
+      "raw_evidence": "User is updating their own profile picture.",
+      "replay_matches": true
+    },
+    {
+      "id": "4de2f44349d88f3d6b3a",
+      "service": "crAPI",
+      "method": "POST",
+      "path": "/identity/api/v2/user/videos",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "profile_Video",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "required": [
+                "file"
+              ],
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "source_locations": [
+        {
+          "file": "services/identity/src/main/java/com/crapi/controller/ProfileController.java",
+          "start_line": 78,
+          "end_line": 87
+        }
+      ],
+      "raw_evidence": "Video upload belongs to the user uploading it.",
+      "replay_matches": true
+    },
+    {
+      "id": "97abea85e395e6649df4",
+      "service": "crAPI",
+      "method": "POST",
+      "path": "/identity/api/v2/vehicle/add_vehicle",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "vehicle_details",
+        "id_col": "id",
+        "owner_col": "owner_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "pincode",
+                "vin"
+              ],
+              "properties": {
+                "pincode": {
+                  "type": "string",
+                  "example": "9896"
+                },
+                "vin": {
+                  "type": "string",
+                  "example": "0IOJO38SMVL663989"
+                }
+              }
+            }
+          }
+        }
+      },
+      "source_locations": [
+        {
+          "file": "services/identity/src/main/java/com/crapi/controller/VehicleController.java",
+          "start_line": 60,
+          "end_line": 68
+        }
+      ],
+      "raw_evidence": "The vehicle belongs to the user who is adding it.",
+      "replay_matches": true
+    },
+    {
+      "id": "956a6feb1b1f65eb5a9a",
+      "service": "crAPI",
+      "method": "POST",
+      "path": "/workshop/api/shop/apply_coupon",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "applied_coupon",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApplyCouponRequest"
+            }
+          }
+        }
+      },
+      "source_locations": [
+        {
+          "file": "services/workshop/crapi/shop/views.py",
+          "start_line": 366,
+          "end_line": 395
+        }
+      ],
+      "raw_evidence": "The caller must be the owner of the coupon being applied.",
+      "replay_matches": true
+    },
+    {
+      "id": "0f7dacc4c4c5dc50ad69",
+      "service": "crAPI",
+      "method": "POST",
+      "path": "/workshop/api/shop/orders",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "order",
+        "id_col": "id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductQuantity"
+            }
+          }
+        },
+        "required": true
+      },
+      "source_locations": [
+        {
+          "file": "services/workshop/crapi/shop/views.py",
+          "start_line": 168,
+          "end_line": 197
+        }
+      ],
+      "raw_evidence": "Order must be created by the user who owns the respective details.",
+      "replay_matches": true
+    },
+    {
+      "id": "16f4b2d20c0ba89ed279",
+      "service": "juice-shop",
+      "method": "POST",
+      "path": "/api/Cards",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Cards",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "lib/insecurity.ts",
+          "start_line": 175,
+          "end_line": 184
+        }
+      ],
+      "raw_evidence": "The Cards belong to the User specified by UserId.",
+      "replay_matches": true
+    },
+    {
+      "id": "bbaf2ce2f276bd2f4679",
+      "service": "juice-shop",
+      "method": "POST",
+      "path": "/api/Complaints",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Complaints",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "lib/insecurity.ts",
+          "start_line": 52,
+          "end_line": 52
+        }
+      ],
+      "raw_evidence": "Complaints are linked to the user who submitted them.",
+      "replay_matches": true
+    },
+    {
+      "id": "4033e696c5dc2d5b3aa2",
+      "service": "juice-shop",
+      "method": "POST",
+      "path": "/api/Feedbacks",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Feedbacks",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "routes/verify.ts",
+          "start_line": 30,
+          "end_line": 37
+        },
+        {
+          "file": "routes/captcha.ts",
+          "start_line": 35,
+          "end_line": 46
+        },
+        {
+          "file": "lib/utils.ts",
+          "start_line": 254,
+          "end_line": 256
+        },
+        {
+          "file": "routes/verify.ts",
+          "start_line": 39,
+          "end_line": 50
+        }
+      ],
+      "raw_evidence": "Feedbacks table requires ownership verification by UserId.",
+      "replay_matches": true
+    },
+    {
+      "id": "ed9b8680702e673060d4",
+      "service": "juice-shop",
+      "method": "POST",
+      "path": "/api/Recycles",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Recycles",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "lib/insecurity.ts",
+          "start_line": 52,
+          "end_line": 52
+        }
+      ],
+      "raw_evidence": "Recycles are associated with the User who created them.",
+      "replay_matches": true
+    },
+    {
+      "id": "745151104eb860a9e9ec",
+      "service": "juice-shop",
+      "method": "POST",
+      "path": "/rest/memories",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Memories",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "routes/memory.ts",
+          "start_line": 10,
+          "end_line": 20
+        },
+        {
+          "file": "routes/fileUpload.ts",
+          "start_line": 19,
+          "end_line": 25
+        },
+        {
+          "file": "lib/utils.ts",
+          "start_line": 254,
+          "end_line": 256
+        },
+        {
+          "file": "lib/insecurity.ts",
+          "start_line": 175,
+          "end_line": 184
+        },
+        {
+          "file": "routes/metrics.ts",
+          "start_line": 73,
+          "end_line": 82
+        }
+      ],
+      "raw_evidence": "Memory belongs to its creator.",
+      "replay_matches": true
+    },
+    {
+      "id": "314ffc8290ffcff7031e",
+      "service": "juice-shop",
+      "method": "PUT",
+      "path": "/rest/wallet/balance",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "Wallets",
+        "id_col": "id",
+        "owner_col": "UserId",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "routes/wallet.ts",
+          "start_line": 21,
+          "end_line": 36
+        },
+        {
+          "file": "lib/utils.ts",
+          "start_line": 254,
+          "end_line": 256
+        },
+        {
+          "file": "lib/insecurity.ts",
+          "start_line": 175,
+          "end_line": 184
+        }
+      ],
+      "raw_evidence": "Wallet balance operation requires ownership check against UserId.",
+      "replay_matches": true
+    },
+    {
+      "id": "90b7d387b719e9937263",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/api/other_user_info",
+      "expected": "public",
+      "raw_label": "owner_match",
+      "label_correct": false,
+      "path_params": [],
+      "query_params": [],
+      "object_param": "user_id",
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "_id",
+        "owner_col": "_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "api/api.js",
+          "start_line": 553,
+          "end_line": 571,
+          "file_sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d"
+        },
+        {
+          "file": "app/server.js",
+          "start_line": 597,
+          "end_line": 615,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "Requesting user information for a specific user ID confirms ownership check.",
+      "replay_matches": true
+    },
+    {
+      "id": "3fb5f18e981183405c13",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/api/pictures/like",
+      "expected": "public",
+      "raw_label": "owner_match",
+      "label_correct": false,
+      "path_params": [],
+      "query_params": [],
+      "object_param": "picture_id",
+      "owner_lookup": {
+        "table": "likes",
+        "id_col": "picture_id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "api/api.js",
+          "start_line": 372,
+          "end_line": 401,
+          "file_sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d"
+        },
+        {
+          "file": "app/server.js",
+          "start_line": 416,
+          "end_line": 445,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "The like is tied to the user who is authenticated.",
+      "replay_matches": true
+    },
+    {
+      "id": "e8437c5320794a594af6",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/api/user/info",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "_id",
+        "owner_col": "_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "api/api.js",
+          "start_line": 505,
+          "end_line": 521,
+          "file_sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d"
+        },
+        {
+          "file": "app/server.js",
+          "start_line": 549,
+          "end_line": 565,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "User information is accessed based on the user's own ID.",
+      "replay_matches": true
+    },
+    {
+      "id": "fd938e89d9362deb8656",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/api/user/pictures",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "pictures",
+        "id_col": "_id",
+        "owner_col": "creator_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "api/api.js",
+          "start_line": 574,
+          "end_line": 586,
+          "file_sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d"
+        },
+        {
+          "file": "app/server.js",
+          "start_line": 618,
+          "end_line": 630,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "Pictures are filtered by their creator_id, which matches the user's ID.",
+      "replay_matches": true
+    },
+    {
+      "id": "bf900bef2d12400d0880",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/user_info",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "_id",
+        "owner_col": "_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "app/server.js",
+          "start_line": 1167,
+          "end_line": 1177,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "The user information is retrieved for the authenticated user only.",
+      "replay_matches": true
+    },
+    {
+      "id": "7ab0a0779b998f445f3c",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/user_loves",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "loves",
+        "id_col": "user_id",
+        "owner_col": "user_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "app/server.js",
+          "start_line": 1285,
+          "end_line": 1297,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "Access to loves entries is limited to the requesting user's ID.",
+      "replay_matches": true
+    },
+    {
+      "id": "2f8f43be0ee49cc83b1e",
+      "service": "Pixi",
+      "method": "GET",
+      "path": "/user_pictures",
+      "expected": "owner_match",
+      "raw_label": "owner_match",
+      "label_correct": true,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "pictures",
+        "id_col": "_id",
+        "owner_col": "creator_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": false,
+      "request_body": [],
+      "source_locations": [
+        {
+          "file": "app/server.js",
+          "start_line": 1256,
+          "end_line": 1268,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "User can only access their own pictures.",
+      "replay_matches": true
+    },
+    {
+      "id": "7292860512c06eed2ffd",
+      "service": "Pixi",
+      "method": "PUT",
+      "path": "/api/user/edit_info",
+      "expected": "owner_match",
+      "raw_label": "owner_or_admin",
+      "label_correct": false,
+      "path_params": [],
+      "query_params": [],
+      "object_param": null,
+      "owner_lookup": {
+        "table": "users",
+        "id_col": "_id",
+        "owner_col": "_id",
+        "tenant_col": null
+      },
+      "no_supported_parameter": true,
+      "lookup_missing": false,
+      "lookup_table_exists": true,
+      "lookup_id_exists": true,
+      "declared_request_body": true,
+      "request_body": [
+        {
+          "name": "user",
+          "in": "body",
+          "description": "userobject",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UsersItem"
+          }
+        }
+      ],
+      "source_locations": [
+        {
+          "file": "api/api.js",
+          "start_line": 523,
+          "end_line": 551,
+          "file_sha256": "92a7f6386800936243bc4d0f6c2dcd61249f6291928b01411c1cde1df2927d0d"
+        },
+        {
+          "file": "app/server.js",
+          "start_line": 567,
+          "end_line": 595,
+          "file_sha256": "e932ba6b54b16b39b9964814ecae3f52e2bba01072dfb75ad9eb44d912753042"
+        }
+      ],
+      "raw_evidence": "The caller can update their own information or has an explicit admin bypass.",
+      "replay_matches": true
+    }
+  ]
+}

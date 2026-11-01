@@ -1,0 +1,396 @@
+{
+  "metrics": {
+    "oas_only": {
+      "n": 14,
+      "correct": 2,
+      "macro_f1": 0.04081632653061224,
+      "per_label": {
+        "public": {
+          "precision": 0.16666666666666666,
+          "recall": 1.0,
+          "f1": 0.2857142857142857,
+          "support": 2
+        },
+        "role_required": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "membership_required": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "tenant_match": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "owner_match": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "owner_or_admin": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "manual_review_required": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "role_required": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "membership_required": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "tenant_match": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 1,
+          "error": 0
+        },
+        "owner_match": {
+          "public": 1,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 1,
+          "error": 0
+        },
+        "owner_or_admin": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "manual_review_required": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        }
+      },
+      "manual_ratio": 0.14285714285714285,
+      "mean_ms": 2001.9730214345534
+    },
+    "oas_code": {
+      "n": 14,
+      "correct": 8,
+      "macro_f1": 0.5333333333333333,
+      "per_label": {
+        "public": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 2
+        },
+        "role_required": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        },
+        "membership_required": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "support": 2
+        },
+        "tenant_match": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 2
+        },
+        "owner_match": {
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4,
+          "support": 2
+        },
+        "owner_or_admin": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "support": 2
+        },
+        "manual_review_required": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "support": 2
+        }
+      },
+      "confusion_matrix": {
+        "public": {
+          "public": 2,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "role_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 2,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "membership_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 1,
+          "tenant_match": 0,
+          "owner_match": 1,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "tenant_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 2,
+          "owner_match": 0,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "owner_match": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 2,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "owner_or_admin": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 1,
+          "owner_or_admin": 1,
+          "manual_review_required": 0,
+          "error": 0
+        },
+        "manual_review_required": {
+          "public": 0,
+          "role_required": 0,
+          "membership_required": 0,
+          "tenant_match": 0,
+          "owner_match": 2,
+          "owner_or_admin": 0,
+          "manual_review_required": 0,
+          "error": 0
+        }
+      },
+      "manual_ratio": 0.0,
+      "mean_ms": 1653.561750002804
+    }
+  },
+  "paired": [
+    {
+      "id": "controlled-observatory:observations",
+      "origin": "synthetic_control",
+      "target": "owner_match",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:notebooks",
+      "origin": "synthetic_control",
+      "target": "owner_match",
+      "oas_only": "manual_review_required",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:calibrations",
+      "origin": "synthetic_control",
+      "target": "owner_or_admin",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:captures",
+      "origin": "synthetic_control",
+      "target": "owner_or_admin",
+      "oas_only": "public",
+      "oas_code": "owner_or_admin"
+    },
+    {
+      "id": "controlled-observatory:allocations",
+      "origin": "synthetic_control",
+      "target": "tenant_match",
+      "oas_only": "manual_review_required",
+      "oas_code": "tenant_match"
+    },
+    {
+      "id": "controlled-observatory:inventories",
+      "origin": "synthetic_control",
+      "target": "tenant_match",
+      "oas_only": "public",
+      "oas_code": "tenant_match"
+    },
+    {
+      "id": "controlled-observatory:queues",
+      "origin": "synthetic_control",
+      "target": "role_required",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:relays",
+      "origin": "synthetic_control",
+      "target": "role_required",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:spectra",
+      "origin": "synthetic_control",
+      "target": "membership_required",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:forecasts",
+      "origin": "synthetic_control",
+      "target": "membership_required",
+      "oas_only": "public",
+      "oas_code": "membership_required"
+    },
+    {
+      "id": "controlled-observatory:catalog",
+      "origin": "synthetic_control",
+      "target": "public",
+      "oas_only": "public",
+      "oas_code": "public"
+    },
+    {
+      "id": "controlled-observatory:bulletins",
+      "origin": "synthetic_control",
+      "target": "public",
+      "oas_only": "public",
+      "oas_code": "public"
+    },
+    {
+      "id": "controlled-observatory:transfers",
+      "origin": "synthetic_control",
+      "target": "manual_review_required",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "controlled-observatory:reservations",
+      "origin": "synthetic_control",
+      "target": "manual_review_required",
+      "oas_only": "public",
+      "oas_code": "owner_match"
+    },
+    {
+      "id": "realworld-django:GET:/articles/{slug}",
+      "origin": "external_static",
+      "target": null,
+      "oas_only": "public",
+      "oas_code": "public"
+    },
+    {
+      "id": "realworld-django:PUT:/articles/{slug}",
+      "origin": "external_static",
+      "target": null,
+      "oas_only": "manual_review_required",
+      "oas_code": "owner_or_admin"
+    },
+    {
+      "id": "realworld-django:DELETE:/articles/{slug}/comments/{id}",
+      "origin": "external_static",
+      "target": null,
+      "oas_only": "manual_review_required",
+      "oas_code": "owner_or_admin"
+    },
+    {
+      "id": "realworld-django:GET:/tags",
+      "origin": "external_static",
+      "target": null,
+      "oas_only": "public",
+      "oas_code": "public"
+    }
+  ],
+  "usage": {
+    "oas_only": {
+      "responses": 18,
+      "input_tokens": 51773,
+      "output_tokens": 1109,
+      "evidence_invalid": 0,
+      "errors": 0
+    },
+    "oas_code": {
+      "responses": 18,
+      "input_tokens": 61546,
+      "output_tokens": 1439,
+      "evidence_invalid": 0,
+      "errors": 0
+    }
+  },
+  "complete": true,
+  "scored_origin": "synthetic_control"
+}

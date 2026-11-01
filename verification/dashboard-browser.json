@@ -1,0 +1,12 @@
+[
+  {
+    "case": "dashboard approve -> proxy BLOCK",
+    "status": 403,
+    "elapsed_sec": 2.9689999999973224
+  },
+  {
+    "case": "dashboard rollback -> proxy OBSERVE",
+    "status": 200,
+    "elapsed_sec": 4.60899999999674
+  }
+]

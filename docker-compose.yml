@@ -1,0 +1,84 @@
+services:
+  demo-backend:
+    build: .
+    image: blade:local
+    command: [uvicorn, demo_backend.main:app, --host, 0.0.0.0, --port, "9000"]
+    ports: ["9000:9000"]
+    volumes: ["demo-data:/data"]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:9000/public/health', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  admin-api:
+    build: .
+    image: blade:local
+    env_file: .env
+    environment:
+      BLADE_OLLAMA_URL: ${BLADE_DOCKER_OLLAMA_URL:-http://host.docker.internal:11434}
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    command: [uvicorn, admin_api.main:app, --host, 0.0.0.0, --port, "8100"]
+    ports: ["8100:8100"]
+    volumes:
+      - admin-data:/data
+      - demo-data:/demo:ro
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8100/policies', timeout=2)"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  proxy:
+    build: .
+    image: blade:local
+    environment:
+      BLADE_JWT_SECRET: ${BLADE_JWT_SECRET:?Set BLADE_JWT_SECRET in .env}
+      BLADE_TARGET_URL: http://demo-backend:9000
+      BLADE_ADMIN_URL: http://admin-api:8100
+      BLADE_DB_DSN: sqlite:///file:/data/demo.db?mode=ro
+      BLADE_FAIL_MODE: ${BLADE_FAIL_MODE:-open}
+      BLADE_CACHE_TTL: ${BLADE_CACHE_TTL:-60}
+      BLADE_POLICY_POLL_SEC: ${BLADE_POLICY_POLL_SEC:-5}
+      BLADE_PROXY_HOST: 0.0.0.0
+      BLADE_PHASE2_ENABLED: ${BLADE_PHASE2_ENABLED:-false}
+      BLADE_MODE_ENABLED: ${BLADE_MODE_ENABLED:-true}
+      BLADE_OBSERVABILITY_ENABLED: ${BLADE_OBSERVABILITY_ENABLED:-true}
+    command: [python, -m, proxy.server]
+    ports: ["8080:8080"]
+    volumes: ["demo-data:/data:ro"]
+    depends_on:
+      admin-api: {condition: service_healthy}
+      demo-backend: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import socket; socket.create_connection(('localhost',8080),2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  dashboard:
+    build: ./dashboard
+    ports: ["3000:3000"]
+    depends_on:
+      admin-api: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:3000/]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  alerts:
+    build: .
+    image: blade:local
+    command: [python, -m, admin_api.alerts]
+    environment:
+      BLADE_SLACK_WEBHOOK: ${BLADE_SLACK_WEBHOOK:-}
+      BLADE_DISCORD_WEBHOOK: ${BLADE_DISCORD_WEBHOOK:-}
+    volumes: ["admin-data:/data:ro", "alert-state:/state"]
+    depends_on:
+      admin-api: {condition: service_healthy}
+
+volumes:
+  demo-data:
+  admin-data:
+  alert-state:

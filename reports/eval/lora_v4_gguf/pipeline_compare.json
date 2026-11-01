@@ -1,0 +1,579 @@
+{
+ "llm": {
+  "classifier": "llm",
+  "policies": [
+   {
+    "id": "pol_public_health_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/public/health"
+    },
+    "label": "public",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 1.0,
+    "evidence": "The endpoint explicitly states it is intended to be public.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T18:53:46.042913Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orders_get_by_orderId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/orders/{orderId}"
+    },
+    "label": "owner_match",
+    "params": {
+     "object_param": "orderId",
+     "owner_lookup": {
+      "table": "orders",
+      "id_col": "id",
+      "owner_col": "user_id",
+      "tenant_col": null
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 1.0,
+    "evidence": "Orders are owned by the user who created them.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T18:55:03.513890Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orders_delete_by_orderId",
+    "endpoint": {
+     "method": "DELETE",
+     "path": "/orders/{orderId}"
+    },
+    "label": "owner_match",
+    "params": {
+     "object_param": "orderId",
+     "owner_lookup": {
+      "table": "orders",
+      "id_col": "id",
+      "owner_col": "user_id",
+      "tenant_col": null
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 1.0,
+    "evidence": "Delete order requires ownership of the order.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T18:56:20.863214Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_users_get_by_userId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/users/{userId}"
+    },
+    "label": "manual_review_required",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.0,
+    "evidence": "Cannot identify ownership column in ERD",
+    "status": "PENDING",
+    "created_at": "2026-10-29T18:57:38.535718Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_admin_reports_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/admin/reports"
+    },
+    "label": "role_required",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [
+      "admin"
+     ],
+     "allowed_membership": []
+    },
+    "confidence": 1.0,
+    "evidence": "Reports require admin role.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T18:58:48.344155Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orgs_docs_get_by_orgId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/orgs/{orgId}/docs"
+    },
+    "label": "tenant_match",
+    "params": {
+     "object_param": "orgId",
+     "owner_lookup": {
+      "table": "orgs",
+      "id_col": "id",
+      "owner_col": null,
+      "tenant_col": "id"
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "Requested org must match caller tenant.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:00:05.187695Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_premium_content_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/premium/content"
+    },
+    "label": "membership_required",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [],
+     "allowed_membership": [
+      "premium"
+     ]
+    },
+    "confidence": 0.9,
+    "evidence": "Access to /premium/content requires a premium membership.",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:01:16.381805Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   }
+  ],
+  "seconds": 578.1,
+  "seconds_per_policy": 82.6,
+  "ollama_ps": [
+   {
+    "name": "qwen2.5:7b",
+    "size": 5069917388,
+    "size_vram": 0
+   }
+  ]
+ },
+ "lora": {
+  "classifier": "lora",
+  "policies": [
+   {
+    "id": "pol_public_health_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/public/health"
+    },
+    "label": "public",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=public confidence=0.9] description: 핸들러 원문 — 인증·권한 검사 없이 공개된 헬스체크를 반환하므로; 판단: 익명 접근이 허용되는 긍정 근거가 있어 public 선택 | params: none required",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:03:52.468287Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orders_get_by_orderId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/orders/{orderId}"
+    },
+    "label": "owner_match",
+    "params": {
+     "object_param": "orderId",
+     "owner_lookup": {
+      "table": "orders",
+      "id_col": "id",
+      "owner_col": "user_id",
+      "tenant_col": null
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=owner_match confidence=0.9] description: 핸들러 원문 — 요청자가 객체 소유자여야 함(구현은 owner_id = principal.id로 명시되지 않지만 의도된 정책은 owner_match); 판단: owner_match | params: object_param orderId -> ERD orders.id; owner_col=user_id; tenant_col=None",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:04:22.629382Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orders_delete_by_orderId",
+    "endpoint": {
+     "method": "DELETE",
+     "path": "/orders/{orderId}"
+    },
+    "label": "owner_match",
+    "params": {
+     "object_param": "orderId",
+     "owner_lookup": {
+      "table": "orders",
+      "id_col": "id",
+      "owner_col": "user_id",
+      "tenant_col": null
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=owner_match confidence=0.9] description: 핸들러 원문 — 요청자 id와 객체 소유자 id를 비교해 다르면 거부; 판단: owner_match | params: object_param orderId -> ERD orders.id; owner_col=user_id; tenant_col=None",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:04:51.634088Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_users_get_by_userId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/users/{userId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+     "object_param": "userId",
+     "owner_lookup": {
+      "table": "users",
+      "id_col": "id",
+      "owner_col": "id",
+      "tenant_col": "org_id"
+     },
+     "roles": [
+      "admin"
+     ],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 원문 — 소유자 또는 관리자만 허용하는 조건이 명시되어 있음; 판단: owner_or_admin | params: object_param userId -> ERD users.id; owner_col=id; tenant_col=org_id; llm v2.0 filled ['roles']",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:06:41.681410Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_admin_reports_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/admin/reports"
+    },
+    "label": "role_required",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [
+      "admin"
+     ],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=role_required confidence=0.9] description: 핸들러 원문 — 관리자 역할 검사가 접근 조건이라; 판단: admin 역할이 필요하므로 role_required | params: llm v2.0 filled ['roles']",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:08:24.002916Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_orgs_docs_get_by_orgId",
+    "endpoint": {
+     "method": "GET",
+     "path": "/orgs/{orgId}/docs"
+    },
+    "label": "tenant_match",
+    "params": {
+     "object_param": "orgId",
+     "owner_lookup": {
+      "table": "orgs",
+      "id_col": "id",
+      "owner_col": null,
+      "tenant_col": "id"
+     },
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=tenant_match confidence=0.9] description: 핸들러 코드의 fetch_one — 자원을 요청자의 tenant 범위로 한정하지 않지만, 의도된 정책은 tenant 일치이므로 tenant_match | params: object_param orgId -> ERD orgs.id; owner_col=None; tenant_col=id",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:08:54.988548Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   },
+   {
+    "id": "pol_premium_content_get",
+    "endpoint": {
+     "method": "GET",
+     "path": "/premium/content"
+    },
+    "label": "manual_review_required",
+    "params": {
+     "object_param": null,
+     "owner_lookup": null,
+     "roles": [],
+     "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v4 policy-label-v3.0.1 label=membership_required confidence=0.9] description: 핸들러 원문 — premium 멤버십만 허용하는 조건부; 판단: membership_required | manual_review_required: original label membership_required cannot be enforced by the current runtime (AGENTS.md v2.9)",
+    "status": "PENDING",
+    "created_at": "2026-10-29T19:09:19.371586Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+   }
+  ],
+  "seconds": 482.1,
+  "seconds_per_policy": 68.9,
+  "ollama_ps": [
+   {
+    "name": "blade-qwen-lora-v4:latest",
+    "size": 5470494392,
+    "size_vram": 0
+   },
+   {
+    "name": "qwen2.5:7b",
+    "size": 5069917388,
+    "size_vram": 0
+   }
+  ],
+  "proxy_checks": [
+   {
+    "case": "BOLA: other user reads order",
+    "method": "GET",
+    "path": "/orders/1042",
+    "user": "user_99",
+    "policy_label": "owner_match",
+    "expected": 403,
+    "actual": 403,
+    "ok": true
+   },
+   {
+    "case": "owner reads own order",
+    "method": "GET",
+    "path": "/orders/1042",
+    "user": "user_77",
+    "policy_label": "owner_match",
+    "expected": 200,
+    "actual": 200,
+    "ok": true
+   },
+   {
+    "case": "BOLA: other user deletes order",
+    "method": "DELETE",
+    "path": "/orders/1042",
+    "user": "user_99",
+    "policy_label": "owner_match",
+    "expected": 403,
+    "actual": 403,
+    "ok": true
+   },
+   {
+    "case": "other tenant reads org docs",
+    "method": "GET",
+    "path": "/orgs/org_1/docs",
+    "user": "user_99",
+    "policy_label": "tenant_match",
+    "expected": 403,
+    "actual": 403,
+    "ok": true
+   },
+   {
+    "case": "same tenant reads org docs",
+    "method": "GET",
+    "path": "/orgs/org_1/docs",
+    "user": "user_77",
+    "policy_label": "tenant_match",
+    "expected": 200,
+    "actual": 200,
+    "ok": true
+   },
+   {
+    "case": "non-admin reads admin reports",
+    "method": "GET",
+    "path": "/admin/reports",
+    "user": "user_99",
+    "policy_label": "role_required",
+    "expected": 403,
+    "actual": 403,
+    "ok": true
+   },
+   {
+    "case": "admin reads admin reports",
+    "method": "GET",
+    "path": "/admin/reports",
+    "user": "admin_1",
+    "policy_label": "role_required",
+    "expected": 200,
+    "actual": 200,
+    "ok": true
+   },
+   {
+    "case": "other user reads user record",
+    "method": "GET",
+    "path": "/users/user_77",
+    "user": "user_99",
+    "policy_label": "owner_or_admin",
+    "expected": 403,
+    "actual": 403,
+    "ok": true
+   },
+   {
+    "case": "public health without JWT",
+    "method": "GET",
+    "path": "/public/health",
+    "user": null,
+    "policy_label": "public",
+    "expected": 200,
+    "actual": 200,
+    "ok": true
+   }
+  ],
+  "detections": [
+   {
+    "ts": "2026-10-29T19:09:20.436756Z",
+    "request_id": "9ff75ead-81f0-413c-8279-28f3c84831a1",
+    "sub": "user_99",
+    "method": "GET",
+    "path": "/orders/1042",
+    "policy_id": "pol_orders_get_by_orderId",
+    "label": "owner_match",
+    "verdict": "BLOCK",
+    "reason": "policy_mismatch"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.444314Z",
+    "request_id": "0ff160c9-45cd-400a-bef0-6eddedf1fb13",
+    "sub": "user_77",
+    "method": "GET",
+    "path": "/orders/1042",
+    "policy_id": "pol_orders_get_by_orderId",
+    "label": "owner_match",
+    "verdict": "PASS",
+    "reason": "policy_matched"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.448191Z",
+    "request_id": "92681577-5ab6-42e4-b873-ba192b31586b",
+    "sub": "user_99",
+    "method": "DELETE",
+    "path": "/orders/1042",
+    "policy_id": "pol_orders_delete_by_orderId",
+    "label": "owner_match",
+    "verdict": "BLOCK",
+    "reason": "policy_mismatch"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.451585Z",
+    "request_id": "cb2b0917-dd02-469a-9d56-409673169518",
+    "sub": "user_99",
+    "method": "GET",
+    "path": "/orgs/org_1/docs",
+    "policy_id": "pol_orgs_docs_get_by_orgId",
+    "label": "tenant_match",
+    "verdict": "BLOCK",
+    "reason": "policy_mismatch"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.451585Z",
+    "request_id": "03b3929c-c533-4a5f-a49a-19e82eee0edd",
+    "sub": "user_77",
+    "method": "GET",
+    "path": "/orgs/org_1/docs",
+    "policy_id": "pol_orgs_docs_get_by_orgId",
+    "label": "tenant_match",
+    "verdict": "PASS",
+    "reason": "policy_matched"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.456399Z",
+    "request_id": "9503f84c-ea79-4e94-b4ba-5790e8e1bc3b",
+    "sub": "user_99",
+    "method": "GET",
+    "path": "/admin/reports",
+    "policy_id": "pol_admin_reports_get",
+    "label": "role_required",
+    "verdict": "BLOCK",
+    "reason": "policy_mismatch"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.456399Z",
+    "request_id": "634526e9-e957-4413-9985-08f0f99a8dea",
+    "sub": "admin_1",
+    "method": "GET",
+    "path": "/admin/reports",
+    "policy_id": "pol_admin_reports_get",
+    "label": "role_required",
+    "verdict": "PASS",
+    "reason": "policy_matched"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.459315Z",
+    "request_id": "3cb98b0e-63a4-470f-ac05-45054a3ac505",
+    "sub": "user_99",
+    "method": "GET",
+    "path": "/users/user_77",
+    "policy_id": "pol_users_get_by_userId",
+    "label": "owner_or_admin",
+    "verdict": "BLOCK",
+    "reason": "policy_mismatch"
+   },
+   {
+    "ts": "2026-10-29T19:09:20.459315Z",
+    "request_id": "a5525a2d-3b08-491d-89e7-a74db0f65bbe",
+    "sub": "",
+    "method": "GET",
+    "path": "/public/health",
+    "policy_id": "pol_public_health_get",
+    "label": "public",
+    "verdict": "PASS",
+    "reason": "public"
+   }
+  ]
+ }
+}

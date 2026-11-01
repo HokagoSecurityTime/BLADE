@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "n": 30,
+  "distinct_policy_templates": 15,
+  "truth_table_checks": 1920,
+  "prompt_sha256": "f748510fea456603e2b2fbb77f99cff4fa583444968a301a430218b54731b518",
+  "input_sha256": "0425e49ed4cb532f535f343f01a3f4844827c654c4e99a9a365bcdcb6fc8a5ea",
+  "extraction_sha256": "858f684268f4cf7aad966697c5e8cd0578389c0172c8287c1c9a1c6148256408",
+  "repeats": 1,
+  "final_selector": "LLM; no rule override",
+  "unsafe_metric": "compound contract predicted as concrete label",
+  "raw_prediction_preserved": true,
+  "external_generalization": false
+}

@@ -1,0 +1,32 @@
+# Separate project/volumes/ports; does not replace the presentation stack.
+services:
+  demo-backend:
+    ports: !override ["127.0.0.1:19000:9000"]
+  admin-api:
+    ports: !override ["127.0.0.1:18100:8100"]
+    environment:
+      BLADE_LLM_PROVIDER: ollama
+      BLADE_LLM_MODEL: qwen2.5:7b
+      BLADE_RAG_KINDS: code,idiom
+      BLADE_SLACK_WEBHOOK: ""
+      BLADE_DISCORD_WEBHOOK: ""
+    volumes:
+      - ./.cache/models:/models
+  proxy:
+    ports: !override ["127.0.0.1:18080:8080"]
+    environment:
+      BLADE_JWT_SECRET: phase2-local-verification-signing-key
+      BLADE_POLICY_POLL_SEC: "0.2"
+  dashboard:
+    ports: !override ["127.0.0.1:13000:3000"]
+  alerts:
+    environment:
+      BLADE_LLM_PROVIDER: ollama
+      BLADE_LLM_MODEL: qwen2.5:7b
+      BLADE_RAG_KINDS: code,idiom
+      BLADE_SLACK_WEBHOOK: ""
+      BLADE_DISCORD_WEBHOOK: ""
+    volumes:
+      - ./.cache/models:/models
+  redis:
+    ports: ["127.0.0.1:16380:6379"]

@@ -1,0 +1,61 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:7b",
+  "rag": "code,idiom",
+  "slack": "local HTTP only; external channel deferred by user",
+  "results": [
+    {
+      "step": 1,
+      "status": "PASS",
+      "description": "7 PENDING policies generated with real LLM/RAG/controller"
+    },
+    {
+      "step": 2,
+      "status": "PASS",
+      "description": "7 ACTIVE policies, all observe"
+    },
+    {
+      "step": 3,
+      "status": "PASS",
+      "description": "200 + OBSERVE + would_block=true"
+    },
+    {
+      "step": 4,
+      "status": "PASS",
+      "description": "403 + local Slack-format webhook + real LLM explanation",
+      "explanation": "BLADE 탐지 로그에 따르면, 요청자가 소유권과 일치하지 않아 정책과 맞지 않아 차단되었습니다. 이는 공격 의도를 추측하지 않으며, 실제 차단이 아닙니다.",
+      "external_slack": "DEFERRED"
+    },
+    {
+      "step": 5,
+      "status": "PASS",
+      "description": "20 OBSERVE requests -> real LLM owner_or_admin proposal"
+    },
+    {
+      "step": 6,
+      "status": "PASS",
+      "description": "Proposal accepted via API: v2 / owner_or_admin / observe"
+    },
+    {
+      "step": 7,
+      "status": "PASS",
+      "description": "Rollback triggered a separate review proposal"
+    },
+    {
+      "step": 8,
+      "status": "PASS",
+      "description": "observability rate > 0",
+      "metrics": {
+        "total": 1,
+        "with_policy": 1,
+        "lookup_ok": 1,
+        "rate": 1.0
+      }
+    },
+    {
+      "step": 9,
+      "status": "PASS",
+      "description": "Redis stopped: still 200 + OBSERVE + would_block"
+    }
+  ]
+}

@@ -1,0 +1,478 @@
+[
+  {
+    "id": "me",
+    "reference_label": "owner_match",
+    "source_refs": [
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 36,
+        "end": 49,
+        "code": "    @router.get(\n        \"/me\",\n        response_model=user_schema,\n        name=\"users:current_user\",\n        responses={\n            status.HTTP_401_UNAUTHORIZED: {\n                \"description\": \"Missing token or inactive user.\",\n            },\n        },\n    )\n    async def me(\n        user: models.UP = Depends(get_current_active_user),\n    ):\n        return user_schema.model_validate(user)",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 107,
+        "end": 151,
+        "code": "    def current_user(\n        self,\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        get_enabled_backends: EnabledBackendsDependency[models.UP, models.ID]\n        | None = None,\n    ):\n        \"\"\"\n        Return a dependency callable to retrieve currently authenticated user.\n\n        :param optional: If `True`, `None` is returned if there is no authenticated user\n        or if it doesn't pass the other requirements.\n        Otherwise, throw `401 Unauthorized`. Defaults to `False`.\n        Otherwise, an exception is raised. Defaults to `False`.\n        :param active: If `True`, throw `401 Unauthorized` if\n        the authenticated user is inactive. Defaults to `False`.\n        :param verified: If `True`, throw `403 Forbidden` if\n        the authenticated user is not verified. Defaults to `False`.\n        :param superuser: If `True`, throw `403 Forbidden` if\n        the authenticated user is not a superuser. Defaults to `False`.\n        :param get_enabled_backends: Optional dependency callable returning\n        a list of enabled authentication backends.\n        Useful if you want to dynamically enable some authentication backends\n        based on external logic, like a configuration in database.\n        By default, all specified authentication backends are enabled.\n        Please not however that every backends will appear in the OpenAPI documentation,\n        as FastAPI resolves it statically.\n        \"\"\"\n        signature = self._get_dependency_signature(get_enabled_backends)\n\n        @with_signature(signature)\n        async def current_user_dependency(*args: Any, **kwargs: Any):\n            user, _ = await self._authenticate(\n                *args,\n                optional=optional,\n                active=active,\n                verified=verified,\n                superuser=superuser,\n                **kwargs,\n            )\n            return user\n\n        return current_user_dependency",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 153,
+        "end": 191,
+        "code": "    async def _authenticate(\n        self,\n        *args,\n        user_manager: BaseUserManager[models.UP, models.ID],\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        **kwargs,\n    ) -> tuple[models.UP | None, str | None]:\n        user: models.UP | None = None\n        token: str | None = None\n        enabled_backends: Sequence[AuthenticationBackend[models.UP, models.ID]] = (\n            kwargs.get(\"enabled_backends\", self.backends)\n        )\n        for backend in self.backends:\n            if backend in enabled_backends:\n                token = kwargs[name_to_variable_name(backend.name)]\n                strategy: Strategy[models.UP, models.ID] = kwargs[\n                    name_to_strategy_variable_name(backend.name)\n                ]\n                if token is not None:\n                    user = await strategy.read_token(token, user_manager)\n                    if user:\n                        break\n\n        status_code = status.HTTP_401_UNAUTHORIZED\n        if user:\n            status_code = status.HTTP_403_FORBIDDEN\n            if active and not user.is_active:\n                status_code = status.HTTP_401_UNAUTHORIZED\n                user = None\n            elif (\n                verified and not user.is_verified or superuser and not user.is_superuser\n            ):\n                user = None\n        if not user and not optional:\n            raise HTTPException(status_code=status_code)\n        return user, token",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 193,
+        "end": 237,
+        "code": "    def _get_dependency_signature(\n        self, get_enabled_backends: EnabledBackendsDependency | None = None\n    ) -> Signature:\n        \"\"\"\n        Generate a dynamic signature for the current_user dependency.\n\n        Here comes some blood magic 🧙‍♂️\n        Thank to \"makefun\", we are able to generate callable\n        with a dynamic number of dependencies at runtime.\n        This way, each security schemes are detected by the OpenAPI generator.\n        \"\"\"\n        try:\n            parameters: list[Parameter] = [\n                Parameter(\n                    name=\"user_manager\",\n                    kind=Parameter.POSITIONAL_OR_KEYWORD,\n                    default=Depends(self.get_user_manager),\n                )\n            ]\n\n            for backend in self.backends:\n                parameters += [\n                    Parameter(\n                        name=name_to_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(cast(Callable, backend.transport.scheme)),\n                    ),\n                    Parameter(\n                        name=name_to_strategy_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(backend.get_strategy),\n                    ),\n                ]\n\n            if get_enabled_backends is not None:\n                parameters += [\n                    Parameter(\n                        name=\"enabled_backends\",\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(get_enabled_backends),\n                    )\n                ]\n            return Signature(parameters)\n        except ValueError:\n            raise DuplicateBackendNamesError()",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 19,
+        "end": 21,
+        "code": "    get_current_active_user = authenticator.current_user(\n        active=True, verified=requires_verification\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 22,
+        "end": 24,
+        "code": "    get_current_superuser = authenticator.current_user(\n        active=True, verified=requires_verification, superuser=True\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      }
+    ],
+    "intended_policy": "default users router documentation and declared dependency factory",
+    "implemented": "authenticated self target",
+    "reference_status": "agent source review, not human gold",
+    "gaps": [
+      "configured DB/backend missing",
+      "custom manager callbacks may change policy",
+      "default requires_verification=False only"
+    ]
+  },
+  {
+    "id": "update_me",
+    "reference_label": "owner_match",
+    "source_refs": [
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 51,
+        "end": 110,
+        "code": "    @router.patch(\n        \"/me\",\n        response_model=user_schema,\n        dependencies=[Depends(get_current_active_user)],\n        name=\"users:patch_current_user\",\n        responses={\n            status.HTTP_401_UNAUTHORIZED: {\n                \"description\": \"Missing token or inactive user.\",\n            },\n            status.HTTP_400_BAD_REQUEST: {\n                \"model\": ErrorModel,\n                \"content\": {\n                    \"application/json\": {\n                        \"examples\": {\n                            ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS: {\n                                \"summary\": \"A user with this email already exists.\",\n                                \"value\": {\n                                    \"detail\": ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS\n                                },\n                            },\n                            ErrorCode.UPDATE_USER_INVALID_PASSWORD: {\n                                \"summary\": \"Password validation failed.\",\n                                \"value\": {\n                                    \"detail\": {\n                                        \"code\": ErrorCode.UPDATE_USER_INVALID_PASSWORD,\n                                        \"reason\": \"Password should be\"\n                                        \"at least 3 characters\",\n                                    }\n                                },\n                            },\n                        }\n                    }\n                },\n            },\n        },\n    )\n    async def update_me(\n        request: Request,\n        user_update: user_update_schema,  # type: ignore\n        user: models.UP = Depends(get_current_active_user),\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ):\n        try:\n            user = await user_manager.update(\n                user_update, user, safe=True, request=request\n            )\n            return user_schema.model_validate(user)\n        except exceptions.InvalidPasswordException as e:\n            raise HTTPException(\n                status_code=status.HTTP_400_BAD_REQUEST,\n                detail={\n                    \"code\": ErrorCode.UPDATE_USER_INVALID_PASSWORD,\n                    \"reason\": e.reason,\n                },\n            )\n        except exceptions.UserAlreadyExists:\n            raise HTTPException(\n                status.HTTP_400_BAD_REQUEST,\n                detail=ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS,\n            )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 107,
+        "end": 151,
+        "code": "    def current_user(\n        self,\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        get_enabled_backends: EnabledBackendsDependency[models.UP, models.ID]\n        | None = None,\n    ):\n        \"\"\"\n        Return a dependency callable to retrieve currently authenticated user.\n\n        :param optional: If `True`, `None` is returned if there is no authenticated user\n        or if it doesn't pass the other requirements.\n        Otherwise, throw `401 Unauthorized`. Defaults to `False`.\n        Otherwise, an exception is raised. Defaults to `False`.\n        :param active: If `True`, throw `401 Unauthorized` if\n        the authenticated user is inactive. Defaults to `False`.\n        :param verified: If `True`, throw `403 Forbidden` if\n        the authenticated user is not verified. Defaults to `False`.\n        :param superuser: If `True`, throw `403 Forbidden` if\n        the authenticated user is not a superuser. Defaults to `False`.\n        :param get_enabled_backends: Optional dependency callable returning\n        a list of enabled authentication backends.\n        Useful if you want to dynamically enable some authentication backends\n        based on external logic, like a configuration in database.\n        By default, all specified authentication backends are enabled.\n        Please not however that every backends will appear in the OpenAPI documentation,\n        as FastAPI resolves it statically.\n        \"\"\"\n        signature = self._get_dependency_signature(get_enabled_backends)\n\n        @with_signature(signature)\n        async def current_user_dependency(*args: Any, **kwargs: Any):\n            user, _ = await self._authenticate(\n                *args,\n                optional=optional,\n                active=active,\n                verified=verified,\n                superuser=superuser,\n                **kwargs,\n            )\n            return user\n\n        return current_user_dependency",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 153,
+        "end": 191,
+        "code": "    async def _authenticate(\n        self,\n        *args,\n        user_manager: BaseUserManager[models.UP, models.ID],\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        **kwargs,\n    ) -> tuple[models.UP | None, str | None]:\n        user: models.UP | None = None\n        token: str | None = None\n        enabled_backends: Sequence[AuthenticationBackend[models.UP, models.ID]] = (\n            kwargs.get(\"enabled_backends\", self.backends)\n        )\n        for backend in self.backends:\n            if backend in enabled_backends:\n                token = kwargs[name_to_variable_name(backend.name)]\n                strategy: Strategy[models.UP, models.ID] = kwargs[\n                    name_to_strategy_variable_name(backend.name)\n                ]\n                if token is not None:\n                    user = await strategy.read_token(token, user_manager)\n                    if user:\n                        break\n\n        status_code = status.HTTP_401_UNAUTHORIZED\n        if user:\n            status_code = status.HTTP_403_FORBIDDEN\n            if active and not user.is_active:\n                status_code = status.HTTP_401_UNAUTHORIZED\n                user = None\n            elif (\n                verified and not user.is_verified or superuser and not user.is_superuser\n            ):\n                user = None\n        if not user and not optional:\n            raise HTTPException(status_code=status_code)\n        return user, token",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 193,
+        "end": 237,
+        "code": "    def _get_dependency_signature(\n        self, get_enabled_backends: EnabledBackendsDependency | None = None\n    ) -> Signature:\n        \"\"\"\n        Generate a dynamic signature for the current_user dependency.\n\n        Here comes some blood magic 🧙‍♂️\n        Thank to \"makefun\", we are able to generate callable\n        with a dynamic number of dependencies at runtime.\n        This way, each security schemes are detected by the OpenAPI generator.\n        \"\"\"\n        try:\n            parameters: list[Parameter] = [\n                Parameter(\n                    name=\"user_manager\",\n                    kind=Parameter.POSITIONAL_OR_KEYWORD,\n                    default=Depends(self.get_user_manager),\n                )\n            ]\n\n            for backend in self.backends:\n                parameters += [\n                    Parameter(\n                        name=name_to_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(cast(Callable, backend.transport.scheme)),\n                    ),\n                    Parameter(\n                        name=name_to_strategy_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(backend.get_strategy),\n                    ),\n                ]\n\n            if get_enabled_backends is not None:\n                parameters += [\n                    Parameter(\n                        name=\"enabled_backends\",\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(get_enabled_backends),\n                    )\n                ]\n            return Signature(parameters)\n        except ValueError:\n            raise DuplicateBackendNamesError()",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 19,
+        "end": 21,
+        "code": "    get_current_active_user = authenticator.current_user(\n        active=True, verified=requires_verification\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 22,
+        "end": 24,
+        "code": "    get_current_superuser = authenticator.current_user(\n        active=True, verified=requires_verification, superuser=True\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 440,
+        "end": 467,
+        "code": "    async def update(\n        self,\n        user_update: schemas.UU,\n        user: models.UP,\n        safe: bool = False,\n        request: Request | None = None,\n    ) -> models.UP:\n        \"\"\"\n        Update a user.\n\n        Triggers the on_after_update handler on success\n\n        :param user_update: The UserUpdate model containing\n        the changes to apply to the user.\n        :param user: The current user to update.\n        :param safe: If True, sensitive values like is_superuser or is_verified\n        will be ignored during the update, defaults to False\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        :return: The updated user of type models.UP.\n        \"\"\"\n        if safe:\n            updated_user_data = user_update.create_update_dict()\n        else:\n            updated_user_data = user_update.create_update_dict_superuser()\n        updated_user = await self._update(user, updated_user_data)\n        await self.on_after_update(updated_user, updated_user_data, request)\n        return updated_user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 514,
+        "end": 530,
+        "code": "    async def on_after_update(\n        self,\n        user: models.UP,\n        update_dict: dict[str, Any],\n        request: Request | None = None,\n    ) -> None:\n        \"\"\"\n        Perform logic after successful user update.\n\n        *You should overload this method to add your own logic.*\n\n        :param user: The updated user\n        :param update_dict: Dictionary with the updated user fields.\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 667,
+        "end": 684,
+        "code": "    async def _update(self, user: models.UP, update_dict: dict[str, Any]) -> models.UP:\n        validated_update_dict = {}\n        for field, value in update_dict.items():\n            if field == \"email\" and value != user.email:\n                try:\n                    await self.get_by_email(value)\n                    raise exceptions.UserAlreadyExists()\n                except exceptions.UserNotExists:\n                    validated_update_dict[\"email\"] = value\n                    validated_update_dict[\"is_verified\"] = False\n            elif field == \"password\" and value is not None:\n                await self.validate_password(value, user)\n                validated_update_dict[\"hashed_password\"] = self.password_helper.hash(\n                    value\n                )\n            else:\n                validated_update_dict[field] = value\n        return await self.user_db.update(user, validated_update_dict)",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 485,
+        "end": 498,
+        "code": "    async def validate_password(\n        self, password: str, user: schemas.UC | models.UP\n    ) -> None:\n        \"\"\"\n        Validate a password.\n\n        *You should overload this method to add your own validation logic.*\n\n        :param password: The password to validate.\n        :param user: The user associated to this password.\n        :raises InvalidPasswordException: The password is invalid.\n        :return: None if the password is valid.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 79,
+        "end": 92,
+        "code": "    async def get_by_email(self, user_email: str) -> models.UP:\n        \"\"\"\n        Get a user by e-mail.\n\n        :param user_email: E-mail of the user to retrieve.\n        :raises UserNotExists: The user does not exist.\n        :return: A user of type models.UP.\n        \"\"\"\n        user = await self.user_db.get_by_email(user_email)\n\n        if user is None:\n            raise exceptions.UserNotExists()\n\n        return user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 26,
+        "end": 28,
+        "code": "    async def update(self, user: UP, update_dict: dict[str, Any]) -> UP:\n        \"\"\"Update a user.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      }
+    ],
+    "intended_policy": "default users router documentation and declared dependency factory",
+    "implemented": "authenticated self target",
+    "reference_status": "agent source review, not human gold",
+    "gaps": [
+      "configured DB/backend missing",
+      "custom manager callbacks may change policy",
+      "default requires_verification=False only"
+    ]
+  },
+  {
+    "id": "get_user",
+    "reference_label": "role_required",
+    "source_refs": [
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 112,
+        "end": 130,
+        "code": "    @router.get(\n        \"/{id}\",\n        response_model=user_schema,\n        dependencies=[Depends(get_current_superuser)],\n        name=\"users:user\",\n        responses={\n            status.HTTP_401_UNAUTHORIZED: {\n                \"description\": \"Missing token or inactive user.\",\n            },\n            status.HTTP_403_FORBIDDEN: {\n                \"description\": \"Not a superuser.\",\n            },\n            status.HTTP_404_NOT_FOUND: {\n                \"description\": \"The user does not exist.\",\n            },\n        },\n    )\n    async def get_user(user=Depends(get_user_or_404)):\n        return user_schema.model_validate(user)",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 107,
+        "end": 151,
+        "code": "    def current_user(\n        self,\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        get_enabled_backends: EnabledBackendsDependency[models.UP, models.ID]\n        | None = None,\n    ):\n        \"\"\"\n        Return a dependency callable to retrieve currently authenticated user.\n\n        :param optional: If `True`, `None` is returned if there is no authenticated user\n        or if it doesn't pass the other requirements.\n        Otherwise, throw `401 Unauthorized`. Defaults to `False`.\n        Otherwise, an exception is raised. Defaults to `False`.\n        :param active: If `True`, throw `401 Unauthorized` if\n        the authenticated user is inactive. Defaults to `False`.\n        :param verified: If `True`, throw `403 Forbidden` if\n        the authenticated user is not verified. Defaults to `False`.\n        :param superuser: If `True`, throw `403 Forbidden` if\n        the authenticated user is not a superuser. Defaults to `False`.\n        :param get_enabled_backends: Optional dependency callable returning\n        a list of enabled authentication backends.\n        Useful if you want to dynamically enable some authentication backends\n        based on external logic, like a configuration in database.\n        By default, all specified authentication backends are enabled.\n        Please not however that every backends will appear in the OpenAPI documentation,\n        as FastAPI resolves it statically.\n        \"\"\"\n        signature = self._get_dependency_signature(get_enabled_backends)\n\n        @with_signature(signature)\n        async def current_user_dependency(*args: Any, **kwargs: Any):\n            user, _ = await self._authenticate(\n                *args,\n                optional=optional,\n                active=active,\n                verified=verified,\n                superuser=superuser,\n                **kwargs,\n            )\n            return user\n\n        return current_user_dependency",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 153,
+        "end": 191,
+        "code": "    async def _authenticate(\n        self,\n        *args,\n        user_manager: BaseUserManager[models.UP, models.ID],\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        **kwargs,\n    ) -> tuple[models.UP | None, str | None]:\n        user: models.UP | None = None\n        token: str | None = None\n        enabled_backends: Sequence[AuthenticationBackend[models.UP, models.ID]] = (\n            kwargs.get(\"enabled_backends\", self.backends)\n        )\n        for backend in self.backends:\n            if backend in enabled_backends:\n                token = kwargs[name_to_variable_name(backend.name)]\n                strategy: Strategy[models.UP, models.ID] = kwargs[\n                    name_to_strategy_variable_name(backend.name)\n                ]\n                if token is not None:\n                    user = await strategy.read_token(token, user_manager)\n                    if user:\n                        break\n\n        status_code = status.HTTP_401_UNAUTHORIZED\n        if user:\n            status_code = status.HTTP_403_FORBIDDEN\n            if active and not user.is_active:\n                status_code = status.HTTP_401_UNAUTHORIZED\n                user = None\n            elif (\n                verified and not user.is_verified or superuser and not user.is_superuser\n            ):\n                user = None\n        if not user and not optional:\n            raise HTTPException(status_code=status_code)\n        return user, token",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 193,
+        "end": 237,
+        "code": "    def _get_dependency_signature(\n        self, get_enabled_backends: EnabledBackendsDependency | None = None\n    ) -> Signature:\n        \"\"\"\n        Generate a dynamic signature for the current_user dependency.\n\n        Here comes some blood magic 🧙‍♂️\n        Thank to \"makefun\", we are able to generate callable\n        with a dynamic number of dependencies at runtime.\n        This way, each security schemes are detected by the OpenAPI generator.\n        \"\"\"\n        try:\n            parameters: list[Parameter] = [\n                Parameter(\n                    name=\"user_manager\",\n                    kind=Parameter.POSITIONAL_OR_KEYWORD,\n                    default=Depends(self.get_user_manager),\n                )\n            ]\n\n            for backend in self.backends:\n                parameters += [\n                    Parameter(\n                        name=name_to_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(cast(Callable, backend.transport.scheme)),\n                    ),\n                    Parameter(\n                        name=name_to_strategy_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(backend.get_strategy),\n                    ),\n                ]\n\n            if get_enabled_backends is not None:\n                parameters += [\n                    Parameter(\n                        name=\"enabled_backends\",\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(get_enabled_backends),\n                    )\n                ]\n            return Signature(parameters)\n        except ValueError:\n            raise DuplicateBackendNamesError()",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 19,
+        "end": 21,
+        "code": "    get_current_active_user = authenticator.current_user(\n        active=True, verified=requires_verification\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 22,
+        "end": 24,
+        "code": "    get_current_superuser = authenticator.current_user(\n        active=True, verified=requires_verification, superuser=True\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 26,
+        "end": 34,
+        "code": "    async def get_user_or_404(\n        id: str,\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ) -> models.UP:\n        try:\n            parsed_id = user_manager.parse_id(id)\n            return await user_manager.get(parsed_id)\n        except (exceptions.UserNotExists, exceptions.InvalidID) as e:\n            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND) from e",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 64,
+        "end": 77,
+        "code": "    async def get(self, id: models.ID) -> models.UP:\n        \"\"\"\n        Get a user by id.\n\n        :param id: Id of the user to retrieve.\n        :raises UserNotExists: The user does not exist.\n        :return: A user of type models.UP.\n        \"\"\"\n        user = await self.user_db.get(id)\n\n        if user is None:\n            raise exceptions.UserNotExists()\n\n        return user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 54,
+        "end": 62,
+        "code": "    def parse_id(self, value: Any) -> models.ID:\n        \"\"\"\n        Parse a value into a correct models.ID instance.\n\n        :param value: The value to parse.\n        :raises InvalidID: The models.ID value is invalid.\n        :return: A models.ID object.\n        \"\"\"\n        raise NotImplementedError()  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 10,
+        "end": 12,
+        "code": "    async def get(self, id: ID) -> UP | None:\n        \"\"\"Get a single user by id.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      }
+    ],
+    "intended_policy": "default users router documentation and declared dependency factory",
+    "implemented": "superuser=True prerequisite; arbitrary target via manager.get",
+    "reference_status": "agent source review, not human gold",
+    "gaps": [
+      "configured DB/backend missing",
+      "custom manager callbacks may change policy",
+      "default requires_verification=False only"
+    ]
+  },
+  {
+    "id": "update_user",
+    "reference_label": "role_required",
+    "source_refs": [
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 132,
+        "end": 197,
+        "code": "    @router.patch(\n        \"/{id}\",\n        response_model=user_schema,\n        dependencies=[Depends(get_current_superuser)],\n        name=\"users:patch_user\",\n        responses={\n            status.HTTP_401_UNAUTHORIZED: {\n                \"description\": \"Missing token or inactive user.\",\n            },\n            status.HTTP_403_FORBIDDEN: {\n                \"description\": \"Not a superuser.\",\n            },\n            status.HTTP_404_NOT_FOUND: {\n                \"description\": \"The user does not exist.\",\n            },\n            status.HTTP_400_BAD_REQUEST: {\n                \"model\": ErrorModel,\n                \"content\": {\n                    \"application/json\": {\n                        \"examples\": {\n                            ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS: {\n                                \"summary\": \"A user with this email already exists.\",\n                                \"value\": {\n                                    \"detail\": ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS\n                                },\n                            },\n                            ErrorCode.UPDATE_USER_INVALID_PASSWORD: {\n                                \"summary\": \"Password validation failed.\",\n                                \"value\": {\n                                    \"detail\": {\n                                        \"code\": ErrorCode.UPDATE_USER_INVALID_PASSWORD,\n                                        \"reason\": \"Password should be\"\n                                        \"at least 3 characters\",\n                                    }\n                                },\n                            },\n                        }\n                    }\n                },\n            },\n        },\n    )\n    async def update_user(\n        user_update: user_update_schema,  # type: ignore\n        request: Request,\n        user=Depends(get_user_or_404),\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ):\n        try:\n            user = await user_manager.update(\n                user_update, user, safe=False, request=request\n            )\n            return user_schema.model_validate(user)\n        except exceptions.InvalidPasswordException as e:\n            raise HTTPException(\n                status_code=status.HTTP_400_BAD_REQUEST,\n                detail={\n                    \"code\": ErrorCode.UPDATE_USER_INVALID_PASSWORD,\n                    \"reason\": e.reason,\n                },\n            )\n        except exceptions.UserAlreadyExists:\n            raise HTTPException(\n                status.HTTP_400_BAD_REQUEST,\n                detail=ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS,\n            )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 107,
+        "end": 151,
+        "code": "    def current_user(\n        self,\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        get_enabled_backends: EnabledBackendsDependency[models.UP, models.ID]\n        | None = None,\n    ):\n        \"\"\"\n        Return a dependency callable to retrieve currently authenticated user.\n\n        :param optional: If `True`, `None` is returned if there is no authenticated user\n        or if it doesn't pass the other requirements.\n        Otherwise, throw `401 Unauthorized`. Defaults to `False`.\n        Otherwise, an exception is raised. Defaults to `False`.\n        :param active: If `True`, throw `401 Unauthorized` if\n        the authenticated user is inactive. Defaults to `False`.\n        :param verified: If `True`, throw `403 Forbidden` if\n        the authenticated user is not verified. Defaults to `False`.\n        :param superuser: If `True`, throw `403 Forbidden` if\n        the authenticated user is not a superuser. Defaults to `False`.\n        :param get_enabled_backends: Optional dependency callable returning\n        a list of enabled authentication backends.\n        Useful if you want to dynamically enable some authentication backends\n        based on external logic, like a configuration in database.\n        By default, all specified authentication backends are enabled.\n        Please not however that every backends will appear in the OpenAPI documentation,\n        as FastAPI resolves it statically.\n        \"\"\"\n        signature = self._get_dependency_signature(get_enabled_backends)\n\n        @with_signature(signature)\n        async def current_user_dependency(*args: Any, **kwargs: Any):\n            user, _ = await self._authenticate(\n                *args,\n                optional=optional,\n                active=active,\n                verified=verified,\n                superuser=superuser,\n                **kwargs,\n            )\n            return user\n\n        return current_user_dependency",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 153,
+        "end": 191,
+        "code": "    async def _authenticate(\n        self,\n        *args,\n        user_manager: BaseUserManager[models.UP, models.ID],\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        **kwargs,\n    ) -> tuple[models.UP | None, str | None]:\n        user: models.UP | None = None\n        token: str | None = None\n        enabled_backends: Sequence[AuthenticationBackend[models.UP, models.ID]] = (\n            kwargs.get(\"enabled_backends\", self.backends)\n        )\n        for backend in self.backends:\n            if backend in enabled_backends:\n                token = kwargs[name_to_variable_name(backend.name)]\n                strategy: Strategy[models.UP, models.ID] = kwargs[\n                    name_to_strategy_variable_name(backend.name)\n                ]\n                if token is not None:\n                    user = await strategy.read_token(token, user_manager)\n                    if user:\n                        break\n\n        status_code = status.HTTP_401_UNAUTHORIZED\n        if user:\n            status_code = status.HTTP_403_FORBIDDEN\n            if active and not user.is_active:\n                status_code = status.HTTP_401_UNAUTHORIZED\n                user = None\n            elif (\n                verified and not user.is_verified or superuser and not user.is_superuser\n            ):\n                user = None\n        if not user and not optional:\n            raise HTTPException(status_code=status_code)\n        return user, token",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 193,
+        "end": 237,
+        "code": "    def _get_dependency_signature(\n        self, get_enabled_backends: EnabledBackendsDependency | None = None\n    ) -> Signature:\n        \"\"\"\n        Generate a dynamic signature for the current_user dependency.\n\n        Here comes some blood magic 🧙‍♂️\n        Thank to \"makefun\", we are able to generate callable\n        with a dynamic number of dependencies at runtime.\n        This way, each security schemes are detected by the OpenAPI generator.\n        \"\"\"\n        try:\n            parameters: list[Parameter] = [\n                Parameter(\n                    name=\"user_manager\",\n                    kind=Parameter.POSITIONAL_OR_KEYWORD,\n                    default=Depends(self.get_user_manager),\n                )\n            ]\n\n            for backend in self.backends:\n                parameters += [\n                    Parameter(\n                        name=name_to_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(cast(Callable, backend.transport.scheme)),\n                    ),\n                    Parameter(\n                        name=name_to_strategy_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(backend.get_strategy),\n                    ),\n                ]\n\n            if get_enabled_backends is not None:\n                parameters += [\n                    Parameter(\n                        name=\"enabled_backends\",\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(get_enabled_backends),\n                    )\n                ]\n            return Signature(parameters)\n        except ValueError:\n            raise DuplicateBackendNamesError()",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 19,
+        "end": 21,
+        "code": "    get_current_active_user = authenticator.current_user(\n        active=True, verified=requires_verification\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 22,
+        "end": 24,
+        "code": "    get_current_superuser = authenticator.current_user(\n        active=True, verified=requires_verification, superuser=True\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 26,
+        "end": 34,
+        "code": "    async def get_user_or_404(\n        id: str,\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ) -> models.UP:\n        try:\n            parsed_id = user_manager.parse_id(id)\n            return await user_manager.get(parsed_id)\n        except (exceptions.UserNotExists, exceptions.InvalidID) as e:\n            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND) from e",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 64,
+        "end": 77,
+        "code": "    async def get(self, id: models.ID) -> models.UP:\n        \"\"\"\n        Get a user by id.\n\n        :param id: Id of the user to retrieve.\n        :raises UserNotExists: The user does not exist.\n        :return: A user of type models.UP.\n        \"\"\"\n        user = await self.user_db.get(id)\n\n        if user is None:\n            raise exceptions.UserNotExists()\n\n        return user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 54,
+        "end": 62,
+        "code": "    def parse_id(self, value: Any) -> models.ID:\n        \"\"\"\n        Parse a value into a correct models.ID instance.\n\n        :param value: The value to parse.\n        :raises InvalidID: The models.ID value is invalid.\n        :return: A models.ID object.\n        \"\"\"\n        raise NotImplementedError()  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 440,
+        "end": 467,
+        "code": "    async def update(\n        self,\n        user_update: schemas.UU,\n        user: models.UP,\n        safe: bool = False,\n        request: Request | None = None,\n    ) -> models.UP:\n        \"\"\"\n        Update a user.\n\n        Triggers the on_after_update handler on success\n\n        :param user_update: The UserUpdate model containing\n        the changes to apply to the user.\n        :param user: The current user to update.\n        :param safe: If True, sensitive values like is_superuser or is_verified\n        will be ignored during the update, defaults to False\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        :return: The updated user of type models.UP.\n        \"\"\"\n        if safe:\n            updated_user_data = user_update.create_update_dict()\n        else:\n            updated_user_data = user_update.create_update_dict_superuser()\n        updated_user = await self._update(user, updated_user_data)\n        await self.on_after_update(updated_user, updated_user_data, request)\n        return updated_user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 514,
+        "end": 530,
+        "code": "    async def on_after_update(\n        self,\n        user: models.UP,\n        update_dict: dict[str, Any],\n        request: Request | None = None,\n    ) -> None:\n        \"\"\"\n        Perform logic after successful user update.\n\n        *You should overload this method to add your own logic.*\n\n        :param user: The updated user\n        :param update_dict: Dictionary with the updated user fields.\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 667,
+        "end": 684,
+        "code": "    async def _update(self, user: models.UP, update_dict: dict[str, Any]) -> models.UP:\n        validated_update_dict = {}\n        for field, value in update_dict.items():\n            if field == \"email\" and value != user.email:\n                try:\n                    await self.get_by_email(value)\n                    raise exceptions.UserAlreadyExists()\n                except exceptions.UserNotExists:\n                    validated_update_dict[\"email\"] = value\n                    validated_update_dict[\"is_verified\"] = False\n            elif field == \"password\" and value is not None:\n                await self.validate_password(value, user)\n                validated_update_dict[\"hashed_password\"] = self.password_helper.hash(\n                    value\n                )\n            else:\n                validated_update_dict[field] = value\n        return await self.user_db.update(user, validated_update_dict)",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 485,
+        "end": 498,
+        "code": "    async def validate_password(\n        self, password: str, user: schemas.UC | models.UP\n    ) -> None:\n        \"\"\"\n        Validate a password.\n\n        *You should overload this method to add your own validation logic.*\n\n        :param password: The password to validate.\n        :param user: The user associated to this password.\n        :raises InvalidPasswordException: The password is invalid.\n        :return: None if the password is valid.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 79,
+        "end": 92,
+        "code": "    async def get_by_email(self, user_email: str) -> models.UP:\n        \"\"\"\n        Get a user by e-mail.\n\n        :param user_email: E-mail of the user to retrieve.\n        :raises UserNotExists: The user does not exist.\n        :return: A user of type models.UP.\n        \"\"\"\n        user = await self.user_db.get_by_email(user_email)\n\n        if user is None:\n            raise exceptions.UserNotExists()\n\n        return user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 10,
+        "end": 12,
+        "code": "    async def get(self, id: ID) -> UP | None:\n        \"\"\"Get a single user by id.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 26,
+        "end": 28,
+        "code": "    async def update(self, user: UP, update_dict: dict[str, Any]) -> UP:\n        \"\"\"Update a user.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      }
+    ],
+    "intended_policy": "default users router documentation and declared dependency factory",
+    "implemented": "superuser=True prerequisite; arbitrary target via manager.get",
+    "reference_status": "agent source review, not human gold",
+    "gaps": [
+      "configured DB/backend missing",
+      "custom manager callbacks may change policy",
+      "default requires_verification=False only"
+    ]
+  },
+  {
+    "id": "delete_user",
+    "reference_label": "role_required",
+    "source_refs": [
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 199,
+        "end": 223,
+        "code": "    @router.delete(\n        \"/{id}\",\n        status_code=status.HTTP_204_NO_CONTENT,\n        response_class=Response,\n        dependencies=[Depends(get_current_superuser)],\n        name=\"users:delete_user\",\n        responses={\n            status.HTTP_401_UNAUTHORIZED: {\n                \"description\": \"Missing token or inactive user.\",\n            },\n            status.HTTP_403_FORBIDDEN: {\n                \"description\": \"Not a superuser.\",\n            },\n            status.HTTP_404_NOT_FOUND: {\n                \"description\": \"The user does not exist.\",\n            },\n        },\n    )\n    async def delete_user(\n        request: Request,\n        user=Depends(get_user_or_404),\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ):\n        await user_manager.delete(user, request=request)\n        return None",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 107,
+        "end": 151,
+        "code": "    def current_user(\n        self,\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        get_enabled_backends: EnabledBackendsDependency[models.UP, models.ID]\n        | None = None,\n    ):\n        \"\"\"\n        Return a dependency callable to retrieve currently authenticated user.\n\n        :param optional: If `True`, `None` is returned if there is no authenticated user\n        or if it doesn't pass the other requirements.\n        Otherwise, throw `401 Unauthorized`. Defaults to `False`.\n        Otherwise, an exception is raised. Defaults to `False`.\n        :param active: If `True`, throw `401 Unauthorized` if\n        the authenticated user is inactive. Defaults to `False`.\n        :param verified: If `True`, throw `403 Forbidden` if\n        the authenticated user is not verified. Defaults to `False`.\n        :param superuser: If `True`, throw `403 Forbidden` if\n        the authenticated user is not a superuser. Defaults to `False`.\n        :param get_enabled_backends: Optional dependency callable returning\n        a list of enabled authentication backends.\n        Useful if you want to dynamically enable some authentication backends\n        based on external logic, like a configuration in database.\n        By default, all specified authentication backends are enabled.\n        Please not however that every backends will appear in the OpenAPI documentation,\n        as FastAPI resolves it statically.\n        \"\"\"\n        signature = self._get_dependency_signature(get_enabled_backends)\n\n        @with_signature(signature)\n        async def current_user_dependency(*args: Any, **kwargs: Any):\n            user, _ = await self._authenticate(\n                *args,\n                optional=optional,\n                active=active,\n                verified=verified,\n                superuser=superuser,\n                **kwargs,\n            )\n            return user\n\n        return current_user_dependency",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 153,
+        "end": 191,
+        "code": "    async def _authenticate(\n        self,\n        *args,\n        user_manager: BaseUserManager[models.UP, models.ID],\n        optional: bool = False,\n        active: bool = False,\n        verified: bool = False,\n        superuser: bool = False,\n        **kwargs,\n    ) -> tuple[models.UP | None, str | None]:\n        user: models.UP | None = None\n        token: str | None = None\n        enabled_backends: Sequence[AuthenticationBackend[models.UP, models.ID]] = (\n            kwargs.get(\"enabled_backends\", self.backends)\n        )\n        for backend in self.backends:\n            if backend in enabled_backends:\n                token = kwargs[name_to_variable_name(backend.name)]\n                strategy: Strategy[models.UP, models.ID] = kwargs[\n                    name_to_strategy_variable_name(backend.name)\n                ]\n                if token is not None:\n                    user = await strategy.read_token(token, user_manager)\n                    if user:\n                        break\n\n        status_code = status.HTTP_401_UNAUTHORIZED\n        if user:\n            status_code = status.HTTP_403_FORBIDDEN\n            if active and not user.is_active:\n                status_code = status.HTTP_401_UNAUTHORIZED\n                user = None\n            elif (\n                verified and not user.is_verified or superuser and not user.is_superuser\n            ):\n                user = None\n        if not user and not optional:\n            raise HTTPException(status_code=status_code)\n        return user, token",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/authentication/authenticator.py",
+        "start": 193,
+        "end": 237,
+        "code": "    def _get_dependency_signature(\n        self, get_enabled_backends: EnabledBackendsDependency | None = None\n    ) -> Signature:\n        \"\"\"\n        Generate a dynamic signature for the current_user dependency.\n\n        Here comes some blood magic 🧙‍♂️\n        Thank to \"makefun\", we are able to generate callable\n        with a dynamic number of dependencies at runtime.\n        This way, each security schemes are detected by the OpenAPI generator.\n        \"\"\"\n        try:\n            parameters: list[Parameter] = [\n                Parameter(\n                    name=\"user_manager\",\n                    kind=Parameter.POSITIONAL_OR_KEYWORD,\n                    default=Depends(self.get_user_manager),\n                )\n            ]\n\n            for backend in self.backends:\n                parameters += [\n                    Parameter(\n                        name=name_to_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(cast(Callable, backend.transport.scheme)),\n                    ),\n                    Parameter(\n                        name=name_to_strategy_variable_name(backend.name),\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(backend.get_strategy),\n                    ),\n                ]\n\n            if get_enabled_backends is not None:\n                parameters += [\n                    Parameter(\n                        name=\"enabled_backends\",\n                        kind=Parameter.POSITIONAL_OR_KEYWORD,\n                        default=Depends(get_enabled_backends),\n                    )\n                ]\n            return Signature(parameters)\n        except ValueError:\n            raise DuplicateBackendNamesError()",
+        "sha256": "aed0233f085bf49b6e93b636b267f50bc3919e09499540ccd92eec5d92672931"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 19,
+        "end": 21,
+        "code": "    get_current_active_user = authenticator.current_user(\n        active=True, verified=requires_verification\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 22,
+        "end": 24,
+        "code": "    get_current_superuser = authenticator.current_user(\n        active=True, verified=requires_verification, superuser=True\n    )",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/router/users.py",
+        "start": 26,
+        "end": 34,
+        "code": "    async def get_user_or_404(\n        id: str,\n        user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),\n    ) -> models.UP:\n        try:\n            parsed_id = user_manager.parse_id(id)\n            return await user_manager.get(parsed_id)\n        except (exceptions.UserNotExists, exceptions.InvalidID) as e:\n            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND) from e",
+        "sha256": "654d4d27ef23a40444240483d7ba3e186cf388cddd98f8a1cdaf116aed3c77f8"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 64,
+        "end": 77,
+        "code": "    async def get(self, id: models.ID) -> models.UP:\n        \"\"\"\n        Get a user by id.\n\n        :param id: Id of the user to retrieve.\n        :raises UserNotExists: The user does not exist.\n        :return: A user of type models.UP.\n        \"\"\"\n        user = await self.user_db.get(id)\n\n        if user is None:\n            raise exceptions.UserNotExists()\n\n        return user",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 54,
+        "end": 62,
+        "code": "    def parse_id(self, value: Any) -> models.ID:\n        \"\"\"\n        Parse a value into a correct models.ID instance.\n\n        :param value: The value to parse.\n        :raises InvalidID: The models.ID value is invalid.\n        :return: A models.ID object.\n        \"\"\"\n        raise NotImplementedError()  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 469,
+        "end": 483,
+        "code": "    async def delete(\n        self,\n        user: models.UP,\n        request: Request | None = None,\n    ) -> None:\n        \"\"\"\n        Delete a user.\n\n        :param user: The user to delete.\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        \"\"\"\n        await self.on_before_delete(user, request)\n        await self.user_db.delete(user)\n        await self.on_after_delete(user, request)",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 622,
+        "end": 634,
+        "code": "    async def on_after_delete(\n        self, user: models.UP, request: Request | None = None\n    ) -> None:\n        \"\"\"\n        Perform logic before user delete.\n\n        *You should overload this method to add your own logic.*\n\n        :param user: The user to be deleted\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/manager.py",
+        "start": 608,
+        "end": 620,
+        "code": "    async def on_before_delete(\n        self, user: models.UP, request: Request | None = None\n    ) -> None:\n        \"\"\"\n        Perform logic before user delete.\n\n        *You should overload this method to add your own logic.*\n\n        :param user: The user to be deleted\n        :param request: Optional FastAPI request that\n        triggered the operation, defaults to None.\n        \"\"\"\n        return  # pragma: no cover",
+        "sha256": "a5ea37f5f6a472c6a30557d48b529de58001e73e9806f8cc47ad2c8ba2a8c80c"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 10,
+        "end": 12,
+        "code": "    async def get(self, id: ID) -> UP | None:\n        \"\"\"Get a single user by id.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      },
+      {
+        "file": "fastapi_users/db/base.py",
+        "start": 30,
+        "end": 32,
+        "code": "    async def delete(self, user: UP) -> None:\n        \"\"\"Delete a user.\"\"\"\n        raise NotImplementedError()",
+        "sha256": "be6631346a8baa01d73978d48ef1ff32bd05b5433f82612367bf9ee2744d0353"
+      }
+    ],
+    "intended_policy": "default users router documentation and declared dependency factory",
+    "implemented": "superuser=True prerequisite; arbitrary target via manager.get",
+    "reference_status": "agent source review, not human gold",
+    "gaps": [
+      "configured DB/backend missing",
+      "custom manager callbacks may change policy",
+      "default requires_verification=False only"
+    ]
+  }
+]

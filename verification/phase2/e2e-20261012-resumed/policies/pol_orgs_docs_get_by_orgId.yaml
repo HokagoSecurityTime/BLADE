@@ -1,0 +1,38 @@
+id: pol_orgs_docs_get_by_orgId
+endpoint:
+  method: GET
+  path: /orgs/{orgId}/docs
+label: tenant_match
+params:
+  object_param: orgId
+  owner_lookup:
+    table: orgs
+    id_col: id
+    owner_col: null
+    tenant_col: id
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: Requested org must match caller tenant.
+status: ACTIVE
+created_at: '2026-10-12T04:00:52.618328Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs:
+- kind: code
+  ref: demo_with_admin.py#L91:org_docs
+  snippet: "    @app.get(\"/orgs/{orgId}/docs\", description=\"Intended policy: tenant_match;\
+    \ orgs.id\")\n    def org_docs(orgId: str) -> dict[str, Any]:\n        org = fetch_one(\"\
+    SELECT * FROM orgs WHERE id = ?\", orgId)\n        return {\"org_id\": org[\"\
+    id\"], \"docs\": [{\"title\": f\"Internal documentation for {orgId}\"}]}"
+- kind: code
+  ref: demo_with_admin.py#L35:lifespan
+  snippet: "    @asynccontextmanager\n    async def lifespan(app: FastAPI) -> AsyncIterator[None]:\n\
+    \        with connection() as conn:\n            conn.executescript(Path(__file__).with_name(\"\
+    schema.sql\").read_text(encoding=\"utf-8\"))\n            conn.executemany(\"\
+    INSERT OR IGNORE INTO orgs(id) VALUES (?)\", [(\"org_1\",), (\"org_2\",)])\n \
+    \           conn.executemany(\n                \"INSERT OR IGNORE INTO users(id,\
+    \ org_id, role, membership) VALUES (?, ?, ?, ?)\",\n                [(\"user_77\"\
+    , \"org_1\", \"user\", \"basic\"),\n                 (\"user_99\", \"org_2\",\
+    \ \"user\", \"basic\"),\n                 (\"admin_1\", \"org_1\", \"ad"

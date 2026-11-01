@@ -1,0 +1,408 @@
+[
+  {
+    "method": "POST",
+    "url": "http://127.0.0.1:51590/policies/pol_users_get_by_userId/approve",
+    "request": {},
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Length": "424",
+      "Content-Type": "application/json"
+    },
+    "body": "{\"id\":\"pol_users_get_by_userId\",\"endpoint\":{\"method\":\"GET\",\"path\":\"/users/{userId}\"},\"label\":\"manual_review_required\",\"params\":{\"object_param\":null,\"owner_lookup\":null,\"roles\":[],\"allowed_membership\":[]},\"confidence\":0.5,\"evidence\":\"Explicit manual-review setup fixture for the Phase 2 trigger test\",\"status\":\"ACTIVE\",\"created_at\":\"2026-10-11T16:04:22.746249Z\",\"mode\":\"observe\",\"version\":1,\"source\":\"llm\",\"evidence_refs\":[]}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "28f547b9-e9ea-4db4-aea0-933d56fb536a",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "371847d7-7dda-43bb-aa0f-d189ce859426",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "b7501fc6-7e0f-478d-bf5e-6a799a35433c",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "26c2e41c-e060-44da-9171-b6c544114dc8",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "43ecc406-7091-4473-a818-a1535f128aad",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "165a6302-c6b0-4de1-b440-9aa74f9c45d5",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "341de9e5-be5b-4c11-b540-f913af60a736",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "a328014e-4431-4e4f-b5b1-83ad5303c0b8",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "160ddd41-b283-4e38-a658-e7fc8bd34768",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "c12af1b5-2a4a-4a8e-85ac-a402fa67df4e",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "d6c0833d-0d95-4df6-bdfa-5b4dd563fea9",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "99282ff7-7ba6-430b-86d3-40dafcfeb055",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "a2d4c71b-8b14-4f7f-a994-530c5ba76077",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "de9b1643-7cbb-43a3-a291-96820421aba9",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "08940347-0abc-4028-bf8e-593a136afc38",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "63511cfd-6bc8-4d1a-babc-bc837ebfe750",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "e4d3d3e9-06a4-4937-ae2b-f522545d218c",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "41eea331-ecb2-4ae9-8ce9-b516e4531181",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "14935a32-4305-4e92-b5f5-7808aec78998",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51594/users/user_77",
+    "request": {
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzk5Iiwicm9sZXMiOlsidXNlciJdLCJ0ZW5hbnRfaWQiOiJvcmdfMSIsIm1lbWJlcnNoaXAiOiJiYXNpYyIsImV4cCI6MTc5MTczODI2Mn0.Darpzvq91u7acQ5X-9GN1eAmB2Bc9sGp-B1plj50ruc"
+      }
+    },
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:04:22 GMT",
+      "Server": "uvicorn",
+      "Content-Type": "application/json",
+      "X-Blade-Request-Id": "06c43f03-24ed-44d0-858d-263057375bb6",
+      "X-Blade-Policy": "pol_users_get_by_userId",
+      "Content-Length": "68"
+    },
+    "body": "{\"id\":\"user_77\",\"org_id\":\"org_1\",\"role\":\"user\",\"membership\":\"basic\"}"
+  },
+  {
+    "method": "GET",
+    "url": "http://127.0.0.1:51590/policies/pol_users_get_by_userId/proposals",
+    "request": {},
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 11 Oct 2026 16:05:17 GMT",
+      "Server": "uvicorn",
+      "Content-Length": "1833",
+      "Content-Type": "application/json"
+    },
+    "body": "[{\"id\":1,\"policy_id\":\"pol_users_get_by_userId\",\"base_version\":1,\"base_yaml\":\"id: pol_users_get_by_userId\\nendpoint:\\n  method: GET\\n  path: /users/{userId}\\nlabel: manual_review_required\\nparams:\\n  object_param: null\\n  owner_lookup: null\\n  roles: []\\n  allowed_membership: []\\nconfidence: 0.5\\nevidence: Explicit manual-review setup fixture for the Phase 2 trigger test\\nstatus: ACTIVE\\ncreated_at: '2026-10-11T16:04:22.746249Z'\\nmode: observe\\nversion: 1\\nsource: llm\\nevidence_refs: []\\n\",\"proposed_yaml\":\"id: pol_users_get_by_userId\\nendpoint:\\n  method: GET\\n  path: /users/{userId}\\nlabel: owner_or_admin\\nparams:\\n  object_param: userId\\n  owner_lookup:\\n    table: users\\n    id_col: id\\n    owner_col: id\\n    tenant_col: org_id\\n  roles:\\n  - admin\\n  allowed_membership: []\\nconfidence: 0.95\\nevidence: Caller owns the requested user or has admin bypass.\\nstatus: ACTIVE\\ncreated_at: '2026-10-11T16:04:22.746249Z'\\nmode: observe\\nversion: 2\\nsource: reanalysis\\nevidence_refs:\\n- kind: code\\n  ref: demo_with_admin.py#L77:get_user\\n  snippet: \\\"    @app.get(\\\\\\\"/users/{userId}\\\\\\\", description=\\\\\\\"Intended policy: owner_or_admin;\\\\\\n    \\\\ users.id\\\\\\\")\\\\n    def get_user(userId: str, current_user: Any = Depends(get_current_user))\\\\\\n    \\\\ -> dict[str, Any]:\\\\n        if \\\\\\\"admin\\\\\\\" in current_user.roles:\\\\n          \\\\\\n    \\\\  return fetch_one(\\\\\\\"SELECT * FROM users WHERE id = ?\\\\\\\", userId)\\\\n        if\\\\\\n    \\\\ current_user.id == userId:\\\\n            return fetch_one(\\\\\\\"SELECT * FROM users\\\\\\n    \\\\ WHERE id = ?\\\\\\\", userId)\\\\n        raise HTTPException(status_code=403, detail=\\\\\\\"\\\\\\n    Forbidden\\\\\\\")\\\"\\n\",\"diff_summary\":\"Changed: label, params, confidence, evidence, evidence_refs\",\"reason\":\"manual_review_observe_threshold\",\"created_at\":\"2026-10-11T16:05:18.139119+00:00\",\"status\":\"PENDING\"}]"
+  }
+]
