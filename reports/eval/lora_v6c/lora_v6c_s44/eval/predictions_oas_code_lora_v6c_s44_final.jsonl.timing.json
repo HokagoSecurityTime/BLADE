@@ -1,0 +1,22 @@
+{
+ "out": "/workspace/blade_lora_v3/runs/lora_v6c_s44/eval/predictions_oas_code_lora_v6c_s44_final.jsonl",
+ "cond": "oas_code",
+ "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+ "rows_total": 265,
+ "rows_run": 265,
+ "resumed": 0,
+ "inference_wall_s": 454.7,
+ "mean_ms_per_row": 1715.5,
+ "parse_errors": 1,
+ "manual": 54,
+ "prompt_tokens_max": 3841,
+ "truncated_prompts": 0,
+ "output_tokens_mean": 76.3,
+ "output_tokens_max": 256,
+ "hit_max_new_tokens": 1,
+ "gpu_memory": {
+  "peak_allocated_gib": 23.57,
+  "peak_reserved_gib": 27.27
+ },
+ "finished": "2026-11-04T23:24:36"
+}

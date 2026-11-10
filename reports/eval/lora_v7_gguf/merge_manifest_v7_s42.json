@@ -1,0 +1,21 @@
+{
+  "model": "blade-qwen-lora-v7",
+  "seed": 42,
+  "adapter": "/workspace/blade_c7/runs/lora_v7_s42/adapter",
+  "adapter_sha256": "66c68a58b81a859ea77b9ccfe7d88716c3223f78a8a050754955d70e25184777",
+  "base": "Qwen/Qwen2.5-7B-Instruct",
+  "base_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "merge_dtype": "float32",
+  "merged_checkpoint_dtype": "float16",
+  "f16_gguf_sha256": "ab60f867f2a542d5183cc3fd18d3007f7bdb292a80d1d09fc44bd7f22ae4b891",
+  "q4_k_m_gguf": "/workspace/blade_c7/export/gguf/blade-qwen-lora-v7-s42-Q4_K_M.gguf",
+  "q4_k_m_sha256": "1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d",
+  "q4_k_m_bytes": 4683073504,
+  "llama_cpp": "b11693",
+  "versions": {
+    "torch": "2.13.0+cu129",
+    "transformers": "5.22.2",
+    "peft": "0.21.2"
+  },
+  "note": "same construction as training/lora/README_serve_v5.md (LoRA v5 s42) and README_serve_v4.md"
+}

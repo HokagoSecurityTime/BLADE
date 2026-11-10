@@ -1,0 +1,103 @@
+{
+ "rule": "STOP if v6c s42 test_v5 oas_code macro-F1 <= v5 s42 macro-F1 (pre-registered, AGENTS.md 작업 S8)",
+ "gate": "PASS",
+ "v6c_s42": {
+  "macro_f1": 0.686,
+  "accuracy": 0.7173,
+  "manual_ratio": 0.1555,
+  "output_errors": 0,
+  "concrete": {
+   "n_truth_concrete": 218,
+   "answered": 202,
+   "precision": 0.8663,
+   "recall": 0.8028
+  },
+  "per_project": {
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7391
+   },
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.707
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7193
+   }
+  },
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 1.0,
+    "recall": 0.6842,
+    "f1": 0.8125
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8448,
+    "recall": 0.8829,
+    "f1": 0.8634
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.5106,
+    "recall": 0.7273,
+    "f1": 0.6
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7222,
+    "recall": 0.7647,
+    "f1": 0.7429
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.5185,
+    "recall": 0.6667,
+    "f1": 0.5833
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.6364,
+    "recall": 0.4308,
+    "f1": 0.5138
+   }
+  }
+ },
+ "v5_s42": {
+  "macro_f1": 0.6661,
+  "accuracy": 0.689,
+  "manual_ratio": 0.1625,
+  "output_errors": 1,
+  "concrete": {
+   "n_truth_concrete": 218,
+   "answered": 198,
+   "precision": 0.8485,
+   "recall": 0.7706
+  },
+  "per_project": {
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7536
+   },
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6433
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7368
+   }
+  }
+ },
+ "delta_macro_f1": 0.0199,
+ "pred": "runs/lora_v6c_s42/eval/v5test_predictions_oas_code_lora_v6c_s42_final.jsonl",
+ "baseline": "baseline/v5test_predictions_oas_code_lora_v5_s42_final.jsonl"
+}

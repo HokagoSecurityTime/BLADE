@@ -1,0 +1,21 @@
+id: pol_api_v1_user_get_by_userId
+endpoint:
+  method: GET
+  path: /api/v1/user/{userId}
+label: role_required
+params:
+  object_param: null
+  owner_lookup: null
+  roles:
+  - admin
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=role_required confidence=0.9]
+  description: 핸들러 원문 — requires the MANAGE_USERS permission; 판단: 특정 역할 보유가 실제 접근
+  조건이므로 role_required | params: roles from handler role checks: [''admin'']'
+status: ACTIVE
+created_at: '2026-11-10T11:38:02.698250Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs: []

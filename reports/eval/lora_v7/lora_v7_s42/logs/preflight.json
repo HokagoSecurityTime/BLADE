@@ -1,0 +1,17 @@
+{
+  "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+  "prompt_tokens": 2763,
+  "output_tokens": 44,
+  "parsed": {
+    "label": "public",
+    "confidence": 0.9,
+    "rationale": "security_state=unknown, description=None; \ud310\ub2e8: \uacf5\uac1c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\ub85c \uac04\uc8fc",
+    "evidence_fields": [
+      "security_state"
+    ]
+  },
+  "gpu_memory": {
+    "peak_allocated_gib": 5.78,
+    "peak_reserved_gib": 5.87
+  }
+}

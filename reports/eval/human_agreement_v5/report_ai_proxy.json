@@ -1,0 +1,882 @@
+{
+ "kind": "ai_proxy",
+ "reviewers": "검수자 Claude-A / Claude-B (AI 대리 검수, 사람 아님)",
+ "n": 60,
+ "sample": "reports/eval/human_agreement_v5/sample_60.json",
+ "test_v5_sha256": "7b8e4a940967ec474e0d5dbf6dcdbd6b7e04be439599c2a684664d6b9393fd9c",
+ "inputs": {
+  "A": "review/human_agreement_v5_A_AI대리검수.xlsx",
+  "B": "review/human_agreement_v5_B_AI대리검수.xlsx"
+ },
+ "input_sha256": {
+  "A": "c2fab0951a71ec84c848021be622786281710822ec7e6baddf81420c0473c047",
+  "B": "164c39883983940d6650fff6407b24d2937883dfc9776ce38afc67d337b262d1"
+ },
+ "label_dist": {
+  "truth": {
+   "owner_or_admin": 4,
+   "role_required": 24,
+   "manual_review_required": 14,
+   "public": 4,
+   "owner_match": 7,
+   "membership_required": 7
+  },
+  "A": {
+   "owner_or_admin": 5,
+   "role_required": 20,
+   "manual_review_required": 14,
+   "public": 4,
+   "owner_match": 7,
+   "membership_required": 10
+  },
+  "B": {
+   "owner_or_admin": 7,
+   "role_required": 20,
+   "manual_review_required": 15,
+   "public": 4,
+   "owner_match": 7,
+   "membership_required": 7
+  }
+ },
+ "A_vs_B": {
+  "n": 60,
+  "agreement": 0.9167,
+  "kappa": 0.8936,
+  "macro_f1": 0.9141,
+  "per_label": {
+   "public": {
+    "support": 4,
+    "other_count": 4,
+    "tp": 4,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "role_required": {
+    "support": 20,
+    "other_count": 20,
+    "tp": 20,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "membership_required": {
+    "support": 10,
+    "other_count": 7,
+    "tp": 7,
+    "precision": 1.0,
+    "recall": 0.7,
+    "f1": 0.8235
+   },
+   "tenant_match": {
+    "support": 0,
+    "other_count": 0,
+    "tp": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 7,
+    "other_count": 7,
+    "tp": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "owner_or_admin": {
+    "support": 5,
+    "other_count": 7,
+    "tp": 5,
+    "precision": 0.7143,
+    "recall": 1.0,
+    "f1": 0.8333
+   },
+   "manual_review_required": {
+    "support": 14,
+    "other_count": 15,
+    "tp": 12,
+    "precision": 0.8,
+    "recall": 0.8571,
+    "f1": 0.8276
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 4,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 20,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 7,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 7,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 5,
+    "manual_review_required": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 2,
+    "manual_review_required": 12
+   }
+  }
+ },
+ "A_vs_truth": {
+  "n": 60,
+  "agreement": 0.8333,
+  "kappa": 0.7833,
+  "macro_f1": 0.8698,
+  "per_label": {
+   "public": {
+    "support": 4,
+    "other_count": 4,
+    "tp": 4,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "role_required": {
+    "support": 24,
+    "other_count": 20,
+    "tp": 19,
+    "precision": 0.95,
+    "recall": 0.7917,
+    "f1": 0.8636
+   },
+   "membership_required": {
+    "support": 7,
+    "other_count": 10,
+    "tp": 7,
+    "precision": 0.7,
+    "recall": 1.0,
+    "f1": 0.8235
+   },
+   "tenant_match": {
+    "support": 0,
+    "other_count": 0,
+    "tp": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 7,
+    "other_count": 7,
+    "tp": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "owner_or_admin": {
+    "support": 4,
+    "other_count": 5,
+    "tp": 4,
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.8889
+   },
+   "manual_review_required": {
+    "support": 14,
+    "other_count": 14,
+    "tp": 9,
+    "precision": 0.6429,
+    "recall": 0.6429,
+    "f1": 0.6429
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 4,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 19,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 5
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 7,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 7,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 4,
+    "manual_review_required": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 1,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 1,
+    "manual_review_required": 9
+   }
+  }
+ },
+ "B_vs_truth": {
+  "n": 60,
+  "agreement": 0.85,
+  "kappa": 0.8049,
+  "macro_f1": 0.8801,
+  "per_label": {
+   "public": {
+    "support": 4,
+    "other_count": 4,
+    "tp": 4,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "role_required": {
+    "support": 24,
+    "other_count": 20,
+    "tp": 19,
+    "precision": 0.95,
+    "recall": 0.7917,
+    "f1": 0.8636
+   },
+   "membership_required": {
+    "support": 7,
+    "other_count": 7,
+    "tp": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "tenant_match": {
+    "support": 0,
+    "other_count": 0,
+    "tp": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 7,
+    "other_count": 7,
+    "tp": 7,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+   },
+   "owner_or_admin": {
+    "support": 4,
+    "other_count": 7,
+    "tp": 4,
+    "precision": 0.5714,
+    "recall": 1.0,
+    "f1": 0.7273
+   },
+   "manual_review_required": {
+    "support": 14,
+    "other_count": 15,
+    "tp": 10,
+    "precision": 0.6667,
+    "recall": 0.7143,
+    "f1": 0.6897
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 4,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 19,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 5
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 7,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 7,
+    "owner_or_admin": 0,
+    "manual_review_required": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 4,
+    "manual_review_required": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 1,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 3,
+    "manual_review_required": 10
+   }
+  }
+ },
+ "v5_oas_code": {
+  "s42": {
+   "file": "reports/eval/lora_v5/lora_v5_s42/eval/v5test_predictions_oas_code_lora_v5_s42_final.jsonl",
+   "macro_f1": 0.6406,
+   "accuracy": 0.6667,
+   "manual_ratio": 0.2167,
+   "output_errors": 0,
+   "per_label": {
+    "public": {
+     "support": 4,
+     "other_count": 3,
+     "tp": 3,
+     "precision": 1.0,
+     "recall": 0.75,
+     "f1": 0.8571
+    },
+    "role_required": {
+     "support": 24,
+     "other_count": 21,
+     "tp": 17,
+     "precision": 0.8095,
+     "recall": 0.7083,
+     "f1": 0.7556
+    },
+    "membership_required": {
+     "support": 7,
+     "other_count": 8,
+     "tp": 5,
+     "precision": 0.625,
+     "recall": 0.7143,
+     "f1": 0.6667
+    },
+    "tenant_match": {
+     "support": 0,
+     "other_count": 0,
+     "tp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "owner_match": {
+     "support": 7,
+     "other_count": 10,
+     "tp": 7,
+     "precision": 0.7,
+     "recall": 1.0,
+     "f1": 0.8235
+    },
+    "owner_or_admin": {
+     "support": 4,
+     "other_count": 5,
+     "tp": 1,
+     "precision": 0.2,
+     "recall": 0.25,
+     "f1": 0.2222
+    },
+    "manual_review_required": {
+     "support": 14,
+     "other_count": 13,
+     "tp": 7,
+     "precision": 0.5385,
+     "recall": 0.5,
+     "f1": 0.5185
+    }
+   }
+  },
+  "s43": {
+   "file": "reports/eval/lora_v5/lora_v5_s43/eval/v5test_predictions_oas_code_lora_v5_s43_final.jsonl",
+   "macro_f1": 0.722,
+   "accuracy": 0.7333,
+   "manual_ratio": 0.2,
+   "output_errors": 0,
+   "per_label": {
+    "public": {
+     "support": 4,
+     "other_count": 3,
+     "tp": 3,
+     "precision": 1.0,
+     "recall": 0.75,
+     "f1": 0.8571
+    },
+    "role_required": {
+     "support": 24,
+     "other_count": 23,
+     "tp": 19,
+     "precision": 0.8261,
+     "recall": 0.7917,
+     "f1": 0.8085
+    },
+    "membership_required": {
+     "support": 7,
+     "other_count": 9,
+     "tp": 6,
+     "precision": 0.6667,
+     "recall": 0.8571,
+     "f1": 0.75
+    },
+    "tenant_match": {
+     "support": 0,
+     "other_count": 0,
+     "tp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "owner_match": {
+     "support": 7,
+     "other_count": 8,
+     "tp": 7,
+     "precision": 0.875,
+     "recall": 1.0,
+     "f1": 0.9333
+    },
+    "owner_or_admin": {
+     "support": 4,
+     "other_count": 5,
+     "tp": 2,
+     "precision": 0.4,
+     "recall": 0.5,
+     "f1": 0.4444
+    },
+    "manual_review_required": {
+     "support": 14,
+     "other_count": 12,
+     "tp": 7,
+     "precision": 0.5833,
+     "recall": 0.5,
+     "f1": 0.5385
+    }
+   }
+  },
+  "s44": {
+   "file": "reports/eval/lora_v5/lora_v5_s44/eval/v5test_predictions_oas_code_lora_v5_s44_final.jsonl",
+   "macro_f1": 0.737,
+   "accuracy": 0.7333,
+   "manual_ratio": 0.2167,
+   "output_errors": 0,
+   "per_label": {
+    "public": {
+     "support": 4,
+     "other_count": 3,
+     "tp": 3,
+     "precision": 1.0,
+     "recall": 0.75,
+     "f1": 0.8571
+    },
+    "role_required": {
+     "support": 24,
+     "other_count": 22,
+     "tp": 18,
+     "precision": 0.8182,
+     "recall": 0.75,
+     "f1": 0.7826
+    },
+    "membership_required": {
+     "support": 7,
+     "other_count": 6,
+     "tp": 5,
+     "precision": 0.8333,
+     "recall": 0.7143,
+     "f1": 0.7692
+    },
+    "tenant_match": {
+     "support": 0,
+     "other_count": 0,
+     "tp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "owner_match": {
+     "support": 7,
+     "other_count": 9,
+     "tp": 7,
+     "precision": 0.7778,
+     "recall": 1.0,
+     "f1": 0.875
+    },
+    "owner_or_admin": {
+     "support": 4,
+     "other_count": 7,
+     "tp": 3,
+     "precision": 0.4286,
+     "recall": 0.75,
+     "f1": 0.5455
+    },
+    "manual_review_required": {
+     "support": 14,
+     "other_count": 13,
+     "tp": 8,
+     "precision": 0.6154,
+     "recall": 0.5714,
+     "f1": 0.5926
+    }
+   }
+  }
+ },
+ "v5_summary": {
+  "macro_f1_mean": 0.6999,
+  "macro_f1_sd": 0.0519,
+  "accuracy_mean": 0.7111,
+  "accuracy_sd": 0.0385
+ },
+ "by_confidence": {
+  "상": {
+   "n_A": 33,
+   "A_vs_truth": 32,
+   "n_B": 23,
+   "B_vs_truth": 23
+  },
+  "중": {
+   "n_A": 24,
+   "A_vs_truth": 18,
+   "n_B": 36,
+   "B_vs_truth": 28
+  },
+  "하": {
+   "n_A": 3,
+   "A_vs_truth": 0,
+   "n_B": 1,
+   "B_vs_truth": 0
+  }
+ },
+ "all_three_agree": 48,
+ "disagreements": [
+  {
+   "id": "v5t-ghost-924636cc9d",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/",
+   "truth": "manual_review_required",
+   "A": "role_required",
+   "A_conf": "중",
+   "B": "role_required",
+   "B_conf": "중",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "A_memo": "posts browse는 rolePermissions 표의 post browse 보유 역할에만 허용(Scheduler Integration 제외)",
+   "B_memo": "permissions 사용, rolePermissions에서 post browse 역할별 부여",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-0398a2f985",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.membersOrderedByRole",
+   "truth": "manual_review_required",
+   "A": "membership_required",
+   "A_conf": "하",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "A_memo": "canAccessRoomAsync로 비공개 방은 Subscriptions 구독 확인, 공개 방은 view-c-room 권한만으로 접근",
+   "B_memo": "canAccessRoomAsync 공개방(view-c-room)/비공개방(구독) 경로 혼재",
+   "kind": "B=정답≠A"
+  },
+  {
+   "id": "v5t-rocketchat-0780c8e386",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addOwner",
+   "truth": "role_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "A_memo": "canAccessRoomAsync 구성원 확인 AND hasPermissionAsync(fromUserId,'set-owner',rid) 역할 조건 결합",
+   "B_memo": "비공개 그룹 구성원 AND 'set-owner' 권한 독립 조건 결합",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-09c0e4be92",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.invite",
+   "truth": "role_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "role_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "A_memo": "userInRoom AND add-user-to-joined-room 또는 add-user-to-any-p-room 전역 권한 등 복합 조건",
+   "B_memo": "addUsersToRoomMethod: 구성원 AND add-user-to-joined-room OR add-user-to-any-p-room 혼합 조건",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-0d896bf7fc",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setType",
+   "truth": "role_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "role_required"
+   ],
+   "A_memo": "canAccessRoomAsync 구성원 확인 AND saveRoomSettings의 'edit-room' 권한 결합",
+   "B_memo": "비공개 그룹 구성원 AND saveRoomSettings 'edit-room' 권한 독립 조건 결합",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-23a530da4b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetAvatar",
+   "truth": "manual_review_required",
+   "A": "owner_or_admin",
+   "A_conf": "상",
+   "B": "owner_or_admin",
+   "B_conf": "중",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "A_memo": "user._id === this.userId이면 본인 리셋, 아니면 edit-other-user-avatar 권한으로 우회",
+   "B_memo": "user._id === this.userId 본인 OR 'edit-other-user-avatar'/'manage-moderation-actions' 권한",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-7508165c03",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.rename",
+   "truth": "role_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ],
+   "A_memo": "canAccessRoomAsync 구성원 확인 AND hasPermissionAsync(userId,'edit-room',rid) 결합",
+   "B_memo": "비공개 그룹 구성원(canAccessRoomAsync) AND 'edit-room' 권한 독립 조건 결합",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-d83dae7c4e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.roles",
+   "truth": "manual_review_required",
+   "A": "membership_required",
+   "A_conf": "하",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "A_memo": "canAccessRoomAsync로 비공개 방은 구독 확인, 공개 방은 view-c-room 권한으로 접근",
+   "B_memo": "executeGetRoomRoles: 익명 읽기 설정·공개방/구독 경로 혼재로 단일 조건 불가",
+   "kind": "B=정답≠A"
+  },
+  {
+   "id": "v5t-rocketchat-ec189eb0b4",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.resetRoomKey",
+   "truth": "role_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "manual_review_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "A_memo": "hasPermissionAsync('toggle-room-e2e-encryption',rid) AND canAccessRoomIdAsync 구성원 조건 결합",
+   "B_memo": "hasPermissionAsync('toggle-room-e2e-encryption', rid) AND canAccessRoomIdAsync 독립 조건 결합",
+   "kind": "A=B≠정답"
+  },
+  {
+   "id": "v5t-rocketchat-f7c14cc85e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.info",
+   "truth": "manual_review_required",
+   "A": "membership_required",
+   "A_conf": "하",
+   "B": "manual_review_required",
+   "B_conf": "중",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "A_memo": "canAccessRoomAsync로 비공개 방은 구독 확인, 공개 방은 view-c-room 권한으로 접근",
+   "B_memo": "canAccessRoomAsync: 공개방은 view-c-room 권한, 비공개방은 구독 확인으로 조건이 방 유형별로 상이",
+   "kind": "B=정답≠A"
+  },
+  {
+   "id": "v5t-umami-bf7e66056f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/shares",
+   "truth": "manual_review_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "owner_or_admin",
+   "B_conf": "중",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "A_memo": "canViewWebsite가 admin OR 소유자 OR 팀 구성원 복합 조건",
+   "B_memo": "canViewWebsite: isAdmin 우회 OR user.id===entity.userId (팀 엔티티는 getTeamUser 분기)",
+   "kind": "A=정답≠B"
+  },
+  {
+   "id": "v5t-umami-dd7523bace",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/share/id/{shareId}",
+   "truth": "manual_review_required",
+   "A": "manual_review_required",
+   "A_conf": "중",
+   "B": "owner_or_admin",
+   "B_conf": "하",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "A_memo": "canDeleteEntity가 admin OR 소유자 OR (팀 구성원 AND websiteDelete 팀 역할) 복합 조건",
+   "B_memo": "canDeleteEntity: isAdmin 우회 OR entity.userId===user.id (팀 엔티티는 websiteDelete 권한 추가 분기)",
+   "kind": "A=정답≠B"
+  }
+ ]
+}

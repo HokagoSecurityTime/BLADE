@@ -1,0 +1,19 @@
+# LoRA v7 (data-v7, seed 42, final) merged into Qwen2.5-7B-Instruct (unquantized), GGUF Q4_K_M — built on RunPod by runpod/merge_gguf_v7.sh (task D1, 2026-11-10).
+# Registration follows the C-5 procedure after the LoRA v7 adoption (AGENTS.md "S9 확인·v7 채택"); blade-qwen-lora-v5 stays registered for rollback.
+# Copy this file next to the GGUF, then `ollama create blade-qwen-lora-v7 -f Modelfile.blade-qwen-lora-v7`.
+# TEMPLATE and PARAMETERs are identical to Modelfile.blade-qwen-lora-v5 / -v4 (same tokenizer/chat template, greedy, no repetition penalty, 256 new tokens).
+FROM ./blade-qwen-lora-v7-s42-Q4_K_M.gguf
+TEMPLATE """<|im_start|>system
+{{ if .System }}{{ .System }}{{ else }}You are Qwen, created by Alibaba Cloud. You are a helpful assistant.{{ end }}<|im_end|>
+{{ range .Messages }}{{ if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ .Content }}<|im_end|>
+{{ end }}{{ end }}<|im_start|>assistant
+"""
+PARAMETER temperature 0
+PARAMETER repeat_penalty 1
+PARAMETER num_predict 256
+PARAMETER num_ctx 8192
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"

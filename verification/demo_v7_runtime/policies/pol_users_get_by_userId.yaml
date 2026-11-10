@@ -1,0 +1,25 @@
+id: pol_users_get_by_userId
+endpoint:
+  method: GET
+  path: /users/{userId}
+label: tenant_match
+params:
+  object_param: userId
+  owner_lookup:
+    table: users
+    id_col: id
+    owner_col: id
+    tenant_col: org_id
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=tenant_match confidence=0.9]
+  description: 핸들러 코드의 fetch_one — 자원을 요청자의 활성 조직 범위로 한정하므로; 판단: 요청자의 tenant와 대상 자원의
+  tenant가 일치해야 하므로 tenant_match | params: object_param userId -> ERD users.id; owner_col=id;
+  tenant_col=org_id'
+status: ACTIVE
+created_at: '2026-11-10T11:17:21.859375Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs: []

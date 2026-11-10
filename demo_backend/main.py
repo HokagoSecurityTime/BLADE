@@ -1,3 +1,4 @@
+
 """Intentionally vulnerable demo: no authentication or authorization checks.
 
 The documented policies describe intended enforcement by the future BLADE proxy.

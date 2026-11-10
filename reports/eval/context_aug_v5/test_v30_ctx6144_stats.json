@@ -1,0 +1,5073 @@
+{
+ "set": "test_v30",
+ "budget": "ctx6144",
+ "n": 207,
+ "skipped": 58,
+ "per_project": {
+  "VAmPI": {
+   "n": 12,
+   "perm_table": 0,
+   "perm_flow": 0,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 0,
+   "helper": 0,
+   "any_block": 0,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 0,
+   "blocks_found_mean": 0,
+   "blocks_kept_mean": 0,
+   "unresolved_records": 3,
+   "unresolved_names": 4,
+   "excluded": {
+    "helper_cap": 0
+   },
+   "tokens_before_mean": 3054,
+   "tokens_after_mean": 3065,
+   "tokens_after_max": 3224
+  },
+  "crAPI": {
+   "n": 53,
+   "perm_table": 0,
+   "perm_flow": 0,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 0,
+   "helper": 1,
+   "any_block": 1,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 0,
+   "blocks_found_mean": 0.02,
+   "blocks_kept_mean": 0.02,
+   "unresolved_records": 22,
+   "unresolved_names": 48,
+   "excluded": {
+    "helper_cap": 0,
+    "authentication": 1
+   },
+   "tokens_before_mean": 3060,
+   "tokens_after_mean": 3077,
+   "tokens_after_max": 3470
+  },
+  "juice-shop": {
+   "n": 69,
+   "perm_table": 0,
+   "perm_flow": 0,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 0,
+   "helper": 12,
+   "any_block": 12,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 0,
+   "blocks_found_mean": 0.19,
+   "blocks_kept_mean": 0.19,
+   "unresolved_records": 33,
+   "unresolved_names": 53,
+   "excluded": {
+    "helper_cap": 0,
+    "no_authz_signal": 16,
+    "authentication": 11
+   },
+   "tokens_before_mean": 3067,
+   "tokens_after_mean": 3085,
+   "tokens_after_max": 3666
+  },
+  "Pixi": {
+   "n": 48,
+   "perm_table": 0,
+   "perm_flow": 0,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 0,
+   "helper": 0,
+   "any_block": 0,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 0,
+   "blocks_found_mean": 0,
+   "blocks_kept_mean": 0,
+   "unresolved_records": 4,
+   "unresolved_names": 4,
+   "excluded": {
+    "helper_cap": 0,
+    "authentication": 2
+   },
+   "tokens_before_mean": 3149,
+   "tokens_after_mean": 3160,
+   "tokens_after_max": 3852
+  },
+  "DVWS-node": {
+   "n": 25,
+   "perm_table": 0,
+   "perm_flow": 0,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 0,
+   "helper": 0,
+   "any_block": 0,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 0,
+   "blocks_found_mean": 0,
+   "blocks_kept_mean": 0,
+   "unresolved_records": 5,
+   "unresolved_names": 14,
+   "excluded": {
+    "helper_cap": 0
+   },
+   "tokens_before_mean": 3029,
+   "tokens_after_mean": 3040,
+   "tokens_after_max": 3194
+  }
+ },
+ "records": [
+  {
+   "id": "b98a2ab3b50a679bfa16",
+   "project": "VAmPI",
+   "method": "DELETE",
+   "path": "/users/v1/{username}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3060,
+   "tokens_after": 3071,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "Admins [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a3b2d062cdb1162b5997",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/books/v1",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2890,
+   "tokens_after": 2901,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4af8a0694ed2e327e0db",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/books/v1/{book_title}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3184,
+   "tokens_after": 3195,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "759eb32d69ab1820e44d",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/me",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3007,
+   "tokens_after": 3018,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f40e37d667e9313cbb3e",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/users/v1",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2890,
+   "tokens_after": 2901,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e0a91b1fbd877d1fd12c",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/users/v1/_debug",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2906,
+   "tokens_after": 2917,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c47f96241d6d7fc93158",
+   "project": "VAmPI",
+   "method": "GET",
+   "path": "/users/v1/{username}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2919,
+   "tokens_after": 2930,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ff8c5eda79000fa6687f",
+   "project": "VAmPI",
+   "method": "POST",
+   "path": "/books/v1",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3140,
+   "tokens_after": 3151,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7f3a2148b6be2455ba76",
+   "project": "VAmPI",
+   "method": "POST",
+   "path": "/users/v1/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3213,
+   "tokens_after": 3224,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "auth_token [unresolved]",
+    "user.encode_auth_token [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "8a8d61e2f627c4a1102e",
+   "project": "VAmPI",
+   "method": "POST",
+   "path": "/users/v1/register",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3138,
+   "tokens_after": 3149,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "b3906a959a0b669047ba",
+   "project": "VAmPI",
+   "method": "PUT",
+   "path": "/users/v1/{username}/email",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3190,
+   "tokens_after": 3201,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "217a26a0ed334f7297d0",
+   "project": "VAmPI",
+   "method": "PUT",
+   "path": "/users/v1/{username}/password",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3116,
+   "tokens_after": 3127,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "Unauthorized [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2463648df20db46705c1",
+   "project": "crAPI",
+   "method": "DELETE",
+   "path": "/identity/api/v2/admin/videos/{video_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3005,
+   "tokens_after": 3016,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "profileService.deleteAdminProfileVideo [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "aae57acca0e9317e81c1",
+   "project": "crAPI",
+   "method": "DELETE",
+   "path": "/identity/api/v2/user/videos/{video_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3004,
+   "tokens_after": 3015,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "149fc53d41cf49d52bb9",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/community/api/v2/community/posts/recent",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3210,
+   "tokens_after": 3221,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "9a7d3d59efab53f32063",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/community/api/v2/community/posts/{postId}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3007,
+   "tokens_after": 3018,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "autherID [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "887fef961a2a2394c816",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/auth/jwks.json",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2892,
+   "tokens_after": 2903,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "acdc8447219278841824",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/v2/user/dashboard",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2980,
+   "tokens_after": 2991,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d93acb187b6c273464f0",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/v2/user/videos/convert_video",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3031,
+   "tokens_after": 3042,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d0afe4b052514b189dfa",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/v2/user/videos/{video_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3026,
+   "tokens_after": 3037,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5928631c56d36ced026a",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/v2/vehicle/vehicles",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3141,
+   "tokens_after": 3152,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "VehicleOwnership [unresolved]",
+    "vehicleOwnerships [unresolved]",
+    "vehicleOwnershipService.getPreviousOwners [unresolved]",
+    "vehicleDetail.setPreviousOwners [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c3203410c4072686beaa",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/api/v2/vehicle/{vehicleId}/location",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2997,
+   "tokens_after": 3008,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "240a92b7ee284506eb3f",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/identity/health_check",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2892,
+   "tokens_after": 2903,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "15af38ebe8faf15c930f",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/management/users/all",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3164,
+   "tokens_after": 3470,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "AdminUserView"
+   ],
+   "unresolved": [
+    "Admin [unresolved]",
+    "authorised [unresolved]",
+    "jwt_auth_required [unresolved]",
+    "jwt_auth_required (depth2 in views.py) [external:utils/jwt]",
+    "Admin (depth2 in views.py) [not imported / not defined in file]",
+    "authorised (depth2 in views.py) [not imported / not defined in file]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "860383f68102b772bb99",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/mechanic",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3178,
+   "tokens_after": 3189,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "jwt_auth_required [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "6bca6097b26cf226f405",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/mechanic/mechanic_report",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3216,
+   "tokens_after": 3227,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "report_id.isnumeric [unresolved]",
+    "jwt_auth_required [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cdd3d3e140b0b509bcd3",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/mechanic/receive_report",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3173,
+   "tokens_after": 3184,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "serializer.is_valid [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a0f5f54a6d4c22bb18e7",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/mechanic/service_requests",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3282,
+   "tokens_after": 3293,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "jwt_auth_required [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "af6e2ae1b29132ee1d77",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/shop/orders/all",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3201,
+   "tokens_after": 3212,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "jwt_auth_required [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d42ed128370ce4d3ce71",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/shop/orders/{order_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3210,
+   "tokens_after": 3221,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "basic_auth [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7a19e5a3a9eb0d5947f3",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/shop/products",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3156,
+   "tokens_after": 3167,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "jwt_auth_required [unresolved]",
+    "serializer.is_valid [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c085f5d6b9f87dd6d4a1",
+   "project": "crAPI",
+   "method": "GET",
+   "path": "/workshop/api/shop/return_qr_code",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2937,
+   "tokens_after": 2948,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cd33a23103c412ea5651",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/community/api/v2/community/posts",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3112,
+   "tokens_after": 3123,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "324601a8dc9e9ea969bb",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/community/api/v2/community/posts/{postId}/comment",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3230,
+   "tokens_after": 3241,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0797f5bb072770d50159",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/community/api/v2/coupon/new-coupon",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3169,
+   "tokens_after": 3180,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3dc50d2c3650a204001d",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/community/api/v2/coupon/validate-coupon",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3137,
+   "tokens_after": 3148,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d72193f9a1b7d79700d0",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/forget-password",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2974,
+   "tokens_after": 2985,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bc1dce3621c7da44ddfe",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2960,
+   "tokens_after": 2971,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticateUser [unresolved]",
+    "userService.authenticateUserLogin [unresolved]",
+    "HttpStatus.UNAUTHORIZED [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "58e3df2930d0ce4c3175",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/signup",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3014,
+   "tokens_after": 3025,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "875c33706a68c4c9a61a",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/unlock",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2945,
+   "tokens_after": 2956,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "HttpStatus.UNAUTHORIZED [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "61f662463e13765b9478",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/v2.7/user/login-with-token",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2985,
+   "tokens_after": 2996,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "be8b11cdbabe4486aeda",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/v2/check-otp",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2993,
+   "tokens_after": 3004,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7e3f8c20d798e8b34143",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/v3/check-otp",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3020,
+   "tokens_after": 3031,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bb532c95786f45e07314",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/v4.0/user/login-with-token",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2929,
+   "tokens_after": 2940,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "769288e3cd1d5d4c117d",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/auth/verify",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3003,
+   "tokens_after": 3014,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "HttpStatus.UNAUTHORIZED [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "dcc8f1be82d40ee3d5cf",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/change-email",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3026,
+   "tokens_after": 3037,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "abbb3b1e9239779e76f2",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/change-phone-number",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3006,
+   "tokens_after": 3017,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c917e3e10dce94cc245c",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/pictures",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2998,
+   "tokens_after": 3009,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "fc9dac901542ca88d688",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/reset-password",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2989,
+   "tokens_after": 3000,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5a72ac6384c12b441687",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/verify-email-token",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3041,
+   "tokens_after": 3052,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "312256166232634f8b1b",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/verify-phone-otp",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3019,
+   "tokens_after": 3030,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4de2f44349d88f3d6b3a",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/user/videos",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2999,
+   "tokens_after": 3010,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "97abea85e395e6649df4",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/vehicle/add_vehicle",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2977,
+   "tokens_after": 2988,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "vehicleService.checkVehicle [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2c0c5b01954059e821bf",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/vehicle/register_vehicle",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2946,
+   "tokens_after": 2957,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d8c5cf5eb0bfbd488219",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/api/v2/vehicle/resend_email",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2990,
+   "tokens_after": 3001,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "580f801a0d75c34f1331",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/management/admin/lockUser",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2924,
+   "tokens_after": 2935,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0aa2fbdb066b3d771316",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/identity/management/user/apikey",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2917,
+   "tokens_after": 2928,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d553cdd9276767f1b1bc",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/mechanic/signup",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3128,
+   "tokens_after": 3139,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "serializer.is_valid [unresolved]",
+    "bcrypt.hashpw [unresolved]",
+    "User.ROLE_CHOICES.MECH [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "6224f0ab777c554bb796",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/merchant/contact_mechanic",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3197,
+   "tokens_after": 3208,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "serializer.is_valid [unresolved]",
+    "HTTP_AUTHORIZATION [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "956a6feb1b1f65eb5a9a",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/shop/apply_coupon",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3135,
+   "tokens_after": 3146,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "checking [unresolved]",
+    "authorised [unresolved]",
+    "serializer.is_valid [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0f7dacc4c4c5dc50ad69",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/shop/orders",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3151,
+   "tokens_after": 3162,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "serializer.is_valid [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e878000888f7f413f8b0",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/shop/orders/return_order",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3218,
+   "tokens_after": 3229,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "79d4449bddc16ef5992f",
+   "project": "crAPI",
+   "method": "POST",
+   "path": "/workshop/api/shop/products",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3081,
+   "tokens_after": 3092,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "serializer.is_valid [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0b0918598294090d14c3",
+   "project": "crAPI",
+   "method": "PUT",
+   "path": "/identity/api/v2/user/videos/{video_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3041,
+   "tokens_after": 3052,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "fed0409de548b760d467",
+   "project": "crAPI",
+   "method": "PUT",
+   "path": "/workshop/api/shop/orders/{order_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3225,
+   "tokens_after": 3236,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorised [unresolved]",
+    "Order.STATUS_CHOICES.has_value [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "267af32d80a0676db11d",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Addresss/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3120,
+   "tokens_after": 3131,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "df4bec349a3613906e39",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Cards/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3125,
+   "tokens_after": 3136,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "839cbd23124f4c9278ad",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Products/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2860,
+   "tokens_after": 2871,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f39152044579211bc61a",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Quantitys/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2861,
+   "tokens_after": 2872,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cffea7522dac244d677f",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Recycles/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2861,
+   "tokens_after": 2872,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "8f823c91369626ba6d9f",
+   "project": "juice-shop",
+   "method": "DELETE",
+   "path": "/api/Users/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2859,
+   "tokens_after": 2870,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7881b143ae63fc60a35e",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Addresss",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3063,
+   "tokens_after": 3074,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d03dd5bb033fde20a6b9",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Addresss/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3117,
+   "tokens_after": 3128,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "48784a817ce60824dbc1",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Cards",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3201,
+   "tokens_after": 3212,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cc7aabb324d891f2d312",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Cards/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3285,
+   "tokens_after": 3296,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a786e652a128f7d49fcb",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Complaints",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2854,
+   "tokens_after": 2894,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "939ca4cd3f9e9e8b27df",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Deliverys",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3074,
+   "tokens_after": 3085,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "security.isDeluxe [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bb8c80531d0fc1d9caed",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Deliverys/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3069,
+   "tokens_after": 3080,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "security.isDeluxe [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7cf042f2cfd8f56045a3",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/PrivacyRequests",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2857,
+   "tokens_after": 2868,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5861cf111a0a131186d5",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Recycles",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2889,
+   "tokens_after": 2900,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "13b3024516b002a3d17d",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Recycles/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2942,
+   "tokens_after": 2953,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "6c0c7e81f4263be705bd",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/SecurityAnswers",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2857,
+   "tokens_after": 2868,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "9c760e36b50d4ee7a2d9",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Users",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2851,
+   "tokens_after": 2891,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7ff76e2ecef4c5c31665",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/api/Users/{id}",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2855,
+   "tokens_after": 2895,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "447fc0aa6c34613756ff",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/2fa/status",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3108,
+   "tokens_after": 3119,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "isAuthorized [unresolved]",
+    "security.authenticatedUsers.from [unresolved]",
+    "security.authorize [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "be9b12fb6e4c31c1d823",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/basket/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3168,
+   "tokens_after": 3179,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "challenges.basketAccessChallenge [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 2,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f01502b9ee6e82ca7e9e",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/deluxe-membership",
+   "found": 2,
+   "kept": 2,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2986,
+   "tokens_after": 3147,
+   "kinds": {
+    "helper": 2
+   },
+   "kinds_found": {
+    "helper": 2
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "security.isCustomer",
+    "security.isDeluxe"
+   ],
+   "unresolved": [
+    "membershipCost [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bc7fd5ac27c130eb1670",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/memories",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2969,
+   "tokens_after": 2980,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ed50adacf184ba6ddcba",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/order-history",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3058,
+   "tokens_after": 3069,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authorization [unresolved]"
+   ],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "76f7d58a66bcc80fa70e",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/order-history/orders",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3067,
+   "tokens_after": 3078,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "286fba309233af2275a4",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/products/{id}/reviews",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3124,
+   "tokens_after": 3135,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 2,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c199be4494217f7a301b",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/saveLoginIp",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3188,
+   "tokens_after": 3199,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 2,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0a3ece0464909469b61e",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/track-order/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3090,
+   "tokens_after": 3101,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3e5864573bebca5a8458",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/user/authentication-details",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2896,
+   "tokens_after": 2907,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c64b7f4c9538c700b710",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/user/change-password",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3186,
+   "tokens_after": 3197,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "cannot [unresolved]",
+    "headers.authorization [unresolved]",
+    "headers.authorization.substr [unresolved]"
+   ],
+   "excluded": {
+    "authentication": 2,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3adb00c6de54a6331736",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/user/security-question",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3049,
+   "tokens_after": 3060,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7364a223f5e100dd73b2",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/user/whoami",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3211,
+   "tokens_after": 3222,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4014be5658e0ee17ea1e",
+   "project": "juice-shop",
+   "method": "GET",
+   "path": "/rest/wallet/balance",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3108,
+   "tokens_after": 3119,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e502084b4f925dbf28e4",
+   "project": "juice-shop",
+   "method": "PATCH",
+   "path": "/rest/products/reviews",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3133,
+   "tokens_after": 3173,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [
+    "author [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "905507d01b81ba5eb1f0",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Addresss",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2932,
+   "tokens_after": 2943,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e574b8ba6eacb5d7c83c",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/BasketItems",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3451,
+   "tokens_after": 3462,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]",
+    "security.authenticatedUsers.from [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "16f4b2d20c0ba89ed279",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Cards",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2931,
+   "tokens_after": 2942,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bbaf2ce2f276bd2f4679",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Complaints",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2854,
+   "tokens_after": 2894,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4033e696c5dc2d5b3aa2",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Feedbacks",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3296,
+   "tokens_after": 3307,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "af9828d3c503f11fb3fe",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/PrivacyRequests",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2853,
+   "tokens_after": 2893,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "39034afdb110cdb9defc",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Products",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2852,
+   "tokens_after": 2892,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "063fa7598db37c095700",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Quantitys",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2857,
+   "tokens_after": 2868,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ed9b8680702e673060d4",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Recycles",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2853,
+   "tokens_after": 2893,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "1b6a93b2cd2fddfc5d01",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/SecurityQuestions",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2857,
+   "tokens_after": 2868,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0cd1ae74896420dd9abe",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/api/Users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3026,
+   "tokens_after": 3037,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [],
+   "unresolved": [
+    "challenges.registerAdminChallenge [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "9400cf3c01d33fe952da",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/b2b/v2/orders",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3235,
+   "tokens_after": 3246,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 1,
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "179edeb6b4389d232d5d",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/profile/image/file",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3349,
+   "tokens_after": 3360,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "ensureFileIsPassed [unresolved]"
+   ],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f0ca27ba6aba3b33b9d2",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/profile/image/url",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3303,
+   "tokens_after": 3314,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3f60ffc8151aba598d58",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/2fa/disable",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3142,
+   "tokens_after": 3153,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "isAuthorized [unresolved]",
+    "security.authenticatedUsers.from [unresolved]",
+    "security.hash [unresolved]",
+    "security.authenticatedUsers.updateFrom [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4ee6439b95fb9a2c4bb8",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/2fa/setup",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3217,
+   "tokens_after": 3228,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "isAuthorized [unresolved]",
+    "security.authenticatedUsers.from [unresolved]",
+    "security.hash [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "812cccd2e9c35add2146",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/2fa/verify",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3209,
+   "tokens_after": 3220,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "challenges.twoFactorAuthUnsafeSecretStorageChallenge [unresolved]",
+    "security.authorize [unresolved]",
+    "security.authenticatedUsers.put [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cd10794910422bd9dcf8",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/basket/{id}/checkout",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3238,
+   "tokens_after": 3249,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "no_authz_signal": 1,
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "eb5692e50c0e12db6ca9",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/chat",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3157,
+   "tokens_after": 3168,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "9416b7189d811cbb7daa",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/deluxe-membership",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3419,
+   "tokens_after": 3474,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "security.authorize"
+   ],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "745151104eb860a9e9ec",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/memories",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3264,
+   "tokens_after": 3275,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "ensureFileIsPassed [unresolved]",
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "eef733c4cdf73432c9bc",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/products/reviews",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3198,
+   "tokens_after": 3238,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isAuthorized"
+   ],
+   "unresolved": [
+    "Unauthorized [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2787243a5db7dfb178b4",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/user/data-export",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3655,
+   "tokens_after": 3666,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]",
+    "authorization [unresolved]",
+    "author [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 1,
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c88cdff9970205a15244",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/user/login",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3246,
+   "tokens_after": 3301,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "security.authorize"
+   ],
+   "unresolved": [
+    "authentication [unresolved]",
+    "loginAdminChallenge [unresolved]",
+    "admin123 [unresolved]",
+    "challenges.oauthUserPasswordChallenge [unresolved]",
+    "challenges.loginAdminChallenge [unresolved]"
+   ],
+   "excluded": {
+    "authentication": 2,
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "cb7b63f3b0b2e2e8e967",
+   "project": "juice-shop",
+   "method": "POST",
+   "path": "/rest/user/reset-password",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3176,
+   "tokens_after": 3187,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "cannot [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "b99ce3da978a18ab2017",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/Addresss/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2936,
+   "tokens_after": 2947,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7b6e2731e933a52a9070",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/BasketItems/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3213,
+   "tokens_after": 3224,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]",
+    "security.authenticatedUsers.from [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a15c48c2351014fde76c",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/Cards/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2860,
+   "tokens_after": 2871,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "20048ada164e23252369",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/Feedbacks/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2861,
+   "tokens_after": 2872,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c1eb8e1b4c0183b6c75b",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/Recycles/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2861,
+   "tokens_after": 2872,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4e0c68cd981acbfe4a95",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/api/Users/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2859,
+   "tokens_after": 2870,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "383ff20e485d08b7aab2",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/rest/basket/{id}/coupon/{coupon}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3110,
+   "tokens_after": 3121,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "fbe864fbd2d924117550",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/rest/order-history/{id}/delivery-status",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3113,
+   "tokens_after": 3124,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "6c5807ef29707164f73b",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/rest/products/{id}/reviews",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3081,
+   "tokens_after": 3092,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "author [unresolved]"
+   ],
+   "excluded": {
+    "no_authz_signal": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "314ffc8290ffcff7031e",
+   "project": "juice-shop",
+   "method": "PUT",
+   "path": "/rest/wallet/balance",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3190,
+   "tokens_after": 3201,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "authenticatedUsers.tokenMap [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "dc4019dd63bac3b0e405",
+   "project": "Pixi",
+   "method": "DELETE",
+   "path": "/api/delete_photo",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3264,
+   "tokens_after": 3275,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "fad2ffd19dad19055370",
+   "project": "Pixi",
+   "method": "DELETE",
+   "path": "/api/picture/delete",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3337,
+   "tokens_after": 3348,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "43e7d3752b50b3dfdd1b",
+   "project": "Pixi",
+   "method": "DELETE",
+   "path": "/user_delete_photo/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3087,
+   "tokens_after": 3098,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2168150bddc48ce3a0c8",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2861,
+   "tokens_after": 2872,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5cb15a9c2cc08fcaa9f2",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin/all_users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2939,
+   "tokens_after": 2950,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a1be3b47f9420231f409",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin/likes/search",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3057,
+   "tokens_after": 3068,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "af52b958d71fa4458e1e",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin/loves/search",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3059,
+   "tokens_after": 3070,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ae718aeadf0285be8850",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin/total_money",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2945,
+   "tokens_after": 2956,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "95a588720a50160e0c3e",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/admin/users/search",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3043,
+   "tokens_after": 3054,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2289e5bc9d8ead4e8818",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/all_users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2938,
+   "tokens_after": 2949,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d2d3003f1edf061ec6ed",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/admin/all_users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3065,
+   "tokens_after": 3076,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0e1637db083f68e499d4",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/admin/total_money",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3077,
+   "tokens_after": 3088,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "90b7d387b719e9937263",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/other_user_info",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3248,
+   "tokens_after": 3259,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "81ad27320942026fa518",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/picture/delete/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3513,
+   "tokens_after": 3524,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "cannot [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5b4104eb0ef8a0531dbd",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/picture/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3169,
+   "tokens_after": 3180,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c31d0a5bb5c879e094f3",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/picture/{picture_id}/likes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3180,
+   "tokens_after": 3191,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bcfa59eea899fc11ba4f",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/picture/{picture_id}/loves",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3151,
+   "tokens_after": 3162,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "32447425974cf6f24467",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/pictures",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3159,
+   "tokens_after": 3170,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3fb5f18e981183405c13",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/pictures/like",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3791,
+   "tokens_after": 3802,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f98a05bef6af6ac52df9",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/pictures/love",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3841,
+   "tokens_after": 3852,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4dc92bf6452cc6671184",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/search",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3142,
+   "tokens_after": 3153,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e8437c5320794a594af6",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/user/info",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3198,
+   "tokens_after": 3209,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c250b480c9ec5ee55617",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/user/likes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3251,
+   "tokens_after": 3262,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bbfd5bfc671dc4af42c5",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/user/loves",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3258,
+   "tokens_after": 3269,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "fd938e89d9362deb8656",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/api/user/pictures",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3098,
+   "tokens_after": 3109,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "9a4f29e70cdc281a0357",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/like_photo/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3303,
+   "tokens_after": 3314,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0f5b4d569c99d8d9c870",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/love_photo/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3326,
+   "tokens_after": 3337,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "b92cea1a3f110420ee85",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/other_users_pictures/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2963,
+   "tokens_after": 2974,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "b036005643c333b5e7ae",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/other_users_profile/{id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3026,
+   "tokens_after": 3037,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "is_admin [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "eed3687a2d41f8658232",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/picture/{picture_id}/likes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2980,
+   "tokens_after": 2991,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "5e6b124fedb6105ffbd0",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/search",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3003,
+   "tokens_after": 3014,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a843efb3b237cbef2026",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/total_money",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2941,
+   "tokens_after": 2952,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0293603d276a2bdbefe0",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_delete_photo",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3336,
+   "tokens_after": 3347,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "8854d7bfa8e6100efee9",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_delete_photo/{picture_id}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3246,
+   "tokens_after": 3257,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "cannot [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bf900bef2d12400d0880",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_info",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2936,
+   "tokens_after": 2947,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "28fa5fab6338ef186954",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_likes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2947,
+   "tokens_after": 2958,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7ab0a0779b998f445f3c",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_loves",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2950,
+   "tokens_after": 2961,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2f8f43be0ee49cc83b1e",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_pictures",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2949,
+   "tokens_after": 2960,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "93b3678d43a24b94f1c3",
+   "project": "Pixi",
+   "method": "GET",
+   "path": "/user_profile/{userid}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2922,
+   "tokens_after": 2933,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "1e7e10e8d4827df5e28a",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/admin/money",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3108,
+   "tokens_after": 3119,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "01df9f46f6e721fa4cb0",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/api/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2919,
+   "tokens_after": 2930,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ab9da003ee3dbde8e544",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/api/picture/upload",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3660,
+   "tokens_after": 3671,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a3f4eb9a86fa08f2ad71",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/api/register",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2961,
+   "tokens_after": 2972,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "680ac46b983584d4552d",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/api/user/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2999,
+   "tokens_after": 3010,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "authentication": 1,
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "25fd1086a6999340c575",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/api/user/register",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3101,
+   "tokens_after": 3112,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "bf2d1601b02281b85536",
+   "project": "Pixi",
+   "method": "POST",
+   "path": "/upload_photo",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3206,
+   "tokens_after": 3217,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7292860512c06eed2ffd",
+   "project": "Pixi",
+   "method": "PUT",
+   "path": "/api/user/edit_info",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3589,
+   "tokens_after": 3600,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "objForUpdate.is_admin [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "6309b77a47e9b994f9fe",
+   "project": "Pixi",
+   "method": "PUT",
+   "path": "/user_info/{userid}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3090,
+   "tokens_after": 3101,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a15a54f7818a6cf25d98",
+   "project": "DVWS-node",
+   "method": "DELETE",
+   "path": "/api/v2/notes/{noteId}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2935,
+   "tokens_after": 2946,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "963209fb55865d6f2acf",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/upload",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3002,
+   "tokens_after": 3013,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "c4993c51f6be6657d771",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/admin/logs",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2899,
+   "tokens_after": 2910,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "06ba24e97fdcb059ad92",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/notes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2978,
+   "tokens_after": 2989,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "ffe188e6f24418c23676",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/notes/{noteId}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2926,
+   "tokens_after": 2937,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "be2ff7c9ec46320a97af",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/notesearch/all",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3067,
+   "tokens_after": 3078,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "d0ab15d66e0643031f91",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/passphrase/{username}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2997,
+   "tokens_after": 3008,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "91d2105d144e1805a5b2",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2975,
+   "tokens_after": 2986,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "7093260288fd7266a210",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/users/checkadmin",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3098,
+   "tokens_after": 3109,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "checkadmin [unresolved]",
+    "issuer [unresolved]",
+    "Admin [unresolved]",
+    "AdminURL [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "50730915ce2378191bee",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/users/logout/{redirect}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2873,
+   "tokens_after": 2884,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "f8fd9992a61819c2c4af",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/users/profile",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2985,
+   "tokens_after": 2996,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "4d8caf213fb70649fc0f",
+   "project": "DVWS-node",
+   "method": "GET",
+   "path": "/api/v2/users/profile/export/xml",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3002,
+   "tokens_after": 3013,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0a8fb9b5c84b26b19826",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/download",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2920,
+   "tokens_after": 2931,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "0f7af84126bd72a56bd5",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/upload",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3060,
+   "tokens_after": 3071,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a40f8db8b12527fda084",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/admin/create-user",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3163,
+   "tokens_after": 3174,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "adminCreateUser [unresolved]",
+    "Check [unresolved]",
+    "authCookie [unresolved]",
+    "auth_token [unresolved]",
+    "authCookie.split [unresolved]",
+    "Unauthorized [unresolved]",
+    "Admin [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "3f37f7f30c7bc18f180a",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/export",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3145,
+   "tokens_after": 3156,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "208819689993254cc920",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3183,
+   "tokens_after": 3194,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "issuer [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "60c95e757a6b732073ae",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/notes",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3010,
+   "tokens_after": 3021,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "e48aca1abec6c374bfa1",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/notes/import/xml",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3105,
+   "tokens_after": 3116,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "Unauthorized [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "29a91ef41063c0221266",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/notesearch",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3095,
+   "tokens_after": 3106,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "26c60d2fb9155d63f00c",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/passphrase",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3121,
+   "tokens_after": 3132,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "2e45bdad0431b35cfbf5",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/users",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3096,
+   "tokens_after": 3107,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [
+    "hash [unresolved]"
+   ],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "90e39b6520bac57f8f52",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/users/profile/export/xml",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3002,
+   "tokens_after": 3013,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "1d45c0e2ac7bb00728b3",
+   "project": "DVWS-node",
+   "method": "POST",
+   "path": "/api/v2/users/profile/import/xml",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3147,
+   "tokens_after": 3158,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "a4f0cd98076a7ed61adf",
+   "project": "DVWS-node",
+   "method": "PUT",
+   "path": "/api/v2/notes/{noteId}",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2937,
+   "tokens_after": 2948,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": [],
+   "unresolved": [],
+   "excluded": {
+    "helper_cap": 0
+   },
+   "ghost_doc": null
+  },
+  {
+   "id": "quill_blog_catalogue_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_catalogue_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_drafts_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_drafts_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_shared_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_shared_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_workspace_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_workspace_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_audit_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_audit_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_subscription_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_subscription_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_disputed_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "quill_blog_disputed_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_catalogue_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_catalogue_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_drafts_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_drafts_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_shared_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_shared_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_workspace_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_workspace_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_audit_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_audit_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_subscription_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_subscription_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_disputed_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "folio_wiki_disputed_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_catalogue_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_catalogue_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_drafts_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_drafts_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_shared_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_shared_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_workspace_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_workspace_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_audit_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_audit_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_subscription_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_subscription_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_disputed_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "beacon_iot_disputed_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_catalogue_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_catalogue_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_drafts_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_drafts_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_shared_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_shared_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_workspace_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_workspace_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_audit_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_audit_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_roster_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_roster_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_gear_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_gear_1",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_council_0",
+   "project": null,
+   "skipped": "no repo config"
+  },
+  {
+   "id": "summit_club_council_1",
+   "project": null,
+   "skipped": "no repo config"
+  }
+ ]
+}

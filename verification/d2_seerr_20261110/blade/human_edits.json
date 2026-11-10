@@ -1,0 +1,377 @@
+[
+ {
+  "id": "pol_api_v1_issueComment_put_by_commentId",
+  "method": "PUT",
+  "path": "/api/v1/issueComment/{commentId}",
+  "edit": "E2",
+  "before": {
+   "label": "manual_review_required",
+   "confidence": 0.0,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_match",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "commentId",
+    "owner_lookup": {
+     "table": "issue_comment",
+     "id_col": "id",
+     "owner_col": "userId",
+     "tenant_col": null
+    },
+    "roles": [],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_issue_comment_post_by_issueId",
+  "method": "POST",
+  "path": "/api/v1/issue/{issueId}/comment",
+  "edit": "E3",
+  "before": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "modifiedById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "createdById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_issue_delete_by_issueId",
+  "method": "DELETE",
+  "path": "/api/v1/issue/{issueId}",
+  "edit": "E3",
+  "before": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "modifiedById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "createdById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_issue_get_by_issueId",
+  "method": "GET",
+  "path": "/api/v1/issue/{issueId}",
+  "edit": "E3",
+  "before": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "modifiedById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "issueId",
+    "owner_lookup": {
+     "table": "issue",
+     "id_col": "id",
+     "owner_col": "createdById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_request_delete_by_requestId",
+  "method": "DELETE",
+  "path": "/api/v1/request/{requestId}",
+  "edit": "E1",
+  "before": {
+   "label": "manual_review_required",
+   "confidence": 0.0,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "requestId",
+    "owner_lookup": {
+     "table": "media_request",
+     "id_col": "id",
+     "owner_col": "requestedById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_request_get_by_requestId",
+  "method": "GET",
+  "path": "/api/v1/request/{requestId}",
+  "edit": "E1",
+  "before": {
+   "label": "manual_review_required",
+   "confidence": 0.0,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "requestId",
+    "owner_lookup": {
+     "table": "media_request",
+     "id_col": "id",
+     "owner_col": "requestedById",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "manual"
+  }
+ },
+ {
+  "id": "pol_api_v1_request_put_by_requestId",
+  "method": "PUT",
+  "path": "/api/v1/request/{requestId}",
+  "edit": null,
+  "before": {
+   "label": "role_required",
+   "confidence": 0.9,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [
+     "admin",
+     "user"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "role_required",
+   "confidence": 0.9,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [
+     "admin",
+     "user"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "llm"
+  }
+ },
+ {
+  "id": "pol_api_v1_settings_main_get",
+  "method": "GET",
+  "path": "/api/v1/settings/main",
+  "edit": null,
+  "before": {
+   "label": "manual_review_required",
+   "confidence": 0.0,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "manual_review_required",
+   "confidence": 0.0,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "llm"
+  }
+ },
+ {
+  "id": "pol_api_v1_user_get_by_userId",
+  "method": "GET",
+  "path": "/api/v1/user/{userId}",
+  "edit": null,
+  "before": {
+   "label": "role_required",
+   "confidence": 0.9,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [
+     "admin"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "role_required",
+   "confidence": 0.9,
+   "params": {
+    "object_param": null,
+    "owner_lookup": null,
+    "roles": [
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "llm"
+  }
+ },
+ {
+  "id": "pol_api_v1_user_quota_get_by_userId",
+  "method": "GET",
+  "path": "/api/v1/user/{userId}/quota",
+  "edit": null,
+  "before": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "userId",
+    "owner_lookup": {
+     "table": "user",
+     "id_col": "id",
+     "owner_col": "id",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   }
+  },
+  "after": {
+   "label": "owner_or_admin",
+   "confidence": 0.9,
+   "params": {
+    "object_param": "userId",
+    "owner_lookup": {
+     "table": "user",
+     "id_col": "id",
+     "owner_col": "id",
+     "tenant_col": null
+    },
+    "roles": [
+     "owner",
+     "admin"
+    ],
+    "allowed_membership": []
+   },
+   "status": "ACTIVE",
+   "source": "llm"
+  }
+ }
+]

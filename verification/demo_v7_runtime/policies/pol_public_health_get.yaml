@@ -1,0 +1,20 @@
+id: pol_public_health_get
+endpoint:
+  method: GET
+  path: /public/health
+label: public
+params:
+  object_param: null
+  owner_lookup: null
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=public confidence=0.9] description:
+  핸들러 코드의 return {"status": "ok"}; 판단: 인증·권한 검사 없이 익명 호출을 허용하므로 public 선택 | params:
+  none required'
+status: ACTIVE
+created_at: '2026-11-10T11:15:54.544910Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs: []

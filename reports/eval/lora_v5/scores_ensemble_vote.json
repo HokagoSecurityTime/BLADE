@@ -1,0 +1,1765 @@
+{
+ "definition": "작업 S2 (2026-11-03): LoRA v5 3 seed 다수결(ensemble vote) 재채점 — 학습·추론 없음, 보조 지표.\n대상: test_v30 oas_code 합성 제외 207 · test_v31_supp oas_code 222 · test_v5 oas_code 283. 기존 seed 42·43·44 예측 파일만 읽는다.\n\n동률 규칙(AGENTS.md '작업 S2' 절, 채점 전 사전 기록):\n- 3 seed가 모두 다르면 seed 42 예측.\n- 출력 오류는 기권. 나머지 2개로 다수결, 그래도 동률이면 seed 42 예측(seed 42 자체가 기권이면 출력 오류). 3개 모두 기권이면 출력 오류.\n지표 정의는 scripts/eval_combined_v5.py metrics()와 동일(7-class, macro-F1은 support>0 label 평균, 구체 정밀도·재현율은 eval_v30.py concrete()).\n단일 seed 평균 ± 표본 표준편차와 나란히 표기. 주지표·발표 수치는 바꾸지 않는다.",
+ "truth_hashes": {
+  "test_v30": "9bd47216575afc602b03afa20e617308dd9a97476c94e67a117eb17009afd5e2",
+  "test_v31_supp": "803d914902c7ca2042fd15d4a7852d42e71828e58d4ae4d3ac791fb868e63395",
+  "test_v5": "7b8e4a940967ec474e0d5dbf6dcdbd6b7e04be439599c2a684664d6b9393fd9c",
+  "test_v5_manifest": "57fd384f46e89e905209e627a7ff7fb9f312e22a7bed222639e91a80bd05fccd"
+ },
+ "sets": {
+  "test_v30_207": {
+   "title": "test_v30 oas_code 합성 제외",
+   "files": [
+    "reports/eval/lora_v5/lora_v5_s42/eval/predictions_oas_code_lora_v5_s42_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s43/eval/predictions_oas_code_lora_v5_s43_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s44/eval/predictions_oas_code_lora_v5_s44_final.jsonl"
+   ],
+   "records": 207,
+   "unanimous": 138,
+   "vote_reasons": {
+    "majority": 201,
+    "majority_after_abstain": 5,
+    "tie_seed42_abstain": 1
+   },
+   "tie_records": [
+    {
+     "id": "905507d01b81ba5eb1f0",
+     "truth": "owner_match",
+     "votes": {
+      "42": "output_error",
+      "43": "owner_match",
+      "44": "manual_review_required"
+     },
+     "chosen": "output_error",
+     "reason": "tie_seed42_abstain"
+    }
+   ],
+   "single": {
+    "42": {
+     "records": 207,
+     "macro_f1": 0.3661,
+     "supported_labels": 5,
+     "accuracy": 0.5604,
+     "manual_ratio": 0.256,
+     "output_errors": 4,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 150,
+      "answer_rate": 0.7282,
+      "precision": 0.7667,
+      "recall": 0.5583
+     },
+     "per_label": {
+      "public": {
+       "support": 58,
+       "precision": 0.6667,
+       "recall": 0.6207,
+       "f1": 0.6429
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.7333,
+       "recall": 0.2821,
+       "f1": 0.4074
+      },
+      "membership_required": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 106,
+       "precision": 0.8831,
+       "recall": 0.6415,
+       "f1": 0.7432
+      },
+      "owner_or_admin": {
+       "support": 3,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "manual_review_required": {
+       "support": 1,
+       "precision": 0.0189,
+       "recall": 1.0,
+       "f1": 0.037
+      }
+     }
+    },
+    "43": {
+     "records": 207,
+     "macro_f1": 0.386,
+     "supported_labels": 5,
+     "accuracy": 0.5797,
+     "manual_ratio": 0.2899,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 147,
+      "answer_rate": 0.7136,
+      "precision": 0.8095,
+      "recall": 0.5777
+     },
+     "per_label": {
+      "public": {
+       "support": 58,
+       "precision": 0.7826,
+       "recall": 0.6207,
+       "f1": 0.6923
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.7647,
+       "recall": 0.3333,
+       "f1": 0.4643
+      },
+      "membership_required": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 106,
+       "precision": 0.8434,
+       "recall": 0.6604,
+       "f1": 0.7407
+      },
+      "owner_or_admin": {
+       "support": 3,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "manual_review_required": {
+       "support": 1,
+       "precision": 0.0167,
+       "recall": 1.0,
+       "f1": 0.0328
+      }
+     }
+    },
+    "44": {
+     "records": 207,
+     "macro_f1": 0.3711,
+     "supported_labels": 5,
+     "accuracy": 0.5652,
+     "manual_ratio": 0.2995,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 206,
+      "answered": 143,
+      "answer_rate": 0.6942,
+      "precision": 0.8112,
+      "recall": 0.5631
+     },
+     "per_label": {
+      "public": {
+       "support": 58,
+       "precision": 0.7436,
+       "recall": 0.5,
+       "f1": 0.5979
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.8571,
+       "recall": 0.3077,
+       "f1": 0.4528
+      },
+      "membership_required": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 106,
+       "precision": 0.8523,
+       "recall": 0.7075,
+       "f1": 0.7732
+      },
+      "owner_or_admin": {
+       "support": 3,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "manual_review_required": {
+       "support": 1,
+       "precision": 0.0161,
+       "recall": 1.0,
+       "f1": 0.0317
+      }
+     }
+    }
+   },
+   "ensemble": {
+    "records": 207,
+    "macro_f1": 0.3855,
+    "supported_labels": 5,
+    "accuracy": 0.5845,
+    "manual_ratio": 0.2754,
+    "output_errors": 1,
+    "concrete": {
+     "n_truth_concrete": 206,
+     "answered": 149,
+     "answer_rate": 0.7233,
+     "precision": 0.8054,
+     "recall": 0.5825
+    },
+    "per_label": {
+     "public": {
+      "support": 58,
+      "precision": 0.7447,
+      "recall": 0.6034,
+      "f1": 0.6667
+     },
+     "role_required": {
+      "support": 39,
+      "precision": 0.7647,
+      "recall": 0.3333,
+      "f1": 0.4643
+     },
+     "membership_required": {
+      "support": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "tenant_match": {
+      "support": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "owner_match": {
+      "support": 106,
+      "precision": 0.8675,
+      "recall": 0.6792,
+      "f1": 0.7619
+     },
+     "owner_or_admin": {
+      "support": 3,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "manual_review_required": {
+      "support": 1,
+      "precision": 0.0175,
+      "recall": 1.0,
+      "f1": 0.0345
+     }
+    }
+   },
+   "flips_vs_seed": {
+    "42": {
+     "changed": 26,
+     "gained": 12,
+     "lost": 7
+    },
+    "43": {
+     "changed": 17,
+     "gained": 7,
+     "lost": 6
+    },
+    "44": {
+     "changed": 27,
+     "gained": 9,
+     "lost": 5
+    }
+   },
+   "voted_labels": {
+    "b98a2ab3b50a679bfa16": "role_required",
+    "a3b2d062cdb1162b5997": "public",
+    "4af8a0694ed2e327e0db": "owner_match",
+    "759eb32d69ab1820e44d": "owner_match",
+    "f40e37d667e9313cbb3e": "public",
+    "e0a91b1fbd877d1fd12c": "manual_review_required",
+    "c47f96241d6d7fc93158": "public",
+    "ff8c5eda79000fa6687f": "owner_match",
+    "7f3a2148b6be2455ba76": "public",
+    "8a8d61e2f627c4a1102e": "public",
+    "b3906a959a0b669047ba": "owner_match",
+    "217a26a0ed334f7297d0": "owner_match",
+    "2463648df20db46705c1": "role_required",
+    "aae57acca0e9317e81c1": "owner_match",
+    "149fc53d41cf49d52bb9": "public",
+    "9a7d3d59efab53f32063": "public",
+    "887fef961a2a2394c816": "public",
+    "acdc8447219278841824": "manual_review_required",
+    "d93acb187b6c273464f0": "manual_review_required",
+    "d0afe4b052514b189dfa": "owner_match",
+    "5928631c56d36ced026a": "owner_match",
+    "c3203410c4072686beaa": "owner_match",
+    "240a92b7ee284506eb3f": "public",
+    "15af38ebe8faf15c930f": "role_required",
+    "860383f68102b772bb99": "public",
+    "6bca6097b26cf226f405": "manual_review_required",
+    "cdd3d3e140b0b509bcd3": "membership_required",
+    "a0f5f54a6d4c22bb18e7": "owner_match",
+    "af6e2ae1b29132ee1d77": "owner_match",
+    "d42ed128370ce4d3ce71": "owner_match",
+    "7a19e5a3a9eb0d5947f3": "manual_review_required",
+    "c085f5d6b9f87dd6d4a1": "public",
+    "cd33a23103c412ea5651": "owner_match",
+    "324601a8dc9e9ea969bb": "owner_match",
+    "0797f5bb072770d50159": "manual_review_required",
+    "3dc50d2c3650a204001d": "manual_review_required",
+    "d72193f9a1b7d79700d0": "public",
+    "bc1dce3621c7da44ddfe": "public",
+    "58e3df2930d0ce4c3175": "public",
+    "875c33706a68c4c9a61a": "public",
+    "61f662463e13765b9478": "public",
+    "be8b11cdbabe4486aeda": "manual_review_required",
+    "7e3f8c20d798e8b34143": "manual_review_required",
+    "bb532c95786f45e07314": "public",
+    "769288e3cd1d5d4c117d": "public",
+    "dcc8f1be82d40ee3d5cf": "manual_review_required",
+    "abbb3b1e9239779e76f2": "owner_match",
+    "c917e3e10dce94cc245c": "owner_match",
+    "fc9dac901542ca88d688": "public",
+    "5a72ac6384c12b441687": "owner_match",
+    "312256166232634f8b1b": "public",
+    "4de2f44349d88f3d6b3a": "owner_match",
+    "97abea85e395e6649df4": "manual_review_required",
+    "2c0c5b01954059e821bf": "manual_review_required",
+    "d8c5cf5eb0bfbd488219": "public",
+    "580f801a0d75c34f1331": "role_required",
+    "0aa2fbdb066b3d771316": "public",
+    "d553cdd9276767f1b1bc": "public",
+    "6224f0ab777c554bb796": "manual_review_required",
+    "956a6feb1b1f65eb5a9a": "owner_match",
+    "0f7dacc4c4c5dc50ad69": "owner_match",
+    "e878000888f7f413f8b0": "owner_match",
+    "79d4449bddc16ef5992f": "role_required",
+    "0b0918598294090d14c3": "owner_match",
+    "fed0409de548b760d467": "owner_match",
+    "267af32d80a0676db11d": "owner_match",
+    "df4bec349a3613906e39": "owner_match",
+    "839cbd23124f4c9278ad": "manual_review_required",
+    "f39152044579211bc61a": "manual_review_required",
+    "cffea7522dac244d677f": "manual_review_required",
+    "8f823c91369626ba6d9f": "manual_review_required",
+    "7881b143ae63fc60a35e": "owner_match",
+    "d03dd5bb033fde20a6b9": "owner_match",
+    "48784a817ce60824dbc1": "owner_match",
+    "cc7aabb324d891f2d312": "owner_match",
+    "a786e652a128f7d49fcb": "manual_review_required",
+    "939ca4cd3f9e9e8b27df": "public",
+    "bb8c80531d0fc1d9caed": "manual_review_required",
+    "7cf042f2cfd8f56045a3": "manual_review_required",
+    "5861cf111a0a131186d5": "manual_review_required",
+    "13b3024516b002a3d17d": "manual_review_required",
+    "6c0c7e81f4263be705bd": "manual_review_required",
+    "9c760e36b50d4ee7a2d9": "manual_review_required",
+    "7ff76e2ecef4c5c31665": "manual_review_required",
+    "447fc0aa6c34613756ff": "manual_review_required",
+    "be9b12fb6e4c31c1d823": "manual_review_required",
+    "f01502b9ee6e82ca7e9e": "manual_review_required",
+    "bc7fd5ac27c130eb1670": "public",
+    "ed50adacf184ba6ddcba": "owner_match",
+    "76f7d58a66bcc80fa70e": "role_required",
+    "286fba309233af2275a4": "owner_match",
+    "c199be4494217f7a301b": "owner_match",
+    "0a3ece0464909469b61e": "manual_review_required",
+    "3e5864573bebca5a8458": "manual_review_required",
+    "c64b7f4c9538c700b710": "owner_match",
+    "3adb00c6de54a6331736": "manual_review_required",
+    "7364a223f5e100dd73b2": "owner_match",
+    "4014be5658e0ee17ea1e": "owner_match",
+    "e502084b4f925dbf28e4": "owner_match",
+    "905507d01b81ba5eb1f0": "output_error",
+    "e574b8ba6eacb5d7c83c": "owner_match",
+    "16f4b2d20c0ba89ed279": "owner_match",
+    "bbaf2ce2f276bd2f4679": "manual_review_required",
+    "4033e696c5dc2d5b3aa2": "manual_review_required",
+    "af9828d3c503f11fb3fe": "manual_review_required",
+    "39034afdb110cdb9defc": "manual_review_required",
+    "063fa7598db37c095700": "manual_review_required",
+    "ed9b8680702e673060d4": "manual_review_required",
+    "1b6a93b2cd2fddfc5d01": "manual_review_required",
+    "0cd1ae74896420dd9abe": "role_required",
+    "9400cf3c01d33fe952da": "manual_review_required",
+    "179edeb6b4389d232d5d": "owner_match",
+    "f0ca27ba6aba3b33b9d2": "owner_match",
+    "3f60ffc8151aba598d58": "owner_match",
+    "4ee6439b95fb9a2c4bb8": "owner_match",
+    "812cccd2e9c35add2146": "owner_match",
+    "cd10794910422bd9dcf8": "owner_match",
+    "eb5692e50c0e12db6ca9": "public",
+    "9416b7189d811cbb7daa": "manual_review_required",
+    "745151104eb860a9e9ec": "owner_match",
+    "eef733c4cdf73432c9bc": "owner_match",
+    "2787243a5db7dfb178b4": "owner_match",
+    "c88cdff9970205a15244": "public",
+    "cb7b63f3b0b2e2e8e967": "manual_review_required",
+    "b99ce3da978a18ab2017": "owner_match",
+    "7b6e2731e933a52a9070": "owner_match",
+    "a15c48c2351014fde76c": "manual_review_required",
+    "20048ada164e23252369": "manual_review_required",
+    "c1eb8e1b4c0183b6c75b": "manual_review_required",
+    "4e0c68cd981acbfe4a95": "manual_review_required",
+    "383ff20e485d08b7aab2": "owner_match",
+    "fbe864fbd2d924117550": "role_required",
+    "6c5807ef29707164f73b": "owner_match",
+    "314ffc8290ffcff7031e": "owner_match",
+    "dc4019dd63bac3b0e405": "manual_review_required",
+    "fad2ffd19dad19055370": "manual_review_required",
+    "43e7d3752b50b3dfdd1b": "owner_match",
+    "2168150bddc48ce3a0c8": "public",
+    "5cb15a9c2cc08fcaa9f2": "role_required",
+    "a1be3b47f9420231f409": "manual_review_required",
+    "af52b958d71fa4458e1e": "manual_review_required",
+    "ae718aeadf0285be8850": "public",
+    "95a588720a50160e0c3e": "manual_review_required",
+    "2289e5bc9d8ead4e8818": "public",
+    "d2d3003f1edf061ec6ed": "role_required",
+    "0e1637db083f68e499d4": "role_required",
+    "90b7d387b719e9937263": "manual_review_required",
+    "81ad27320942026fa518": "owner_match",
+    "5b4104eb0ef8a0531dbd": "owner_match",
+    "c31d0a5bb5c879e094f3": "owner_match",
+    "bcfa59eea899fc11ba4f": "owner_match",
+    "32447425974cf6f24467": "public",
+    "3fb5f18e981183405c13": "owner_match",
+    "f98a05bef6af6ac52df9": "owner_match",
+    "4dc92bf6452cc6671184": "public",
+    "e8437c5320794a594af6": "owner_match",
+    "c250b480c9ec5ee55617": "owner_match",
+    "bbfd5bfc671dc4af42c5": "owner_match",
+    "fd938e89d9362deb8656": "owner_match",
+    "9a4f29e70cdc281a0357": "owner_match",
+    "0f5b4d569c99d8d9c870": "owner_match",
+    "b92cea1a3f110420ee85": "membership_required",
+    "b036005643c333b5e7ae": "role_required",
+    "eed3687a2d41f8658232": "manual_review_required",
+    "5e6b124fedb6105ffbd0": "public",
+    "a843efb3b237cbef2026": "public",
+    "0293603d276a2bdbefe0": "owner_match",
+    "8854d7bfa8e6100efee9": "owner_match",
+    "bf900bef2d12400d0880": "owner_match",
+    "28fa5fab6338ef186954": "owner_match",
+    "7ab0a0779b998f445f3c": "owner_match",
+    "2f8f43be0ee49cc83b1e": "owner_match",
+    "93b3678d43a24b94f1c3": "manual_review_required",
+    "1e7e10e8d4827df5e28a": "role_required",
+    "01df9f46f6e721fa4cb0": "public",
+    "ab9da003ee3dbde8e544": "owner_match",
+    "a3f4eb9a86fa08f2ad71": "public",
+    "680ac46b983584d4552d": "public",
+    "25fd1086a6999340c575": "public",
+    "bf2d1601b02281b85536": "owner_match",
+    "7292860512c06eed2ffd": "owner_match",
+    "6309b77a47e9b994f9fe": "owner_match",
+    "a15a54f7818a6cf25d98": "owner_match",
+    "963209fb55865d6f2acf": "owner_match",
+    "c4993c51f6be6657d771": "role_required",
+    "06ba24e97fdcb059ad92": "owner_match",
+    "ffe188e6f24418c23676": "public",
+    "be2ff7c9ec46320a97af": "public",
+    "d0ab15d66e0643031f91": "manual_review_required",
+    "91d2105d144e1805a5b2": "public",
+    "7093260288fd7266a210": "role_required",
+    "50730915ce2378191bee": "public",
+    "f8fd9992a61819c2c4af": "owner_match",
+    "4d8caf213fb70649fc0f": "public",
+    "0a8fb9b5c84b26b19826": "owner_match",
+    "0f7af84126bd72a56bd5": "manual_review_required",
+    "a40f8db8b12527fda084": "role_required",
+    "3f37f7f30c7bc18f180a": "owner_match",
+    "208819689993254cc920": "public",
+    "60c95e757a6b732073ae": "owner_match",
+    "e48aca1abec6c374bfa1": "manual_review_required",
+    "29a91ef41063c0221266": "public",
+    "26c60d2fb9155d63f00c": "manual_review_required",
+    "2e45bdad0431b35cfbf5": "public",
+    "90e39b6520bac57f8f52": "public",
+    "1d45c0e2ac7bb00728b3": "role_required",
+    "a4f0cd98076a7ed61adf": "owner_match"
+   }
+  },
+  "test_v31_supp": {
+   "title": "test_v31_supp oas_code",
+   "files": [
+    "reports/eval/lora_v5/lora_v5_s42/eval/supp_predictions_oas_code_lora_v5_s42_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s43/eval/supp_predictions_oas_code_lora_v5_s43_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s44/eval/supp_predictions_oas_code_lora_v5_s44_final.jsonl"
+   ],
+   "records": 222,
+   "unanimous": 139,
+   "vote_reasons": {
+    "majority": 212,
+    "tie_all_differ": 8,
+    "tie_after_abstain": 2
+   },
+   "tie_records": [
+    {
+     "id": "v4t-chatwoot-9396815365",
+     "truth": "membership_required",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "role_required",
+      "44": "owner_or_admin"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-chatwoot-078e43f1a5",
+     "truth": "membership_required",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "membership_required",
+      "44": "owner_or_admin"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-chamilo-386a6eb88b",
+     "truth": "owner_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "owner_match",
+      "44": "role_required"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-0ede58cae4",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "role_required",
+      "44": "tenant_match"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-c96b4158a8",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "role_required",
+      "44": "manual_review_required"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-e5ed133463",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "role_required",
+      "44": "tenant_match"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-8dcd3b5cde",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "role_required",
+      "44": "membership_required"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-9a7ff520ac",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "manual_review_required",
+      "44": "output_error"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_after_abstain"
+    },
+    {
+     "id": "v4t-flowise-11e232587e",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "manual_review_required",
+      "44": "tenant_match"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v4t-flowise-58ad7b33a8",
+     "truth": "tenant_match",
+     "votes": {
+      "42": "membership_required",
+      "43": "output_error",
+      "44": "manual_review_required"
+     },
+     "chosen": "membership_required",
+     "reason": "tie_after_abstain"
+    }
+   ],
+   "single": {
+    "42": {
+     "records": 222,
+     "macro_f1": 0.4725,
+     "supported_labels": 7,
+     "accuracy": 0.4009,
+     "manual_ratio": 0.2342,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 147,
+      "answer_rate": 0.7656,
+      "precision": 0.5578,
+      "recall": 0.4271
+     },
+     "per_label": {
+      "public": {
+       "support": 2,
+       "precision": 1.0,
+       "recall": 1.0,
+       "f1": 1.0
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.4375,
+       "recall": 0.7179,
+       "f1": 0.5437
+      },
+      "membership_required": {
+       "support": 55,
+       "precision": 0.6389,
+       "recall": 0.4182,
+       "f1": 0.5055
+      },
+      "tenant_match": {
+       "support": 55,
+       "precision": 1.0,
+       "recall": 0.1091,
+       "f1": 0.1967
+      },
+      "owner_match": {
+       "support": 21,
+       "precision": 0.4839,
+       "recall": 0.7143,
+       "f1": 0.5769
+      },
+      "owner_or_admin": {
+       "support": 20,
+       "precision": 0.2581,
+       "recall": 0.4,
+       "f1": 0.3137
+      },
+      "manual_review_required": {
+       "support": 30,
+       "precision": 0.1346,
+       "recall": 0.2333,
+       "f1": 0.1707
+      }
+     }
+    },
+    "43": {
+     "records": 222,
+     "macro_f1": 0.5149,
+     "supported_labels": 7,
+     "accuracy": 0.464,
+     "manual_ratio": 0.1441,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 167,
+      "answer_rate": 0.8698,
+      "precision": 0.5689,
+      "recall": 0.4948
+     },
+     "per_label": {
+      "public": {
+       "support": 2,
+       "precision": 1.0,
+       "recall": 1.0,
+       "f1": 1.0
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.3605,
+       "recall": 0.7949,
+       "f1": 0.496
+      },
+      "membership_required": {
+       "support": 55,
+       "precision": 0.8205,
+       "recall": 0.5818,
+       "f1": 0.6809
+      },
+      "tenant_match": {
+       "support": 55,
+       "precision": 1.0,
+       "recall": 0.1273,
+       "f1": 0.2258
+      },
+      "owner_match": {
+       "support": 21,
+       "precision": 0.5,
+       "recall": 0.7143,
+       "f1": 0.5882
+      },
+      "owner_or_admin": {
+       "support": 20,
+       "precision": 0.32,
+       "recall": 0.4,
+       "f1": 0.3556
+      },
+      "manual_review_required": {
+       "support": 30,
+       "precision": 0.25,
+       "recall": 0.2667,
+       "f1": 0.2581
+      }
+     }
+    },
+    "44": {
+     "records": 222,
+     "macro_f1": 0.4677,
+     "supported_labels": 7,
+     "accuracy": 0.3919,
+     "manual_ratio": 0.2432,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 192,
+      "answered": 144,
+      "answer_rate": 0.75,
+      "precision": 0.5556,
+      "recall": 0.4167
+     },
+     "per_label": {
+      "public": {
+       "support": 2,
+       "precision": 1.0,
+       "recall": 1.0,
+       "f1": 1.0
+      },
+      "role_required": {
+       "support": 39,
+       "precision": 0.3774,
+       "recall": 0.5128,
+       "f1": 0.4348
+      },
+      "membership_required": {
+       "support": 55,
+       "precision": 0.7436,
+       "recall": 0.5273,
+       "f1": 0.617
+      },
+      "tenant_match": {
+       "support": 55,
+       "precision": 1.0,
+       "recall": 0.1636,
+       "f1": 0.2812
+      },
+      "owner_match": {
+       "support": 21,
+       "precision": 0.4074,
+       "recall": 0.5238,
+       "f1": 0.4583
+      },
+      "owner_or_admin": {
+       "support": 20,
+       "precision": 0.2432,
+       "recall": 0.45,
+       "f1": 0.3158
+      },
+      "manual_review_required": {
+       "support": 30,
+       "precision": 0.1296,
+       "recall": 0.2333,
+       "f1": 0.1667
+      }
+     }
+    }
+   },
+   "ensemble": {
+    "records": 222,
+    "macro_f1": 0.4949,
+    "supported_labels": 7,
+    "accuracy": 0.4324,
+    "manual_ratio": 0.2117,
+    "output_errors": 0,
+    "concrete": {
+     "n_truth_concrete": 192,
+     "answered": 152,
+     "answer_rate": 0.7917,
+     "precision": 0.5855,
+     "recall": 0.4635
+    },
+    "per_label": {
+     "public": {
+      "support": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+     },
+     "role_required": {
+      "support": 39,
+      "precision": 0.4375,
+      "recall": 0.7179,
+      "f1": 0.5437
+     },
+     "membership_required": {
+      "support": 55,
+      "precision": 0.6591,
+      "recall": 0.5273,
+      "f1": 0.5859
+     },
+     "tenant_match": {
+      "support": 55,
+      "precision": 1.0,
+      "recall": 0.1273,
+      "f1": 0.2258
+     },
+     "owner_match": {
+      "support": 21,
+      "precision": 0.4828,
+      "recall": 0.6667,
+      "f1": 0.56
+     },
+     "owner_or_admin": {
+      "support": 20,
+      "precision": 0.3103,
+      "recall": 0.45,
+      "f1": 0.3673
+     },
+     "manual_review_required": {
+      "support": 30,
+      "precision": 0.1489,
+      "recall": 0.2333,
+      "f1": 0.1818
+     }
+    }
+   },
+   "flips_vs_seed": {
+    "42": {
+     "changed": 18,
+     "gained": 9,
+     "lost": 2
+    },
+    "43": {
+     "changed": 48,
+     "gained": 6,
+     "lost": 13
+    },
+    "44": {
+     "changed": 27,
+     "gained": 12,
+     "lost": 3
+    }
+   },
+   "voted_labels": {
+    "v4t-chatwoot-a7959f6c9f": "owner_or_admin",
+    "v4t-chatwoot-445be1f080": "owner_or_admin",
+    "v4t-chatwoot-91a85aab9f": "membership_required",
+    "v4t-chatwoot-95204a02e4": "owner_or_admin",
+    "v4t-chatwoot-90bab44d61": "membership_required",
+    "v4t-chatwoot-9e18255467": "membership_required",
+    "v4t-chatwoot-4c90fdc99f": "membership_required",
+    "v4t-chatwoot-e8d89bdce6": "owner_match",
+    "v4t-chatwoot-64a8db49f4": "owner_match",
+    "v4t-chatwoot-9396815365": "manual_review_required",
+    "v4t-chatwoot-51cb15a4f4": "owner_or_admin",
+    "v4t-chatwoot-3b1d3561f8": "membership_required",
+    "v4t-chatwoot-fdd575ed5f": "membership_required",
+    "v4t-chatwoot-9c508c7a56": "membership_required",
+    "v4t-chatwoot-45d5ad9844": "owner_match",
+    "v4t-chatwoot-2a4e9315ab": "owner_or_admin",
+    "v4t-chatwoot-bbb1fffd29": "membership_required",
+    "v4t-chatwoot-bd801cfc57": "owner_match",
+    "v4t-chatwoot-546653f2a4": "membership_required",
+    "v4t-chatwoot-03669a69b1": "owner_match",
+    "v4t-chatwoot-7a7700530e": "membership_required",
+    "v4t-chatwoot-0bb9eddaec": "owner_match",
+    "v4t-chatwoot-564e5fce51": "owner_match",
+    "v4t-chatwoot-e924d40f50": "role_required",
+    "v4t-chatwoot-a1be4532b9": "membership_required",
+    "v4t-chatwoot-0620532df5": "membership_required",
+    "v4t-chatwoot-9d8b09d90d": "role_required",
+    "v4t-chatwoot-512b658047": "membership_required",
+    "v4t-chatwoot-da04e9ce52": "membership_required",
+    "v4t-chatwoot-41e7b1b44a": "manual_review_required",
+    "v4t-chatwoot-e88beef5ef": "membership_required",
+    "v4t-chatwoot-4593e731e1": "manual_review_required",
+    "v4t-chatwoot-d161bc3f71": "manual_review_required",
+    "v4t-chatwoot-b5ab4c7c63": "manual_review_required",
+    "v4t-chatwoot-74cf4fe5a2": "role_required",
+    "v4t-chatwoot-1205725003": "role_required",
+    "v4t-chatwoot-0ca2f04687": "manual_review_required",
+    "v4t-chatwoot-c18863f382": "membership_required",
+    "v4t-chatwoot-03a9708adc": "manual_review_required",
+    "v4t-chatwoot-5ac15cc194": "owner_or_admin",
+    "v4t-chatwoot-753cf2500c": "owner_or_admin",
+    "v4t-chatwoot-078e43f1a5": "manual_review_required",
+    "v4t-chatwoot-be3da6a755": "owner_or_admin",
+    "v4t-chatwoot-057f27a0c8": "membership_required",
+    "v4t-chatwoot-33fd839669": "membership_required",
+    "v4t-chatwoot-febac611cb": "owner_or_admin",
+    "v4t-chatwoot-47d90bc4d9": "membership_required",
+    "v4t-chatwoot-e6dae7add9": "membership_required",
+    "v4t-chatwoot-93cb1bf716": "role_required",
+    "v4t-chatwoot-a374fd4783": "manual_review_required",
+    "v4t-chatwoot-c5ddd52bd4": "membership_required",
+    "v4t-chatwoot-8658306c59": "membership_required",
+    "v4t-chatwoot-cc59fd2fda": "membership_required",
+    "v4t-chatwoot-af75f581fa": "owner_or_admin",
+    "v4t-chatwoot-9858ef5a68": "owner_or_admin",
+    "v4t-chatwoot-9358491b1b": "owner_or_admin",
+    "v4t-chatwoot-d7eb2d8602": "role_required",
+    "v4t-chatwoot-cb1a437bfc": "role_required",
+    "v4t-chatwoot-80bc4fa93d": "role_required",
+    "v4t-chatwoot-e81a0989fb": "owner_match",
+    "v4t-chatwoot-2b899af5d6": "role_required",
+    "v4t-chatwoot-a21da231a4": "role_required",
+    "v4t-chatwoot-094dc4e0aa": "owner_match",
+    "v4t-chatwoot-ed7fc5a4c9": "owner_match",
+    "v4t-chatwoot-f8e4aa6633": "owner_match",
+    "v4t-chatwoot-f8a59a7139": "owner_match",
+    "v4t-chatwoot-71fcc01e80": "owner_match",
+    "v4t-chatwoot-8e5b8fab5d": "owner_match",
+    "v4t-chatwoot-bfc74394f6": "owner_match",
+    "v4t-chatwoot-dabc76b33d": "owner_match",
+    "v4t-chatwoot-9c39551db6": "owner_match",
+    "v4t-chatwoot-7641cdaa59": "owner_or_admin",
+    "v4t-chatwoot-0a933387f6": "owner_or_admin",
+    "v4t-chatwoot-645ea1b98c": "owner_match",
+    "v4t-chatwoot-709c71ebe6": "membership_required",
+    "v4t-chatwoot-526e377900": "membership_required",
+    "v4t-chatwoot-66d6ba7970": "membership_required",
+    "v4t-chatwoot-0e7d04ddfd": "membership_required",
+    "v4t-chatwoot-4e599548ff": "public",
+    "v4t-chamilo-b4f870e523": "role_required",
+    "v4t-chamilo-4e5241c0d5": "owner_match",
+    "v4t-chamilo-e572f1eb93": "owner_or_admin",
+    "v4t-chamilo-cd7628b032": "role_required",
+    "v4t-chamilo-6a95d43c80": "manual_review_required",
+    "v4t-chamilo-2199b704fd": "owner_or_admin",
+    "v4t-chamilo-0715e09e5b": "owner_match",
+    "v4t-chamilo-c8a960822c": "role_required",
+    "v4t-chamilo-dfdbab7cb9": "role_required",
+    "v4t-chamilo-3fd758ef66": "membership_required",
+    "v4t-chamilo-8c2aa82f83": "membership_required",
+    "v4t-chamilo-597af5747c": "membership_required",
+    "v4t-chamilo-7ea54fcd54": "membership_required",
+    "v4t-chamilo-95607cc575": "membership_required",
+    "v4t-chamilo-c21c45e65d": "membership_required",
+    "v4t-chamilo-8027d206a9": "role_required",
+    "v4t-chamilo-919a10f92d": "role_required",
+    "v4t-chamilo-58a62ecb08": "membership_required",
+    "v4t-chamilo-8a5d8ccfbb": "membership_required",
+    "v4t-chamilo-f6a2aabd62": "role_required",
+    "v4t-chamilo-d2308c93ef": "role_required",
+    "v4t-chamilo-b105460554": "role_required",
+    "v4t-chamilo-80f69eea94": "role_required",
+    "v4t-chamilo-2ddb841792": "role_required",
+    "v4t-chamilo-6a227b8876": "role_required",
+    "v4t-chamilo-80f1a8bae9": "role_required",
+    "v4t-chamilo-2f41122fef": "owner_or_admin",
+    "v4t-chamilo-da4af8730d": "manual_review_required",
+    "v4t-chamilo-4af10c015d": "manual_review_required",
+    "v4t-chamilo-a83195063d": "owner_or_admin",
+    "v4t-chamilo-d2d9b86ebe": "role_required",
+    "v4t-chamilo-e424843572": "role_required",
+    "v4t-chamilo-390915f2a0": "role_required",
+    "v4t-chamilo-feb608b868": "role_required",
+    "v4t-chamilo-5eb22ec4c9": "owner_or_admin",
+    "v4t-chamilo-dc7ffaf014": "role_required",
+    "v4t-chamilo-f10416c4f6": "role_required",
+    "v4t-chamilo-407e62c3b6": "role_required",
+    "v4t-chamilo-be83b72aae": "role_required",
+    "v4t-chamilo-cea8369238": "role_required",
+    "v4t-chamilo-093ff09781": "role_required",
+    "v4t-chamilo-b79c92884e": "role_required",
+    "v4t-chamilo-20eb1c5c40": "owner_or_admin",
+    "v4t-chamilo-802d0384f2": "owner_or_admin",
+    "v4t-chamilo-ab41e8f226": "owner_or_admin",
+    "v4t-chamilo-89ffb28bd6": "owner_or_admin",
+    "v4t-chamilo-083a7c0b05": "owner_or_admin",
+    "v4t-chamilo-c29de2ae69": "owner_or_admin",
+    "v4t-chamilo-dd1ab6eef6": "owner_or_admin",
+    "v4t-chamilo-7959566c96": "owner_or_admin",
+    "v4t-chamilo-3014a41b4c": "owner_match",
+    "v4t-chamilo-e0e4f48ac6": "owner_match",
+    "v4t-chamilo-60637f6db1": "owner_match",
+    "v4t-chamilo-baccecca3c": "owner_match",
+    "v4t-chamilo-386a6eb88b": "membership_required",
+    "v4t-chamilo-bf077c6697": "owner_or_admin",
+    "v4t-chamilo-33521fd990": "owner_or_admin",
+    "v4t-chamilo-057e603259": "manual_review_required",
+    "v4t-flowise-806469b37c": "role_required",
+    "v4t-flowise-84aabe6e9a": "tenant_match",
+    "v4t-flowise-0007bf93e2": "manual_review_required",
+    "v4t-flowise-56152515d5": "role_required",
+    "v4t-flowise-a715cfc378": "manual_review_required",
+    "v4t-flowise-2e0c81b4f5": "role_required",
+    "v4t-flowise-0ede58cae4": "membership_required",
+    "v4t-flowise-7c2e265dba": "manual_review_required",
+    "v4t-flowise-c96b4158a8": "membership_required",
+    "v4t-flowise-12da768508": "manual_review_required",
+    "v4t-flowise-098e665c9e": "manual_review_required",
+    "v4t-flowise-d4f8cf0a02": "manual_review_required",
+    "v4t-flowise-114a22a04a": "manual_review_required",
+    "v4t-flowise-6f5c1703a2": "manual_review_required",
+    "v4t-flowise-d70e573281": "membership_required",
+    "v4t-flowise-e5ed133463": "manual_review_required",
+    "v4t-flowise-3601707298": "role_required",
+    "v4t-flowise-5ff35ef682": "tenant_match",
+    "v4t-flowise-14d70a4d16": "manual_review_required",
+    "v4t-flowise-ad52549065": "tenant_match",
+    "v4t-flowise-09fd70fc3d": "manual_review_required",
+    "v4t-flowise-a0007705f4": "manual_review_required",
+    "v4t-flowise-9d9d86767a": "role_required",
+    "v4t-flowise-4f46e09602": "manual_review_required",
+    "v4t-flowise-9e2fc69415": "role_required",
+    "v4t-flowise-261886a5f8": "manual_review_required",
+    "v4t-flowise-10b67e5c19": "manual_review_required",
+    "v4t-flowise-fd79d18e94": "role_required",
+    "v4t-flowise-181dca3a6d": "role_required",
+    "v4t-flowise-ba8e12f50f": "tenant_match",
+    "v4t-flowise-169f58011e": "role_required",
+    "v4t-flowise-8dcd3b5cde": "manual_review_required",
+    "v4t-flowise-1c066ec7b8": "role_required",
+    "v4t-flowise-9a7ff520ac": "membership_required",
+    "v4t-flowise-9a92b06238": "manual_review_required",
+    "v4t-flowise-d3e96b97fc": "role_required",
+    "v4t-flowise-d5089dceaa": "manual_review_required",
+    "v4t-flowise-7fafb70c39": "role_required",
+    "v4t-flowise-43258d3e80": "role_required",
+    "v4t-flowise-7b6c5bcd18": "manual_review_required",
+    "v4t-flowise-633a0ccaab": "role_required",
+    "v4t-flowise-9bd2bb9b92": "manual_review_required",
+    "v4t-flowise-20cd86a0df": "manual_review_required",
+    "v4t-flowise-0ddedb6fa0": "manual_review_required",
+    "v4t-flowise-11e232587e": "membership_required",
+    "v4t-flowise-69d95bdb15": "manual_review_required",
+    "v4t-flowise-0d1e4f4f3f": "tenant_match",
+    "v4t-flowise-d1a6a39bf8": "role_required",
+    "v4t-flowise-41909406ea": "membership_required",
+    "v4t-flowise-fd64aba2a1": "manual_review_required",
+    "v4t-flowise-710e06fe88": "manual_review_required",
+    "v4t-flowise-a72fabf788": "manual_review_required",
+    "v4t-flowise-6a1f13578c": "owner_match",
+    "v4t-flowise-f8f20b3606": "manual_review_required",
+    "v4t-flowise-3192c4f195": "role_required",
+    "v4t-flowise-4af3d5d1a4": "manual_review_required",
+    "v4t-flowise-8f30bd8a5c": "membership_required",
+    "v4t-flowise-9d1a8e9530": "manual_review_required",
+    "v4t-flowise-ff9e6ab2b4": "role_required",
+    "v4t-flowise-58ad7b33a8": "membership_required",
+    "v4t-multitenant_lab-ce575b3b5c": "public",
+    "v4t-multitenant_lab-b6b35fc009": "tenant_match",
+    "v4t-multitenant_lab-4871532f96": "tenant_match",
+    "v4t-multitenant_lab-8119383409": "manual_review_required",
+    "v4t-generic_university-ec43abf2c6": "owner_match",
+    "v4t-generic_university-37196c496b": "manual_review_required",
+    "v4t-generic_university-3570cca06d": "manual_review_required",
+    "v4t-generic_university-bdae24ad67": "owner_match",
+    "v4t-generic_university-6e2a31dc70": "owner_match",
+    "v4t-generic_university-c11ae9ca75": "owner_match",
+    "v4t-generic_university-f28b5b9df3": "role_required",
+    "v4t-generic_university-7817d70fb3": "role_required",
+    "v4t-generic_university-78b9ccb609": "role_required",
+    "v4t-generic_university-1522e86a62": "role_required",
+    "v4t-generic_university-1f24dfc88f": "role_required",
+    "v4t-generic_university-1c4ae5e8e0": "role_required",
+    "v4t-generic_university-49c76847cb": "role_required",
+    "v4t-generic_university-d898b97b0b": "role_required",
+    "v4t-generic_university-2b5eb19669": "role_required",
+    "v4t-generic_university-08295498e4": "role_required",
+    "v4t-generic_university-04354f761f": "manual_review_required",
+    "v4t-generic_university-d2d0a43039": "role_required",
+    "v4t-generic_university-e92314f371": "role_required",
+    "v4t-generic_university-30fce1e2d0": "role_required",
+    "v4t-generic_university-c07af49988": "manual_review_required"
+   }
+  },
+  "test_v5": {
+   "title": "test_v5 oas_code",
+   "files": [
+    "reports/eval/lora_v5/lora_v5_s42/eval/v5test_predictions_oas_code_lora_v5_s42_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s43/eval/v5test_predictions_oas_code_lora_v5_s43_final.jsonl",
+    "reports/eval/lora_v5/lora_v5_s44/eval/v5test_predictions_oas_code_lora_v5_s44_final.jsonl"
+   ],
+   "records": 283,
+   "unanimous": 214,
+   "vote_reasons": {
+    "majority": 271,
+    "tie_all_differ": 9,
+    "majority_after_abstain": 3
+   },
+   "tie_records": [
+    {
+     "id": "v5t-rocketchat-223b6d8be3",
+     "truth": "manual_review_required",
+     "votes": {
+      "42": "owner_match",
+      "43": "owner_or_admin",
+      "44": "manual_review_required"
+     },
+     "chosen": "owner_match",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-29963cbc5b",
+     "truth": "manual_review_required",
+     "votes": {
+      "42": "owner_match",
+      "43": "owner_or_admin",
+      "44": "manual_review_required"
+     },
+     "chosen": "owner_match",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-2b42fcece3",
+     "truth": "manual_review_required",
+     "votes": {
+      "42": "owner_match",
+      "43": "manual_review_required",
+      "44": "owner_or_admin"
+     },
+     "chosen": "owner_match",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-38a3cfd41a",
+     "truth": "membership_required",
+     "votes": {
+      "42": "owner_or_admin",
+      "43": "membership_required",
+      "44": "manual_review_required"
+     },
+     "chosen": "owner_or_admin",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-ba4b8c9067",
+     "truth": "membership_required",
+     "votes": {
+      "42": "owner_match",
+      "43": "membership_required",
+      "44": "manual_review_required"
+     },
+     "chosen": "owner_match",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-63a1732919",
+     "truth": "role_required",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "role_required",
+      "44": "membership_required"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-a447ce62f1",
+     "truth": "role_required",
+     "votes": {
+      "42": "owner_or_admin",
+      "43": "manual_review_required",
+      "44": "role_required"
+     },
+     "chosen": "owner_or_admin",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-c2f1c961aa",
+     "truth": "role_required",
+     "votes": {
+      "42": "role_required",
+      "43": "membership_required",
+      "44": "manual_review_required"
+     },
+     "chosen": "role_required",
+     "reason": "tie_all_differ"
+    },
+    {
+     "id": "v5t-rocketchat-ff636d6df7",
+     "truth": "role_required",
+     "votes": {
+      "42": "manual_review_required",
+      "43": "owner_or_admin",
+      "44": "role_required"
+     },
+     "chosen": "manual_review_required",
+     "reason": "tie_all_differ"
+    }
+   ],
+   "single": {
+    "42": {
+     "records": 283,
+     "macro_f1": 0.6661,
+     "supported_labels": 6,
+     "accuracy": 0.689,
+     "manual_ratio": 0.1625,
+     "output_errors": 1,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 198,
+      "answer_rate": 0.9083,
+      "precision": 0.8485,
+      "recall": 0.7706
+     },
+     "per_label": {
+      "public": {
+       "support": 19,
+       "precision": 0.9333,
+       "recall": 0.7368,
+       "f1": 0.8235
+      },
+      "role_required": {
+       "support": 111,
+       "precision": 0.8667,
+       "recall": 0.8198,
+       "f1": 0.8426
+      },
+      "membership_required": {
+       "support": 33,
+       "precision": 0.4528,
+       "recall": 0.7273,
+       "f1": 0.5581
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 34,
+       "precision": 0.7027,
+       "recall": 0.7647,
+       "f1": 0.7324
+      },
+      "owner_or_admin": {
+       "support": 21,
+       "precision": 0.5,
+       "recall": 0.619,
+       "f1": 0.5532
+      },
+      "manual_review_required": {
+       "support": 65,
+       "precision": 0.587,
+       "recall": 0.4154,
+       "f1": 0.4865
+      }
+     }
+    },
+    "43": {
+     "records": 283,
+     "macro_f1": 0.6836,
+     "supported_labels": 6,
+     "accuracy": 0.6855,
+     "manual_ratio": 0.1519,
+     "output_errors": 0,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 201,
+      "answer_rate": 0.922,
+      "precision": 0.8358,
+      "recall": 0.7706
+     },
+     "per_label": {
+      "public": {
+       "support": 19,
+       "precision": 1.0,
+       "recall": 0.8421,
+       "f1": 0.9143
+      },
+      "role_required": {
+       "support": 111,
+       "precision": 0.8384,
+       "recall": 0.7477,
+       "f1": 0.7905
+      },
+      "membership_required": {
+       "support": 33,
+       "precision": 0.5185,
+       "recall": 0.8485,
+       "f1": 0.6437
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 34,
+       "precision": 0.75,
+       "recall": 0.7941,
+       "f1": 0.7714
+      },
+      "owner_or_admin": {
+       "support": 21,
+       "precision": 0.4,
+       "recall": 0.6667,
+       "f1": 0.5
+      },
+      "manual_review_required": {
+       "support": 65,
+       "precision": 0.6047,
+       "recall": 0.4,
+       "f1": 0.4815
+      }
+     }
+    },
+    "44": {
+     "records": 283,
+     "macro_f1": 0.6985,
+     "supported_labels": 6,
+     "accuracy": 0.6996,
+     "manual_ratio": 0.1837,
+     "output_errors": 2,
+     "concrete": {
+      "n_truth_concrete": 218,
+      "answered": 196,
+      "answer_rate": 0.8991,
+      "precision": 0.852,
+      "recall": 0.7661
+     },
+     "per_label": {
+      "public": {
+       "support": 19,
+       "precision": 1.0,
+       "recall": 0.8947,
+       "f1": 0.9444
+      },
+      "role_required": {
+       "support": 111,
+       "precision": 0.8614,
+       "recall": 0.7838,
+       "f1": 0.8208
+      },
+      "membership_required": {
+       "support": 33,
+       "precision": 0.4889,
+       "recall": 0.6667,
+       "f1": 0.5641
+      },
+      "tenant_match": {
+       "support": 0,
+       "precision": 0.0,
+       "recall": 0.0,
+       "f1": 0.0
+      },
+      "owner_match": {
+       "support": 34,
+       "precision": 0.7879,
+       "recall": 0.7647,
+       "f1": 0.7761
+      },
+      "owner_or_admin": {
+       "support": 21,
+       "precision": 0.4545,
+       "recall": 0.7143,
+       "f1": 0.5556
+      },
+      "manual_review_required": {
+       "support": 65,
+       "precision": 0.5962,
+       "recall": 0.4769,
+       "f1": 0.5299
+      }
+     }
+    }
+   },
+   "ensemble": {
+    "records": 283,
+    "macro_f1": 0.6884,
+    "supported_labels": 6,
+    "accuracy": 0.7032,
+    "manual_ratio": 0.1484,
+    "output_errors": 0,
+    "concrete": {
+     "n_truth_concrete": 218,
+     "answered": 203,
+     "answer_rate": 0.9312,
+     "precision": 0.8473,
+     "recall": 0.789
+    },
+    "per_label": {
+     "public": {
+      "support": 19,
+      "precision": 1.0,
+      "recall": 0.7895,
+      "f1": 0.8824
+     },
+     "role_required": {
+      "support": 111,
+      "precision": 0.8667,
+      "recall": 0.8198,
+      "f1": 0.8426
+     },
+     "membership_required": {
+      "support": 33,
+      "precision": 0.4615,
+      "recall": 0.7273,
+      "f1": 0.5647
+     },
+     "tenant_match": {
+      "support": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+     },
+     "owner_match": {
+      "support": 34,
+      "precision": 0.7027,
+      "recall": 0.7647,
+      "f1": 0.7324
+     },
+     "owner_or_admin": {
+      "support": 21,
+      "precision": 0.5,
+      "recall": 0.7619,
+      "f1": 0.6038
+     },
+     "manual_review_required": {
+      "support": 65,
+      "precision": 0.6429,
+      "recall": 0.4154,
+      "f1": 0.5047
+     }
+    }
+   },
+   "flips_vs_seed": {
+    "42": {
+     "changed": 13,
+     "gained": 8,
+     "lost": 4
+    },
+    "43": {
+     "changed": 36,
+     "gained": 17,
+     "lost": 12
+    },
+    "44": {
+     "changed": 29,
+     "gained": 13,
+     "lost": 12
+    }
+   },
+   "voted_labels": {
+    "v5t-ghost-3a4c4f64d4": "role_required",
+    "v5t-ghost-53dfabbcec": "role_required",
+    "v5t-ghost-75f00bbd7d": "role_required",
+    "v5t-ghost-833ad427ba": "role_required",
+    "v5t-ghost-84508d60db": "role_required",
+    "v5t-ghost-924636cc9d": "role_required",
+    "v5t-ghost-a1ea7c67cd": "manual_review_required",
+    "v5t-ghost-fed0901946": "role_required",
+    "v5t-ghost-39c04d77ae": "owner_match",
+    "v5t-ghost-ffeb0a64b6": "owner_match",
+    "v5t-ghost-0771ec6e22": "owner_or_admin",
+    "v5t-ghost-19a1342d7a": "owner_or_admin",
+    "v5t-ghost-244db7151d": "role_required",
+    "v5t-ghost-37631c0d48": "role_required",
+    "v5t-ghost-3904cb1077": "owner_or_admin",
+    "v5t-ghost-4150fd0cea": "owner_or_admin",
+    "v5t-ghost-559c930bb8": "role_required",
+    "v5t-ghost-603d47e243": "owner_or_admin",
+    "v5t-ghost-00fb8d537d": "public",
+    "v5t-ghost-0cbaf4100c": "public",
+    "v5t-ghost-6e1dca8d3d": "manual_review_required",
+    "v5t-ghost-81aa11ba50": "public",
+    "v5t-ghost-a322c4eaaa": "manual_review_required",
+    "v5t-ghost-a4d27433a3": "public",
+    "v5t-ghost-bae2ea5162": "public",
+    "v5t-ghost-026ae91b7d": "role_required",
+    "v5t-ghost-03a0ddc6dd": "owner_match",
+    "v5t-ghost-05ee24e847": "role_required",
+    "v5t-ghost-0a16c78538": "role_required",
+    "v5t-ghost-1137a5840d": "role_required",
+    "v5t-ghost-11643c69d1": "owner_or_admin",
+    "v5t-ghost-1abee7746e": "role_required",
+    "v5t-ghost-1dabb75c59": "role_required",
+    "v5t-ghost-20b1c48d88": "role_required",
+    "v5t-ghost-21720b1b00": "role_required",
+    "v5t-ghost-2b08fa9772": "role_required",
+    "v5t-ghost-3b54456064": "role_required",
+    "v5t-ghost-4b5706fd70": "role_required",
+    "v5t-ghost-4bc909eaec": "role_required",
+    "v5t-ghost-4dffed0923": "role_required",
+    "v5t-ghost-5577946797": "role_required",
+    "v5t-ghost-56bc478d48": "role_required",
+    "v5t-ghost-57682ef176": "role_required",
+    "v5t-ghost-5aa09a019d": "role_required",
+    "v5t-ghost-5f25be85a3": "role_required",
+    "v5t-ghost-61d77659ca": "role_required",
+    "v5t-ghost-679c71d6aa": "role_required",
+    "v5t-ghost-6e938978cd": "role_required",
+    "v5t-ghost-7a1e6b3342": "role_required",
+    "v5t-ghost-7b3b3cdfaa": "role_required",
+    "v5t-ghost-7e98472d5c": "role_required",
+    "v5t-ghost-9548873473": "role_required",
+    "v5t-ghost-a494e9ebbe": "role_required",
+    "v5t-ghost-a6298f6e0e": "role_required",
+    "v5t-ghost-bb9eb52d42": "role_required",
+    "v5t-ghost-be7afd4f75": "role_required",
+    "v5t-ghost-c2dc71937b": "role_required",
+    "v5t-ghost-c62b8e6b5b": "role_required",
+    "v5t-ghost-c846744ab7": "role_required",
+    "v5t-ghost-d1a626ce9d": "role_required",
+    "v5t-ghost-d862fb21df": "role_required",
+    "v5t-ghost-d991d035bb": "role_required",
+    "v5t-ghost-f2b1a7f14a": "role_required",
+    "v5t-ghost-f53a273e1d": "role_required",
+    "v5t-ghost-f689c2de47": "role_required",
+    "v5t-ghost-fa87533dab": "role_required",
+    "v5t-ghost-fe64027ab0": "role_required",
+    "v5t-ghost-fed14a36b6": "role_required",
+    "v5t-ghost-ff4fdcaf37": "role_required",
+    "v5t-rocketchat-0398a2f985": "manual_review_required",
+    "v5t-rocketchat-07f8fbb692": "manual_review_required",
+    "v5t-rocketchat-17ffd71761": "role_required",
+    "v5t-rocketchat-181a424100": "membership_required",
+    "v5t-rocketchat-1fbf39be09": "owner_or_admin",
+    "v5t-rocketchat-223b6d8be3": "owner_match",
+    "v5t-rocketchat-23806b2325": "role_required",
+    "v5t-rocketchat-25c4e3c534": "membership_required",
+    "v5t-rocketchat-29963cbc5b": "owner_match",
+    "v5t-rocketchat-2b42fcece3": "owner_match",
+    "v5t-rocketchat-3dedfa9896": "membership_required",
+    "v5t-rocketchat-405bd5ac21": "manual_review_required",
+    "v5t-rocketchat-4ef22bfc27": "owner_or_admin",
+    "v5t-rocketchat-609098a14c": "membership_required",
+    "v5t-rocketchat-6d967375a0": "manual_review_required",
+    "v5t-rocketchat-825833feb2": "manual_review_required",
+    "v5t-rocketchat-993879a33c": "membership_required",
+    "v5t-rocketchat-a57ae9a917": "manual_review_required",
+    "v5t-rocketchat-a7c264f2bb": "membership_required",
+    "v5t-rocketchat-a7d7197ba0": "membership_required",
+    "v5t-rocketchat-b29bfcff96": "manual_review_required",
+    "v5t-rocketchat-b3ee80cc2f": "membership_required",
+    "v5t-rocketchat-b5307adaa2": "membership_required",
+    "v5t-rocketchat-b77dd994c4": "role_required",
+    "v5t-rocketchat-b830163cb8": "owner_match",
+    "v5t-rocketchat-bfa20a50ad": "manual_review_required",
+    "v5t-rocketchat-ccf0304195": "membership_required",
+    "v5t-rocketchat-d83dae7c4e": "manual_review_required",
+    "v5t-rocketchat-d8e8746051": "owner_match",
+    "v5t-rocketchat-dfc8ce163b": "manual_review_required",
+    "v5t-rocketchat-e2714912b9": "membership_required",
+    "v5t-rocketchat-ead569149d": "manual_review_required",
+    "v5t-rocketchat-f1492901da": "manual_review_required",
+    "v5t-rocketchat-f7c14cc85e": "manual_review_required",
+    "v5t-rocketchat-fc1513c9cb": "membership_required",
+    "v5t-rocketchat-fd924826e6": "manual_review_required",
+    "v5t-rocketchat-ff7db67253": "membership_required",
+    "v5t-rocketchat-0779d29666": "membership_required",
+    "v5t-rocketchat-1260841fea": "membership_required",
+    "v5t-rocketchat-2f893cf343": "membership_required",
+    "v5t-rocketchat-301c3c9949": "membership_required",
+    "v5t-rocketchat-35eb77dc38": "membership_required",
+    "v5t-rocketchat-38a3cfd41a": "owner_or_admin",
+    "v5t-rocketchat-3944d8594e": "owner_match",
+    "v5t-rocketchat-52d02d65e4": "membership_required",
+    "v5t-rocketchat-5cbc62a53f": "membership_required",
+    "v5t-rocketchat-63107638c6": "membership_required",
+    "v5t-rocketchat-664e07d05b": "membership_required",
+    "v5t-rocketchat-7346251579": "manual_review_required",
+    "v5t-rocketchat-81879cc975": "membership_required",
+    "v5t-rocketchat-89ea440008": "membership_required",
+    "v5t-rocketchat-927bea1fc5": "membership_required",
+    "v5t-rocketchat-a1a072fb89": "membership_required",
+    "v5t-rocketchat-a1a9b72abe": "manual_review_required",
+    "v5t-rocketchat-a4fac1b151": "manual_review_required",
+    "v5t-rocketchat-ba4b8c9067": "owner_match",
+    "v5t-rocketchat-c7e845f0ff": "membership_required",
+    "v5t-rocketchat-ca9122e429": "membership_required",
+    "v5t-rocketchat-ccf34d5fc7": "membership_required",
+    "v5t-rocketchat-d034faf3d4": "membership_required",
+    "v5t-rocketchat-f48a84b063": "membership_required",
+    "v5t-rocketchat-f5874fe2eb": "membership_required",
+    "v5t-rocketchat-0b84024de3": "owner_match",
+    "v5t-rocketchat-1127aaa42f": "membership_required",
+    "v5t-rocketchat-19292cc3f8": "owner_match",
+    "v5t-rocketchat-2698a2beab": "owner_match",
+    "v5t-rocketchat-428b8184e1": "owner_match",
+    "v5t-rocketchat-45a4cb83d4": "owner_match",
+    "v5t-rocketchat-4f43c85d68": "owner_match",
+    "v5t-rocketchat-52036bd241": "owner_match",
+    "v5t-rocketchat-6aebdee592": "membership_required",
+    "v5t-rocketchat-6b2fa402f2": "owner_match",
+    "v5t-rocketchat-7440b3fddc": "owner_match",
+    "v5t-rocketchat-840fb09247": "owner_match",
+    "v5t-rocketchat-8dfb39edba": "owner_match",
+    "v5t-rocketchat-93a2fee5f8": "owner_match",
+    "v5t-rocketchat-a91ad30642": "owner_match",
+    "v5t-rocketchat-aa457dfda3": "owner_match",
+    "v5t-rocketchat-aa6f56d2ae": "owner_match",
+    "v5t-rocketchat-b0265eaedd": "owner_match",
+    "v5t-rocketchat-b105b248a2": "membership_required",
+    "v5t-rocketchat-b97740355c": "membership_required",
+    "v5t-rocketchat-d44c655fda": "owner_match",
+    "v5t-rocketchat-e274608cda": "owner_match",
+    "v5t-rocketchat-e880661365": "owner_match",
+    "v5t-rocketchat-f2b1c69495": "owner_match",
+    "v5t-rocketchat-063a2e7907": "owner_or_admin",
+    "v5t-rocketchat-23a530da4b": "owner_or_admin",
+    "v5t-rocketchat-2663f8f241": "owner_or_admin",
+    "v5t-rocketchat-26b775fea8": "role_required",
+    "v5t-rocketchat-58210f7976": "owner_or_admin",
+    "v5t-rocketchat-8289184b61": "owner_or_admin",
+    "v5t-rocketchat-8b0ce73e2a": "owner_or_admin",
+    "v5t-rocketchat-ab6a857aaf": "owner_or_admin",
+    "v5t-rocketchat-bb49c88371": "owner_or_admin",
+    "v5t-rocketchat-d3c6acea99": "owner_or_admin",
+    "v5t-rocketchat-ecefcc9d2c": "membership_required",
+    "v5t-rocketchat-127573597f": "public",
+    "v5t-rocketchat-50404e7f9f": "public",
+    "v5t-rocketchat-96a1ca9bcf": "public",
+    "v5t-rocketchat-b1ab279e75": "public",
+    "v5t-rocketchat-c1f1f31ee0": "public",
+    "v5t-rocketchat-f06379241c": "public",
+    "v5t-rocketchat-0780c8e386": "role_required",
+    "v5t-rocketchat-09c0e4be92": "role_required",
+    "v5t-rocketchat-0a75eb9b8b": "role_required",
+    "v5t-rocketchat-0d4fa14e85": "role_required",
+    "v5t-rocketchat-0d896bf7fc": "membership_required",
+    "v5t-rocketchat-120c826396": "role_required",
+    "v5t-rocketchat-1b04685611": "role_required",
+    "v5t-rocketchat-258c4c7f6e": "role_required",
+    "v5t-rocketchat-2728fd39da": "membership_required",
+    "v5t-rocketchat-3c6f0d2295": "role_required",
+    "v5t-rocketchat-3f15a8caba": "role_required",
+    "v5t-rocketchat-4ebd125c22": "membership_required",
+    "v5t-rocketchat-4fccb48579": "role_required",
+    "v5t-rocketchat-52624474db": "role_required",
+    "v5t-rocketchat-5b6c0ebf4d": "role_required",
+    "v5t-rocketchat-5efea22347": "role_required",
+    "v5t-rocketchat-5f876d01d7": "role_required",
+    "v5t-rocketchat-61d5e55ae2": "manual_review_required",
+    "v5t-rocketchat-62021dedf1": "role_required",
+    "v5t-rocketchat-63a1732919": "manual_review_required",
+    "v5t-rocketchat-64704a55de": "membership_required",
+    "v5t-rocketchat-6a9ba0c552": "role_required",
+    "v5t-rocketchat-6e3968ce8f": "role_required",
+    "v5t-rocketchat-70f72af62c": "role_required",
+    "v5t-rocketchat-7508165c03": "membership_required",
+    "v5t-rocketchat-7cc51eccb8": "role_required",
+    "v5t-rocketchat-7fef853453": "membership_required",
+    "v5t-rocketchat-825ebbb8fa": "role_required",
+    "v5t-rocketchat-826b7bee76": "role_required",
+    "v5t-rocketchat-8391ad7a95": "role_required",
+    "v5t-rocketchat-893d997b68": "role_required",
+    "v5t-rocketchat-92300cd10b": "role_required",
+    "v5t-rocketchat-951602c914": "role_required",
+    "v5t-rocketchat-9d1d72179e": "role_required",
+    "v5t-rocketchat-9eda74f499": "role_required",
+    "v5t-rocketchat-a41ec34093": "manual_review_required",
+    "v5t-rocketchat-a447ce62f1": "owner_or_admin",
+    "v5t-rocketchat-a47b2cfbc1": "role_required",
+    "v5t-rocketchat-ae3a073bb9": "membership_required",
+    "v5t-rocketchat-b424fe6e3b": "role_required",
+    "v5t-rocketchat-b975a0246d": "role_required",
+    "v5t-rocketchat-be9103fbad": "manual_review_required",
+    "v5t-rocketchat-c2f1c961aa": "role_required",
+    "v5t-rocketchat-c65d2bcd9d": "role_required",
+    "v5t-rocketchat-ca047ea3cd": "role_required",
+    "v5t-rocketchat-cd911f7d93": "role_required",
+    "v5t-rocketchat-cdf09d2caa": "role_required",
+    "v5t-rocketchat-e5468be8ae": "role_required",
+    "v5t-rocketchat-e9fd4375ac": "role_required",
+    "v5t-rocketchat-ec189eb0b4": "manual_review_required",
+    "v5t-rocketchat-f11a30c0d2": "role_required",
+    "v5t-rocketchat-f1a6c48c61": "role_required",
+    "v5t-rocketchat-f307e5c070": "role_required",
+    "v5t-rocketchat-ff636d6df7": "manual_review_required",
+    "v5t-umami-05d9018016": "manual_review_required",
+    "v5t-umami-0a31680c6d": "manual_review_required",
+    "v5t-umami-1243b61dd0": "owner_or_admin",
+    "v5t-umami-16028b99b3": "owner_or_admin",
+    "v5t-umami-181ff0b308": "manual_review_required",
+    "v5t-umami-189d97d3d0": "manual_review_required",
+    "v5t-umami-1ac5a3d03d": "manual_review_required",
+    "v5t-umami-1d109a581c": "manual_review_required",
+    "v5t-umami-336747e804": "manual_review_required",
+    "v5t-umami-5f862f98fb": "owner_or_admin",
+    "v5t-umami-8368db1fee": "manual_review_required",
+    "v5t-umami-abdc2fefe5": "owner_or_admin",
+    "v5t-umami-b5fb9b9198": "manual_review_required",
+    "v5t-umami-b645d17e1d": "manual_review_required",
+    "v5t-umami-bdd6ebb218": "manual_review_required",
+    "v5t-umami-bf7e66056f": "manual_review_required",
+    "v5t-umami-dba8caee9a": "owner_or_admin",
+    "v5t-umami-dd7523bace": "owner_or_admin",
+    "v5t-umami-334b4196fe": "membership_required",
+    "v5t-umami-56f66291b9": "membership_required",
+    "v5t-umami-6d4f7e167f": "membership_required",
+    "v5t-umami-b02d7575d9": "membership_required",
+    "v5t-umami-dd07135e2c": "membership_required",
+    "v5t-umami-1ddff0d24c": "membership_required",
+    "v5t-umami-3787292ff1": "owner_match",
+    "v5t-umami-3dde1c334d": "owner_match",
+    "v5t-umami-404ae6243e": "owner_match",
+    "v5t-umami-4d95113add": "membership_required",
+    "v5t-umami-a8feaa9ffc": "manual_review_required",
+    "v5t-umami-af1dbfec47": "owner_match",
+    "v5t-umami-b89ee084f9": "owner_match",
+    "v5t-umami-bd9e54d1f1": "owner_match",
+    "v5t-umami-e2ccb4b90c": "owner_match",
+    "v5t-umami-e6c63b5cdc": "manual_review_required",
+    "v5t-umami-187a24107f": "owner_or_admin",
+    "v5t-umami-431f171df1": "owner_or_admin",
+    "v5t-umami-6eb1dd711f": "owner_or_admin",
+    "v5t-umami-f6f0764144": "owner_or_admin",
+    "v5t-umami-019432a060": "public",
+    "v5t-umami-503d2dbda4": "public",
+    "v5t-umami-5a862e9746": "public",
+    "v5t-umami-640719b3b2": "public",
+    "v5t-umami-8a66f9b00f": "manual_review_required",
+    "v5t-umami-9454ba34fd": "manual_review_required",
+    "v5t-umami-0704ce0c7e": "owner_or_admin",
+    "v5t-umami-1d86a9207c": "role_required",
+    "v5t-umami-2908d81714": "role_required",
+    "v5t-umami-29da074b3f": "role_required",
+    "v5t-umami-8c869fdfb0": "role_required",
+    "v5t-umami-9ae29e870f": "role_required",
+    "v5t-umami-a94e56626f": "owner_or_admin",
+    "v5t-umami-ad293dc85a": "role_required",
+    "v5t-umami-b5ef75cf61": "role_required",
+    "v5t-umami-d334436440": "owner_or_admin",
+    "v5t-umami-e2207e964c": "role_required",
+    "v5t-umami-e37907fe2d": "role_required",
+    "v5t-umami-e883ef9f59": "membership_required"
+   }
+  }
+ }
+}

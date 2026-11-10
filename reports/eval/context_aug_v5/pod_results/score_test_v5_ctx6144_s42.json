@@ -1,0 +1,77 @@
+{
+ "records": 283,
+ "macro_f1": 0.5567,
+ "supported_labels": 6,
+ "accuracy": 0.629,
+ "manual_ratio": 0.2014,
+ "output_errors": 0,
+ "concrete": {
+  "n_truth_concrete": 218,
+  "answered": 187,
+  "answer_rate": 0.8578,
+  "precision": 0.8128,
+  "recall": 0.6972
+ },
+ "per_label": {
+  "public": {
+   "support": 19,
+   "precision": 1.0,
+   "recall": 0.4737,
+   "f1": 0.6429
+  },
+  "role_required": {
+   "support": 111,
+   "precision": 0.7101,
+   "recall": 0.8829,
+   "f1": 0.7871
+  },
+  "membership_required": {
+   "support": 33,
+   "precision": 0.4857,
+   "recall": 0.5152,
+   "f1": 0.5
+  },
+  "tenant_match": {
+   "support": 0,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0
+  },
+  "owner_match": {
+   "support": 34,
+   "precision": 0.8276,
+   "recall": 0.7059,
+   "f1": 0.7619
+  },
+  "owner_or_admin": {
+   "support": 21,
+   "precision": 0.2667,
+   "recall": 0.1905,
+   "f1": 0.2222
+  },
+  "manual_review_required": {
+   "support": 65,
+   "precision": 0.4561,
+   "recall": 0.4,
+   "f1": 0.4262
+  }
+ },
+ "kind": "test_v5",
+ "pred": "/workspace/blade_s4_ctx_h100_20261104/out/pred_test_v5_ctx6144_s42.jsonl",
+ "per_project": {
+  "ghost": {
+   "n": 69,
+   "accuracy": 0.6812
+  },
+  "rocketchat": {
+   "n": 157,
+   "accuracy": 0.6624
+  },
+  "umami": {
+   "n": 57,
+   "accuracy": 0.4737
+  }
+ },
+ "prompt_tokens_max": 5583,
+ "mean_ms_per_row": 796.9
+}

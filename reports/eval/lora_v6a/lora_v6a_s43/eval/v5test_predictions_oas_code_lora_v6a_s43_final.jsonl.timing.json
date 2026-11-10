@@ -1,0 +1,18 @@
+{
+ "out": "/workspace/blade_lora_v3/runs/lora_v6a_s43/eval/v5test_predictions_oas_code_lora_v6a_s43_final.jsonl",
+ "cond": "oas_code",
+ "rows_total": 283,
+ "rows_run": 283,
+ "resumed": 0,
+ "inference_wall_s": 142.3,
+ "mean_ms_per_row": 501.1,
+ "parse_errors": 0,
+ "manual": 74,
+ "label_prob_available": 283,
+ "prompt_tokens_max": 5150,
+ "truncated_prompts": 0,
+ "output_tokens_mean": 80.5,
+ "output_tokens_max": 100,
+ "hit_max_new_tokens": 0,
+ "finished": "2026-11-04T00:50:21"
+}

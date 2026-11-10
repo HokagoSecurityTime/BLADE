@@ -1,0 +1,127 @@
+2026-11-04 23:53:23,132 INFO run base_qwen14b_runpod data=base14b seed=0 base=/workspace/blade_lora_v3 preflight=False eval_only=False limit=0
+2026-11-04 23:53:23,176 INFO inputs verified against data_v5_hashes.json (5 files)
+2026-11-04 23:53:32,941 INFO Disabling Tensorflow because USE_TORCH is set
+2026-11-04 23:53:38,206 INFO env {'gpu': 'NVIDIA A100 80GB PCIe', 'vram_gb': 79, 'torch': '2.14.1+cu130', 'cuda': '13.0', 'transformers': '5.17.0', 'trl': '1.15.0', 'peft': '0.21.2', 'unsloth': '2026.11.1', 'python': '3.12.3', 'base_model': 'unsloth/Qwen2.5-14B-Instruct-bnb-4bit', 'v5_base_model': 'unsloth/Qwen2.5-7B-Instruct-bnb-4bit'}
+2026-11-04 23:53:38,208 INFO HP {'base_model': 'unsloth/Qwen2.5-14B-Instruct-bnb-4bit', 'max_seq_len': 4096, 'lora_r': 16, 'lora_alpha': 16, 'lora_dropout': 0.0, 'target_modules': ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj'], 'epochs': 3, 'lr': 0.0002, 'batch': 2, 'grad_acc': 4, 'warmup_steps': 10, 'weight_decay': 0.01, 'lr_scheduler': 'cosine', 'save_steps': 30, 'eval_steps': 30, 'eval_max_new_tokens': 256, 'eval_batch': 8, 'prompt_version': 'policy-label-v3.0.1', 'prompt_file': 'policy_label_v3.0.1.md', 'changed_vs_v5': {'base_model': 'unsloth/Qwen2.5-7B-Instruct-bnb-4bit -> unsloth/Qwen2.5-14B-Instruct-bnb-4bit (the only change)'}}
+2026-11-04 23:53:38,212 INFO base model: no training
+2026-11-04 23:53:38,250 INFO test_v5 inputs verified against test_v5_manifest.json (57fd384f46e8)
+2026-11-04 23:53:38,334 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,340 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,389 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-11-04 23:53:38,803 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/runpod/revision/main "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,804 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/vram-80/revision/main "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,806 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/1/revision/main "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,809 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/repeat/revision/main "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,841 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/runpod/tree/6f8e9b23468ea646932acbd77a598adac5b178a9?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,844 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/1/tree/7ec782b7604cd9ea0781c23a4270f031650f5617?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,847 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/vram-80/tree/830433cec98f0aa155f72baba38dc9fe6831d3f3?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,876 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/repeat/tree/7c48478c02f84ed89f149b0815cc0216ee831fb0?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,909 INFO HTTP Request: HEAD https://huggingface.co/unslothai/runpod/resolve/6f8e9b23468ea646932acbd77a598adac5b178a9/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,913 INFO HTTP Request: HEAD https://huggingface.co/unslothai/1/resolve/7ec782b7604cd9ea0781c23a4270f031650f5617/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,914 INFO HTTP Request: HEAD https://huggingface.co/unslothai/1/resolve/7ec782b7604cd9ea0781c23a4270f031650f5617/model.safetensors "HTTP/1.1 302 Found"
+2026-11-04 23:53:38,917 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/README.md?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2FREADME.md=&etag=%22e7e1860c72f904dcbe246fc7c83fa8c4e61e014e%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,918 INFO HTTP Request: HEAD https://huggingface.co/unslothai/vram-80/resolve/830433cec98f0aa155f72baba38dc9fe6831d3f3/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,926 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/.gitattributes?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,945 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/.gitattributes?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,949 INFO HTTP Request: HEAD https://huggingface.co/unslothai/repeat/resolve/7c48478c02f84ed89f149b0815cc0216ee831fb0/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,949 INFO HTTP Request: HEAD https://huggingface.co/unslothai/repeat/resolve/7c48478c02f84ed89f149b0815cc0216ee831fb0/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:38,958 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/README.md?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2FREADME.md=&etag=%22e7e1860c72f904dcbe246fc7c83fa8c4e61e014e%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,975 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/README.md?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2FREADME.md=&etag=%2239e18699dbfcf098eff81dcf2fc31803e558b870%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,977 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/.gitattributes?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,984 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/.gitattributes?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:38,991 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/.gitattributes?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,009 INFO HTTP Request: HEAD https://huggingface.co/unslothai/runpod/resolve/6f8e9b23468ea646932acbd77a598adac5b178a9/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,014 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/1/xet-read-token/7ec782b7604cd9ea0781c23a4270f031650f5617 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,015 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/repeat/xet-read-token/7c48478c02f84ed89f149b0815cc0216ee831fb0 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,023 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/config.json?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,025 INFO HTTP Request: HEAD https://huggingface.co/unslothai/repeat/resolve/7c48478c02f84ed89f149b0815cc0216ee831fb0/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,026 INFO HTTP Request: HEAD https://huggingface.co/unslothai/runpod/resolve/6f8e9b23468ea646932acbd77a598adac5b178a9/.gitattributes "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,029 INFO HTTP Request: HEAD https://huggingface.co/unslothai/1/resolve/7ec782b7604cd9ea0781c23a4270f031650f5617/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,036 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/README.md?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2FREADME.md=&etag=%2239e18699dbfcf098eff81dcf2fc31803e558b870%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,038 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/.gitattributes?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,039 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/vram-80/xet-read-token/830433cec98f0aa155f72baba38dc9fe6831d3f3 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,040 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/config.json?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,040 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/config.json?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,043 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/.gitattributes?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,048 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/config.json?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2Fconfig.json=&etag=%22b45487c7fddc646b832426e98d1ba4da26a58eaa%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,049 INFO HTTP Request: GET https://huggingface.co/api/models/unslothai/runpod/xet-read-token/6f8e9b23468ea646932acbd77a598adac5b178a9 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,051 INFO HTTP Request: HEAD https://huggingface.co/unslothai/vram-80/resolve/830433cec98f0aa155f72baba38dc9fe6831d3f3/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,053 INFO HTTP Request: HEAD https://huggingface.co/unslothai/vram-80/resolve/830433cec98f0aa155f72baba38dc9fe6831d3f3/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,058 INFO HTTP Request: HEAD https://huggingface.co/unslothai/1/resolve/7ec782b7604cd9ea0781c23a4270f031650f5617/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,072 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/repeat/7c48478c02f84ed89f149b0815cc0216ee831fb0/config.json?%2Funslothai%2Frepeat%2Fresolve%2F7c48478c02f84ed89f149b0815cc0216ee831fb0%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,074 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/config.json?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,076 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/runpod/6f8e9b23468ea646932acbd77a598adac5b178a9/.gitattributes?%2Funslothai%2Frunpod%2Fresolve%2F6f8e9b23468ea646932acbd77a598adac5b178a9%2F.gitattributes=&etag=%22a6344aac8c09253b3b630fb776ae94478aa0275b%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,077 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/README.md?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2FREADME.md=&etag=%2239e18699dbfcf098eff81dcf2fc31803e558b870%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,080 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/config.json?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2Fconfig.json=&etag=%22b45487c7fddc646b832426e98d1ba4da26a58eaa%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,081 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/README.md?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2FREADME.md=&etag=%22e74907d8cde48b3f4a1739a65e09f5aa9be031e6%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,093 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/config.json?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2Fconfig.json=&etag=%22c0fd5260818f672a9119328c53cc33df84f30698%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,095 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/1/7ec782b7604cd9ea0781c23a4270f031650f5617/README.md?%2Funslothai%2F1%2Fresolve%2F7ec782b7604cd9ea0781c23a4270f031650f5617%2FREADME.md=&etag=%22e74907d8cde48b3f4a1739a65e09f5aa9be031e6%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,095 INFO HTTP Request: GET https://huggingface.co/api/resolve-cache/models/unslothai/vram-80/830433cec98f0aa155f72baba38dc9fe6831d3f3/README.md?%2Funslothai%2Fvram-80%2Fresolve%2F830433cec98f0aa155f72baba38dc9fe6831d3f3%2FREADME.md=&etag=%2239e18699dbfcf098eff81dcf2fc31803e558b870%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,409 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,415 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,469 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,498 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/modules.json "HTTP/1.1 404 Not Found"
+2026-11-04 23:53:39,537 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/model.safetensors.index.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,542 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/model.safetensors.index.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fmodel.safetensors.index.json=&etag=%22c6b805b0426124279a2cddd46f7d599950004889%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,660 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,666 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:39,715 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:39,721 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:43,447 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/generation_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:43,454 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/generation_config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fgeneration_config.json=&etag=%22cc10b3d36b7c54b7eb5e9767bfea34a94daffaed%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:43,509 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:43,515 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:43,557 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:43,563 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/tokenizer_config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22a5de2eb6cac65b89846ac1bcfb837a3d83459f40%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:43,613 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-11-04 23:53:43,662 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:44,583 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit "HTTP/1.1 200 OK"
+2026-11-04 23:53:44,627 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:44,632 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Fconfig.json=&etag=%22f46f0433596bd6b66823a0c545981ff8a56b230d%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:44,676 INFO HTTP Request: HEAD https://huggingface.co/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-11-04 23:53:44,684 INFO HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/63af63299c76dc5f79e0b0801e11304f95760ec2/tokenizer_config.json?%2Funsloth%2FQwen2.5-14B-Instruct-bnb-4bit%2Fresolve%2Fmain%2Ftokenizer_config.json=&etag=%22a5de2eb6cac65b89846ac1bcfb837a3d83459f40%22 "HTTP/1.1 200 OK"
+2026-11-04 23:53:44,747 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-11-04 23:53:44,798 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-11-04 23:53:45,264 INFO HTTP Request: GET https://huggingface.co/api/models/unsloth/Qwen2.5-14B-Instruct-bnb-4bit "HTTP/1.1 200 OK"
+2026-11-04 23:53:46,132 INFO base unsloth/Qwen2.5-14B-Instruct-bnb-4bit loaded in 8s: 48 layers, hidden 5120, heads 40 / kv 8, vocab 152064, 8.16B params (as stored), allocated 9.26 GiB
+2026-11-04 23:53:46,136 INFO base_qwen14b_runpod predictions_oas_base_qwen14b_runpod.jsonl: 269 rows, 0 already done, 269 to run
+2026-11-04 23:53:58,257 INFO predictions_oas_base_qwen14b_runpod.jsonl: 8/269 rows, 1514 ms/row
+2026-11-04 23:55:44,754 INFO predictions_oas_base_qwen14b_runpod.jsonl: 88/269 rows, 1130 ms/row
+2026-11-04 23:57:20,723 INFO predictions_oas_base_qwen14b_runpod.jsonl: 168/269 rows, 1216 ms/row
+2026-11-04 23:58:58,774 INFO predictions_oas_base_qwen14b_runpod.jsonl: 248/269 rows, 1057 ms/row
+2026-11-04 23:59:25,449 INFO gpu memory eval predictions_oas_base_qwen14b_runpod.jsonl: peak allocated 19.01 GiB, peak reserved 25.18 GiB
+2026-11-04 23:59:25,457 INFO base_qwen14b_runpod oas: 269 rows, parse errors 8, manual 167, mean 1261 ms/row, output tokens mean 73 max 120
+2026-11-04 23:59:25,457 INFO base_qwen14b_runpod predictions_oas_code_base_qwen14b_runpod.jsonl: 265 rows, 0 already done, 265 to run
+2026-11-04 23:59:37,827 INFO predictions_oas_code_base_qwen14b_runpod.jsonl: 8/265 rows, 1546 ms/row
+2026-11-05 00:01:39,258 INFO predictions_oas_code_base_qwen14b_runpod.jsonl: 88/265 rows, 1521 ms/row
+2026-11-05 00:03:49,265 INFO predictions_oas_code_base_qwen14b_runpod.jsonl: 168/265 rows, 1730 ms/row
+2026-11-05 00:05:43,797 INFO predictions_oas_code_base_qwen14b_runpod.jsonl: 248/265 rows, 1191 ms/row
+2026-11-05 00:06:09,318 INFO gpu memory eval predictions_oas_code_base_qwen14b_runpod.jsonl: peak allocated 21.57 GiB, peak reserved 37.95 GiB
+2026-11-05 00:06:09,349 INFO base_qwen14b_runpod oas_code: 265 rows, parse errors 6, manual 81, mean 1524 ms/row, output tokens mean 86 max 132
+2026-11-05 00:06:09,351 INFO base_qwen14b_runpod supp_predictions_oas_base_qwen14b_runpod.jsonl: 222 rows, 0 already done, 222 to run
+2026-11-05 00:06:20,810 INFO supp_predictions_oas_base_qwen14b_runpod.jsonl: 8/222 rows, 1431 ms/row
+2026-11-05 00:08:11,393 INFO supp_predictions_oas_base_qwen14b_runpod.jsonl: 88/222 rows, 1204 ms/row
+2026-11-05 00:09:53,440 INFO supp_predictions_oas_base_qwen14b_runpod.jsonl: 168/222 rows, 1316 ms/row
+2026-11-05 00:11:11,746 INFO gpu memory eval supp_predictions_oas_base_qwen14b_runpod.jsonl: peak allocated 21.57 GiB, peak reserved 37.95 GiB
+2026-11-05 00:11:11,753 INFO base_qwen14b_runpod supp oas: 222 rows, parse errors 0, manual 147, mean 1362 ms/row, output tokens mean 82 max 123
+2026-11-05 00:11:11,754 INFO base_qwen14b_runpod supp_predictions_oas_code_base_qwen14b_runpod.jsonl: 222 rows, 0 already done, 222 to run
+2026-11-05 00:11:24,504 INFO supp_predictions_oas_code_base_qwen14b_runpod.jsonl: 8/222 rows, 1593 ms/row
+2026-11-05 00:13:48,281 INFO supp_predictions_oas_code_base_qwen14b_runpod.jsonl: 88/222 rows, 1498 ms/row
+2026-11-05 00:15:52,666 INFO supp_predictions_oas_code_base_qwen14b_runpod.jsonl: 168/222 rows, 1605 ms/row
+2026-11-05 00:17:25,274 INFO gpu memory eval supp_predictions_oas_code_base_qwen14b_runpod.jsonl: peak allocated 22.14 GiB, peak reserved 40.44 GiB
+2026-11-05 00:17:25,282 INFO base_qwen14b_runpod supp oas_code: 222 rows, parse errors 0, manual 14, mean 1682 ms/row, output tokens mean 95 max 166
+2026-11-05 00:17:25,283 INFO base_qwen14b_runpod v5test_predictions_oas_base_qwen14b_runpod.jsonl: 283 rows, 0 already done, 283 to run
+2026-11-05 00:17:35,039 INFO v5test_predictions_oas_base_qwen14b_runpod.jsonl: 8/283 rows, 1219 ms/row
+2026-11-05 00:19:17,795 INFO v5test_predictions_oas_base_qwen14b_runpod.jsonl: 88/283 rows, 1373 ms/row
+2026-11-05 00:21:09,495 INFO v5test_predictions_oas_base_qwen14b_runpod.jsonl: 168/283 rows, 1211 ms/row
+2026-11-05 00:22:51,351 INFO v5test_predictions_oas_base_qwen14b_runpod.jsonl: 248/283 rows, 1380 ms/row
+2026-11-05 00:23:45,834 INFO gpu memory eval v5test_predictions_oas_base_qwen14b_runpod.jsonl: peak allocated 22.14 GiB, peak reserved 40.48 GiB
+2026-11-05 00:23:45,841 INFO base_qwen14b_runpod v5test oas: 283 rows, parse errors 0, manual 188, mean 1344 ms/row, output tokens mean 80 max 142
+2026-11-05 00:23:45,842 INFO base_qwen14b_runpod v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: 283 rows, 0 already done, 283 to run
+2026-11-05 00:23:59,108 INFO v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: 8/283 rows, 1658 ms/row
+2026-11-05 00:26:25,002 INFO v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: 88/283 rows, 2070 ms/row
+2026-11-05 00:28:53,161 INFO v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: 168/283 rows, 1642 ms/row
+2026-11-05 00:31:11,211 INFO v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: 248/283 rows, 1651 ms/row
+2026-11-05 00:32:10,816 INFO gpu memory eval v5test_predictions_oas_code_base_qwen14b_runpod.jsonl: peak allocated 22.19 GiB, peak reserved 42.99 GiB
+2026-11-05 00:32:10,827 INFO base_qwen14b_runpod v5test oas_code: 283 rows, parse errors 0, manual 2, mean 1784 ms/row, output tokens mean 96 max 156
+2026-11-05 00:32:10,859 INFO done base_qwen14b_runpod

@@ -1,0 +1,9 @@
+2026-11-10T11:25:21Z stack up backend=22129 admin=22130 proxy=22134
+2026-11-10T11:25:22Z A) policy before: manual_review_required ACTIVE observe 1 llm
+2026-11-10T11:25:22Z A) GET /orders/1042 as user_99 (BOLA, manual policy) -> 200 ; as user_77 (owner) -> 200
+2026-11-10T11:25:22Z B) rollback ACTIVE->PENDING: 200
+2026-11-10T11:25:22Z B) PUT label owner_match: 200 owner_match PENDING 1 manual None
+2026-11-10T11:25:23Z B) approve PENDING->ACTIVE: 200 owner_match ACTIVE observe None
+2026-11-10T11:25:31Z C) after poll: GET /orders/1042 as user_99 (BOLA) -> 403 ; as user_77 (owner) -> 200 ; no token -> 403
+2026-11-10T11:25:31Z C) detections (last 3): 6 [('OBSERVE', 'manual_review_required'), ('OBSERVE', 'manual_review_required'), ('PASS', 'public')]
+2026-11-10T11:25:32Z stack stopped; original ./policies untouched: manual_review_required

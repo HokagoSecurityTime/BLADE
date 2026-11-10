@@ -1,0 +1,37 @@
+{
+ "checks": {
+  "torch>=2.4": {
+   "ok": true,
+   "info": "2.8.0+cu128"
+  },
+  "cuda>=12.1": {
+   "ok": true,
+   "info": "12.8"
+  },
+  "gpu": {
+   "ok": true,
+   "info": "NVIDIA H100 80GB HBM3 capability (9, 0) vram 79 GB"
+  },
+  "transformers": {
+   "ok": true,
+   "info": "5.22.1"
+  },
+  "peft": {
+   "ok": true,
+   "info": "0.21.2"
+  },
+  "bitsandbytes import": {
+   "ok": true,
+   "info": "0.50.2"
+  },
+  "bitsandbytes 4bit forward on this GPU": {
+   "ok": true,
+   "info": "output (2, 64)"
+  },
+  "sdpa": {
+   "ok": true,
+   "info": "scaled_dot_product_attention ok"
+  }
+ },
+ "ok": true
+}

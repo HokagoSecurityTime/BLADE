@@ -1,0 +1,8005 @@
+{
+ "set": "test_v5",
+ "n": 283,
+ "skipped": 0,
+ "per_project": {
+  "ghost": {
+   "n": 69,
+   "perm_table": 61,
+   "perm_flow": 12,
+   "permissible": 18,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 46,
+   "permissible_in_input": 3,
+   "perm_any": 65,
+   "helper": 60,
+   "any_block": 69,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 63,
+   "blocks_found_mean": 15.57,
+   "blocks_kept_mean": 5.71,
+   "tokens_before_mean": 3315,
+   "tokens_after_mean": 4002,
+   "tokens_after_max": 4086
+  },
+  "rocketchat": {
+   "n": 157,
+   "perm_table": 109,
+   "perm_flow": 54,
+   "permissible": 0,
+   "perm_table_in_input": 0,
+   "perm_flow_in_input": 5,
+   "permissible_in_input": 0,
+   "perm_any": 111,
+   "helper": 71,
+   "any_block": 129,
+   "perm_table_found_but_dropped": 2,
+   "dropped_any": 94,
+   "blocks_found_mean": 8.31,
+   "blocks_kept_mean": 3.33,
+   "tokens_before_mean": 3580,
+   "tokens_after_mean": 3848,
+   "tokens_after_max": 4089
+  },
+  "umami": {
+   "n": 57,
+   "perm_table": 38,
+   "perm_flow": 1,
+   "permissible": 0,
+   "perm_table_in_input": 5,
+   "perm_flow_in_input": 0,
+   "permissible_in_input": 0,
+   "perm_any": 39,
+   "helper": 44,
+   "any_block": 56,
+   "perm_table_found_but_dropped": 0,
+   "dropped_any": 43,
+   "blocks_found_mean": 10.84,
+   "blocks_kept_mean": 5.81,
+   "tokens_before_mean": 3462,
+   "tokens_after_mean": 3996,
+   "tokens_after_max": 4090
+  }
+ },
+ "records": [
+  {
+   "id": "v5t-ghost-3a4c4f64d4",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/tags/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3288,
+   "tokens_after": 3970,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[tag]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-53dfabbcec",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/slugs/{type}/{name}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3342,
+   "tokens_after": 3991,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[slug]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-75f00bbd7d",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/{id}/",
+   "found": 18,
+   "kept": 3,
+   "dropped": 15,
+   "cut": true,
+   "tokens_before": 3377,
+   "tokens_after": 3977,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-833ad427ba",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/images/upload/",
+   "found": 7,
+   "kept": 7,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3155,
+   "tokens_after": 4072,
+   "kinds": {
+    "perm_flow": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_flow": 1,
+    "helper": 6
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "canThis(core)",
+    "check",
+    "check",
+    "isLocked",
+    "isInactive",
+    "isPasswordCorrect",
+    "hashedPassword"
+   ]
+  },
+  {
+   "id": "v5t-ghost-84508d60db",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/users/",
+   "found": 17,
+   "kept": 5,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3267,
+   "tokens_after": 4059,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "authenticate",
+    "authenticate",
+    "authorize"
+   ]
+  },
+  {
+   "id": "v5t-ghost-924636cc9d",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/",
+   "found": 18,
+   "kept": 3,
+   "dropped": 15,
+   "cut": true,
+   "tokens_before": 3342,
+   "tokens_after": 3942,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-a1ea7c67cd",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/config/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3191,
+   "tokens_after": 4044,
+   "kinds": {
+    "perm_flow": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "canThis(core)",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-fed0901946",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/roles/",
+   "found": 17,
+   "kept": 6,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3245,
+   "tokens_after": 4067,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[role]",
+    "role.permissible",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize"
+   ]
+  },
+  {
+   "id": "v5t-ghost-39c04d77ae",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/users/{id}/token/",
+   "found": 18,
+   "kept": 6,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3126,
+   "tokens_after": 4071,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "perm_flow": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "canThis(core)",
+    "authenticate",
+    "authenticate",
+    "authorize"
+   ]
+  },
+  {
+   "id": "v5t-ghost-ffeb0a64b6",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/users/{id}/token/",
+   "found": 18,
+   "kept": 5,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3154,
+   "tokens_after": 4022,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "canThis(core)",
+    "authenticate",
+    "authenticate"
+   ]
+  },
+  {
+   "id": "v5t-ghost-0771ec6e22",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/pages/{id}/",
+   "found": 19,
+   "kept": 2,
+   "dropped": 17,
+   "cut": true,
+   "tokens_before": 3690,
+   "tokens_after": 4016,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-19a1342d7a",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/posts/{id}/",
+   "found": 19,
+   "kept": 3,
+   "dropped": 16,
+   "cut": true,
+   "tokens_before": 3553,
+   "tokens_after": 4086,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-244db7151d",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/pages/{id}/",
+   "found": 19,
+   "kept": 2,
+   "dropped": 17,
+   "cut": true,
+   "tokens_before": 3566,
+   "tokens_after": 4012,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-37631c0d48",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/webhooks/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3408,
+   "tokens_after": 4031,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[webhook]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-3904cb1077",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/users/{id}/",
+   "found": 17,
+   "kept": 3,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3595,
+   "tokens_after": 4038,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "isOwner"
+   ]
+  },
+  {
+   "id": "v5t-ghost-4150fd0cea",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/posts/{id}/",
+   "found": 19,
+   "kept": 2,
+   "dropped": 17,
+   "cut": true,
+   "tokens_before": 3677,
+   "tokens_after": 4003,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-559c930bb8",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/webhooks/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3394,
+   "tokens_after": 4017,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[webhook]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-603d47e243",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/users/password/",
+   "found": 17,
+   "kept": 3,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3622,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "isOwner"
+   ]
+  },
+  {
+   "id": "v5t-ghost-00fb8d537d",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/authentication/invitation/",
+   "found": 4,
+   "kept": 4,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3057,
+   "tokens_after": 3468,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication"
+   ]
+  },
+  {
+   "id": "v5t-ghost-0cbaf4100c",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/authentication/setup/",
+   "found": 7,
+   "kept": 7,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3108,
+   "tokens_after": 3702,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication",
+    "isSetup",
+    "isSetup",
+    "checkIsSetup"
+   ]
+  },
+  {
+   "id": "v5t-ghost-6e1dca8d3d",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/authentication/password_reset/",
+   "found": 4,
+   "kept": 4,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3173,
+   "tokens_after": 3584,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication"
+   ]
+  },
+  {
+   "id": "v5t-ghost-81aa11ba50",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/authentication/invitation/",
+   "found": 6,
+   "kept": 6,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3076,
+   "tokens_after": 3669,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication",
+    "isInvitation",
+    "isInvitation"
+   ]
+  },
+  {
+   "id": "v5t-ghost-a322c4eaaa",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/session/",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3267,
+   "tokens_after": 4010,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [],
+   "names": [
+    "hasLoggedIn",
+    "check",
+    "check",
+    "authentication",
+    "authentication",
+    "isLocked",
+    "isInactive",
+    "isPasswordCorrect",
+    "hashedPassword"
+   ]
+  },
+  {
+   "id": "v5t-ghost-a4d27433a3",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/authentication/password_reset/",
+   "found": 12,
+   "kept": 6,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3240,
+   "tokens_after": 4041,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication",
+    "Members",
+    "nonePublicAuth"
+   ]
+  },
+  {
+   "id": "v5t-ghost-bae2ea5162",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/site/",
+   "found": 15,
+   "kept": 4,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3062,
+   "tokens_after": 3941,
+   "kinds": {
+    "perm_flow": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_flow": 1,
+    "helper": 14
+   },
+   "kinds_in_input": [],
+   "names": [
+    "canThis(core)",
+    "tokenPermissionCheck",
+    "Members",
+    "nonePublicAuth"
+   ]
+  },
+  {
+   "id": "v5t-ghost-026ae91b7d",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/db/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3218,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[db]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-03a0ddc6dd",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/authentication/setup/",
+   "found": 17,
+   "kept": 9,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3056,
+   "tokens_after": 4024,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "rolePermissions[authentication]",
+    "canThis(core)",
+    "authentication",
+    "authentication",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-05ee24e847",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/{id}/gift_links/",
+   "found": 15,
+   "kept": 6,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3314,
+   "tokens_after": 4084,
+   "kinds": {
+    "helper": 6
+   },
+   "kinds_found": {
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-0a16c78538",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/newsletters/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3253,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[newsletter]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-1137a5840d",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/integrations/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3354,
+   "tokens_after": 3970,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow",
+    "permissible"
+   ],
+   "names": [
+    "rolePermissions[integration]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-11643c69d1",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/users/{id}/",
+   "found": 17,
+   "kept": 3,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3553,
+   "tokens_after": 4059,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "authenticate"
+   ]
+  },
+  {
+   "id": "v5t-ghost-1abee7746e",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/identities/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3285,
+   "tokens_after": 4029,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[identity]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-1dabb75c59",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/labels/{id}/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3260,
+   "tokens_after": 4068,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[label]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-20b1c48d88",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/emails/{id}/retry/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3251,
+   "tokens_after": 4045,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[email]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-21720b1b00",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/posts/{id}/copy/",
+   "found": 19,
+   "kept": 3,
+   "dropped": 16,
+   "cut": true,
+   "tokens_before": 3510,
+   "tokens_after": 4043,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-2b08fa9772",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/members/{id}/",
+   "found": 16,
+   "kept": 8,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3298,
+   "tokens_after": 4041,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[member]",
+    "members",
+    "members",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-3b54456064",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/tags/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3281,
+   "tokens_after": 3963,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[tag]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-4b5706fd70",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/gifts/flush_reminders/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3234,
+   "tokens_after": 4063,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[gift]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-4bc909eaec",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/themes/{name}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3271,
+   "tokens_after": 3951,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[theme]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-4dffed0923",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/tiers/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3276,
+   "tokens_after": 3945,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[product]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-5577946797",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/authentication/reset/",
+   "found": 16,
+   "kept": 9,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3166,
+   "tokens_after": 4051,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[authentication]",
+    "authentication",
+    "authentication",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-56bc478d48",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/upgrades/",
+   "found": 15,
+   "kept": 6,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3359,
+   "tokens_after": 4063,
+   "kinds": {
+    "helper": 6
+   },
+   "kinds_found": {
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-57682ef176",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/members/{id}/",
+   "found": 16,
+   "kept": 8,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3315,
+   "tokens_after": 4058,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[member]",
+    "members",
+    "members",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-5aa09a019d",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/pages/{id}/copy/",
+   "found": 19,
+   "kept": 3,
+   "dropped": 16,
+   "cut": true,
+   "tokens_before": 3521,
+   "tokens_after": 4054,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-5f25be85a3",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/themes/upload/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3317,
+   "tokens_after": 3997,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[theme]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-61d77659ca",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/snippets/{id}/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3260,
+   "tokens_after": 4074,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[snippet]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-679c71d6aa",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/db/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3235,
+   "tokens_after": 4017,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[db]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-6e938978cd",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/invites/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3370,
+   "tokens_after": 4018,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow",
+    "permissible"
+   ],
+   "names": [
+    "rolePermissions[invite]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-7a1e6b3342",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/users/owner/",
+   "found": 17,
+   "kept": 3,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3581,
+   "tokens_after": 4061,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[user]",
+    "user.permissible",
+    "transferOwnership"
+   ]
+  },
+  {
+   "id": "v5t-ghost-7b3b3cdfaa",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/invites/",
+   "found": 17,
+   "kept": 5,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3569,
+   "tokens_after": 4052,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[invite]",
+    "invite.permissible",
+    "role_id",
+    "isOwner",
+    "setIsRoles"
+   ]
+  },
+  {
+   "id": "v5t-ghost-7e98472d5c",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/settings/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3285,
+   "tokens_after": 3952,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[setting]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-9548873473",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/webhooks/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3203,
+   "tokens_after": 4032,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[webhook]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-a494e9ebbe",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/tiers/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3287,
+   "tokens_after": 3956,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[product]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-a6298f6e0e",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/members/",
+   "found": 16,
+   "kept": 8,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3293,
+   "tokens_after": 4036,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[member]",
+    "members",
+    "members",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-bb9eb52d42",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/tags/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3291,
+   "tokens_after": 3973,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[tag]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-be7afd4f75",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/email_previews/posts/{id}/",
+   "found": 15,
+   "kept": 6,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3293,
+   "tokens_after": 4063,
+   "kinds": {
+    "helper": 6
+   },
+   "kinds_found": {
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-c2dc71937b",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/themes/{name}/activate/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3275,
+   "tokens_after": 3955,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[theme]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-c62b8e6b5b",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/members/",
+   "found": 16,
+   "kept": 8,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3255,
+   "tokens_after": 3998,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[member]",
+    "members",
+    "members",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-c846744ab7",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/integrations/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3433,
+   "tokens_after": 4049,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow",
+    "permissible"
+   ],
+   "names": [
+    "rolePermissions[integration]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-d1a626ce9d",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/schedules/{resource}/{id}/",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3549,
+   "tokens_after": 4047,
+   "kinds": {
+    "perm_flow": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "canThis(core)",
+    "authenticate",
+    "authenticate"
+   ]
+  },
+  {
+   "id": "v5t-ghost-d862fb21df",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/comments/{id}/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3237,
+   "tokens_after": 4026,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[comment]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-d991d035bb",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/recommendations/{id}/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3268,
+   "tokens_after": 3956,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[recommendation]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-ghost-f2b1a7f14a",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/snippets/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3256,
+   "tokens_after": 4070,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[snippet]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-f53a273e1d",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/notifications/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3265,
+   "tokens_after": 4048,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[notification]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-f689c2de47",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/redirects/upload/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3228,
+   "tokens_after": 4050,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[redirect]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-fa87533dab",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/posts/",
+   "found": 19,
+   "kept": 3,
+   "dropped": 16,
+   "cut": true,
+   "tokens_before": 3442,
+   "tokens_after": 4042,
+   "kinds": {
+    "perm_table": 1,
+    "permissible": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "permissible": 2,
+    "perm_flow": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "rolePermissions[post]",
+    "post.permissible",
+    "post.permissible"
+   ]
+  },
+  {
+   "id": "v5t-ghost-fe64027ab0",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/offers/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3219,
+   "tokens_after": 4069,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[offer]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-fed14a36b6",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/labels/{id}/",
+   "found": 16,
+   "kept": 7,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3257,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[label]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi",
+    "tokenPermissionCheck"
+   ]
+  },
+  {
+   "id": "v5t-ghost-ff4fdcaf37",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/tags/",
+   "found": 16,
+   "kept": 6,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3285,
+   "tokens_after": 3967,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "rolePermissions[tag]",
+    "authenticate",
+    "authenticate",
+    "authorize",
+    "authorize",
+    "authorizeAdminApi"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0398a2f985",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.membersOrderedByRole",
+   "found": 21,
+   "kept": 3,
+   "dropped": 18,
+   "cut": true,
+   "tokens_before": 3816,
+   "tokens_after": 4069,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-07f8fbb692",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.list",
+   "found": 13,
+   "kept": 4,
+   "dropped": 9,
+   "cut": false,
+   "tokens_before": 3776,
+   "tokens_after": 4026,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasAny",
+    "hasPermissionToSeeAllPublicChannels",
+    "hasPermissionAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-17ffd71761",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/permissions.listAll",
+   "found": 4,
+   "kept": 4,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3470,
+   "tokens_after": 3966,
+   "kinds": {
+    "helper": 4
+   },
+   "kinds_found": {
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isPermissionsListAll",
+    "permissionsGetMethod",
+    "permissionsEndpoints",
+    "Permissions"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-181a424100",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/chat.getPinnedMessages",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3778,
+   "tokens_after": 4007,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-1fbf39be09",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/chat.delete",
+   "found": 12,
+   "kept": 3,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3783,
+   "tokens_after": 4083,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 6
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-223b6d8be3",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.getStatus",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3732,
+   "tokens_after": 3743,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-23806b2325",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/oauth-apps.get",
+   "found": 9,
+   "kept": 8,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3274,
+   "tokens_after": 4039,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "oauth",
+    "isOAuthAppsManager",
+    "hasPermissionAsync",
+    "OAuthApps",
+    "getCustomOAuthServices",
+    "permissionId",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-25c4e3c534",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.counters",
+   "found": 15,
+   "kept": 3,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3830,
+   "tokens_after": 4061,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 9
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-29963cbc5b",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.info",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3554,
+   "tokens_after": 3843,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-2b42fcece3",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.createToken",
+   "found": 4,
+   "kept": 0,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 4051,
+   "tokens_after": 4062,
+   "kinds": {},
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-3dedfa9896",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/chat.getMentionedMessages",
+   "found": 10,
+   "kept": 2,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3877,
+   "tokens_after": 4027,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-405bd5ac21",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.info",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3707,
+   "tokens_after": 3973,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 4,
+    "helper": 6
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-4ef22bfc27",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.update",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": false,
+   "tokens_before": 3776,
+   "tokens_after": 4043,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "isUpdateUserData",
+    "hasPermissionAsync",
+    "canEditOtherUserInfo"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-609098a14c",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.bannedUsers",
+   "found": 10,
+   "kept": 4,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3697,
+   "tokens_after": 4050,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-6d967375a0",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/settings",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3186,
+   "tokens_after": 3474,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-825833feb2",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.members",
+   "found": 13,
+   "kept": 2,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3817,
+   "tokens_after": 3991,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 4,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-993879a33c",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/chat.react",
+   "found": 10,
+   "kept": 4,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3728,
+   "tokens_after": 4057,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a57ae9a917",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.getPresence",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3805,
+   "tokens_after": 3816,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-a7c264f2bb",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/chat.getStarredMessages",
+   "found": 10,
+   "kept": 2,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3893,
+   "tokens_after": 4043,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a7d7197ba0",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.counters",
+   "found": 7,
+   "kept": 7,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3584,
+   "tokens_after": 3947,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "members",
+    "members",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b29bfcff96",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.history",
+   "found": 14,
+   "kept": 3,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3863,
+   "tokens_after": 4082,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b3ee80cc2f",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.listRoomsOfUser",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3488,
+   "tokens_after": 3915,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "isMember",
+    "isMember",
+    "TeamMember",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b5307adaa2",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/chat.getDeletedMessages",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3387,
+   "tokens_after": 3398,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-b77dd994c4",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/roles.list",
+   "found": 2,
+   "kept": 2,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3328,
+   "tokens_after": 3674,
+   "kinds": {
+    "helper": 2
+   },
+   "kinds_found": {
+    "helper": 2
+   },
+   "kinds_in_input": [],
+   "names": [
+    "Roles",
+    "rolesRoutes"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b830163cb8",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.checkUsernameAvailability",
+   "found": 3,
+   "kept": 3,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3121,
+   "tokens_after": 3590,
+   "kinds": {
+    "helper": 3
+   },
+   "kinds_found": {
+    "helper": 3
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkUsernameAvailability",
+    "checkUsernameAvailabilityWithValidation",
+    "checkUsernameAvailabilityCallback"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-bfa20a50ad",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.history",
+   "found": 11,
+   "kept": 1,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3926,
+   "tokens_after": 4046,
+   "kinds": {
+    "perm_table": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 4,
+    "helper": 6
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "permission→roles"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ccf0304195",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.listTeams",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3233,
+   "tokens_after": 3696,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "check",
+    "hasPermissionAsync",
+    "hasDockerEnv",
+    "hasDockerCGroup",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d83dae7c4e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.roles",
+   "found": 15,
+   "kept": 1,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3976,
+   "tokens_after": 4068,
+   "kinds": {
+    "perm_table": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d8e8746051",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.hide",
+   "found": 13,
+   "kept": 4,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3639,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-dfc8ce163b",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.counters",
+   "found": 7,
+   "kept": 5,
+   "dropped": 2,
+   "cut": false,
+   "tokens_before": 3836,
+   "tokens_after": 4072,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "members",
+    "members",
+    "permissionId"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-e2714912b9",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.listRooms",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3506,
+   "tokens_after": 3933,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "isMember",
+    "isMember",
+    "TeamMember",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ead569149d",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.getIntegrations",
+   "found": 20,
+   "kept": 2,
+   "dropped": 18,
+   "cut": true,
+   "tokens_before": 3819,
+   "tokens_after": 4087,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 14
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f1492901da",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/chat.getMessage",
+   "found": 10,
+   "kept": 4,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3719,
+   "tokens_after": 4072,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessPublicRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f7c14cc85e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.info",
+   "found": 9,
+   "kept": 2,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3869,
+   "tokens_after": 4019,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 4,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-fc1513c9cb",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.nameExists",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3115,
+   "tokens_after": 3126,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-fd924826e6",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.info",
+   "found": 9,
+   "kept": 3,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3822,
+   "tokens_after": 4072,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 4,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_flow"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ff7db67253",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.isMember",
+   "found": 13,
+   "kept": 2,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3874,
+   "tokens_after": 4024,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0779d29666",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.close",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3832,
+   "tokens_after": 4048,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-1260841fea",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.leave",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3404,
+   "tokens_after": 3602,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "members",
+    "members",
+    "membersIds",
+    "existingMember",
+    "TeamMember"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-2f893cf343",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.files",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3873,
+   "tokens_after": 4089,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-301c3c9949",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.history",
+   "found": 9,
+   "kept": 3,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3844,
+   "tokens_after": 4068,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canReadRoom",
+    "canReadRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-35eb77dc38",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.open",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3840,
+   "tokens_after": 4056,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-38a3cfd41a",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/im.leave",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3789,
+   "tokens_after": 4067,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "allowMemberAction",
+    "allowMemberAction"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-3944d8594e",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/im.close",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3808,
+   "tokens_after": 4064,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-52d02d65e4",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.leave",
+   "found": 20,
+   "kept": 2,
+   "dropped": 18,
+   "cut": true,
+   "tokens_before": 3849,
+   "tokens_after": 4048,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 14
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-5cbc62a53f",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.close",
+   "found": 3,
+   "kept": 3,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3593,
+   "tokens_after": 3775,
+   "kinds": {
+    "helper": 3
+   },
+   "kinds_found": {
+    "helper": 3
+   },
+   "kinds_in_input": [],
+   "names": [
+    "check",
+    "hasDockerEnv",
+    "hasDockerCGroup"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-63107638c6",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.leave",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3831,
+   "tokens_after": 4076,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "allowMemberAction",
+    "allowMemberAction"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-664e07d05b",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.members",
+   "found": 11,
+   "kept": 9,
+   "dropped": 2,
+   "cut": false,
+   "tokens_before": 3648,
+   "tokens_after": 4053,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "members",
+    "members",
+    "canSeeAllMembers",
+    "hasPermissionAsync",
+    "isMember",
+    "isMember",
+    "TeamMember",
+    "permissionId"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7346251579",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.open",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3537,
+   "tokens_after": 3548,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-81879cc975",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.leave",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3815,
+   "tokens_after": 4060,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "allowMemberAction",
+    "allowMemberAction"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-89ea440008",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.members",
+   "found": 18,
+   "kept": 2,
+   "dropped": 16,
+   "cut": true,
+   "tokens_before": 3885,
+   "tokens_after": 4017,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-927bea1fc5",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.listChildren",
+   "found": 3,
+   "kept": 3,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3546,
+   "tokens_after": 3672,
+   "kinds": {
+    "helper": 3
+   },
+   "kinds_found": {
+    "helper": 3
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isMember",
+    "isMember",
+    "TeamMember"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a1a072fb89",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.messages",
+   "found": 10,
+   "kept": 2,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3904,
+   "tokens_after": 4020,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a1a9b72abe",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.moderators",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3843,
+   "tokens_after": 4059,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a4fac1b151",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/im.open",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3730,
+   "tokens_after": 4059,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ba4b8c9067",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/chat.starMessage",
+   "found": 8,
+   "kept": 3,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3500,
+   "tokens_after": 4035,
+   "kinds": {
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_flow": 5,
+    "helper": 3
+   },
+   "kinds_in_input": [],
+   "names": [
+    "canAccessRoom",
+    "roomAccessValidators",
+    "canAccessPublicRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-c7e845f0ff",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.info",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3822,
+   "tokens_after": 4038,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ca9122e429",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.history",
+   "found": 13,
+   "kept": 2,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3891,
+   "tokens_after": 4035,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ccf34d5fc7",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.messages",
+   "found": 13,
+   "kept": 2,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3848,
+   "tokens_after": 3980,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d034faf3d4",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.files",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3817,
+   "tokens_after": 4073,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f48a84b063",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.roles",
+   "found": 15,
+   "kept": 3,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3848,
+   "tokens_after": 4064,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f5874fe2eb",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.online",
+   "found": 10,
+   "kept": 3,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3800,
+   "tokens_after": 4016,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0b84024de3",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.deleteOwnAccount",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3214,
+   "tokens_after": 3225,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-1127aaa42f",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.list",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3286,
+   "tokens_after": 3330,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "TeamMember"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-19292cc3f8",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.open",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3070,
+   "tokens_after": 3081,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-2698a2beab",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/subscriptions.unread",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3242,
+   "tokens_after": 3253,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-428b8184e1",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.removeOtherTokens",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3327,
+   "tokens_after": 3833,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "authenticatedRoute",
+    "authenticatedRoute",
+    "isUserWithUsername",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-45a4cb83d4",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/me",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3362,
+   "tokens_after": 3868,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "authenticatedRoute",
+    "authenticatedRoute",
+    "isUserWithUsername",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-4f43c85d68",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.updateOwnBasicInfo",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3376,
+   "tokens_after": 3387,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-52036bd241",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.setUserPublicAndPrivateKeys",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3128,
+   "tokens_after": 3139,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-6aebdee592",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.list",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3275,
+   "tokens_after": 3286,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-6b2fa402f2",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.removePersonalAccessToken",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3084,
+   "tokens_after": 3095,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-7440b3fddc",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.getPreferences",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3170,
+   "tokens_after": 3181,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-840fb09247",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/subscriptions.getOne",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3046,
+   "tokens_after": 3057,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-8dfb39edba",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/subscriptions.get",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3129,
+   "tokens_after": 3140,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-93a2fee5f8",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.2fa.enableEmail",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3389,
+   "tokens_after": 3607,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "hasUnverifiedEmail",
+    "xAuthToken",
+    "xAuthToken",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a91ad30642",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.logoutOtherClients",
+   "found": 4,
+   "kept": 4,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3422,
+   "tokens_after": 3591,
+   "kinds": {
+    "helper": 4
+   },
+   "kinds_found": {
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "xAuthToken",
+    "xAuthToken",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-aa457dfda3",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/e2e.fetchMyKeys",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3093,
+   "tokens_after": 3104,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-aa6f56d2ae",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.requestDataDownload",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3325,
+   "tokens_after": 3336,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-b0265eaedd",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.saveDraft",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3107,
+   "tokens_after": 3118,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-b105b248a2",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.favorite",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3650,
+   "tokens_after": 3661,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-b97740355c",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/channels.list.joined",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3280,
+   "tokens_after": 3291,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-d44c655fda",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.list",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3275,
+   "tokens_after": 3286,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-e274608cda",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/subscriptions.read",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3178,
+   "tokens_after": 3189,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-e880661365",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.saveNotification",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3121,
+   "tokens_after": 3132,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-f2b1c69495",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.enableTotp",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3177,
+   "tokens_after": 3188,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-063a2e7907",
+   "project": "rocketchat",
+   "method": "PUT",
+   "path": "/api/v1/integrations.update",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3737,
+   "tokens_after": 4085,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-23a530da4b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetAvatar",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3583,
+   "tokens_after": 3888,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-2663f8f241",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.logout",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3331,
+   "tokens_after": 3618,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-26b775fea8",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/integrations.remove",
+   "found": 14,
+   "kept": 1,
+   "dropped": 13,
+   "cut": false,
+   "tokens_before": 3824,
+   "tokens_after": 3992,
+   "kinds": {
+    "perm_table": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 13
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-58210f7976",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/integrations.get",
+   "found": 4,
+   "kept": 4,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3491,
+   "tokens_after": 3737,
+   "kinds": {
+    "helper": 4
+   },
+   "kinds_found": {
+    "helper": 4
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-8289184b61",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.setAvatar",
+   "found": 8,
+   "kept": 4,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3864,
+   "tokens_after": 4083,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canEditOtherUserAvatar",
+    "canEditOtherUserAvatar",
+    "hasPermissionAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-8b0ce73e2a",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.setPreferences",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3475,
+   "tokens_after": 3763,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ab6a857aaf",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetE2EKey",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3682,
+   "tokens_after": 3972,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-bb49c88371",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.setStatus",
+   "found": 8,
+   "kept": 3,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3872,
+   "tokens_after": 4038,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "check",
+    "hasPermissionAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d3c6acea99",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetTOTP",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3693,
+   "tokens_after": 3982,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ecefcc9d2c",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/integrations.history",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": false,
+   "tokens_before": 3728,
+   "tokens_after": 4071,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "hasAny",
+    "canViewOnlyOwnOutgoingIntegrations",
+    "canViewOnlyOwnOutgoingIntegrations"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-127573597f",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.register",
+   "found": 3,
+   "kept": 3,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3462,
+   "tokens_after": 3791,
+   "kinds": {
+    "helper": 3
+   },
+   "kinds_found": {
+    "helper": 3
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkUsernameAvailability",
+    "checkEmailAvailability",
+    "checkUsernameAvailabilityCallback"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-50404e7f9f",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/info",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3282,
+   "tokens_after": 3783,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "authenticatedRoute",
+    "authenticatedRoute",
+    "isUserWithUsername",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-96a1ca9bcf",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/settings.public",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3163,
+   "tokens_after": 3174,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-b1ab279e75",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.forgotPassword",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3188,
+   "tokens_after": 3236,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "isPasswordResetEnabled"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-c1f1f31ee0",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/login",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3306,
+   "tokens_after": 3317,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-f06379241c",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/pw.getPolicy",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3289,
+   "tokens_after": 3795,
+   "kinds": {
+    "helper": 5
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "authenticatedRoute",
+    "authenticatedRoute",
+    "isUserWithUsername",
+    "hashedToken",
+    "hashedToken"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0780c8e386",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addOwner",
+   "found": 17,
+   "kept": 4,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3751,
+   "tokens_after": 4083,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-09c0e4be92",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.invite",
+   "found": 5,
+   "kept": 4,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3805,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0a75eb9b8b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.addModerator",
+   "found": 10,
+   "kept": 4,
+   "dropped": 6,
+   "cut": false,
+   "tokens_before": 3845,
+   "tokens_after": 4021,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "check",
+    "isFederated",
+    "isFederated"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0d4fa14e85",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.addMembers",
+   "found": 11,
+   "kept": 10,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3111,
+   "tokens_after": 4032,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "addMembers",
+    "members",
+    "members",
+    "hasAtLeastOnePermissionAsync",
+    "isRoleAddedToTeam",
+    "addRolesToMember",
+    "isRoleAddedToSubscription",
+    "addRolesToSubscription",
+    "hasAtLeastOnePermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0d896bf7fc",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setType",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3857,
+   "tokens_after": 4069,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-120c826396",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/oauth-apps.delete",
+   "found": 16,
+   "kept": 4,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3233,
+   "tokens_after": 3983,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "oauth",
+    "permissionsRequired",
+    "permissionsRequired"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-1b04685611",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.setTopic",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3579,
+   "tokens_after": 3872,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-258c4c7f6e",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.removeOwner",
+   "found": 15,
+   "kept": 4,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3726,
+   "tokens_after": 4058,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-2728fd39da",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setReadOnly",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3826,
+   "tokens_after": 4038,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-3c6f0d2295",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.unarchive",
+   "found": 14,
+   "kept": 4,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3716,
+   "tokens_after": 4046,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-3f15a8caba",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.invite",
+   "found": 5,
+   "kept": 4,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3805,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-4ebd125c22",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.kick",
+   "found": 17,
+   "kept": 4,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3455,
+   "tokens_after": 4016,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 11
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-4fccb48579",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/teams.listAll",
+   "found": 10,
+   "kept": 10,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3258,
+   "tokens_after": 4009,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "hasAllPermissionAsync",
+    "hasAny",
+    "hasAtLeastOnePermissionAsync",
+    "hasAllPermission",
+    "hasAllPermission",
+    "hasAtLeastOnePermission",
+    "hasAtLeastOnePermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-52624474db",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.archive",
+   "found": 12,
+   "kept": 7,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3591,
+   "tokens_after": 4071,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 11
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "check",
+    "allowMemberAction",
+    "allowMemberAction",
+    "hasPermissionAsync",
+    "hasDockerEnv",
+    "hasDockerCGroup"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-5b6c0ebf4d",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/oauth-apps.list",
+   "found": 14,
+   "kept": 2,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3498,
+   "tokens_after": 4081,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 13
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "oauth"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-5efea22347",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.adminRooms.getRoom",
+   "found": 6,
+   "kept": 6,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3225,
+   "tokens_after": 3941,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "findAdminRoom",
+    "hasPermissionAsync",
+    "adminFields",
+    "scopeAdminRoomsForAbac",
+    "stripABACManagedFieldsForAdmin"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-5f876d01d7",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/roles.getUsersInRole",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3733,
+   "tokens_after": 4038,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "getUsersInRole",
+    "getUsersInRole"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-61d5e55ae2",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/im.delete",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3789,
+   "tokens_after": 4020,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-62021dedf1",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addLeader",
+   "found": 14,
+   "kept": 4,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3647,
+   "tokens_after": 4053,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-63a1732919",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.delete",
+   "found": 11,
+   "kept": 2,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3834,
+   "tokens_after": 3999,
+   "kinds": {
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_flow": 5,
+    "helper": 6
+   },
+   "kinds_in_input": [],
+   "names": [
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-64704a55de",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.convertToTeam",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3788,
+   "tokens_after": 4083,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 7
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-6a9ba0c552",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/permissions.update",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": false,
+   "tokens_before": 3715,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 15
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-6e3968ce8f",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/roles.addUserToRole",
+   "found": 10,
+   "kept": 4,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3817,
+   "tokens_after": 4063,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "addUserToRole",
+    "Roles",
+    "hasRoleAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-70f72af62c",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.delete",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3088,
+   "tokens_after": 3377,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7508165c03",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.rename",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3809,
+   "tokens_after": 4021,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7cc51eccb8",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.deactivateIdle",
+   "found": 14,
+   "kept": 4,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3542,
+   "tokens_after": 4043,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 13
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "setActiveNotLoggedInAfterWithRole"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7fef853453",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.update",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3086,
+   "tokens_after": 3375,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-825ebbb8fa",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.muteUser",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3494,
+   "tokens_after": 3787,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-826b7bee76",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.create",
+   "found": 10,
+   "kept": 8,
+   "dropped": 2,
+   "cut": false,
+   "tokens_before": 3618,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "members",
+    "members",
+    "check",
+    "hasPermissionAsync",
+    "hasDockerEnv",
+    "hasDockerCGroup",
+    "permissionId"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-8391ad7a95",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.create",
+   "found": 7,
+   "kept": 7,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3502,
+   "tokens_after": 3977,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canEditExtension",
+    "isUpdateUserData",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-893d997b68",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.archive",
+   "found": 18,
+   "kept": 3,
+   "dropped": 15,
+   "cut": true,
+   "tokens_before": 3762,
+   "tokens_after": 3970,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 12
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-92300cd10b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.kick",
+   "found": 17,
+   "kept": 3,
+   "dropped": 14,
+   "cut": true,
+   "tokens_before": 3766,
+   "tokens_after": 3978,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 11
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-951602c914",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/settings/{_id}",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3321,
+   "tokens_after": 3889,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "hasAllPermissionAsync",
+    "hasAny",
+    "hasAtLeastOnePermissionAsync",
+    "hasAllPermission",
+    "hasAllPermission",
+    "hasAtLeastOnePermission",
+    "hasAtLeastOnePermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-9d1d72179e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.listAll",
+   "found": 10,
+   "kept": 8,
+   "dropped": 2,
+   "cut": false,
+   "tokens_before": 3392,
+   "tokens_after": 4039,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "hasAllPermissionAsync",
+    "hasAny",
+    "hasAtLeastOnePermissionAsync",
+    "hasAllPermission",
+    "hasAllPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-9eda74f499",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.adminRooms",
+   "found": 5,
+   "kept": 4,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3359,
+   "tokens_after": 4044,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "findAdminRooms",
+    "hasPermissionAsync",
+    "adminFields"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a41ec34093",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.list",
+   "found": 11,
+   "kept": 0,
+   "dropped": 11,
+   "cut": false,
+   "tokens_before": 4038,
+   "tokens_after": 4049,
+   "kinds": {},
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-rocketchat-a447ce62f1",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/integrations.create",
+   "found": 5,
+   "kept": 5,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3285,
+   "tokens_after": 3633,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 4
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermissionAsync",
+    "permissionId",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-a47b2cfbc1",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.setActiveStatus",
+   "found": 10,
+   "kept": 6,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3517,
+   "tokens_after": 4077,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "hasAny",
+    "hasAllPermissionAsync",
+    "hasAtLeastOnePermissionAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ae3a073bb9",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setTopic",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3700,
+   "tokens_after": 4036,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b424fe6e3b",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/im.list.everyone",
+   "found": 10,
+   "kept": 7,
+   "dropped": 3,
+   "cut": false,
+   "tokens_before": 3436,
+   "tokens_after": 4037,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "hasAllPermissionAsync",
+    "hasAny",
+    "hasAtLeastOnePermissionAsync",
+    "hasAllPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-b975a0246d",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addModerator",
+   "found": 16,
+   "kept": 3,
+   "dropped": 13,
+   "cut": true,
+   "tokens_before": 3759,
+   "tokens_after": 3969,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 10
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-be9103fbad",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.delete",
+   "found": 5,
+   "kept": 4,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3797,
+   "tokens_after": 4043,
+   "kinds": {
+    "helper": 4
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permissionId",
+    "hasPermissionAsync",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-c2f1c961aa",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.cleanHistory",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3730,
+   "tokens_after": 4060,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-c65d2bcd9d",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.delete",
+   "found": 5,
+   "kept": 4,
+   "dropped": 1,
+   "cut": false,
+   "tokens_before": 3812,
+   "tokens_after": 4058,
+   "kinds": {
+    "helper": 4
+   },
+   "kinds_found": {
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permissionId",
+    "hasPermissionAsync",
+    "hasPermission",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ca047ea3cd",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.create",
+   "found": 12,
+   "kept": 4,
+   "dropped": 8,
+   "cut": false,
+   "tokens_before": 3795,
+   "tokens_after": 4019,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 11
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "members",
+    "members",
+    "canSeeAllTeams"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-cd911f7d93",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addAll",
+   "found": 14,
+   "kept": 3,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3775,
+   "tokens_after": 3982,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-cdf09d2caa",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.create",
+   "found": 12,
+   "kept": 7,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3454,
+   "tokens_after": 4009,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 6
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "members",
+    "members",
+    "hasAllPermissionAsync",
+    "hasAny"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-e5468be8ae",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.delete",
+   "found": 10,
+   "kept": 6,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3484,
+   "tokens_after": 4024,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles",
+    "permissionsRequired",
+    "permissionsRequired",
+    "hasAllPermissionAsync",
+    "hasAny",
+    "hasAtLeastOnePermissionAsync"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-e9fd4375ac",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/rooms.banUser",
+   "found": 15,
+   "kept": 4,
+   "dropped": 11,
+   "cut": true,
+   "tokens_before": 3683,
+   "tokens_after": 4019,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 9
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ec189eb0b4",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.resetRoomKey",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3555,
+   "tokens_after": 4042,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 2
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f11a30c0d2",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/settings/{_id}",
+   "found": 4,
+   "kept": 1,
+   "dropped": 3,
+   "cut": false,
+   "tokens_before": 3812,
+   "tokens_after": 3996,
+   "kinds": {
+    "perm_table": 1
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 3
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "permission→roles"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f1a6c48c61",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.removeMember",
+   "found": 13,
+   "kept": 8,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3284,
+   "tokens_after": 4061,
+   "kinds": {
+    "perm_table": 1,
+    "helper": 7
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "helper": 12
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "removeMember",
+    "hasAtLeastOnePermissionAsync",
+    "removeMembers",
+    "TeamMember",
+    "hasAtLeastOnePermission",
+    "hasAtLeastOnePermission",
+    "members"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f307e5c070",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.removeModerator",
+   "found": 14,
+   "kept": 4,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3741,
+   "tokens_after": 4075,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "canAccessRoom",
+    "hasPermission",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ff636d6df7",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/chat.pinMessage",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3536,
+   "tokens_after": 3957,
+   "kinds": {
+    "perm_table": 1,
+    "perm_flow": 3
+   },
+   "kinds_found": {
+    "perm_table": 1,
+    "perm_flow": 5,
+    "helper": 5
+   },
+   "kinds_in_input": [],
+   "names": [
+    "permission→roles",
+    "hasPermission",
+    "canAccessRoom",
+    "roomAccessValidators"
+   ]
+  },
+  {
+   "id": "v5t-umami-05d9018016",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/stats",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3729,
+   "tokens_after": 4058,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-0a31680c6d",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites/{websiteId}/transfer",
+   "found": 12,
+   "kept": 3,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3794,
+   "tokens_after": 4069,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-1243b61dd0",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites/{websiteId}/goals/{goalId}",
+   "found": 13,
+   "kept": 3,
+   "dropped": 10,
+   "cut": true,
+   "tokens_before": 3668,
+   "tokens_after": 4088,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-16028b99b3",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites/{websiteId}",
+   "found": 12,
+   "kept": 5,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3558,
+   "tokens_after": 4060,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-181ff0b308",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/realtime/{websiteId}",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3737,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-189d97d3d0",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3710,
+   "tokens_after": 4039,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-1ac5a3d03d",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/export",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3670,
+   "tokens_after": 4090,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-1d109a581c",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/auth/subscription",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3522,
+   "tokens_after": 4024,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-336747e804",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/active",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3714,
+   "tokens_after": 4043,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-5f862f98fb",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites/{websiteId}/shares",
+   "found": 12,
+   "kept": 4,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3602,
+   "tokens_after": 4057,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled"
+   ]
+  },
+  {
+   "id": "v5t-umami-8368db1fee",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/sessions",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3780,
+   "tokens_after": 4055,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-abdc2fefe5",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites/{websiteId}/reset",
+   "found": 12,
+   "kept": 5,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3540,
+   "tokens_after": 4042,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-b5fb9b9198",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/goals/{goalId}",
+   "found": 12,
+   "kept": 3,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3650,
+   "tokens_after": 4070,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "perm_flow": 1,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-b645d17e1d",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/boards/{boardId}",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3522,
+   "tokens_after": 4024,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-bdd6ebb218",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/share/id/{shareId}",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3597,
+   "tokens_after": 4052,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 1
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled"
+   ]
+  },
+  {
+   "id": "v5t-umami-bf7e66056f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/shares",
+   "found": 11,
+   "kept": 3,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3723,
+   "tokens_after": 4052,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-dba8caee9a",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/websites/{websiteId}",
+   "found": 12,
+   "kept": 5,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3535,
+   "tokens_after": 4037,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-dd7523bace",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/share/id/{shareId}",
+   "found": 12,
+   "kept": 5,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3546,
+   "tokens_after": 4048,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-334b4196fe",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/users",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3468,
+   "tokens_after": 4057,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-56f66291b9",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3442,
+   "tokens_after": 4080,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-6d4f7e167f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/links",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3477,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-b02d7575d9",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/pixels",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3479,
+   "tokens_after": 4068,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-dd07135e2c",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/websites",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3482,
+   "tokens_after": 4071,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-1ddff0d24c",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams",
+   "found": 10,
+   "kept": 10,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3358,
+   "tokens_after": 4053,
+   "kinds": {
+    "helper": 10
+   },
+   "kinds_found": {
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "members",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-3787292ff1",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/me/api-keys",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3319,
+   "tokens_after": 3960,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-3dde1c334d",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/me/websites",
+   "found": 12,
+   "kept": 8,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3369,
+   "tokens_after": 4058,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "getAllUserWebsitesIncludingTeamAccess",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "members",
+    "members"
+   ]
+  },
+  {
+   "id": "v5t-umami-404ae6243e",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/dashboard",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": false,
+   "tokens_before": 3313,
+   "tokens_after": 4014,
+   "kinds": {
+    "perm_flow": 2,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_flow": 2,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "hasValidBoardReports",
+    "isValidBoardReportReference",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-4d95113add",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/me/teams",
+   "found": 10,
+   "kept": 10,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3360,
+   "tokens_after": 4055,
+   "kinds": {
+    "helper": 10
+   },
+   "kinds_found": {
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "members",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-a8feaa9ffc",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/me",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3334,
+   "tokens_after": 3975,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "authKey",
+    "ROLES",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "createAuthKey",
+    "teamOwner"
+   ]
+  },
+  {
+   "id": "v5t-umami-af1dbfec47",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/dashboard",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3246,
+   "tokens_after": 3887,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-b89ee084f9",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites",
+   "found": 12,
+   "kept": 8,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3343,
+   "tokens_after": 4032,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "getAllUserWebsitesIncludingTeamAccess",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "members",
+    "members"
+   ]
+  },
+  {
+   "id": "v5t-umami-bd9e54d1f1",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/me/password",
+   "found": 11,
+   "kept": 11,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3340,
+   "tokens_after": 4062,
+   "kinds": {
+    "helper": 11
+   },
+   "kinds_found": {
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "checkPassword",
+    "hashPassword",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-e2ccb4b90c",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/me/api-keys/{keyId}",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3343,
+   "tokens_after": 3984,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-e6c63b5cdc",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/auth/verify",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3231,
+   "tokens_after": 3872,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-187a24107f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/users/{userId}/teams",
+   "found": 9,
+   "kept": 9,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3323,
+   "tokens_after": 3964,
+   "kinds": {
+    "helper": 9
+   },
+   "kinds_found": {
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "isApiKeyBlockedPath",
+    "hashApiKey",
+    "teamOwner",
+    "createAuthKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-431f171df1",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/users/{userId}",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3330,
+   "tokens_after": 4077,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-6eb1dd711f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/users/{userId}/websites",
+   "found": 12,
+   "kept": 8,
+   "dropped": 4,
+   "cut": false,
+   "tokens_before": 3383,
+   "tokens_after": 4072,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "getAllUserWebsitesIncludingTeamAccess",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "ROLES",
+    "authKey",
+    "members",
+    "members"
+   ]
+  },
+  {
+   "id": "v5t-umami-f6f0764144",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/users/{userId}",
+   "found": 14,
+   "kept": 6,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3505,
+   "tokens_after": 4051,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "userRoleParam",
+    "userRoleParam",
+    "hashPassword"
+   ]
+  },
+  {
+   "id": "v5t-umami-019432a060",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "found": 15,
+   "kept": 12,
+   "dropped": 3,
+   "cut": true,
+   "tokens_before": 3122,
+   "tokens_after": 4004,
+   "kinds": {
+    "helper": 12
+   },
+   "kinds_found": {
+    "helper": 15
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkPassword",
+    "ROLES",
+    "checkAuth",
+    "isEnabled",
+    "isTwoFactorConfigured",
+    "PARTIAL_AUTH_TOKEN_TYPE",
+    "hash",
+    "hash",
+    "saveAuth",
+    "teamOwner",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-503d2dbda4",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/heartbeat",
+   "found": 0,
+   "kept": 0,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 2864,
+   "tokens_after": 2875,
+   "kinds": {},
+   "kinds_found": {},
+   "kinds_in_input": [],
+   "names": []
+  },
+  {
+   "id": "v5t-umami-5a862e9746",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/share/{slug}",
+   "found": 1,
+   "kept": 1,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3063,
+   "tokens_after": 3113,
+   "kinds": {
+    "helper": 1
+   },
+   "kinds_found": {
+    "helper": 1
+   },
+   "kinds_in_input": [],
+   "names": [
+    "authorizedEntityIds"
+   ]
+  },
+  {
+   "id": "v5t-umami-640719b3b2",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/recorder",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3159,
+   "tokens_after": 3940,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkAuth",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "PARTIAL_AUTH_TOKEN_TYPE",
+    "authKey",
+    "hash",
+    "hash"
+   ]
+  },
+  {
+   "id": "v5t-umami-8a66f9b00f",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/send",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3032,
+   "tokens_after": 3813,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkAuth",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "PARTIAL_AUTH_TOKEN_TYPE",
+    "authKey",
+    "hash",
+    "hash"
+   ]
+  },
+  {
+   "id": "v5t-umami-9454ba34fd",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/batch",
+   "found": 8,
+   "kept": 8,
+   "dropped": 0,
+   "cut": false,
+   "tokens_before": 3083,
+   "tokens_after": 3864,
+   "kinds": {
+    "helper": 8
+   },
+   "kinds_found": {
+    "helper": 8
+   },
+   "kinds_in_input": [],
+   "names": [
+    "checkAuth",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth",
+    "PARTIAL_AUTH_TOKEN_TYPE",
+    "authKey",
+    "hash",
+    "hash"
+   ]
+  },
+  {
+   "id": "v5t-umami-0704ce0c7e",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/teams/{teamId}",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3671,
+   "tokens_after": 4041,
+   "kinds": {
+    "perm_table": 2,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 2,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_table"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-1d86a9207c",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/admin/2fa/global",
+   "found": 12,
+   "kept": 7,
+   "dropped": 5,
+   "cut": true,
+   "tokens_before": 3420,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isTwoFactorConfigured",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-2908d81714",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/users/{userId}",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3315,
+   "tokens_after": 4062,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-29da074b3f",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/teams",
+   "found": 12,
+   "kept": 6,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3662,
+   "tokens_after": 4069,
+   "kinds": {
+    "perm_table": 2,
+    "helper": 4
+   },
+   "kinds_found": {
+    "perm_table": 2,
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_table"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "teamOwnerId",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-8c869fdfb0",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/users",
+   "found": 14,
+   "kept": 8,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3430,
+   "tokens_after": 4058,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 5
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "userRoleParam",
+    "userRoleParam",
+    "hashPassword",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-9ae29e870f",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/teams/{teamId}/users",
+   "found": 13,
+   "kept": 5,
+   "dropped": 8,
+   "cut": true,
+   "tokens_before": 3738,
+   "tokens_after": 4066,
+   "kinds": {
+    "perm_table": 2,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 2,
+    "helper": 11
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_table"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "teamRoleParam",
+    "teamRoleParam",
+    "isApiKeyEnabled"
+   ]
+  },
+  {
+   "id": "v5t-umami-a94e56626f",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/teams/{teamId}",
+   "found": 11,
+   "kept": 4,
+   "dropped": 7,
+   "cut": true,
+   "tokens_before": 3726,
+   "tokens_after": 4009,
+   "kinds": {
+    "perm_table": 2,
+    "helper": 2
+   },
+   "kinds_found": {
+    "perm_table": 2,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_table"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey"
+   ]
+  },
+  {
+   "id": "v5t-umami-ad293dc85a",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/admin/websites",
+   "found": 13,
+   "kept": 6,
+   "dropped": 7,
+   "cut": false,
+   "tokens_before": 3318,
+   "tokens_after": 4065,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-b5ef75cf61",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/admin/users",
+   "found": 11,
+   "kept": 6,
+   "dropped": 5,
+   "cut": false,
+   "tokens_before": 3310,
+   "tokens_after": 4057,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 8
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-d334436440",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/teams/{teamId}/users/{userId}",
+   "found": 15,
+   "kept": 3,
+   "dropped": 12,
+   "cut": true,
+   "tokens_before": 3713,
+   "tokens_after": 4042,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 12
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-e2207e964c",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/admin/teams",
+   "found": 13,
+   "kept": 6,
+   "dropped": 7,
+   "cut": false,
+   "tokens_before": 3315,
+   "tokens_after": 4062,
+   "kinds": {
+    "perm_table": 3,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 10
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  },
+  {
+   "id": "v5t-umami-e37907fe2d",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/websites",
+   "found": 12,
+   "kept": 3,
+   "dropped": 9,
+   "cut": true,
+   "tokens_before": 3636,
+   "tokens_after": 4056,
+   "kinds": {
+    "perm_table": 3
+   },
+   "kinds_found": {
+    "perm_table": 3,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "ROLE_PERMISSIONS"
+   ]
+  },
+  {
+   "id": "v5t-umami-e883ef9f59",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/users/{userId}",
+   "found": 11,
+   "kept": 5,
+   "dropped": 6,
+   "cut": true,
+   "tokens_before": 3709,
+   "tokens_after": 4079,
+   "kinds": {
+    "perm_table": 2,
+    "helper": 3
+   },
+   "kinds_found": {
+    "perm_table": 2,
+    "helper": 9
+   },
+   "kinds_in_input": [
+    "helper",
+    "perm_table"
+   ],
+   "names": [
+    "ROLES",
+    "PERMISSIONS",
+    "isApiKeyEnabled",
+    "isApiKey",
+    "checkApiKeyAuth"
+   ]
+  }
+ ]
+}

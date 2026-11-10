@@ -1,0 +1,27 @@
+id: pol_api_v1_issueComment_put_by_commentId
+endpoint:
+  method: PUT
+  path: /api/v1/issueComment/{commentId}
+label: owner_match
+params:
+  object_param: commentId
+  owner_lookup:
+    table: issue_comment
+    id_col: id
+    owner_col: userId
+    tenant_col: null
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_match confidence=0.9]
+  description: 핸들러 원문 — 요청자 id와 객체 소유자 id를 비교해 다르면 거부; 판단: owner_match | params: object_param
+  commentId: only path parameter (no ERD table bound); llm v2.0 filled [''owner_lookup'']
+  | Unknown lookup table or id column | human edit E2 (D2 2026-11-10): label restored
+  to model label owner_match; owner_lookup={"table": "issue_comment", "id_col": "id",
+  "owner_col": "userId", "tenant_col": null}'
+status: ACTIVE
+created_at: '2026-11-10T11:37:28.853103Z'
+mode: observe
+version: 1
+source: manual
+evidence_refs: []

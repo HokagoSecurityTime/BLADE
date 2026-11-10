@@ -1,0 +1,1377 @@
+{
+ "definition": "data-v7 LoRA v7 (v5 recipe + data-v7: re-judged LLM-labelled rows (45 label changes, 256 OAS-only newly-manual rows excluded) + test_v31_supp 221 + test_v5 281 added to train) — stage-1 analysis (test_v30 only).\nReads only existing prediction files (no inference): reports/eval/lora_v7/lora_v7_s{42,43,44}/eval/ and reports/eval/lora_v5/lora_v5_s*/eval/ (v5 baseline), plus scores_test_v30.json (scripts/eval_v30.py --eval-def both).\nWrites reports/eval/lora_v7/analysis.json and report.md. Pre-registered criteria (AGENTS.md 작업 data-v7, 3-seed mean): (1) test_v6 macro-F1 >= v5 + 0.016 (S9, after test_v6 freeze — NOT evaluated here),\n(2) test_v30 207 concrete precision drop <= 0.025, (3) test_v30 207 public misjudge (/35) mean <= 2.0. test_v5 / test_v31_supp are training data for v7 and are never scored.",
+ "criteria": {
+  "macro_f1_gain": 0.016,
+  "precision_drop": 0.025,
+  "public_misjudge_max": 2.0
+ },
+ "headline": {
+  "v5": {
+   "test_v30_207": {
+    "macro_f1": [
+     0.3661,
+     0.386,
+     0.3711
+    ],
+    "macro_f1_265": [
+     0.6947,
+     0.6943,
+     0.7109
+    ],
+    "accuracy": [
+     0.5604,
+     0.5797,
+     0.5652
+    ],
+    "precision": [
+     0.7667,
+     0.8095,
+     0.8112
+    ],
+    "recall": [
+     0.5583,
+     0.5777,
+     0.5631
+    ],
+    "answer_rate": [
+     0.7282,
+     0.7136,
+     0.6942
+    ],
+    "manual": [
+     0.256,
+     0.2899,
+     0.2995
+    ],
+    "errors": [
+     4,
+     0,
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.6429,
+      0.6923,
+      0.5979
+     ],
+     "role_required": [
+      0.4074,
+      0.4643,
+      0.4528
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7432,
+      0.7407,
+      0.7732
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.037,
+      0.0328,
+      0.0317
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.6667,
+       0.6207
+      ],
+      [
+       0.7826,
+       0.6207
+      ],
+      [
+       0.7436,
+       0.5
+      ]
+     ],
+     "role_required": [
+      [
+       0.7333,
+       0.2821
+      ],
+      [
+       0.7647,
+       0.3333
+      ],
+      [
+       0.8571,
+       0.3077
+      ]
+     ],
+     "membership_required": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.8831,
+       0.6415
+      ],
+      [
+       0.8434,
+       0.6604
+      ],
+      [
+       0.8523,
+       0.7075
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.0189,
+       1.0
+      ],
+      [
+       0.0167,
+       1.0
+      ],
+      [
+       0.0161,
+       1.0
+      ]
+     ]
+    },
+    "support": {
+     "public": 58,
+     "role_required": 39,
+     "membership_required": 0,
+     "tenant_match": 0,
+     "owner_match": 106,
+     "owner_or_admin": 3,
+     "manual_review_required": 1
+    },
+    "synthetic_macro_f1": [
+     0.9905,
+     0.9496,
+     0.9905
+    ],
+    "public_misjudge_35": [
+     3,
+     2,
+     1
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687",
+      "d8c5cf5eb0bfbd488219"
+     ],
+     "43": [
+      "0797f5bb072770d50159",
+      "fc9dac901542ca88d688"
+     ],
+     "44": [
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7574,
+     0.7279,
+     0.7333
+    ],
+    "macro_f1_102": [
+     0.5036,
+     0.4632,
+     0.4196
+    ],
+    "precision": [
+     0.8866,
+     0.9101,
+     0.9277
+    ],
+    "manual": [
+     0.375,
+     0.4375,
+     0.4813
+    ],
+    "errors": [
+     3,
+     1,
+     0
+    ],
+    "public_misjudge": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "v7": {
+   "test_v30_207": {
+    "macro_f1": [
+     0.3775,
+     0.4138,
+     0.4032
+    ],
+    "macro_f1_265": [
+     0.7282,
+     0.7248,
+     0.7419
+    ],
+    "accuracy": [
+     0.6135,
+     0.6425,
+     0.6329
+    ],
+    "precision": [
+     0.8077,
+     0.8462,
+     0.8176
+    ],
+    "recall": [
+     0.6117,
+     0.6408,
+     0.6311
+    ],
+    "answer_rate": [
+     0.7573,
+     0.7573,
+     0.7718
+    ],
+    "manual": [
+     0.2222,
+     0.2464,
+     0.2174
+    ],
+    "errors": [
+     5,
+     0,
+     3
+    ],
+    "per_label": {
+     "public": [
+      0.6452,
+      0.6737,
+      0.6667
+     ],
+     "role_required": [
+      0.3922,
+      0.5357,
+      0.5
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.8075,
+      0.8213,
+      0.8057
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.0426,
+      0.0385,
+      0.0435
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.8571,
+       0.5172
+      ],
+      [
+       0.8649,
+       0.5517
+      ],
+      [
+       0.8857,
+       0.5345
+      ]
+     ],
+     "role_required": [
+      [
+       0.8333,
+       0.2564
+      ],
+      [
+       0.8824,
+       0.3846
+      ],
+      [
+       0.8235,
+       0.359
+      ]
+     ],
+     "membership_required": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.8037,
+       0.8113
+      ],
+      [
+       0.8416,
+       0.8019
+      ],
+      [
+       0.8095,
+       0.8019
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.0217,
+       1.0
+      ],
+      [
+       0.0196,
+       1.0
+      ],
+      [
+       0.0222,
+       1.0
+      ]
+     ]
+    },
+    "support": {
+     "public": 58,
+     "role_required": 39,
+     "membership_required": 0,
+     "tenant_match": 0,
+     "owner_match": 106,
+     "owner_or_admin": 3,
+     "manual_review_required": 1
+    },
+    "synthetic_macro_f1": [
+     1.0,
+     0.9648,
+     1.0
+    ],
+    "public_misjudge_35": [
+     1,
+     1,
+     2
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688"
+     ],
+     "43": [
+      "fc9dac901542ca88d688"
+     ],
+     "44": [
+      "fc9dac901542ca88d688",
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7462,
+     0.7662,
+     0.7523
+    ],
+    "macro_f1_102": [
+     0.4254,
+     0.4834,
+     0.4518
+    ],
+    "precision": [
+     0.875,
+     0.89,
+     0.8936
+    ],
+    "manual": [
+     0.4,
+     0.375,
+     0.4062
+    ],
+    "errors": [
+     0,
+     0,
+     1
+    ],
+    "public_misjudge": [
+     0,
+     0,
+     2
+    ]
+   }
+  }
+ },
+ "verdict": {
+  "c1": "pending: test_v6 (S9) — not evaluated in stage 1",
+  "c2_precision_drop": -0.028,
+  "c2_pass": true,
+  "c3_public_misjudge_mean": 1.33,
+  "c3_pass": true,
+  "regression_ok": true
+ },
+ "paired_precision_delta": [
+  0.041,
+  0.0367,
+  0.0064
+ ],
+ "paired_macro_f1_delta": [
+  0.0114,
+  0.0278,
+  0.0321
+ ],
+ "transitions": {
+  "v5_to_v7": {
+   "42": {
+    "manual_review_required->owner_match": 15,
+    "public->manual_review_required": 11,
+    "public->owner_match": 10,
+    "manual_review_required->public": 4,
+    "membership_required->owner_match": 3,
+    "output_error->owner_match": 3,
+    "owner_match->membership_required": 2,
+    "role_required->manual_review_required": 2,
+    "manual_review_required->output_error": 2,
+    "public->output_error": 2,
+    "role_required->owner_match": 1,
+    "output_error->manual_review_required": 1,
+    "membership_required->manual_review_required": 1,
+    "manual_review_required->role_required": 1,
+    "role_required->output_error": 1
+   },
+   "42_fixed": 24,
+   "42_newly_wrong": 13,
+   "43": {
+    "manual_review_required->owner_match": 18,
+    "public->manual_review_required": 7,
+    "public->owner_match": 4,
+    "owner_match->manual_review_required": 4,
+    "manual_review_required->public": 2,
+    "role_required->manual_review_required": 2,
+    "membership_required->owner_match": 1,
+    "role_required->owner_match": 1,
+    "manual_review_required->membership_required": 1,
+    "public->role_required": 1,
+    "manual_review_required->role_required": 1,
+    "owner_match->role_required": 1,
+    "owner_match->public": 1
+   },
+   "43_fixed": 24,
+   "43_newly_wrong": 11,
+   "44": {
+    "manual_review_required->owner_match": 13,
+    "public->manual_review_required": 7,
+    "manual_review_required->public": 7,
+    "public->owner_match": 3,
+    "manual_review_required->role_required": 3,
+    "membership_required->owner_match": 2,
+    "manual_review_required->membership_required": 1,
+    "owner_match->output_error": 1,
+    "owner_match->membership_required": 1,
+    "output_error->manual_review_required": 1,
+    "manual_review_required->output_error": 1,
+    "public->output_error": 1,
+    "output_error->owner_match": 1
+   },
+   "44_fixed": 20,
+   "44_newly_wrong": 6
+  },
+  "fixed_by_truth": {
+   "42": {
+    "owner_match": 20,
+    "public": 3,
+    "role_required": 1
+   },
+   "43": {
+    "owner_match": 19,
+    "public": 2,
+    "role_required": 3
+   },
+   "44": {
+    "owner_match": 12,
+    "public": 6,
+    "role_required": 2
+   }
+  },
+  "newly_wrong_by_truth": {
+   "42": {
+    "public": 9,
+    "owner_match": 2,
+    "role_required": 2
+   },
+   "43": {
+    "public": 6,
+    "owner_match": 4,
+    "role_required": 1
+   },
+   "44": {
+    "public": 4,
+    "owner_match": 2
+   }
+  },
+  "v7_manual_by_truth": {
+   "42": {
+    "public": 8,
+    "role_required": 20,
+    "owner_match": 14,
+    "owner_or_admin": 3,
+    "manual_review_required": 1
+   },
+   "43": {
+    "public": 12,
+    "role_required": 18,
+    "owner_match": 17,
+    "owner_or_admin": 3,
+    "manual_review_required": 1
+   },
+   "44": {
+    "public": 10,
+    "role_required": 18,
+    "owner_match": 14,
+    "owner_or_admin": 2,
+    "manual_review_required": 1
+   }
+  },
+  "seed_disagree": {
+   "v5": {
+    "records": 69,
+    "all_three": 1,
+    "pairs": {
+     "manual_review_required|public": 23,
+     "manual_review_required|owner_match": 23,
+     "owner_match|public": 6,
+     "manual_review_required|role_required": 5,
+     "membership_required|owner_match": 4,
+     "output_error|owner_match": 4,
+     "manual_review_required|output_error": 3,
+     "manual_review_required|membership_required": 1,
+     "public|role_required": 1,
+     "owner_match|role_required": 1
+    }
+   },
+   "v7": {
+    "records": 34,
+    "all_three": 3,
+    "pairs": {
+     "manual_review_required|owner_match": 14,
+     "manual_review_required|public": 7,
+     "manual_review_required|role_required": 4,
+     "owner_match|public": 4,
+     "manual_review_required|output_error": 4,
+     "output_error|role_required": 3,
+     "output_error|owner_match": 2,
+     "membership_required|owner_match": 1,
+     "manual_review_required|membership_required": 1
+    }
+   }
+  },
+  "wrong_in_all_6_runs": 58,
+  "wrong_in_all_6_by_truth": {
+   "role_required": 23,
+   "public": 18,
+   "owner_match": 14,
+   "owner_or_admin": 3
+  }
+ },
+ "confusion_mean": {
+  "v5": {
+   "public": {
+    "public": 33.7,
+    "role_required": 1.7,
+    "membership_required": 1.3,
+    "tenant_match": 0,
+    "owner_match": 11,
+    "owner_or_admin": 0,
+    "manual_review_required": 10.3,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 6.3,
+    "role_required": 12,
+    "membership_required": 0.7,
+    "tenant_match": 0,
+    "owner_match": 0.7,
+    "owner_or_admin": 0,
+    "manual_review_required": 19,
+    "output_error": 0.3
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 6.3,
+    "role_required": 1.7,
+    "membership_required": 0.3,
+    "tenant_match": 0,
+    "owner_match": 71,
+    "owner_or_admin": 0,
+    "manual_review_required": 25,
+    "output_error": 1.7
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 0
+   }
+  },
+  "v7": {
+   "public": {
+    "public": 31,
+    "role_required": 1,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 15.7,
+    "owner_or_admin": 0,
+    "manual_review_required": 10,
+    "output_error": 0.3
+   },
+   "role_required": {
+    "public": 2.7,
+    "role_required": 13,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 0,
+    "manual_review_required": 18.7,
+    "output_error": 1.7
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 2,
+    "role_required": 1.3,
+    "membership_required": 1.7,
+    "tenant_match": 0,
+    "owner_match": 85.3,
+    "owner_or_admin": 0,
+    "manual_review_required": 15,
+    "output_error": 0.7
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0.3,
+    "owner_or_admin": 0,
+    "manual_review_required": 2.7,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 0
+   }
+  }
+ },
+ "errors": {
+  "v5_s42_oas_code": {
+   "n": 5,
+   "han": 5,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "6c0c7e81f4263be705bd",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 인증·권한 검사 없이 익명 호출을 허용하므로; 판단: 인증만 확인되고 요청자-객체 관계가 불확정因而，系统未能生成预期的JSON"
+    },
+    {
+     "id": "905507d01b81ba5eb1f0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상 고객의 보안 주체记录已结束，达到最大长度。"
+    },
+    {
+     "id": "a15a54f7818a6cf25d98",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记：请使用中文回答。\n根据提供的信息，这是一个合成服务的意图设计示例。我们将按照要求的格式进行分析并给出结论。\n\n输入：DELETE "
+    }
+   ]
+  },
+  "v5_s42_oas": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "2463648df20db46705c1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: admin 역할을 가진 사용자만 다른用户的请求被拒绝，因为当前策略要求必须具有特定角色。根据描述，只有管理员才能删除其他用户的个人视频，因此选择 role_require"
+    },
+    {
+     "id": "beacon_iot_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    },
+    {
+     "id": "summit_club_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    }
+   ]
+  },
+  "v5_s43_oas_code": {
+   "n": 4,
+   "han": 4,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "quill_blog_catalogue_0",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 obj=None时不进行身份验证和权限检查即返回对象；判断：无需认证的公开访问条件满足”，\"evidence_fields\": [\"description\", \"path_"
+    },
+    {
+     "id": "beacon_iot_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未应答：请给出一个合理的回答。"
+    },
+    {
+     "id": "summit_club_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未完成，请继续。\n"
+    }
+   ]
+  },
+  "v5_s43_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "summit_club_catalogue_1",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 인텐션얼리 앵 若要回答，请将上述内容翻译成中文。"
+    }
+   ]
+  },
+  "v5_s44_oas_code": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "4033e696c5dc2d5b3aa2",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 인증·권한 검사过程已暂停，继续请稍候。"
+    },
+    {
+     "id": "a4f0cd98076a7ed61adf",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记\nuser\nReturn JSON."
+    },
+    {
+     "id": "folio_wiki_audit_1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 역할·권한 검사 코드虽已翻译，但为了保持原意和格式，这里直接使用了中文回答。在某些情况下，可能需要根据具体需求调整答案的长度或内容以适应不同的场景。\n{\""
+    }
+   ]
+  },
+  "v5_s44_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v7_s42_oas_code": {
+   "n": 5,
+   "han": 4,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "9416b7189d811cbb7daa",
+     "truth": "owner_match",
+     "output_tokens": 84,
+     "raw": "{\"label\": \"payment_mode_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 paymentMode — 지불 방식(카드·지갑·프리미엄 등) 선택이 접근 조건이라; 판단: 특정 지불 방식 보유가 실제 접근 조"
+    },
+    {
+     "id": "2168150bddc48ce3a0c8",
+     "truth": "role_required",
+     "output_tokens": 197,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 인증·권한 검사 없이 경로를暴胀\nuser\nReturn JSON.\n{\"method\": \"GET\", \"path\": \"/admin\", \"path_"
+    },
+    {
+     "id": "5cb15a9c2cc08fcaa9f2",
+     "truth": "role_required",
+     "output_tokens": 60,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 접근을 login_check로 한 다음,所有人:\n       所有用户记录，只有管理员才能查看。\", \"evidence_fields\": [\"des"
+    }
+   ]
+  },
+  "v7_s42_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v7_s43_oas_code": {
+   "n": 3,
+   "han": 2,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "folio_wiki_workspace_1",
+     "truth": "tenant_match",
+     "output_tokens": 94,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 caller와 record가同一个输出语种: 韩语\n共享租户。\n——描述中的调用者和记录必须共享一个租户。判断：组成员关系不是根据共享租户确定的，因此 ten"
+    },
+    {
+     "id": "summit_club_gear_1",
+     "truth": "membership_required",
+     "output_tokens": 132,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.9, \"rationale\": \"description: 경 Grroup ownere记录中存在错误，已修复。\n{\"label\": \"membership_required\", \"confidence\": 0.9, \""
+    },
+    {
+     "id": "summit_club_council_1",
+     "truth": "manual_review_required",
+     "output_tokens": 73,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0,9, \"rationale\": \"description: 핸들러 코드의 tenant_id — 접근 조건이 하나로 정해지지 않아; 판단: 접근 조건이 확정되지 않아 보류\", \"evidence_fiel"
+    }
+   ]
+  },
+  "v7_s43_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v7_s44_oas_code": {
+   "n": 3,
+   "han": 3,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "7364a223f5e100dd73b2",
+     "truth": "owner_match",
+     "output_tokens": 46,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자가 자신의 정보를 조회하는 것으로 의도되어营造良好氛围感的图片\n"
+    },
+    {
+     "id": "af52b958d71fa4458e1e",
+     "truth": "role_required",
+     "output_tokens": 123,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 소유자 id를 비교해 다르면 거부,否则继续翻译？\n{\"label\": \"manual_review_requir"
+    },
+    {
+     "id": "ae718aeadf0285be8850",
+     "truth": "role_required",
+     "output_tokens": 49,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자가 인증된 사용자여야 하며, love 카드总数: 0"
+    }
+   ]
+  },
+  "v7_s44_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 1,
+   "examples": [
+    {
+     "id": "217a26a0ed334f7297d0",
+     "truth": "owner_match",
+     "output_tokens": 256,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: Update users password; path_params: [username]; username은 사용자 계정을 의미하며, 경로에 요청자 본인의 계정名被请"
+    }
+   ]
+  }
+ },
+ "lengths": {
+  "v5_s42_oas_code": {
+   "raw_chars_mean": 203.8,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_oas": {
+   "raw_chars_mean": 189.6,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_oas_code": {
+   "raw_chars_mean": 198.4,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_oas": {
+   "raw_chars_mean": 190.7,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_oas_code": {
+   "raw_chars_mean": 198.0,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_oas": {
+   "raw_chars_mean": 197.3,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v7_s42_oas_code": {
+   "raw_chars_mean": 205.0,
+   "output_tokens_mean": 75.8,
+   "output_tokens_max": 197
+  },
+  "v7_s42_oas": {
+   "raw_chars_mean": 196.0,
+   "output_tokens_mean": 68.4,
+   "output_tokens_max": 108
+  },
+  "v7_s43_oas_code": {
+   "raw_chars_mean": 210.5,
+   "output_tokens_mean": 77.3,
+   "output_tokens_max": 132
+  },
+  "v7_s43_oas": {
+   "raw_chars_mean": 203.7,
+   "output_tokens_mean": 73.5,
+   "output_tokens_max": 105
+  },
+  "v7_s44_oas_code": {
+   "raw_chars_mean": 198.3,
+   "output_tokens_mean": 71.1,
+   "output_tokens_max": 123
+  },
+  "v7_s44_oas": {
+   "raw_chars_mean": 190.3,
+   "output_tokens_mean": 64.8,
+   "output_tokens_max": 256
+  }
+ },
+ "times": {
+  "v5_s42_oas_code": {
+   "inference_ms_mean": 744.8
+  },
+  "v5_s42_oas": {
+   "inference_ms_mean": 625.5
+  },
+  "v5_s43_oas_code": {
+   "inference_ms_mean": 686.4
+  },
+  "v5_s43_oas": {
+   "inference_ms_mean": 627.6
+  },
+  "v5_s44_oas_code": {
+   "inference_ms_mean": 691.7
+  },
+  "v5_s44_oas": {
+   "inference_ms_mean": 626.8
+  },
+  "v7_s42_oas_code": {
+   "inference_ms_mean": 379.0,
+   "wall_s": 100.5,
+   "mean_ms_per_row": 379.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 15.69,
+   "rows": 265
+  },
+  "v7_s42_oas": {
+   "inference_ms_mean": 324.9,
+   "wall_s": 87.4,
+   "mean_ms_per_row": 324.9,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.74,
+   "rows": 269
+  },
+  "v7_s43_oas_code": {
+   "inference_ms_mean": 369.3,
+   "wall_s": 97.9,
+   "mean_ms_per_row": 369.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 15.69,
+   "rows": 265
+  },
+  "v7_s43_oas": {
+   "inference_ms_mean": 342.3,
+   "wall_s": 92.1,
+   "mean_ms_per_row": 342.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.74,
+   "rows": 269
+  },
+  "v7_s44_oas_code": {
+   "inference_ms_mean": 363.5,
+   "wall_s": 96.4,
+   "mean_ms_per_row": 363.5,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 15.69,
+   "rows": 265
+  },
+  "v7_s44_oas": {
+   "inference_ms_mean": 333.3,
+   "wall_s": 89.7,
+   "mean_ms_per_row": 333.3,
+   "hit_max_new_tokens": 1,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.74,
+   "rows": 269
+  }
+ },
+ "env": {
+  "v7": {
+   "42": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.3",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "43": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.3",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "44": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.3",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   }
+  },
+  "v5_s42": {
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "vram_gb": 79,
+   "torch": "2.14.1+cu130",
+   "transformers": "5.17.0",
+   "trl": "1.15.0",
+   "peft": "0.21.2",
+   "unsloth": "2026.10.11",
+   "python": "3.12.3"
+  }
+ },
+ "train": {
+  "v7": {
+   "42": {
+    "steps": 579,
+    "minutes": 29.2,
+    "train_loss": 0.119,
+    "val_oas_final": 0.2885,
+    "val_oas_code_final": 0.1746,
+    "val_oas_min": 0.2619,
+    "val_oas_code_min": 0.1618,
+    "peak_gib": 7.33,
+    "reserved_gib": 14.87,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "resumed_from": null,
+    "mask_row0": "loss mask check (row 0): 2904/2971 tokens masked (-100), 67 assistant tokens in loss",
+    "hash_gate": true
+   },
+   "43": {
+    "steps": 579,
+    "minutes": 29.2,
+    "train_loss": 0.1166,
+    "val_oas_final": 0.312,
+    "val_oas_code_final": 0.1869,
+    "val_oas_min": 0.2779,
+    "val_oas_code_min": 0.1656,
+    "peak_gib": 7.32,
+    "reserved_gib": 11.95,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "resumed_from": null,
+    "mask_row0": "loss mask check (row 0): 2904/2971 tokens masked (-100), 67 assistant tokens in loss",
+    "hash_gate": true
+   },
+   "44": {
+    "steps": 579,
+    "minutes": 29.2,
+    "train_loss": 0.1169,
+    "val_oas_final": 0.299,
+    "val_oas_code_final": 0.1867,
+    "val_oas_min": 0.2676,
+    "val_oas_code_min": 0.1722,
+    "peak_gib": 7.31,
+    "reserved_gib": 13.53,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "resumed_from": null,
+    "mask_row0": "loss mask check (row 0): 2904/2971 tokens masked (-100), 67 assistant tokens in loss",
+    "hash_gate": true
+   }
+  },
+  "v5": {
+   "42": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.1464,
+    "val_oas_final": 0.2425,
+    "val_oas_code_final": 0.1469
+   },
+   "43": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.15,
+    "val_oas_final": 0.2479,
+    "val_oas_code_final": 0.1447
+   },
+   "44": {
+    "steps": 480,
+    "minutes": 56.1,
+    "train_loss": 0.1483,
+    "val_oas_final": 0.2535,
+    "val_oas_code_final": 0.1404
+   }
+  }
+ },
+ "config_v7": {
+  "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+  "max_seq_len": 4096,
+  "lora_r": 16,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "target_modules": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj",
+   "gate_proj",
+   "up_proj",
+   "down_proj"
+  ],
+  "epochs": 3,
+  "lr": 0.0002,
+  "batch": 2,
+  "grad_acc": 4,
+  "warmup_steps": 10,
+  "weight_decay": 0.01,
+  "lr_scheduler": "cosine",
+  "save_steps": 30,
+  "eval_steps": 30,
+  "eval_max_new_tokens": 256,
+  "eval_batch": 8,
+  "prompt_version": "policy-label-v3.0.1",
+  "prompt_file": "policy_label_v3.0.1.md",
+  "changed_vs_v5": {
+   "data": "data-v5 -> data-v7 (training labels/rows only; see data_v7_hashes.json)"
+  },
+  "data": "v7",
+  "seed": 42,
+  "train_file": "train_sft_v7.jsonl",
+  "val_file": "val_sft_v7.jsonl",
+  "tag": "lora_v7_s42_final"
+ },
+ "run_log_marks": [
+  "=== 2026-11-07T07:37:40+00:00 run_v7 start pod=kufx154dteqn1b BASE=/workspace-2/blade_lora_v3 SEEDS=[42 43 44] STOP_POD=1",
+  "=== 2026-11-07T07:37:40+00:00 auto-stop armed",
+  "=== 2026-11-07T07:37:40+00:00 0/6 hashes",
+  "=== 2026-11-07T07:37:40+00:00 1/6 environment",
+  "=== 2026-11-07T07:39:42+00:00 2/6 preflight",
+  "=== 2026-11-07T07:40:24+00:00 3/6 seed 42",
+  "=== 2026-11-07T07:40:24+00:00 seed 42: train + eval (resumable)",
+  "=== 2026-11-07T08:14:15+00:00 seed 42 ok",
+  "=== 2026-11-07T08:14:24+00:00 4/6 seed 43",
+  "=== 2026-11-07T08:14:24+00:00 seed 43: train + eval (resumable)",
+  "=== 2026-11-07T08:48:17+00:00 seed 43 ok",
+  "=== 2026-11-07T08:48:25+00:00 5/6 seed 44",
+  "=== 2026-11-07T08:48:25+00:00 seed 44: train + eval (resumable)",
+  "=== 2026-11-07T09:22:11+00:00 seed 44 ok",
+  "=== 2026-11-07T09:22:20+00:00 6/6 final archive",
+  "=== 2026-11-07T09:22:20+00:00 final archive"
+ ],
+ "files": {
+  "zip_sha256": "283d2349227fc59204e88f4cfdfc46e8d8140f9fab42c2a46b17d35c69b6745b",
+  "sums": [
+   "9dc03740ab13352e18ff955ad92f40ab0b1dfc4c808481082261621f4c2560ff  blade_v7_lora_v7_s42_adapter.tar.gz",
+   "5512d97a386b630ffcb3ac2eb5bdd033dc1f29a3d243067ed40e3d255f830842  blade_v7_lora_v7_s42_results.tar.gz",
+   "850793b29a2644460a0904cdfd2afeb8a38e6556b41a49b939976ca537989a45  blade_v7_lora_v7_s43_adapter.tar.gz",
+   "515528c1a33047545f3b50dde38e08217f21f57c6ab7cc79ca8e37b7f310a6ab  blade_v7_lora_v7_s43_results.tar.gz",
+   "63d842ed56a60c443374196528896e1b4fcea2a9f04b52a57a2f0ae2f75f8e95  blade_v7_lora_v7_s44_adapter.tar.gz",
+   "510d2466dfa7fc7d97c25c43bbfc091378959dffb4bf543343ed7671c225363f  blade_v7_lora_v7_s44_results.tar.gz",
+   "c82cb1c06d6d72d090db5b8becc2dfa6323a2d6ed6fa2a676e982805e40b7efa  blade_v7_all_results.tar.gz"
+  ],
+  "pred_sha256": {
+   "lora_v7_s42_oas_code": "53db99314b1e0bb6a4f9953c975a12c405d18747c9bc4400da1501d3cc5e3c8a",
+   "lora_v7_s42_oas": "730864411f733c459951df6b81f1e480c4f409f7251bc32840a88c5b1b00ed78",
+   "lora_v7_s43_oas_code": "c8a81b6011013e8080ed38fd396c3cad1d0c9dbdf131892a4df4aa60ee4b07ea",
+   "lora_v7_s43_oas": "14f03d3c4a15d6554d9b5b0eddaccef57294d63773c657224d1cab93fdc91de3",
+   "lora_v7_s44_oas_code": "999456ed5e25a8cbf97654a9b2d2e53c5b50b58560157b31a7619ca6d0256fd4",
+   "lora_v7_s44_oas": "5a5fc8131303666e7260abc6e4f954732876dc86663cc8314a132647e96c368a"
+  }
+ }
+}

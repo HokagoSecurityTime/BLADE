@@ -1,0 +1,18 @@
+{
+  "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+  "prompt_tokens": 2763,
+  "output_tokens": 85,
+  "parsed": {
+    "label": "public",
+    "confidence": 0.9,
+    "rationale": "description: \uc124\uba85\uacfc \ucf54\ub4dc\uac00 \uc5c6\uc73c\uba70, path\uc640 summary\ub9cc \uc788\ub294 \uac83\uc73c\ub85c \ubcf4\uc544 \ub204\uad6c\ub098 \uc811\uadfc \uac00\ub2a5\ud55c \uacf5\uac1c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\ub85c \ud310\ub2e8; \ud310\ub2e8: \uc811\uadfc \uc870\uac74\uc774 \uba85\uc2dc\ub418\uc5b4 \uc788\uc9c0 \uc54a\uace0, \uc778\uc99d\uc774\ub098 \ud2b9\uc815 \uc5ed\ud560 \uc694\uad6c\uc0ac\ud56d\uc774 \uc5c6\uc73c\ubbc0\ub85c public \uc120\ud0dd",
+    "evidence_fields": [
+      "path",
+      "summary"
+    ]
+  },
+  "gpu_memory": {
+    "peak_allocated_gib": 10.4,
+    "peak_reserved_gib": 10.64
+  }
+}

@@ -1,0 +1,1177 @@
+{
+  "started_utc": "2026-11-10T12:46:41Z",
+  "n": 20,
+  "seerr": "v3.5.1 (ghcr.io/seerr-team/seerr:v3.5.1, 564bfb08)",
+  "model": "blade-qwen-lora-v7",
+  "min_confidence": "0.9",
+  "total": {
+    "n": 560,
+    "TP": 220,
+    "FN": 40,
+    "FP": 40,
+    "TN": 260,
+    "errors": 0,
+    "detection_rate": 0.8461538461538461,
+    "false_positive_rate": 0.13333333333333333,
+    "p50_ms": 8.685700129717588,
+    "p95_ms": 33.76600006595254
+  },
+  "by_label": {
+    "manual_review_required": {
+      "n": 60,
+      "TP": 20,
+      "FN": 20,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "p50_ms": 8.406000211834908,
+      "p95_ms": 10.58429991826415,
+      "normal": 20,
+      "attack": 40
+    },
+    "owner_match": {
+      "n": 60,
+      "TP": 40,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 1.344399992376566,
+      "p95_ms": 14.707500115036964,
+      "normal": 20,
+      "attack": 40
+    },
+    "owner_or_admin": {
+      "n": 320,
+      "TP": 140,
+      "FN": 0,
+      "FP": 0,
+      "TN": 180,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 10.945599991828203,
+      "p95_ms": 43.06640010327101,
+      "normal": 180,
+      "attack": 140
+    },
+    "role_required": {
+      "n": 120,
+      "TP": 20,
+      "FN": 20,
+      "FP": 40,
+      "TN": 40,
+      "errors": 0,
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.5,
+      "p50_ms": 3.862100187689066,
+      "p95_ms": 27.9534999281168,
+      "normal": 80,
+      "attack": 40
+    }
+  },
+  "by_endpoint": {
+    "DELETE /api/v1/issue/{issueId}": {
+      "predicted": "owner_or_admin",
+      "n": 40,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 3.2734000124037266,
+      "p95_ms": 25.106700137257576
+    },
+    "DELETE /api/v1/request/{requestId}": {
+      "predicted": "owner_or_admin",
+      "n": 40,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 3.2040998339653015,
+      "p95_ms": 46.71090003103018
+    },
+    "GET /api/v1/issue/{issueId}": {
+      "predicted": "owner_or_admin",
+      "n": 60,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 40,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 11.181400157511234,
+      "p95_ms": 15.108699910342693
+    },
+    "GET /api/v1/request/{requestId}": {
+      "predicted": "owner_or_admin",
+      "n": 80,
+      "TP": 40,
+      "FN": 0,
+      "FP": 0,
+      "TN": 40,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 4.506300203502178,
+      "p95_ms": 19.194799941033125
+    },
+    "GET /api/v1/settings/main": {
+      "predicted": "manual_review_required",
+      "n": 60,
+      "TP": 20,
+      "FN": 20,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 0.5,
+      "false_positive_rate": 0.0,
+      "p50_ms": 8.406000211834908,
+      "p95_ms": 10.58429991826415
+    },
+    "GET /api/v1/user/{userId}": {
+      "predicted": "role_required",
+      "n": 80,
+      "TP": 20,
+      "FN": 0,
+      "FP": 40,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.6666666666666666,
+      "p50_ms": 2.267099916934967,
+      "p95_ms": 13.437699992209673
+    },
+    "GET /api/v1/user/{userId}/quota": {
+      "predicted": "owner_or_admin",
+      "n": 60,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 40,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 10.923100169748068,
+      "p95_ms": 13.068199623376131
+    },
+    "POST /api/v1/issue/{issueId}/comment": {
+      "predicted": "owner_or_admin",
+      "n": 40,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 3.7396997213363647,
+      "p95_ms": 53.71969984844327
+    },
+    "PUT /api/v1/issueComment/{commentId}": {
+      "predicted": "owner_match",
+      "n": 60,
+      "TP": 40,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 1.344399992376566,
+      "p95_ms": 14.707500115036964
+    },
+    "PUT /api/v1/request/{requestId}": {
+      "predicted": "role_required",
+      "n": 40,
+      "TP": 0,
+      "FN": 20,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": 0.0,
+      "false_positive_rate": 0.0,
+      "p50_ms": 19.313099794089794,
+      "p95_ms": 43.811799958348274
+    }
+  },
+  "by_case": [
+    {
+      "endpoint": "GET /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 요청 조회",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 17.321000341326,
+      "p95_ms": 24.58290010690689,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자가 타인 요청 조회(MANAGE_REQUESTS)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 14.804700389504433,
+      "p95_ms": 17.704199999570847,
+      "verdicts": [
+        [
+          "PASS",
+          "admin_bypass"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 요청 조회",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 2.054200042039156,
+      "p95_ms": 2.997699659317732,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "anonymous",
+      "note": "토큰 없음",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.8643997609615326,
+      "p95_ms": 2.382300328463316,
+      "verdicts": [
+        [
+          "BLOCK",
+          "no_token"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        401
+      ],
+      "shim_statuses": [
+        401
+      ]
+    },
+    {
+      "endpoint": "PUT /api/v1/request/{requestId}",
+      "predicted": "role_required",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자가 요청 수정(MANAGE_REQUESTS)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 24.974400177598,
+      "p95_ms": 48.67189982905984,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "PUT /api/v1/request/{requestId}",
+      "predicted": "role_required",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 요청 수정",
+      "should_block": true,
+      "n": 20,
+      "TP": 0,
+      "FN": 20,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 0.0,
+      "false_positive_rate": null,
+      "p50_ms": 13.64599959924817,
+      "p95_ms": 16.53630007058382,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "DELETE /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 PENDING 요청 삭제(요청마다 다른 대상)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 30.65870003774762,
+      "p95_ms": 47.77440009638667,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        204
+      ],
+      "seerr_direct_statuses": [
+        204
+      ],
+      "shim_statuses": [
+        204
+      ]
+    },
+    {
+      "endpoint": "DELETE /api/v1/request/{requestId}",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 요청 삭제",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.0618995875120163,
+      "p95_ms": 1.7829998396337032,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        401
+      ],
+      "shim_statuses": [
+        401
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/issue/{issueId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 이슈 조회",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 13.360700104385614,
+      "p95_ms": 16.247699968516827,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/issue/{issueId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자가 타인 이슈 조회(MANAGE_ISSUES)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 11.590700130909681,
+      "p95_ms": 13.546400237828493,
+      "verdicts": [
+        [
+          "PASS",
+          "admin_bypass"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/issue/{issueId}",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 이슈 조회",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 2.3622000589966774,
+      "p95_ms": 3.277500160038471,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "POST /api/v1/issue/{issueId}/comment",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 이슈에 댓글",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 44.20700017362833,
+      "p95_ms": 65.28969993814826,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "POST /api/v1/issue/{issueId}/comment",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 이슈에 댓글",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.2892000377178192,
+      "p95_ms": 2.3678001016378403,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "DELETE /api/v1/issue/{issueId}",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 이슈 삭제(댓글 1개, 요청마다 다른 대상)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 21.112199872732162,
+      "p95_ms": 26.948600076138973,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        204
+      ],
+      "seerr_direct_statuses": [
+        204
+      ],
+      "shim_statuses": [
+        204
+      ]
+    },
+    {
+      "endpoint": "DELETE /api/v1/issue/{issueId}",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 이슈 삭제",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.2095998972654343,
+      "p95_ms": 1.8319003283977509,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        401
+      ],
+      "shim_statuses": [
+        401
+      ]
+    },
+    {
+      "endpoint": "PUT /api/v1/issueComment/{commentId}",
+      "predicted": "owner_match",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 댓글 수정",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 13.36369989439845,
+      "p95_ms": 15.453199855983257,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "PUT /api/v1/issueComment/{commentId}",
+      "predicted": "owner_match",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 댓글 수정",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.107699703425169,
+      "p95_ms": 2.2869999520480633,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "PUT /api/v1/issueComment/{commentId}",
+      "predicted": "owner_match",
+      "kind": "attack",
+      "actor": "admin",
+      "note": "관리자가 타인 댓글 수정(Seerr는 작성자만 허용)",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.0327999480068684,
+      "p95_ms": 1.7380001954734325,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}",
+      "predicted": "role_required",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 프로필",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 20,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 1.0,
+      "p50_ms": 2.267099916934967,
+      "p95_ms": 2.6299995370209217,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}",
+      "predicted": "role_required",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자가 타인 프로필(MANAGE_USERS)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 11.958799790591002,
+      "p95_ms": 15.161000192165375,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}",
+      "predicted": "role_required",
+      "kind": "normal",
+      "actor": "bob",
+      "note": "타인 프로필(Seerr는 로그인 사용자에게 필터된 공개 필드 허용)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 20,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 1.0,
+      "p50_ms": 2.1082996390759945,
+      "p95_ms": 2.8106002137064934,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}",
+      "predicted": "role_required",
+      "kind": "attack",
+      "actor": "anonymous",
+      "note": "토큰 없음",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.952899619936943,
+      "p95_ms": 2.496100030839443,
+      "verdicts": [
+        [
+          "BLOCK",
+          "no_token"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        401
+      ],
+      "shim_statuses": [
+        401
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}/quota",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "alice",
+      "note": "본인 쿼터",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 11.499200016260147,
+      "p95_ms": 12.715899851173162,
+      "verdicts": [
+        [
+          "PASS",
+          "policy_matched"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}/quota",
+      "predicted": "owner_or_admin",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자가 타인 쿼터(MANAGE_USERS∧MANAGE_REQUESTS)",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 11.55199995264411,
+      "p95_ms": 13.32499971613288,
+      "verdicts": [
+        [
+          "PASS",
+          "admin_bypass"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/user/{userId}/quota",
+      "predicted": "owner_or_admin",
+      "kind": "attack",
+      "actor": "bob",
+      "note": "타인(alice) 쿼터",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 2.442600205540657,
+      "p95_ms": 2.929399721324444,
+      "verdicts": [
+        [
+          "BLOCK",
+          "policy_mismatch"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/settings/main",
+      "predicted": "manual_review_required",
+      "kind": "normal",
+      "actor": "admin",
+      "note": "관리자 설정 조회",
+      "should_block": false,
+      "n": 20,
+      "TP": 0,
+      "FN": 0,
+      "FP": 0,
+      "TN": 20,
+      "errors": 0,
+      "detection_rate": null,
+      "false_positive_rate": 0.0,
+      "p50_ms": 8.981300052255392,
+      "p95_ms": 10.86059957742691,
+      "verdicts": [
+        [
+          "OBSERVE",
+          "manual_review_required"
+        ]
+      ],
+      "statuses": [
+        200
+      ],
+      "seerr_direct_statuses": [
+        200
+      ],
+      "shim_statuses": [
+        200
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/settings/main",
+      "predicted": "manual_review_required",
+      "kind": "attack",
+      "actor": "alice",
+      "note": "일반 사용자가 설정 조회",
+      "should_block": true,
+      "n": 20,
+      "TP": 0,
+      "FN": 20,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 0.0,
+      "false_positive_rate": null,
+      "p50_ms": 8.572900202125311,
+      "p95_ms": 10.58429991826415,
+      "verdicts": [
+        [
+          "OBSERVE",
+          "manual_review_required"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        403
+      ],
+      "shim_statuses": [
+        403
+      ]
+    },
+    {
+      "endpoint": "GET /api/v1/settings/main",
+      "predicted": "manual_review_required",
+      "kind": "attack",
+      "actor": "anonymous",
+      "note": "토큰 없음",
+      "should_block": true,
+      "n": 20,
+      "TP": 20,
+      "FN": 0,
+      "FP": 0,
+      "TN": 0,
+      "errors": 0,
+      "detection_rate": 1.0,
+      "false_positive_rate": null,
+      "p50_ms": 1.9694999791681767,
+      "p95_ms": 2.596400212496519,
+      "verdicts": [
+        [
+          "BLOCK",
+          "no_token"
+        ]
+      ],
+      "statuses": [
+        403
+      ],
+      "seerr_direct_statuses": [
+        401
+      ],
+      "shim_statuses": [
+        401
+      ]
+    }
+  ],
+  "latency": {
+    "proxy": {
+      "p50_ms": 8.685700129717588,
+      "p95_ms": 33.76600006595254,
+      "n": 560,
+      "errors": 0,
+      "non2xx_normal": 40
+    },
+    "shim": {
+      "p50_ms": 9.485299699008465,
+      "p95_ms": 38.312300108373165,
+      "n": 560,
+      "errors": 0,
+      "non2xx_normal": 0
+    },
+    "direct": {
+      "p50_ms": 8.431300055235624,
+      "p95_ms": 24.372400250285864,
+      "n": 560,
+      "errors": 0,
+      "non2xx_normal": 0
+    }
+  },
+  "oracle": {
+    "direct": {
+      "n": 560,
+      "agree": 560,
+      "rate": 1.0
+    },
+    "shim": {
+      "n": 560,
+      "agree": 560,
+      "rate": 1.0
+    }
+  },
+  "notes": [
+    "should_block is the case design (attack = other user's object / anonymous / non-admin on admin data), fixed before BLADE ran; never from responses.",
+    "Policy labels are LoRA v7 output; no human-decided label is used anywhere in this harness.",
+    "BLADE verdict = detection log verdict; BLOCK = blocked, PASS/OBSERVE = passed (OBSERVE on an attack = FN).",
+    "GET /user/{userId} by another logged-in user is normal: Seerr returns a filtered public profile by design.",
+    "Chains: proxy = client->BLADE->shim->Seerr, shim = client->shim->Seerr (BLADE JWT), direct = client->Seerr (X-API-Key + X-API-User)."
+  ]
+}

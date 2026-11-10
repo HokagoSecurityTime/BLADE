@@ -1,0 +1,1706 @@
+[
+ {
+  "condition": "oas",
+  "model": "lora_v5_s42_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_lora_v5_s42_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.4008,
+  "accuracy": 0.5159,
+  "manual_ratio": 0.2544,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.8333,
+    "recall": 0.5263,
+    "f1": 0.6452
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.5482,
+    "recall": 0.8198,
+    "f1": 0.657
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.2857,
+    "recall": 0.0606,
+    "f1": 0.1
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7692,
+    "recall": 0.5882,
+    "f1": 0.6667
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.3194,
+    "recall": 0.3538,
+    "f1": 0.3358
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.4713
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.5507
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.5965
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 91,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 0,
+    "manual_review_required": 19,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 19,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 0,
+    "manual_review_required": 10,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 2,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 20,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 19,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 2,
+    "role_required": 35,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 0,
+    "manual_review_required": 23,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas",
+  "model": "lora_v6d_s42_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_lora_v6d_s42_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.381,
+  "accuracy": 0.53,
+  "manual_ratio": 0.1519,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.625,
+    "recall": 0.5263,
+    "f1": 0.5714
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.541,
+    "recall": 0.8919,
+    "f1": 0.6735
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7419,
+    "recall": 0.6765,
+    "f1": 0.7077
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.4186,
+    "recall": 0.2769,
+    "f1": 0.3333
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.4841
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.5942
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.5789
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 1,
+    "role_required": 99,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 1,
+    "manual_review_required": 7,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 25,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 0,
+    "manual_review_required": 6,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 5,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 23,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 18,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 5,
+    "role_required": 36,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 0,
+    "manual_review_required": 18,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v5_s42_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_code_lora_v5_s42_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.6661,
+  "accuracy": 0.689,
+  "manual_ratio": 0.1625,
+  "output_errors": 1,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.9333,
+    "recall": 0.7368,
+    "f1": 0.8235
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8667,
+    "recall": 0.8198,
+    "f1": 0.8426
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.4528,
+    "recall": 0.7273,
+    "f1": 0.5581
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7027,
+    "recall": 0.7647,
+    "f1": 0.7324
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.5,
+    "recall": 0.619,
+    "f1": 0.5532
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.587,
+    "recall": 0.4154,
+    "f1": 0.4865
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6433
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7536
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7368
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 14,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 5,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 91,
+    "membership_required": 8,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 4,
+    "manual_review_required": 6,
+    "output_error": 1
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 24,
+    "tenant_match": 0,
+    "owner_match": 5,
+    "owner_or_admin": 1,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 26,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 4,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 13,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 1,
+    "role_required": 10,
+    "membership_required": 14,
+    "tenant_match": 0,
+    "owner_match": 5,
+    "owner_or_admin": 8,
+    "manual_review_required": 27,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v6d_s42_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_code_lora_v6d_s42_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.687,
+  "accuracy": 0.6855,
+  "manual_ratio": 0.1555,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 1.0,
+    "recall": 0.8421,
+    "f1": 0.9143
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.871,
+    "recall": 0.7297,
+    "f1": 0.7941
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.4516,
+    "recall": 0.8485,
+    "f1": 0.5895
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7647,
+    "recall": 0.7647,
+    "f1": 0.7647
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.4412,
+    "recall": 0.7143,
+    "f1": 0.5455
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.6364,
+    "recall": 0.4308,
+    "f1": 0.5138
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6433
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7246
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7544
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 16,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 81,
+    "membership_required": 13,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 7,
+    "manual_review_required": 8,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 28,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 1,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 26,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 3,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 15,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 9,
+    "membership_required": 14,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 11,
+    "manual_review_required": 28,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas",
+  "model": "lora_v5_s43_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_lora_v5_s43_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.4242,
+  "accuracy": 0.4912,
+  "manual_ratio": 0.371,
+  "output_errors": 1,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.5556,
+    "recall": 0.5263,
+    "f1": 0.5405
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.6571,
+    "recall": 0.6216,
+    "f1": 0.6389
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.2857,
+    "recall": 0.1212,
+    "f1": 0.1702
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.6486,
+    "recall": 0.7059,
+    "f1": 0.6761
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.6667,
+    "recall": 0.0952,
+    "f1": 0.1667
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.2857,
+    "recall": 0.4615,
+    "f1": 0.3529
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.3885
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.6377
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.5965
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 1,
+    "role_required": 69,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 0,
+    "manual_review_required": 38,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 1,
+    "role_required": 3,
+    "membership_required": 4,
+    "tenant_match": 0,
+    "owner_match": 7,
+    "owner_or_admin": 0,
+    "manual_review_required": 18,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 3,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 24,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 1
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 10,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 2,
+    "manual_review_required": 7,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 6,
+    "role_required": 20,
+    "membership_required": 4,
+    "tenant_match": 0,
+    "owner_match": 4,
+    "owner_or_admin": 1,
+    "manual_review_required": 30,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas",
+  "model": "lora_v6d_s43_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_lora_v6d_s43_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.4382,
+  "accuracy": 0.5088,
+  "manual_ratio": 0.3604,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.4545,
+    "recall": 0.5263,
+    "f1": 0.4878
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.6604,
+    "recall": 0.6306,
+    "f1": 0.6452
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.2308,
+    "recall": 0.0909,
+    "f1": 0.1304
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7027,
+    "recall": 0.7647,
+    "f1": 0.7324
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 1.0,
+    "recall": 0.1429,
+    "f1": 0.25
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.3137,
+    "recall": 0.4923,
+    "f1": 0.3832
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.3885
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.6377
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.6842
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 1,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 8,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 5,
+    "role_required": 70,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 34,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 1,
+    "role_required": 4,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 4,
+    "owner_or_admin": 0,
+    "manual_review_required": 21,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 3,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 26,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 10,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 3,
+    "manual_review_required": 5,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 6,
+    "role_required": 18,
+    "membership_required": 4,
+    "tenant_match": 0,
+    "owner_match": 5,
+    "owner_or_admin": 0,
+    "manual_review_required": 32,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v5_s43_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_code_lora_v5_s43_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.6836,
+  "accuracy": 0.6855,
+  "manual_ratio": 0.1519,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 1.0,
+    "recall": 0.8421,
+    "f1": 0.9143
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8384,
+    "recall": 0.7477,
+    "f1": 0.7905
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.5185,
+    "recall": 0.8485,
+    "f1": 0.6437
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.75,
+    "recall": 0.7941,
+    "f1": 0.7714
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.4,
+    "recall": 0.6667,
+    "f1": 0.5
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.6047,
+    "recall": 0.4,
+    "f1": 0.4815
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6688
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7681
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.6316
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 16,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 83,
+    "membership_required": 8,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 7,
+    "manual_review_required": 11,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 28,
+    "tenant_match": 0,
+    "owner_match": 4,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 27,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 6,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 14,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 10,
+    "membership_required": 12,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 14,
+    "manual_review_required": 26,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v6d_s43_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_code_lora_v6d_s43_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.7348,
+  "accuracy": 0.7314,
+  "manual_ratio": 0.2297,
+  "output_errors": 1,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.9444,
+    "recall": 0.8947,
+    "f1": 0.9189
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8925,
+    "recall": 0.7477,
+    "f1": 0.8137
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.6,
+    "recall": 0.7273,
+    "f1": 0.6575
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7105,
+    "recall": 0.7941,
+    "f1": 0.75
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.5714,
+    "recall": 0.7619,
+    "f1": 0.6531
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.6154,
+    "recall": 0.6154,
+    "f1": 0.6154
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6815
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7971
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7895
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 17,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 83,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 3,
+    "manual_review_required": 17,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 24,
+    "tenant_match": 0,
+    "owner_match": 6,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 27,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 3,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 16,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 1,
+    "role_required": 7,
+    "membership_required": 4,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 9,
+    "manual_review_required": 40,
+    "output_error": 1
+   }
+  }
+ },
+ {
+  "condition": "oas",
+  "model": "lora_v5_s44_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_lora_v5_s44_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.3821,
+  "accuracy": 0.5371,
+  "manual_ratio": 0.1625,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.7692,
+    "recall": 0.5263,
+    "f1": 0.625
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.5276,
+    "recall": 0.9459,
+    "f1": 0.6774
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.85,
+    "recall": 0.5,
+    "f1": 0.6296
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.4348,
+    "recall": 0.3077,
+    "f1": 0.3604
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.4713
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.6377
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.5965
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 105,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 0,
+    "manual_review_required": 4,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 27,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 0,
+    "manual_review_required": 4,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 8,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 17,
+    "owner_or_admin": 0,
+    "manual_review_required": 6,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 18,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 3,
+    "role_required": 41,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 20,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas",
+  "model": "lora_v6d_s44_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_lora_v6d_s44_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.3789,
+  "accuracy": 0.4947,
+  "manual_ratio": 0.2261,
+  "output_errors": 0,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.7143,
+    "recall": 0.5263,
+    "f1": 0.6061
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.5057,
+    "recall": 0.8018,
+    "f1": 0.6202
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.913,
+    "recall": 0.6176,
+    "f1": 0.7368
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.3125,
+    "recall": 0.3077,
+    "f1": 0.3101
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.4204
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.5942
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.5789
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 10,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 89,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 21,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 24,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 0,
+    "manual_review_required": 7,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 6,
+    "membership_required": 3,
+    "tenant_match": 0,
+    "owner_match": 21,
+    "owner_or_admin": 0,
+    "manual_review_required": 4,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 18,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 4,
+    "role_required": 39,
+    "membership_required": 2,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 20,
+    "output_error": 0
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v5_s44_final",
+  "group": "lora_v5",
+  "file": "v5test_predictions_oas_code_lora_v5_s44_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.6985,
+  "accuracy": 0.6996,
+  "manual_ratio": 0.1837,
+  "output_errors": 2,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 1.0,
+    "recall": 0.8947,
+    "f1": 0.9444
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8614,
+    "recall": 0.7838,
+    "f1": 0.8208
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.4889,
+    "recall": 0.6667,
+    "f1": 0.5641
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7879,
+    "recall": 0.7647,
+    "f1": 0.7761
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.4545,
+    "recall": 0.7143,
+    "f1": 0.5556
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.5962,
+    "recall": 0.4769,
+    "f1": 0.5299
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6561
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7536
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7544
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 17,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 87,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 7,
+    "manual_review_required": 9,
+    "output_error": 1
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 22,
+    "tenant_match": 0,
+    "owner_match": 4,
+    "owner_or_admin": 0,
+    "manual_review_required": 7,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 6,
+    "tenant_match": 0,
+    "owner_match": 26,
+    "owner_or_admin": 0,
+    "manual_review_required": 2,
+    "output_error": 0
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 4,
+    "membership_required": 1,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 15,
+    "manual_review_required": 1,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 0,
+    "role_required": 10,
+    "membership_required": 10,
+    "tenant_match": 0,
+    "owner_match": 2,
+    "owner_or_admin": 11,
+    "manual_review_required": 31,
+    "output_error": 1
+   }
+  }
+ },
+ {
+  "condition": "oas_code",
+  "model": "lora_v6d_s44_final",
+  "group": "lora_v6d",
+  "file": "v5test_predictions_oas_code_lora_v6d_s44_final.jsonl",
+  "records": 283,
+  "macro_f1": 0.6605,
+  "accuracy": 0.6749,
+  "manual_ratio": 0.2438,
+  "output_errors": 1,
+  "meta_phrase_outputs": 0,
+  "per_label": {
+   "public": {
+    "support": 19,
+    "precision": 0.9412,
+    "recall": 0.8421,
+    "f1": 0.8889
+   },
+   "role_required": {
+    "support": 111,
+    "precision": 0.8529,
+    "recall": 0.7838,
+    "f1": 0.8169
+   },
+   "membership_required": {
+    "support": 33,
+    "precision": 0.5152,
+    "recall": 0.5152,
+    "f1": 0.5152
+   },
+   "tenant_match": {
+    "support": 0,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0
+   },
+   "owner_match": {
+    "support": 34,
+    "precision": 0.7297,
+    "recall": 0.7941,
+    "f1": 0.7606
+   },
+   "owner_or_admin": {
+    "support": 21,
+    "precision": 0.4583,
+    "recall": 0.5238,
+    "f1": 0.4889
+   },
+   "manual_review_required": {
+    "support": 65,
+    "precision": 0.4783,
+    "recall": 0.5077,
+    "f1": 0.4925
+   }
+  },
+  "per_project": {
+   "rocketchat": {
+    "n": 157,
+    "accuracy": 0.6178
+   },
+   "ghost": {
+    "n": 69,
+    "accuracy": 0.7681
+   },
+   "umami": {
+    "n": 57,
+    "accuracy": 0.7193
+   }
+  },
+  "confusion": {
+   "public": {
+    "public": 16,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 3,
+    "output_error": 0
+   },
+   "role_required": {
+    "public": 0,
+    "role_required": 87,
+    "membership_required": 4,
+    "tenant_match": 0,
+    "owner_match": 1,
+    "owner_or_admin": 3,
+    "manual_review_required": 16,
+    "output_error": 0
+   },
+   "membership_required": {
+    "public": 0,
+    "role_required": 1,
+    "membership_required": 17,
+    "tenant_match": 0,
+    "owner_match": 6,
+    "owner_or_admin": 0,
+    "manual_review_required": 9,
+    "output_error": 0
+   },
+   "tenant_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 0,
+    "manual_review_required": 0,
+    "output_error": 0
+   },
+   "owner_match": {
+    "public": 0,
+    "role_required": 0,
+    "membership_required": 5,
+    "tenant_match": 0,
+    "owner_match": 27,
+    "owner_or_admin": 0,
+    "manual_review_required": 1,
+    "output_error": 1
+   },
+   "owner_or_admin": {
+    "public": 0,
+    "role_required": 3,
+    "membership_required": 0,
+    "tenant_match": 0,
+    "owner_match": 0,
+    "owner_or_admin": 11,
+    "manual_review_required": 7,
+    "output_error": 0
+   },
+   "manual_review_required": {
+    "public": 1,
+    "role_required": 11,
+    "membership_required": 7,
+    "tenant_match": 0,
+    "owner_match": 3,
+    "owner_or_admin": 10,
+    "manual_review_required": 33,
+    "output_error": 0
+   }
+  }
+ }
+]

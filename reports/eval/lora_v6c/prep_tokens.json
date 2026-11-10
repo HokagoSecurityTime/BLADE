@@ -1,0 +1,48 @@
+{
+ "train_sft_v5.jsonl": {
+  "n": 1274,
+  "mean_14B": 3286.9,
+  "max_14B": 4085,
+  "over4096_14B": 0,
+  "identical_to_7B": true,
+  "stored_tokens_max": 4085,
+  "stored_eq_14B": false
+ },
+ "val_sft_v5.jsonl": {
+  "n": 179,
+  "mean_14B": 3283.0,
+  "max_14B": 4015,
+  "over4096_14B": 0,
+  "identical_to_7B": true,
+  "stored_tokens_max": 4015,
+  "stored_eq_14B": true
+ },
+ "test_v30_inputs.jsonl:oas_user": {
+  "n": 269,
+  "mean_14B": 2816.8,
+  "max_14B": 2976,
+  "over4096_14B": 0,
+  "identical_to_7B": true
+ },
+ "test_v30_inputs.jsonl:oas_code_user": {
+  "n": 265,
+  "mean_14B": 3038.7,
+  "max_14B": 3841,
+  "over4096_14B": 0,
+  "identical_to_7B": true
+ },
+ "test_v5_inputs.jsonl:oas_user": {
+  "n": 283,
+  "mean_14B": 2816.6,
+  "max_14B": 2843,
+  "over4096_14B": 0,
+  "identical_to_7B": true
+ },
+ "test_v5_inputs.jsonl:oas_code_user": {
+  "n": 283,
+  "mean_14B": 3491.2,
+  "max_14B": 4051,
+  "over4096_14B": 0,
+  "identical_to_7B": true
+ }
+}

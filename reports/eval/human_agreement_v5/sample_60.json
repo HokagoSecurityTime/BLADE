@@ -1,0 +1,450 @@
+{
+ "test_v5_sha256": "7b8e4a940967ec474e0d5dbf6dcdbd6b7e04be439599c2a684664d6b9393fd9c",
+ "n_test": 283,
+ "n_sample": 60,
+ "seed": 42,
+ "rule": "label support proportional (largest remainder); support < 10 -> min 5",
+ "support": {
+  "manual_review_required": 65,
+  "owner_match": 34,
+  "owner_or_admin": 21,
+  "public": 19,
+  "role_required": 111,
+  "membership_required": 33
+ },
+ "allocation": {
+  "manual_review_required": 14,
+  "membership_required": 7,
+  "owner_match": 7,
+  "owner_or_admin": 4,
+  "public": 4,
+  "role_required": 24
+ },
+ "by_project": {
+  "ghost": 18,
+  "rocketchat": 34,
+  "umami": 8
+ },
+ "ids": [
+  {
+   "id": "v5t-ghost-0771ec6e22",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/pages/{id}/",
+   "label": "owner_or_admin"
+  },
+  {
+   "id": "v5t-ghost-11643c69d1",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/users/{id}/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-20b1c48d88",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/emails/{id}/retry/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-2b08fa9772",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/members/{id}/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-3b54456064",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/tags/{id}/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-4150fd0cea",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/posts/{id}/",
+   "label": "owner_or_admin"
+  },
+  {
+   "id": "v5t-ghost-4b5706fd70",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/gifts/flush_reminders/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-4bc909eaec",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/themes/{name}/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-5577946797",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/authentication/reset/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-7b3b3cdfaa",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/invites/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-833ad427ba",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/images/upload/",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-ghost-924636cc9d",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-ghost-a1ea7c67cd",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/config/",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-ghost-a322c4eaaa",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/session/",
+   "label": "public"
+  },
+  {
+   "id": "v5t-ghost-bae2ea5162",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/site/",
+   "label": "public"
+  },
+  {
+   "id": "v5t-ghost-c846744ab7",
+   "project": "ghost",
+   "method": "DELETE",
+   "path": "/ghost/api/admin/integrations/{id}/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-f2b1a7f14a",
+   "project": "ghost",
+   "method": "POST",
+   "path": "/ghost/api/admin/snippets/",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-ghost-ffeb0a64b6",
+   "project": "ghost",
+   "method": "PUT",
+   "path": "/ghost/api/admin/users/{id}/token/",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-0398a2f985",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.membersOrderedByRole",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-0779d29666",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.close",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-0780c8e386",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addOwner",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-09c0e4be92",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.invite",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-0a75eb9b8b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/channels.addModerator",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-0d896bf7fc",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setType",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-23806b2325",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/oauth-apps.get",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-23a530da4b",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetAvatar",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-26b775fea8",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/integrations.remove",
+   "label": "owner_or_admin"
+  },
+  {
+   "id": "v5t-rocketchat-29963cbc5b",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.info",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-2f893cf343",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.files",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-3944d8594e",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/im.close",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-45a4cb83d4",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/me",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-4f43c85d68",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.updateOwnBasicInfo",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-50404e7f9f",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/info",
+   "label": "public"
+  },
+  {
+   "id": "v5t-rocketchat-52d02d65e4",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.leave",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-5b6c0ebf4d",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/oauth-apps.list",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-7440b3fddc",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.getPreferences",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-7508165c03",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.rename",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-7fef853453",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/teams.update",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-8391ad7a95",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.create",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-8dfb39edba",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/subscriptions.get",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-9d1d72179e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.listAll",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-a1a9b72abe",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.moderators",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-a41ec34093",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.list",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-a447ce62f1",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/integrations.create",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-aa6f56d2ae",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.requestDataDownload",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-rocketchat-ab6a857aaf",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetE2EKey",
+   "label": "owner_or_admin"
+  },
+  {
+   "id": "v5t-rocketchat-b1ab279e75",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.forgotPassword",
+   "label": "public"
+  },
+  {
+   "id": "v5t-rocketchat-b830163cb8",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/users.checkUsernameAvailability",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-d83dae7c4e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.roles",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-rocketchat-ec189eb0b4",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.resetRoomKey",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-rocketchat-f5874fe2eb",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/groups.online",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-rocketchat-f7c14cc85e",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.info",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-umami-05d9018016",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/stats",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-umami-404ae6243e",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/dashboard",
+   "label": "owner_match"
+  },
+  {
+   "id": "v5t-umami-8368db1fee",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/sessions",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-umami-8c869fdfb0",
+   "project": "umami",
+   "method": "POST",
+   "path": "/api/users",
+   "label": "role_required"
+  },
+  {
+   "id": "v5t-umami-b02d7575d9",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/teams/{teamId}/pixels",
+   "label": "membership_required"
+  },
+  {
+   "id": "v5t-umami-bf7e66056f",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/shares",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-umami-dd7523bace",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/share/id/{shareId}",
+   "label": "manual_review_required"
+  },
+  {
+   "id": "v5t-umami-e2207e964c",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/admin/teams",
+   "label": "role_required"
+  }
+ ]
+}

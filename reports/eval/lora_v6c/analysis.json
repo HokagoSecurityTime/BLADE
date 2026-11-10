@@ -1,0 +1,3409 @@
+{
+ "definition": "S8 LoRA v6c (base model 7B -> 14B, everything else = LoRA v5) — stage-3 analysis and report.\nReads only existing prediction files (no inference): reports/eval/lora_v6c/{lora_v6c_s42,43,44,base_qwen14b_runpod}/eval/ (retrieved from the Pod)\nand reports/eval/lora_v5/lora_v5_s*/eval/ (v5 baseline), plus the scorer outputs scores_test_v5.json / scores_test_v30.json / scores_supp.json produced\nby scripts/eval_test_v5.py, eval_v30.py (eval-def v2) and eval_v31_supp.py. Writes reports/eval/lora_v6c/analysis.json and report.md.\nPre-registered adoption criteria (AGENTS.md 작업 S8, 3-seed mean): (1) test_v5 oas_code macro-F1 >= v5 + 0.016, (2) test_v30 207 concrete precision drop <= 0.025,\n(3) test_v30 207 public misjudge (/35) mean <= 2.0. Early gate (s42 test_v5 macro-F1 > v5 s42 0.6661) was evaluated on the Pod (early_gate.json).",
+ "criteria": {
+  "macro_f1_gain": 0.016,
+  "precision_drop": 0.025,
+  "public_misjudge_max": 2.0
+ },
+ "headline": {
+  "v5": {
+   "test_v5": {
+    "macro_f1": [
+     0.6661,
+     0.6836,
+     0.6985
+    ],
+    "accuracy": [
+     0.689,
+     0.6855,
+     0.6996
+    ],
+    "manual": [
+     0.1625,
+     0.1519,
+     0.1837
+    ],
+    "errors": [
+     1,
+     0,
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.8235,
+      0.9143,
+      0.9444
+     ],
+     "role_required": [
+      0.8426,
+      0.7905,
+      0.8208
+     ],
+     "membership_required": [
+      0.5581,
+      0.6437,
+      0.5641
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7324,
+      0.7714,
+      0.7761
+     ],
+     "owner_or_admin": [
+      0.5532,
+      0.5,
+      0.5556
+     ],
+     "manual_review_required": [
+      0.4865,
+      0.4815,
+      0.5299
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.9333,
+       0.7368
+      ],
+      [
+       1.0,
+       0.8421
+      ],
+      [
+       1.0,
+       0.8947
+      ]
+     ],
+     "role_required": [
+      [
+       0.8667,
+       0.8198
+      ],
+      [
+       0.8384,
+       0.7477
+      ],
+      [
+       0.8614,
+       0.7838
+      ]
+     ],
+     "membership_required": [
+      [
+       0.4528,
+       0.7273
+      ],
+      [
+       0.5185,
+       0.8485
+      ],
+      [
+       0.4889,
+       0.6667
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.7027,
+       0.7647
+      ],
+      [
+       0.75,
+       0.7941
+      ],
+      [
+       0.7879,
+       0.7647
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.5,
+       0.619
+      ],
+      [
+       0.4,
+       0.6667
+      ],
+      [
+       0.4545,
+       0.7143
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.587,
+       0.4154
+      ],
+      [
+       0.6047,
+       0.4
+      ],
+      [
+       0.5962,
+       0.4769
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.6433,
+      0.6688,
+      0.6561
+     ],
+     "ghost": [
+      0.7536,
+      0.7681,
+      0.7536
+     ],
+     "umami": [
+      0.7368,
+      0.6316,
+      0.7544
+     ]
+    },
+    "manual_count": [
+     46,
+     43,
+     52
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.4008,
+     0.4242,
+     0.3821
+    ],
+    "accuracy": [
+     0.5159,
+     0.4912,
+     0.5371
+    ],
+    "manual": [
+     0.2544,
+     0.371,
+     0.1625
+    ],
+    "errors": [
+     0,
+     1,
+     0
+    ]
+   },
+   "test_v30_207": {
+    "macro_f1": [
+     0.3661,
+     0.386,
+     0.3711
+    ],
+    "macro_f1_265": [
+     0.6947,
+     0.6943,
+     0.7109
+    ],
+    "accuracy": [
+     0.5604,
+     0.5797,
+     0.5652
+    ],
+    "precision": [
+     0.7667,
+     0.8095,
+     0.8112
+    ],
+    "recall": [
+     0.5583,
+     0.5777,
+     0.5631
+    ],
+    "answer_rate": [
+     0.7282,
+     0.7136,
+     0.6942
+    ],
+    "manual": [
+     0.256,
+     0.2899,
+     0.2995
+    ],
+    "errors": [
+     4,
+     0,
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.6429,
+      0.6923,
+      0.5979
+     ],
+     "role_required": [
+      0.4074,
+      0.4643,
+      0.4528
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7432,
+      0.7407,
+      0.7732
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.037,
+      0.0328,
+      0.0317
+     ]
+    },
+    "public_misjudge_35": [
+     3,
+     2,
+     1
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687",
+      "d8c5cf5eb0bfbd488219"
+     ],
+     "43": [
+      "0797f5bb072770d50159",
+      "fc9dac901542ca88d688"
+     ],
+     "44": [
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7574,
+     0.7279,
+     0.7333
+    ],
+    "macro_f1_102": [
+     0.5036,
+     0.4632,
+     0.4196
+    ],
+    "precision": [
+     0.8866,
+     0.9101,
+     0.9277
+    ],
+    "manual": [
+     0.375,
+     0.4375,
+     0.4813
+    ],
+    "errors": [
+     3,
+     1,
+     0
+    ],
+    "public_misjudge": [
+     0,
+     0,
+     0
+    ]
+   },
+   "supp": {
+    "oas_code": {
+     "macro_f1": [
+      0.4725,
+      0.5149,
+      0.4677
+     ],
+     "accuracy": [
+      0.4009,
+      0.464,
+      0.3919
+     ],
+     "manual": [
+      0.2342,
+      0.1441,
+      0.2432
+     ],
+     "errors": [
+      0,
+      1,
+      1
+     ],
+     "per_label": {
+      "public": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "role_required": [
+       0.5437,
+       0.496,
+       0.4348
+      ],
+      "membership_required": [
+       0.5055,
+       0.6809,
+       0.617
+      ],
+      "tenant_match": [
+       0.1967,
+       0.2258,
+       0.2812
+      ],
+      "owner_match": [
+       0.5769,
+       0.5882,
+       0.4583
+      ],
+      "owner_or_admin": [
+       0.3137,
+       0.3556,
+       0.3158
+      ],
+      "manual_review_required": [
+       0.1707,
+       0.2581,
+       0.1667
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.443,
+       0.5823,
+       0.481
+      ],
+      "chamilo": [
+       0.3621,
+       0.3966,
+       0.3621
+      ],
+      "flowise": [
+       0.2,
+       0.2,
+       0.2
+      ],
+      "multitenant_lab": [
+       0.5,
+       0.75,
+       0.75
+      ],
+      "generic_university": [
+       0.9048,
+       0.9048,
+       0.619
+      ]
+     }
+    },
+    "oas": {
+     "macro_f1": [
+      0.2037,
+      0.2532,
+      0.317
+     ],
+     "accuracy": [
+      0.1892,
+      0.2432,
+      0.2207
+     ],
+     "manual": [
+      0.455,
+      0.455,
+      0.5631
+     ],
+     "errors": [
+      2,
+      0,
+      1
+     ],
+     "per_label": {
+      "public": [
+       0.5,
+       0.4444,
+       1.0
+      ],
+      "role_required": [
+       0.2308,
+       0.2326,
+       0.2
+      ],
+      "membership_required": [
+       0.1639,
+       0.4211,
+       0.3429
+      ],
+      "tenant_match": [
+       0.0702,
+       0.0656,
+       0.0702
+      ],
+      "owner_match": [
+       0.2623,
+       0.3,
+       0.3043
+      ],
+      "owner_or_admin": [
+       0.0,
+       0.0952,
+       0.0952
+      ],
+      "manual_review_required": [
+       0.1985,
+       0.2137,
+       0.2065
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.2785,
+       0.3671,
+       0.3291
+      ],
+      "chamilo": [
+       0.2241,
+       0.2759,
+       0.2586
+      ],
+      "flowise": [
+       0.0667,
+       0.0667,
+       0.0667
+      ],
+      "multitenant_lab": [
+       0.75,
+       0.75,
+       0.75
+      ],
+      "generic_university": [
+       0.0,
+       0.0952,
+       0.0476
+      ]
+     }
+    }
+   }
+  },
+  "v6c": {
+   "test_v5": {
+    "macro_f1": [
+     0.686,
+     0.6902,
+     0.6628
+    ],
+    "accuracy": [
+     0.7173,
+     0.7173,
+     0.6961
+    ],
+    "manual": [
+     0.1555,
+     0.1237,
+     0.1484
+    ],
+    "errors": [
+     0,
+     0,
+     0
+    ],
+    "per_label": {
+     "public": [
+      0.8125,
+      0.973,
+      0.8824
+     ],
+     "role_required": [
+      0.8634,
+      0.8761,
+      0.87
+     ],
+     "membership_required": [
+      0.6,
+      0.6047,
+      0.5814
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7429,
+      0.6944,
+      0.6944
+     ],
+     "owner_or_admin": [
+      0.5833,
+      0.5333,
+      0.5
+     ],
+     "manual_review_required": [
+      0.5138,
+      0.46,
+      0.4486
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       1.0,
+       0.6842
+      ],
+      [
+       1.0,
+       0.9474
+      ],
+      [
+       1.0,
+       0.7895
+      ]
+     ],
+     "role_required": [
+      [
+       0.8448,
+       0.8829
+      ],
+      [
+       0.8609,
+       0.8919
+      ],
+      [
+       0.8661,
+       0.8739
+      ]
+     ],
+     "membership_required": [
+      [
+       0.5106,
+       0.7273
+      ],
+      [
+       0.4906,
+       0.7879
+      ],
+      [
+       0.4717,
+       0.7576
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.7222,
+       0.7647
+      ],
+      [
+       0.6579,
+       0.7353
+      ],
+      [
+       0.6579,
+       0.7353
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.5185,
+       0.6667
+      ],
+      [
+       0.5,
+       0.5714
+      ],
+      [
+       0.4783,
+       0.5238
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.6364,
+       0.4308
+      ],
+      [
+       0.6571,
+       0.3538
+      ],
+      [
+       0.5714,
+       0.3692
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.707,
+      0.6943,
+      0.6561
+     ],
+     "ghost": [
+      0.7391,
+      0.8261,
+      0.7826
+     ],
+     "umami": [
+      0.7193,
+      0.6491,
+      0.7018
+     ]
+    },
+    "manual_count": [
+     44,
+     35,
+     42
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.4458,
+     0.4092,
+     0.4405
+    ],
+    "accuracy": [
+     0.5583,
+     0.5194,
+     0.5512
+    ],
+    "manual": [
+     0.1731,
+     0.2438,
+     0.1979
+    ],
+    "errors": [
+     2,
+     0,
+     3
+    ]
+   },
+   "test_v30_207": {
+    "macro_f1": [
+     0.4505,
+     0.4223,
+     0.4449
+    ],
+    "macro_f1_265": [
+     0.705,
+     0.684,
+     0.6954
+    ],
+    "accuracy": [
+     0.6522,
+     0.6329,
+     0.6473
+    ],
+    "precision": [
+     0.8323,
+     0.7939,
+     0.8121
+    ],
+    "recall": [
+     0.6505,
+     0.6359,
+     0.6505
+    ],
+    "answer_rate": [
+     0.7816,
+     0.801,
+     0.801
+    ],
+    "manual": [
+     0.2174,
+     0.1981,
+     0.1932
+    ],
+    "errors": [
+     1,
+     0,
+     1
+    ],
+    "per_label": {
+     "public": [
+      0.7573,
+      0.7568,
+      0.7368
+     ],
+     "role_required": [
+      0.6452,
+      0.5614,
+      0.6667
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.8065,
+      0.7935,
+      0.8211
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.0435,
+      0.0,
+      0.0
+     ]
+    },
+    "public_misjudge_35": [
+     2,
+     2,
+     1
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687"
+     ],
+     "43": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687"
+     ],
+     "44": [
+      "5a72ac6384c12b441687"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7325,
+     0.744,
+     0.6879
+    ],
+    "macro_f1_102": [
+     0.4908,
+     0.5754,
+     0.4813
+    ],
+    "precision": [
+     0.871,
+     0.8824,
+     0.81
+    ],
+    "manual": [
+     0.4188,
+     0.3625,
+     0.375
+    ],
+    "errors": [
+     0,
+     0,
+     0
+    ],
+    "public_misjudge": [
+     2,
+     1,
+     0
+    ]
+   },
+   "supp": {
+    "oas_code": {
+     "macro_f1": [
+      0.5047,
+      0.598,
+      0.4901
+     ],
+     "accuracy": [
+      0.464,
+      0.545,
+      0.4279
+     ],
+     "manual": [
+      0.1757,
+      0.1937,
+      0.1396
+     ],
+     "errors": [
+      0,
+      5,
+      0
+     ],
+     "per_label": {
+      "public": [
+       0.8,
+       1.0,
+       1.0
+      ],
+      "role_required": [
+       0.56,
+       0.5893,
+       0.4776
+      ],
+      "membership_required": [
+       0.5053,
+       0.7679,
+       0.5319
+      ],
+      "tenant_match": [
+       0.2258,
+       0.3077,
+       0.1667
+      ],
+      "owner_match": [
+       0.5455,
+       0.7179,
+       0.4561
+      ],
+      "owner_or_admin": [
+       0.6061,
+       0.5294,
+       0.4706
+      ],
+      "manual_review_required": [
+       0.2899,
+       0.274,
+       0.3279
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.5443,
+       0.7722,
+       0.557
+      ],
+      "chamilo": [
+       0.4655,
+       0.4483,
+       0.4138
+      ],
+      "flowise": [
+       0.1833,
+       0.2333,
+       0.15
+      ],
+      "multitenant_lab": [
+       0.75,
+       0.75,
+       0.75
+      ],
+      "generic_university": [
+       0.9048,
+       0.8095,
+       0.7143
+      ]
+     }
+    },
+    "oas": {
+     "macro_f1": [
+      0.2873,
+      0.2968,
+      0.3143
+     ],
+     "accuracy": [
+      0.1622,
+      0.1802,
+      0.2207
+     ],
+     "manual": [
+      0.6081,
+      0.5766,
+      0.5991
+     ],
+     "errors": [
+      0,
+      0,
+      1
+     ],
+     "per_label": {
+      "public": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "role_required": [
+       0.2095,
+       0.2037,
+       0.26
+      ],
+      "membership_required": [
+       0.1935,
+       0.303,
+       0.2985
+      ],
+      "tenant_match": [
+       0.0702,
+       0.0702,
+       0.0702
+      ],
+      "owner_match": [
+       0.3333,
+       0.3871,
+       0.375
+      ],
+      "owner_or_admin": [
+       0.0952,
+       0.0,
+       0.0
+      ],
+      "manual_review_required": [
+       0.1091,
+       0.1139,
+       0.1963
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.2152,
+       0.2658,
+       0.2658
+      ],
+      "chamilo": [
+       0.1897,
+       0.1724,
+       0.2931
+      ],
+      "flowise": [
+       0.0667,
+       0.0667,
+       0.0667
+      ],
+      "multitenant_lab": [
+       0.75,
+       0.75,
+       0.75
+      ],
+      "generic_university": [
+       0.0476,
+       0.0952,
+       0.1905
+      ]
+     }
+    }
+   }
+  },
+  "base14b": {
+   "test_v5": {
+    "macro_f1": [
+     0.5041
+    ],
+    "accuracy": [
+     0.576
+    ],
+    "manual": [
+     0.0071
+    ],
+    "errors": [
+     0
+    ],
+    "per_label": {
+     "public": [
+      0.8889
+     ],
+     "role_required": [
+      0.675
+     ],
+     "membership_required": [
+      0.3846
+     ],
+     "tenant_match": [
+      0.0
+     ],
+     "owner_match": [
+      0.75
+     ],
+     "owner_or_admin": [
+      0.2963
+     ],
+     "manual_review_required": [
+      0.0299
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.9412,
+       0.8421
+      ]
+     ],
+     "role_required": [
+      [
+       0.5167,
+       0.973
+      ]
+     ],
+     "membership_required": [
+      [
+       0.5263,
+       0.303
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.8,
+       0.7059
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.6667,
+       0.1905
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.5,
+       0.0154
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.5223
+     ],
+     "ghost": [
+      0.7101
+     ],
+     "umami": [
+      0.5614
+     ]
+    },
+    "manual_count": [
+     2
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.2381
+    ],
+    "accuracy": [
+     0.2933
+    ],
+    "manual": [
+     0.6643
+    ],
+    "errors": [
+     0
+    ]
+   },
+   "test_v30_207": {
+    "macro_f1": [
+     0.2953
+    ],
+    "macro_f1_265": [
+     0.6648
+    ],
+    "accuracy": [
+     0.4106
+    ],
+    "precision": [
+     0.6204
+    ],
+    "recall": [
+     0.4126
+    ],
+    "answer_rate": [
+     0.665
+    ],
+    "manual": [
+     0.3237
+    ],
+    "errors": [
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.6606
+     ],
+     "role_required": [
+      0.3371
+     ],
+     "membership_required": [
+      0.0
+     ],
+     "tenant_match": [
+      0.0
+     ],
+     "owner_match": [
+      0.4789
+     ],
+     "owner_or_admin": [
+      0.0
+     ],
+     "manual_review_required": [
+      0.0
+     ]
+    },
+    "public_misjudge_35": [
+     5
+    ],
+    "public_ids": {
+     "0": [
+      "c3203410c4072686beaa",
+      "dcc8f1be82d40ee3d5cf",
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687",
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7082
+    ],
+    "macro_f1_102": [
+     0.414
+    ],
+    "precision": [
+     0.8353
+    ],
+    "manual": [
+     0.4188
+    ],
+    "errors": [
+     8
+    ],
+    "public_misjudge": [
+     3
+    ]
+   },
+   "supp": {
+    "oas_code": {
+     "macro_f1": [
+      0.2447
+     ],
+     "accuracy": [
+      0.2297
+     ],
+     "manual": [
+      0.0631
+     ],
+     "errors": [
+      0
+     ],
+     "per_label": {
+      "public": [
+       0.6667
+      ],
+      "role_required": [
+       0.2977
+      ],
+      "membership_required": [
+       0.0351
+      ],
+      "tenant_match": [
+       0.1667
+      ],
+      "owner_match": [
+       0.4103
+      ],
+      "owner_or_admin": [
+       0.0
+      ],
+      "manual_review_required": [
+       0.1364
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.2532
+      ],
+      "chamilo": [
+       0.1897
+      ],
+      "flowise": [
+       0.0833
+      ],
+      "multitenant_lab": [
+       1.0
+      ],
+      "generic_university": [
+       0.5238
+      ]
+     }
+    },
+    "oas": {
+     "macro_f1": [
+      0.1547
+     ],
+     "accuracy": [
+      0.1261
+     ],
+     "manual": [
+      0.6622
+     ],
+     "errors": [
+      0
+     ],
+     "per_label": {
+      "public": [
+       0.5
+      ],
+      "role_required": [
+       0.2178
+      ],
+      "membership_required": [
+       0.1034
+      ],
+      "tenant_match": [
+       0.069
+      ],
+      "owner_match": [
+       0.0909
+      ],
+      "owner_or_admin": [
+       0.0
+      ],
+      "manual_review_required": [
+       0.1017
+      ]
+     },
+     "per_project": {
+      "chatwoot": [
+       0.1266
+      ],
+      "chamilo": [
+       0.1724
+      ],
+      "flowise": [
+       0.0667
+      ],
+      "multitenant_lab": [
+       0.75
+      ],
+      "generic_university": [
+       0.0476
+      ]
+     }
+    }
+   }
+  },
+  "base7b": {
+   "test_v5": {
+    "macro_f1": [
+     0.2377
+    ],
+    "accuracy": [
+     0.3816
+    ],
+    "manual": [
+     0.0
+    ],
+    "errors": [
+     35
+    ],
+    "per_label": {
+     "public": [
+      0.7805
+     ],
+     "role_required": [
+      0.5405
+     ],
+     "membership_required": [
+      0.0
+     ],
+     "tenant_match": [
+      0.0
+     ],
+     "owner_match": [
+      0.1053
+     ],
+     "owner_or_admin": [
+      0.0
+     ],
+     "manual_review_required": [
+      0.0
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.7273,
+       0.8421
+      ]
+     ],
+     "role_required": [
+      [
+       0.4054,
+       0.8108
+      ]
+     ],
+     "membership_required": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.5,
+       0.0588
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.0,
+       0.0
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.3631
+     ],
+     "ghost": [
+      0.5217
+     ],
+     "umami": [
+      0.2632
+     ]
+    },
+    "manual_count": [
+     0
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.127
+    ],
+    "accuracy": [
+     0.2473
+    ],
+    "manual": [
+     0.0
+    ],
+    "errors": [
+     87
+    ]
+   }
+  }
+ },
+ "verdict": {
+  "c1_macro_f1_delta": -0.0031,
+  "c1_pass": false,
+  "c2_precision_drop": -0.017,
+  "c2_pass": true,
+  "c3_public_misjudge_mean": 1.67,
+  "c3_pass": true,
+  "adopt": false
+ },
+ "early_gate": {
+  "rule": "STOP if v6c s42 test_v5 oas_code macro-F1 <= v5 s42 macro-F1 (pre-registered, AGENTS.md 작업 S8)",
+  "gate": "PASS",
+  "v6c_s42": {
+   "macro_f1": 0.686,
+   "accuracy": 0.7173,
+   "manual_ratio": 0.1555,
+   "output_errors": 0,
+   "concrete": {
+    "n_truth_concrete": 218,
+    "answered": 202,
+    "precision": 0.8663,
+    "recall": 0.8028
+   },
+   "per_project": {
+    "ghost": {
+     "n": 69,
+     "accuracy": 0.7391
+    },
+    "rocketchat": {
+     "n": 157,
+     "accuracy": 0.707
+    },
+    "umami": {
+     "n": 57,
+     "accuracy": 0.7193
+    }
+   },
+   "per_label": {
+    "public": {
+     "support": 19,
+     "precision": 1.0,
+     "recall": 0.6842,
+     "f1": 0.8125
+    },
+    "role_required": {
+     "support": 111,
+     "precision": 0.8448,
+     "recall": 0.8829,
+     "f1": 0.8634
+    },
+    "membership_required": {
+     "support": 33,
+     "precision": 0.5106,
+     "recall": 0.7273,
+     "f1": 0.6
+    },
+    "tenant_match": {
+     "support": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0
+    },
+    "owner_match": {
+     "support": 34,
+     "precision": 0.7222,
+     "recall": 0.7647,
+     "f1": 0.7429
+    },
+    "owner_or_admin": {
+     "support": 21,
+     "precision": 0.5185,
+     "recall": 0.6667,
+     "f1": 0.5833
+    },
+    "manual_review_required": {
+     "support": 65,
+     "precision": 0.6364,
+     "recall": 0.4308,
+     "f1": 0.5138
+    }
+   }
+  },
+  "v5_s42": {
+   "macro_f1": 0.6661,
+   "accuracy": 0.689,
+   "manual_ratio": 0.1625,
+   "output_errors": 1,
+   "concrete": {
+    "n_truth_concrete": 218,
+    "answered": 198,
+    "precision": 0.8485,
+    "recall": 0.7706
+   },
+   "per_project": {
+    "ghost": {
+     "n": 69,
+     "accuracy": 0.7536
+    },
+    "rocketchat": {
+     "n": 157,
+     "accuracy": 0.6433
+    },
+    "umami": {
+     "n": 57,
+     "accuracy": 0.7368
+    }
+   }
+  },
+  "delta_macro_f1": 0.0199,
+  "pred": "runs/lora_v6c_s42/eval/v5test_predictions_oas_code_lora_v6c_s42_final.jsonl",
+  "baseline": "baseline/v5test_predictions_oas_code_lora_v5_s42_final.jsonl"
+ },
+ "transitions": {
+  "v5_to_v6c": {
+   "42": {
+    "manual_review_required->role_required": 8,
+    "role_required->owner_or_admin": 7,
+    "owner_or_admin->role_required": 6,
+    "membership_required->manual_review_required": 5,
+    "manual_review_required->owner_or_admin": 4,
+    "manual_review_required->membership_required": 4,
+    "membership_required->role_required": 4,
+    "owner_or_admin->manual_review_required": 3,
+    "role_required->manual_review_required": 3,
+    "public->manual_review_required": 2,
+    "owner_match->manual_review_required": 2,
+    "membership_required->owner_match": 2,
+    "manual_review_required->public": 1,
+    "owner_match->role_required": 1,
+    "public->role_required": 1,
+    "owner_match->membership_required": 1,
+    "output_error->role_required": 1,
+    "owner_or_admin->owner_match": 1
+   },
+   "42_fixed": 28,
+   "42_newly_wrong": 20,
+   "43": {
+    "manual_review_required->role_required": 9,
+    "manual_review_required->membership_required": 8,
+    "owner_or_admin->role_required": 8,
+    "membership_required->role_required": 5,
+    "owner_or_admin->manual_review_required": 4,
+    "membership_required->manual_review_required": 4,
+    "manual_review_required->public": 3,
+    "role_required->manual_review_required": 3,
+    "role_required->owner_or_admin": 2,
+    "owner_or_admin->owner_match": 2,
+    "membership_required->owner_match": 2,
+    "owner_match->manual_review_required": 2,
+    "public->manual_review_required": 1,
+    "manual_review_required->owner_match": 1,
+    "owner_match->membership_required": 1,
+    "owner_match->role_required": 1,
+    "manual_review_required->owner_or_admin": 1,
+    "role_required->membership_required": 1,
+    "role_required->owner_match": 1
+   },
+   "43_fixed": 31,
+   "43_newly_wrong": 22,
+   "44": {
+    "manual_review_required->membership_required": 16,
+    "owner_or_admin->role_required": 13,
+    "role_required->manual_review_required": 9,
+    "manual_review_required->role_required": 6,
+    "membership_required->role_required": 5,
+    "membership_required->owner_match": 4,
+    "owner_or_admin->manual_review_required": 3,
+    "role_required->owner_or_admin": 3,
+    "public->manual_review_required": 3,
+    "manual_review_required->owner_or_admin": 3,
+    "manual_review_required->owner_match": 2,
+    "membership_required->manual_review_required": 2,
+    "role_required->membership_required": 2,
+    "manual_review_required->public": 1,
+    "output_error->manual_review_required": 1,
+    "owner_match->membership_required": 1,
+    "output_error->role_required": 1
+   },
+   "44_fixed": 33,
+   "44_newly_wrong": 34
+  },
+  "new_manual_by_truth": {
+   "42": {
+    "owner_or_admin": 2,
+    "public": 2,
+    "manual_review_required": 7,
+    "membership_required": 3,
+    "role_required": 1
+   },
+   "43": {
+    "owner_or_admin": 2,
+    "public": 1,
+    "manual_review_required": 6,
+    "membership_required": 2,
+    "role_required": 2,
+    "owner_match": 1
+   },
+   "44": {
+    "manual_review_required": 7,
+    "owner_or_admin": 4,
+    "public": 3,
+    "role_required": 4
+   }
+  },
+  "v6c_seed_disagree_records": 62,
+  "v6c_all_three_differ": 3,
+  "v5_seed_disagree_records": 69,
+  "v6c_disagree_pairs": {
+   "manual_review_required|membership_required": 17,
+   "manual_review_required|role_required": 16,
+   "owner_or_admin|role_required": 12,
+   "manual_review_required|public": 6,
+   "membership_required|role_required": 6,
+   "manual_review_required|owner_or_admin": 4,
+   "membership_required|owner_match": 3,
+   "manual_review_required|owner_match": 2,
+   "owner_match|owner_or_admin": 2
+  }
+ },
+ "v6c_confusion_mean": {
+  "public": {
+   "public": 15.3,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 3.7,
+   "output_error": 0
+  },
+  "role_required": {
+   "public": 0,
+   "role_required": 98,
+   "membership_required": 4.7,
+   "tenant_match": 0,
+   "owner_match": 1,
+   "owner_or_admin": 3.3,
+   "manual_review_required": 4,
+   "output_error": 0
+  },
+  "membership_required": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 25,
+   "tenant_match": 0,
+   "owner_match": 5.7,
+   "owner_or_admin": 0,
+   "manual_review_required": 2.3,
+   "output_error": 0
+  },
+  "tenant_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 0,
+   "output_error": 0
+  },
+  "owner_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 6.7,
+   "tenant_match": 0,
+   "owner_match": 25.3,
+   "owner_or_admin": 0,
+   "manual_review_required": 2,
+   "output_error": 0
+  },
+  "owner_or_admin": {
+   "public": 0,
+   "role_required": 4.3,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 1,
+   "owner_or_admin": 12.3,
+   "manual_review_required": 3.3,
+   "output_error": 0
+  },
+  "manual_review_required": {
+   "public": 0,
+   "role_required": 12,
+   "membership_required": 14.7,
+   "tenant_match": 0,
+   "owner_match": 4.3,
+   "owner_or_admin": 9,
+   "manual_review_required": 25,
+   "output_error": 0
+  }
+ },
+ "v5_confusion_mean": {
+  "public": {
+   "public": 15.7,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 3.3,
+   "output_error": 0
+  },
+  "role_required": {
+   "public": 0,
+   "role_required": 87,
+   "membership_required": 7.3,
+   "tenant_match": 0,
+   "owner_match": 1.3,
+   "owner_or_admin": 6,
+   "manual_review_required": 8.7,
+   "output_error": 0.7
+  },
+  "membership_required": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 24.7,
+   "tenant_match": 0,
+   "owner_match": 4.3,
+   "owner_or_admin": 0.3,
+   "manual_review_required": 3.7,
+   "output_error": 0
+  },
+  "tenant_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 0,
+   "output_error": 0
+  },
+  "owner_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 6,
+   "tenant_match": 0,
+   "owner_match": 26.3,
+   "owner_or_admin": 0,
+   "manual_review_required": 1.7,
+   "output_error": 0
+  },
+  "owner_or_admin": {
+   "public": 0,
+   "role_required": 4.7,
+   "membership_required": 0.7,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 14,
+   "manual_review_required": 1.7,
+   "output_error": 0
+  },
+  "manual_review_required": {
+   "public": 0.3,
+   "role_required": 10,
+   "membership_required": 12,
+   "tenant_match": 0,
+   "owner_match": 3.3,
+   "owner_or_admin": 11,
+   "manual_review_required": 28,
+   "output_error": 0.3
+  }
+ },
+ "s13": [
+  {
+   "id": "v5t-ghost-924636cc9d",
+   "type": "G3-b/G6-c 경계(모든 역할 보유 권한)",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/",
+   "truth": "manual_review_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "v6c": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0398a2f985",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.membersOrderedByRole",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0780c8e386",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addOwner",
+   "truth": "role_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "v6c": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-09c0e4be92",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.invite",
+   "truth": "role_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0d896bf7fc",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setType",
+   "truth": "role_required",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "role_required"
+   ],
+   "v6c": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-23a530da4b",
+   "type": "G4-c/G6-b 경계(설정 의존)",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetAvatar",
+   "truth": "manual_review_required",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "v6c": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7508165c03",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.rename",
+   "truth": "role_required",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ],
+   "v6c": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d83dae7c4e",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.roles",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ec189eb0b4",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.resetRoomKey",
+   "truth": "role_required",
+   "v5": [
+    "manual_review_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f7c14cc85e",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.info",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-umami-bf7e66056f",
+   "type": "G6-a 복합 OR(Umami canView)",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/shares",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6c": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-umami-dd7523bace",
+   "type": "G6-a 복합 OR(Umami canDelete)",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/share/id/{shareId}",
+   "truth": "manual_review_required",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "v6c": [
+    "role_required",
+    "owner_or_admin",
+    "owner_or_admin"
+   ]
+  }
+ ],
+ "s13_by_type": {
+  "G3-b/G6-c 경계(모든 역할 보유 권한)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6c_correct": 0
+  },
+  "canAccessRoom(G6-a)": {
+   "n": 3,
+   "v5_correct": 9,
+   "v6c_correct": 9
+  },
+  "G3-a 그룹 안 역할": {
+   "n": 5,
+   "v5_correct": 7,
+   "v6c_correct": 9
+  },
+  "G4-c/G6-b 경계(설정 의존)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6c_correct": 0
+  },
+  "G6-a 복합 OR(Umami canView)": {
+   "n": 1,
+   "v5_correct": 3,
+   "v6c_correct": 3
+  },
+  "G6-a 복합 OR(Umami canDelete)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6c_correct": 0
+  }
+ },
+ "errors": {
+  "v5_s42_test_v5_oas_code": {
+   "n": 1,
+   "han": 0,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-7cc51eccb8",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 'permissionsRequired: [\"edit-other-user"
+    }
+   ]
+  },
+  "v5_s42_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s42_test_v30_oas_code": {
+   "n": 5,
+   "han": 5,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "6c0c7e81f4263be705bd",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 인증·권한 검사 없이 익명 호출을 허용하므로; 판단:"
+    },
+    {
+     "id": "905507d01b81ba5eb1f0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상 고객의 보안 주체记录已结束，达到最大长度。"
+    },
+    {
+     "id": "a15a54f7818a6cf25d98",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记：请使用中文回答。\n根据提供的信息，这是一个合成服务"
+    }
+   ]
+  },
+  "v5_s42_test_v30_oas": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "2463648df20db46705c1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: admin 역할을 가진 사용자만 다른用户的请求被拒绝，因为当前策略要求必须具有特定角色。根"
+    },
+    {
+     "id": "beacon_iot_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    },
+    {
+     "id": "summit_club_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    }
+   ]
+  },
+  "v5_s42_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s42_supp_oas": {
+   "n": 2,
+   "han": 2,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-564e5fce51",
+     "truth": "membership_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자가 객체의 소유자여야 함; 판단: owner_cols가 없으나 경로·리소스 의미상 "
+    },
+    {
+     "id": "v4t-flowise-ba8e12f50f",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 모든 변수를 조회하는 요청으로, 인증이 필요하지만 익명 접근은 허용되지 않음; 판단: 인증된 사용"
+    }
+   ]
+  },
+  "v5_s43_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s43_test_v5_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-b97740355c",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.9, \"rationale\": \"summary: 요청자는 핸들러가 공개 채널을 반환하며, caller가 참여한 채널만을 목록으로呈"
+    }
+   ]
+  },
+  "v5_s43_test_v30_oas_code": {
+   "n": 4,
+   "han": 4,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "quill_blog_catalogue_0",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 obj=None时不进行身份验证和权限检查即返回对象；判断：无需认证的公开访问条件满足”，\""
+    },
+    {
+     "id": "beacon_iot_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未应答：请给出"
+    },
+    {
+     "id": "summit_club_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未完成，请继续"
+    }
+   ]
+  },
+  "v5_s43_test_v30_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "summit_club_catalogue_1",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 인텐션얼리 앵 若要回答，请将上述内容翻译成中文。"
+    }
+   ]
+  },
+  "v5_s43_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-flowise-58ad7b33a8",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 route组织方，这是一道关于政策标签的推理题。根据题目描述"
+    }
+   ]
+  },
+  "v5_s43_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_test_v5_oas_code": {
+   "n": 2,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-bfa20a50ad",
+     "truth": "manual_review_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 authOrAnonRequired, Accounts_AllowAnonymousRea"
+    },
+    {
+     "id": "v5t-rocketchat-6a9ba0c552",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 'permissionsRequired: [\"access-permissi"
+    }
+   ]
+  },
+  "v5_s44_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_test_v30_oas_code": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "4033e696c5dc2d5b3aa2",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 인증·권한 검사过程已暂停，继续请稍候。"
+    },
+    {
+     "id": "a4f0cd98076a7ed61adf",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记\nuser\nReturn JSON."
+    },
+    {
+     "id": "folio_wiki_audit_1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 역할·권한 검사 코드虽已翻译，但为了保持原意和格式，这里直接使用了中文回答"
+    }
+   ]
+  },
+  "v5_s44_test_v30_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-flowise-9a7ff520ac",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의工具提示，请给出对应的中文回答。"
+    }
+   ]
+  },
+  "v5_s44_supp_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-41e7b1b44a",
+     "truth": "membership_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 모든 대화를 리스트로呈现中文\n\nuser\n返回 JSON。"
+    }
+   ]
+  },
+  "v6c_s42_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s42_test_v5_oas": {
+   "n": 2,
+   "han": 2,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-4fccb48579",
+     "truth": "role_required",
+     "output_tokens": 36,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"summary: 모든 팀을列出符合要求的标签和置信度。"
+    },
+    {
+     "id": "v5t-umami-b5ef75cf61",
+     "truth": "role_required",
+     "output_tokens": 32,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"summary: 모든 사용자를列出的标签是role_required。"
+    }
+   ]
+  },
+  "v6c_s42_test_v30_oas_code": {
+   "n": 1,
+   "han": 0,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "bf2d1601b02281b85536",
+     "truth": "owner_match",
+     "output_tokens": 69,
+     "raw": "{\"label\": \"login_check\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — login_check 함수에서 인증을 확인하므로; 판단: 인증 요구가 명"
+    }
+   ]
+  },
+  "v6c_s42_test_v30_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s42_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s42_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s43_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s43_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s43_test_v30_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s43_test_v30_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s43_supp_oas_code": {
+   "n": 5,
+   "han": 0,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v4t-chamilo-cd7628b032",
+     "truth": "manual_review_required",
+     "output_tokens": 73,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — principal[\"roles\"].includes(\"ROLE_USER"
+    },
+    {
+     "id": "v4t-chamilo-58a62ecb08",
+     "truth": "membership_required",
+     "output_tokens": 72,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — principal[\"roles\"]에 'ROLE_USER'가 있어야 함"
+    },
+    {
+     "id": "v4t-chamilo-dc7ffaf014",
+     "truth": "manual_review_required",
+     "output_tokens": 74,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — principal[\"roles\"]에 \"ROLE_USER\"가 있어야 함"
+    }
+   ]
+  },
+  "v6c_s43_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s44_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s44_test_v5_oas": {
+   "n": 3,
+   "han": 3,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-b29bfcff96",
+     "truth": "manual_review_required",
+     "output_tokens": 51,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"summary: Public channel history; 판단: 요청에 인증이 필요하지 않으며,任何人都可以访问公共频道历"
+    },
+    {
+     "id": "v5t-rocketchat-4fccb48579",
+     "truth": "role_required",
+     "output_tokens": 127,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"summary: 모든 팀을列出符合要求的标签和置信度。根据提供的信息，这个API端点需要管理员角色才能访问。因此，选择"
+    },
+    {
+     "id": "v5t-umami-b5ef75cf61",
+     "truth": "role_required",
+     "output_tokens": 31,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"summary: 모든 사용자를列出所有用户的访问条件。"
+    }
+   ]
+  },
+  "v6c_s44_test_v30_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 1,
+   "examples": [
+    {
+     "id": "3adb00c6de54a6331736",
+     "truth": "public",
+     "output_tokens": 256,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 UserModel.where, email — 대상 객체가 요"
+    }
+   ]
+  },
+  "v6c_s44_test_v30_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s44_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6c_s44_supp_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v4t-chamilo-bf077c6697",
+     "truth": "owner_or_admin",
+     "output_tokens": 95,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.85, \"rationale\": \"description: security 조건이 'DELETE' 권한 검사로 명시되어 있으나"
+    }
+   ]
+  },
+  "base14b_s0_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "base14b_s0_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "base14b_s0_test_v30_oas_code": {
+   "n": 6,
+   "han": 0,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "7e3f8c20d798e8b34143",
+     "truth": "public",
+     "output_tokens": 78,
+     "raw": "{\"label\":\"public\",\"confidence\":0.9,\"rationale\":\"description: 핸들러가 인증·인가 검사 없이 OTP를 검증하고 반환한다; 판단: 익명 허용의 긍정 근거가 코드에 있어 p"
+    },
+    {
+     "id": "5e6b124fedb6105ffbd0",
+     "truth": "public",
+     "output_tokens": 79,
+     "raw": "{\"label\":\"public\",\"confidence\":0.8,\"rationale\":\"description: 핸들러가 인증·인가 검사 없이 쿼리를 받아 MongoDB에서 사진 검색 결과를 반환한다; 판단: 익명 접근"
+    },
+    {
+     "id": "beacon_iot_catalogue_0",
+     "truth": "public",
+     "output_tokens": 78,
+     "raw": "{\n\"label\":\"explicitly_anonymous\",\n\"confidence\":0.9,\n\"rationale\":\"description: 핸들러가 인증·인가 검사 없이 객체를 반환한다; 판단: 익명 허용의 긍정 근"
+    }
+   ]
+  },
+  "base14b_s0_test_v30_oas": {
+   "n": 8,
+   "han": 0,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "quill_blog_catalogue_0",
+     "truth": "public",
+     "output_tokens": 63,
+     "raw": "{\"label\":\"explicitly_anonymous\",\"confidence\":0.9,\"rationale\":\"description: 'Intentionally anonymous reference catalogue."
+    },
+    {
+     "id": "quill_blog_catalogue_1",
+     "truth": "public",
+     "output_tokens": 63,
+     "raw": "{\"label\":\"explicitly_anonymous\",\"confidence\":0.9,\"rationale\":\"description: 'Intentionally anonymous reference catalogue."
+    },
+    {
+     "id": "folio_wiki_catalogue_1",
+     "truth": "public",
+     "output_tokens": 62,
+     "raw": "{\n\"label\":\"explicitly_anonymous\",\n\"confidence\":0.9,\n\"rationale\":\"description: 'Intentionally anonymous reference catalog"
+    }
+   ]
+  },
+  "base14b_s0_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "base14b_s0_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  }
+ },
+ "lengths": {
+  "v5_s42_test_v5_oas_code": {
+   "raw_chars_mean": 232.3,
+   "raw_chars_max": 305,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s42_test_v5_oas": {
+   "raw_chars_mean": 189.3,
+   "raw_chars_max": 255,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s42_test_v30_oas_code": {
+   "raw_chars_mean": 203.8,
+   "raw_chars_max": 566,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s42_test_v30_oas": {
+   "raw_chars_mean": 189.6,
+   "raw_chars_max": 243,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s42_supp_oas_code": {
+   "raw_chars_mean": 239.1,
+   "raw_chars_max": 309,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s42_supp_oas": {
+   "raw_chars_mean": 207.6,
+   "raw_chars_max": 541,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_test_v5_oas_code": {
+   "raw_chars_mean": 237.4,
+   "raw_chars_max": 314,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_test_v5_oas": {
+   "raw_chars_mean": 197.0,
+   "raw_chars_max": 259,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_test_v30_oas_code": {
+   "raw_chars_mean": 198.4,
+   "raw_chars_max": 280,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_test_v30_oas": {
+   "raw_chars_mean": 190.7,
+   "raw_chars_max": 352,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_supp_oas_code": {
+   "raw_chars_mean": 240.9,
+   "raw_chars_max": 529,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s43_supp_oas": {
+   "raw_chars_mean": 204.3,
+   "raw_chars_max": 274,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_test_v5_oas_code": {
+   "raw_chars_mean": 232.7,
+   "raw_chars_max": 334,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_test_v5_oas": {
+   "raw_chars_mean": 185.6,
+   "raw_chars_max": 228,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_test_v30_oas_code": {
+   "raw_chars_mean": 198.0,
+   "raw_chars_max": 389,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_test_v30_oas": {
+   "raw_chars_mean": 197.3,
+   "raw_chars_max": 403,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_supp_oas_code": {
+   "raw_chars_mean": 240,
+   "raw_chars_max": 314,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v5_s44_supp_oas": {
+   "raw_chars_mean": 204.8,
+   "raw_chars_max": 318,
+   "output_tokens_mean": null,
+   "output_tokens_max": null,
+   "prompt_tokens_mean": null,
+   "prompt_tokens_max": null
+  },
+  "v6c_s42_test_v5_oas_code": {
+   "raw_chars_mean": 229.2,
+   "raw_chars_max": 350,
+   "output_tokens_mean": 80.4,
+   "output_tokens_max": 110,
+   "prompt_tokens_mean": 3491.2,
+   "prompt_tokens_max": 4051
+  },
+  "v6c_s42_test_v5_oas": {
+   "raw_chars_mean": 203.4,
+   "raw_chars_max": 267,
+   "output_tokens_mean": 71.7,
+   "output_tokens_max": 103,
+   "prompt_tokens_mean": 2816.6,
+   "prompt_tokens_max": 2843
+  },
+  "v6c_s42_test_v30_oas_code": {
+   "raw_chars_mean": 201.7,
+   "raw_chars_max": 358,
+   "output_tokens_mean": 73.8,
+   "output_tokens_max": 112,
+   "prompt_tokens_mean": 3038.7,
+   "prompt_tokens_max": 3841
+  },
+  "v6c_s42_test_v30_oas": {
+   "raw_chars_mean": 197.9,
+   "raw_chars_max": 266,
+   "output_tokens_mean": 71.8,
+   "output_tokens_max": 102,
+   "prompt_tokens_mean": 2816.8,
+   "prompt_tokens_max": 2976
+  },
+  "v6c_s42_supp_oas_code": {
+   "raw_chars_mean": 222.2,
+   "raw_chars_max": 268,
+   "output_tokens_mean": 77.7,
+   "output_tokens_max": 95,
+   "prompt_tokens_mean": 3324.3,
+   "prompt_tokens_max": 4033
+  },
+  "v6c_s42_supp_oas": {
+   "raw_chars_mean": 200.5,
+   "raw_chars_max": 292,
+   "output_tokens_mean": 72.1,
+   "output_tokens_max": 106,
+   "prompt_tokens_mean": 2841.2,
+   "prompt_tokens_max": 3428
+  },
+  "v6c_s43_test_v5_oas_code": {
+   "raw_chars_mean": 231.5,
+   "raw_chars_max": 350,
+   "output_tokens_mean": 81.1,
+   "output_tokens_max": 110,
+   "prompt_tokens_mean": 3491.2,
+   "prompt_tokens_max": 4051
+  },
+  "v6c_s43_test_v5_oas": {
+   "raw_chars_mean": 198.4,
+   "raw_chars_max": 273,
+   "output_tokens_mean": 68.8,
+   "output_tokens_max": 102,
+   "prompt_tokens_mean": 2816.6,
+   "prompt_tokens_max": 2843
+  },
+  "v6c_s43_test_v30_oas_code": {
+   "raw_chars_mean": 205.3,
+   "raw_chars_max": 319,
+   "output_tokens_mean": 74.7,
+   "output_tokens_max": 126,
+   "prompt_tokens_mean": 3038.7,
+   "prompt_tokens_max": 3841
+  },
+  "v6c_s43_test_v30_oas": {
+   "raw_chars_mean": 196.8,
+   "raw_chars_max": 277,
+   "output_tokens_mean": 71.3,
+   "output_tokens_max": 105,
+   "prompt_tokens_mean": 2816.8,
+   "prompt_tokens_max": 2976
+  },
+  "v6c_s43_supp_oas_code": {
+   "raw_chars_mean": 230.6,
+   "raw_chars_max": 292,
+   "output_tokens_mean": 79.5,
+   "output_tokens_max": 94,
+   "prompt_tokens_mean": 3324.3,
+   "prompt_tokens_max": 4033
+  },
+  "v6c_s43_supp_oas": {
+   "raw_chars_mean": 201.9,
+   "raw_chars_max": 292,
+   "output_tokens_mean": 72.4,
+   "output_tokens_max": 101,
+   "prompt_tokens_mean": 2841.2,
+   "prompt_tokens_max": 3428
+  },
+  "v6c_s44_test_v5_oas_code": {
+   "raw_chars_mean": 231.2,
+   "raw_chars_max": 313,
+   "output_tokens_mean": 80.8,
+   "output_tokens_max": 100,
+   "prompt_tokens_mean": 3491.2,
+   "prompt_tokens_max": 4051
+  },
+  "v6c_s44_test_v5_oas": {
+   "raw_chars_mean": 203.3,
+   "raw_chars_max": 297,
+   "output_tokens_mean": 70.7,
+   "output_tokens_max": 127,
+   "prompt_tokens_mean": 2816.6,
+   "prompt_tokens_max": 2843
+  },
+  "v6c_s44_test_v30_oas_code": {
+   "raw_chars_mean": 210.2,
+   "raw_chars_max": 313,
+   "output_tokens_mean": 76.3,
+   "output_tokens_max": 256,
+   "prompt_tokens_mean": 3038.7,
+   "prompt_tokens_max": 3841
+  },
+  "v6c_s44_test_v30_oas": {
+   "raw_chars_mean": 194.9,
+   "raw_chars_max": 272,
+   "output_tokens_mean": 69.3,
+   "output_tokens_max": 96,
+   "prompt_tokens_mean": 2816.8,
+   "prompt_tokens_max": 2976
+  },
+  "v6c_s44_supp_oas_code": {
+   "raw_chars_mean": 230.8,
+   "raw_chars_max": 290,
+   "output_tokens_mean": 79.7,
+   "output_tokens_max": 96,
+   "prompt_tokens_mean": 3324.3,
+   "prompt_tokens_max": 4033
+  },
+  "v6c_s44_supp_oas": {
+   "raw_chars_mean": 206.6,
+   "raw_chars_max": 308,
+   "output_tokens_mean": 75.0,
+   "output_tokens_max": 112,
+   "prompt_tokens_mean": 2841.2,
+   "prompt_tokens_max": 3428
+  },
+  "base14b_s0_test_v5_oas_code": {
+   "raw_chars_mean": 258.9,
+   "raw_chars_max": 551,
+   "output_tokens_mean": 95.7,
+   "output_tokens_max": 156,
+   "prompt_tokens_mean": 3491.2,
+   "prompt_tokens_max": 4051
+  },
+  "base14b_s0_test_v5_oas": {
+   "raw_chars_mean": 236.3,
+   "raw_chars_max": 517,
+   "output_tokens_mean": 79.5,
+   "output_tokens_max": 142,
+   "prompt_tokens_mean": 2816.6,
+   "prompt_tokens_max": 2843
+  },
+  "base14b_s0_test_v30_oas_code": {
+   "raw_chars_mean": 224.5,
+   "raw_chars_max": 374,
+   "output_tokens_mean": 85.9,
+   "output_tokens_max": 132,
+   "prompt_tokens_mean": 3038.7,
+   "prompt_tokens_max": 3841
+  },
+  "base14b_s0_test_v30_oas": {
+   "raw_chars_mean": 216.0,
+   "raw_chars_max": 420,
+   "output_tokens_mean": 72.8,
+   "output_tokens_max": 120,
+   "prompt_tokens_mean": 2816.8,
+   "prompt_tokens_max": 2976
+  },
+  "base14b_s0_supp_oas_code": {
+   "raw_chars_mean": 265.2,
+   "raw_chars_max": 500,
+   "output_tokens_mean": 95.4,
+   "output_tokens_max": 166,
+   "prompt_tokens_mean": 3324.3,
+   "prompt_tokens_max": 4033
+  },
+  "base14b_s0_supp_oas": {
+   "raw_chars_mean": 253.1,
+   "raw_chars_max": 540,
+   "output_tokens_mean": 82.2,
+   "output_tokens_max": 123,
+   "prompt_tokens_mean": 2841.2,
+   "prompt_tokens_max": 3428
+  }
+ },
+ "times": {
+  "v5_s42_test_v5_oas_code": {
+   "inference_ms_mean": 808.9,
+   "inference_ms_sum_s": 228.9
+  },
+  "v5_s42_test_v5_oas": {
+   "inference_ms_mean": 651.8,
+   "inference_ms_sum_s": 184.5
+  },
+  "v5_s42_test_v30_oas_code": {
+   "inference_ms_mean": 744.8,
+   "inference_ms_sum_s": 197.4
+  },
+  "v5_s42_test_v30_oas": {
+   "inference_ms_mean": 625.5,
+   "inference_ms_sum_s": 168.3
+  },
+  "v5_s42_supp_oas_code": {
+   "inference_ms_mean": 753.8,
+   "inference_ms_sum_s": 167.3
+  },
+  "v5_s42_supp_oas": {
+   "inference_ms_mean": 679.8,
+   "inference_ms_sum_s": 150.9
+  },
+  "v5_s43_test_v5_oas_code": {
+   "inference_ms_mean": 826.2,
+   "inference_ms_sum_s": 233.8
+  },
+  "v5_s43_test_v5_oas": {
+   "inference_ms_mean": 666.1,
+   "inference_ms_sum_s": 188.5
+  },
+  "v5_s43_test_v30_oas_code": {
+   "inference_ms_mean": 686.4,
+   "inference_ms_sum_s": 181.9
+  },
+  "v5_s43_test_v30_oas": {
+   "inference_ms_mean": 627.6,
+   "inference_ms_sum_s": 168.8
+  },
+  "v5_s43_supp_oas_code": {
+   "inference_ms_mean": 789.1,
+   "inference_ms_sum_s": 175.2
+  },
+  "v5_s43_supp_oas": {
+   "inference_ms_mean": 654.8,
+   "inference_ms_sum_s": 145.4
+  },
+  "v5_s44_test_v5_oas_code": {
+   "inference_ms_mean": 826.9,
+   "inference_ms_sum_s": 234.0
+  },
+  "v5_s44_test_v5_oas": {
+   "inference_ms_mean": 622.3,
+   "inference_ms_sum_s": 176.1
+  },
+  "v5_s44_test_v30_oas_code": {
+   "inference_ms_mean": 691.7,
+   "inference_ms_sum_s": 183.3
+  },
+  "v5_s44_test_v30_oas": {
+   "inference_ms_mean": 626.8,
+   "inference_ms_sum_s": 168.6
+  },
+  "v5_s44_supp_oas_code": {
+   "inference_ms_mean": 763.4,
+   "inference_ms_sum_s": 169.5
+  },
+  "v5_s44_supp_oas": {
+   "inference_ms_mean": 660.9,
+   "inference_ms_sum_s": 146.7
+  },
+  "v6c_s42_test_v5_oas_code": {
+   "inference_ms_mean": 1787.8,
+   "inference_ms_sum_s": 505.9,
+   "wall_s": 506.0,
+   "mean_ms_per_row": 1787.8,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.19
+  },
+  "v6c_s42_test_v5_oas": {
+   "inference_ms_mean": 1549.4,
+   "inference_ms_sum_s": 438.5,
+   "wall_s": 438.6,
+   "mean_ms_per_row": 1549.4,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s42_test_v30_oas_code": {
+   "inference_ms_mean": 1811.0,
+   "inference_ms_sum_s": 479.9,
+   "wall_s": 480.0,
+   "mean_ms_per_row": 1810.9,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "v6c_s42_test_v30_oas": {
+   "inference_ms_mean": 1581.6,
+   "inference_ms_sum_s": 425.4,
+   "wall_s": 425.5,
+   "mean_ms_per_row": 1581.6,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 21.01
+  },
+  "v6c_s42_supp_oas_code": {
+   "inference_ms_mean": 1746.3,
+   "inference_ms_sum_s": 387.7,
+   "wall_s": 387.7,
+   "mean_ms_per_row": 1746.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s42_supp_oas": {
+   "inference_ms_mean": 1660.7,
+   "inference_ms_sum_s": 368.7,
+   "wall_s": 368.8,
+   "mean_ms_per_row": 1660.7,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "v6c_s43_test_v5_oas_code": {
+   "inference_ms_mean": 1838.4,
+   "inference_ms_sum_s": 520.3,
+   "wall_s": 520.4,
+   "mean_ms_per_row": 1838.4,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.19
+  },
+  "v6c_s43_test_v5_oas": {
+   "inference_ms_mean": 1515.6,
+   "inference_ms_sum_s": 428.9,
+   "wall_s": 429.0,
+   "mean_ms_per_row": 1515.6,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s43_test_v30_oas_code": {
+   "inference_ms_mean": 1674.4,
+   "inference_ms_sum_s": 443.7,
+   "wall_s": 443.8,
+   "mean_ms_per_row": 1674.4,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "v6c_s43_test_v30_oas": {
+   "inference_ms_mean": 1551.5,
+   "inference_ms_sum_s": 417.3,
+   "wall_s": 417.5,
+   "mean_ms_per_row": 1551.5,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 21.01
+  },
+  "v6c_s43_supp_oas_code": {
+   "inference_ms_mean": 1744.2,
+   "inference_ms_sum_s": 387.2,
+   "wall_s": 387.3,
+   "mean_ms_per_row": 1744.2,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s43_supp_oas": {
+   "inference_ms_mean": 1571.3,
+   "inference_ms_sum_s": 348.8,
+   "wall_s": 348.9,
+   "mean_ms_per_row": 1571.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "v6c_s44_test_v5_oas_code": {
+   "inference_ms_mean": 1819.2,
+   "inference_ms_sum_s": 514.8,
+   "wall_s": 515.0,
+   "mean_ms_per_row": 1819.2,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.2
+  },
+  "v6c_s44_test_v5_oas": {
+   "inference_ms_mean": 1600.1,
+   "inference_ms_sum_s": 452.8,
+   "wall_s": 452.9,
+   "mean_ms_per_row": 1600.1,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s44_test_v30_oas_code": {
+   "inference_ms_mean": 1715.5,
+   "inference_ms_sum_s": 454.6,
+   "wall_s": 454.7,
+   "mean_ms_per_row": 1715.5,
+   "hit_max_new_tokens": 1,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "v6c_s44_test_v30_oas": {
+   "inference_ms_mean": 1583.6,
+   "inference_ms_sum_s": 426.0,
+   "wall_s": 426.1,
+   "mean_ms_per_row": 1583.6,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 21.01
+  },
+  "v6c_s44_supp_oas_code": {
+   "inference_ms_mean": 1730.7,
+   "inference_ms_sum_s": 384.2,
+   "wall_s": 384.3,
+   "mean_ms_per_row": 1730.7,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 24.14
+  },
+  "v6c_s44_supp_oas": {
+   "inference_ms_mean": 1594.0,
+   "inference_ms_sum_s": 353.9,
+   "wall_s": 354.0,
+   "mean_ms_per_row": 1594.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 23.57
+  },
+  "base14b_s0_test_v5_oas_code": {
+   "inference_ms_mean": 1784.0,
+   "inference_ms_sum_s": 504.9,
+   "wall_s": 505.0,
+   "mean_ms_per_row": 1784.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 22.19
+  },
+  "base14b_s0_test_v5_oas": {
+   "inference_ms_mean": 1344.3,
+   "inference_ms_sum_s": 380.4,
+   "wall_s": 380.5,
+   "mean_ms_per_row": 1344.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 22.14
+  },
+  "base14b_s0_test_v30_oas_code": {
+   "inference_ms_mean": 1523.6,
+   "inference_ms_sum_s": 403.8,
+   "wall_s": 403.9,
+   "mean_ms_per_row": 1523.6,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 21.57
+  },
+  "base14b_s0_test_v30_oas": {
+   "inference_ms_mean": 1261.0,
+   "inference_ms_sum_s": 339.2,
+   "wall_s": 339.3,
+   "mean_ms_per_row": 1261.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 19.01
+  },
+  "base14b_s0_supp_oas_code": {
+   "inference_ms_mean": 1682.1,
+   "inference_ms_sum_s": 373.4,
+   "wall_s": 373.5,
+   "mean_ms_per_row": 1682.1,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 22.14
+  },
+  "base14b_s0_supp_oas": {
+   "inference_ms_mean": 1361.8,
+   "inference_ms_sum_s": 302.3,
+   "wall_s": 302.4,
+   "mean_ms_per_row": 1361.8,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 21.57
+  }
+ },
+ "env": {
+  "v6c": {
+   "42": {
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.1",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "43": {
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.1",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "44": {
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.1",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   }
+  },
+  "v5_s42": {
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "vram_gb": 79,
+   "torch": "2.14.1+cu130",
+   "transformers": "5.17.0",
+   "trl": "1.15.0",
+   "peft": "0.21.2",
+   "unsloth": "2026.10.11",
+   "python": "3.12.3"
+  }
+ },
+ "train": {
+  "v6c": {
+   "42": {
+    "steps": 480,
+    "minutes": 132.0,
+    "train_loss": 0.1344,
+    "val_oas_final": 0.2341,
+    "val_oas_code_final": 0.1229,
+    "val_oas_min": 0.2163,
+    "val_oas_code_min": 0.116,
+    "gpu": {
+     "peak_allocated_gib": 11.71,
+     "peak_reserved_gib": 16.45
+    },
+    "trainable": 68812800,
+    "padding_free": true,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss"
+   },
+   "43": {
+    "steps": 480,
+    "minutes": 131.8,
+    "train_loss": 0.1387,
+    "val_oas_final": 0.2358,
+    "val_oas_code_final": 0.1223,
+    "val_oas_min": 0.2103,
+    "val_oas_code_min": 0.1147,
+    "gpu": {
+     "peak_allocated_gib": 11.71,
+     "peak_reserved_gib": 16.41
+    },
+    "trainable": 68812800,
+    "padding_free": true,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss"
+   },
+   "44": {
+    "steps": 480,
+    "minutes": 132.1,
+    "train_loss": 0.1376,
+    "val_oas_final": 0.2373,
+    "val_oas_code_final": 0.1188,
+    "val_oas_min": 0.2169,
+    "val_oas_code_min": 0.1102,
+    "gpu": {
+     "peak_allocated_gib": 11.71,
+     "peak_reserved_gib": 15.28
+    },
+    "trainable": 68812800,
+    "padding_free": true,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss"
+   }
+  },
+  "v5": {
+   "42": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.1464,
+    "val_oas_final": 0.2425,
+    "val_oas_code_final": 0.1469
+   },
+   "43": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.15,
+    "val_oas_final": 0.2479,
+    "val_oas_code_final": 0.1447
+   },
+   "44": {
+    "steps": 480,
+    "minutes": 56.1,
+    "train_loss": 0.1483,
+    "val_oas_final": 0.2535,
+    "val_oas_code_final": 0.1404
+   }
+  }
+ },
+ "config_v6c": {
+  "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+  "max_seq_len": 4096,
+  "lora_r": 16,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "target_modules": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj",
+   "gate_proj",
+   "up_proj",
+   "down_proj"
+  ],
+  "epochs": 3,
+  "lr": 0.0002,
+  "batch": 2,
+  "grad_acc": 4,
+  "warmup_steps": 10,
+  "weight_decay": 0.01,
+  "lr_scheduler": "cosine",
+  "save_steps": 30,
+  "eval_steps": 30,
+  "eval_max_new_tokens": 256,
+  "eval_batch": 8,
+  "prompt_version": "policy-label-v3.0.1",
+  "prompt_file": "policy_label_v3.0.1.md",
+  "changed_vs_v5": {
+   "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit -> unsloth/Qwen2.5-14B-Instruct-bnb-4bit (the only change)"
+  },
+  "data": "v6c",
+  "seed": 42,
+  "train_file": "train_sft_v5.jsonl",
+  "val_file": "val_sft_v5.jsonl",
+  "tag": "lora_v6c_s42_final"
+ },
+ "preflight": {
+  "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+  "prompt_tokens": 2763,
+  "output_tokens": 85,
+  "parsed": {
+   "label": "public",
+   "confidence": 0.9,
+   "rationale": "description: 설명과 코드가 없으며, path와 summary만 있는 것으로 보아 누구나 접근 가능한 공개 엔드포인트로 판단; 판단: 접근 조건이 명시되어 있지 않고, 인증이나 특정 역할 요구사항이 없으므로 public 선택",
+   "evidence_fields": [
+    "path",
+    "summary"
+   ]
+  },
+  "gpu_memory": {
+   "peak_allocated_gib": 10.4,
+   "peak_reserved_gib": 10.64
+  }
+ },
+ "run_marks": [
+  "2026-11-04T14:49:09+00:00 run_v6c start pod=zra2rcdj6gbixh BASE=/workspace/blade_lora_v3 SEEDS=[42 43 44] STOP_POD=1 RUN_BASE14B=1",
+  "2026-11-04T14:49:09+00:00 auto-stop armed: runpodctl stop pod zra2rcdj6gbixh will run when this script ends",
+  "2026-11-04T14:49:09+00:00 0/7 hashes",
+  "2026-11-04T14:49:09+00:00 1/7 environment",
+  "2026-11-04T14:51:49+00:00 2/7 preflight (14B base load + generate + memory)",
+  "2026-11-04T14:52:44+00:00 3/7 seed 42",
+  "2026-11-04T14:52:44+00:00 seed 42: train + eval (resumable)",
+  "2026-11-04T17:53:02+00:00 seed 42 ok",
+  "2026-11-04T17:53:15+00:00 EARLY GATE (pre-registered): v6c s42 test_v5 oas_code macro-F1 vs v5 s42 (0.6661)",
+  "2026-11-04T17:53:29+00:00 EARLY GATE PASS: continuing with the remaining seeds",
+  "2026-11-04T17:53:29+00:00 4/7 seed 43",
+  "2026-11-04T17:53:29+00:00 seed 43: train + eval (resumable)",
+  "2026-11-04T20:52:54+00:00 seed 43 ok",
+  "2026-11-04T20:53:07+00:00 5/7 seed 44",
+  "2026-11-04T20:53:07+00:00 seed 44: train + eval (resumable)",
+  "2026-11-04T23:53:09+00:00 seed 44 ok",
+  "2026-11-04T23:53:23+00:00 6/7 base 14B zero-shot (eval only, 6 jobs)",
+  "2026-11-05T00:32:13+00:00 base14b ok",
+  "2026-11-05T00:32:13+00:00 7/7 final archive",
+  "2026-11-05T00:32:13+00:00 final archive"
+ ],
+ "files": {
+  "zip_sha256": "97cd45dd2634831de6a64aa05c9074376a307b4de0dd3998c4e2d4d2d5de0be1",
+  "sums": [
+   "f00834513a52412ae1f0d158a94e048e4b8859fdaf77ed3373be840cacd69ab7  blade_v6c_lora_v6c_s42_adapter.tar.gz",
+   "c266d196ff6aacbb84fcd7850929d64efeb0c3746dc0220858841f012f5c1e22  blade_v6c_lora_v6c_s42_results.tar.gz",
+   "f00834513a52412ae1f0d158a94e048e4b8859fdaf77ed3373be840cacd69ab7  blade_v6c_lora_v6c_s42_adapter.tar.gz",
+   "47d10b85b53aac5ed31521c4aadc16fc3001edec3761f1529dae6a8733110731  blade_v6c_lora_v6c_s42_results.tar.gz",
+   "70c6f5e70b4d29346663a2219439592adea39a10c33074960a3ce6fa86444358  blade_v6c_lora_v6c_s43_adapter.tar.gz",
+   "c44f14edf6a767e36ab045fa4a90ea7fd7a71dc7b31264ffe3eba78fbc36eeb5  blade_v6c_lora_v6c_s43_results.tar.gz",
+   "c3e1ea0ba40a961f8e8b64e29e9ef7c262cda926a2f45be58e2fb10419775e5b  blade_v6c_lora_v6c_s44_adapter.tar.gz",
+   "d919a2797fd0e659726a856fba98b5c4d00945ce5da52c008f4276b280c00f1b  blade_v6c_lora_v6c_s44_results.tar.gz",
+   "cf2d2663b0122db7e0a52e3e9ed2590cb16a245f273ec68d0e26b5d5115f35f5  blade_v6c_base_qwen14b_runpod_results.tar.gz",
+   "96c6e3c3ed52474d1bb58da523cd911efe1d58d09d182c4dfe0c513a4c410b31  blade_v6c_all_results.tar.gz"
+  ]
+ }
+}

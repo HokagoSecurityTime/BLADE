@@ -117,3 +117,64 @@ review/v5_train_review*.xlsx
 reports/eval/stable_decoding/raw/
 reports/eval/lora_v5/**/supp_predictions_*.jsonl
 training/lora/data_v5/test_v31_supp_inputs.jsonl
+
+# Mealie real-service evaluation: DB snapshot, Mealie/BLADE secrets, runtime DB and logs
+verification/mealie_runtime/snapshot/
+verification/mealie_runtime/blade/blade_secret.txt
+verification/mealie_runtime/blade/blade.db
+verification/mealie_runtime/blade/detections.jsonl
+verification/mealie_runtime/blade/*.log
+verification/mealie_runtime/blade/*.pid
+verification/mealie_runtime/blade_retry/blade.db
+verification/mealie_runtime/blade_retry/*.log
+verification/mealie_runtime/blade_retry/detections.jsonl
+
+# S8 LoRA v6c: RunPod bundle (contains test_v31_supp_inputs.jsonl = Flowise code) and supp predictions
+export/blade_v6c_*.tgz
+export/blade_v6c_*.sha256
+reports/eval/lora_v6c/**/supp_predictions_*.jsonl
+
+# C′ data-v6d: data-v5 파생(NodeBB GPL-3.0 코드 본문 포함) + Flowise supp 입력 사본 + 검수 xlsx + RunPod 번들
+datasets/blade/processed/train_v6d.jsonl
+datasets/blade/processed/val_v6d.jsonl
+training/lora/data_v6d/train_sft_v6d.jsonl
+training/lora/data_v6d/val_sft_v6d.jsonl
+training/lora/data_v6d/test_v31_supp_inputs.jsonl
+review/c1_relabel_review*.xlsx
+export/blade_v6d_*.tgz
+export/blade_v6d_*.sha256
+training/lora/data_v6a/train_sft_v6a.jsonl
+training/lora/data_v6a/val_sft_v6a.jsonl
+reports/eval/lora_v6d/**/supp_predictions_*.jsonl
+
+# data-v7 rejudge inputs: derived from frozen data-v6d (reproducible: scripts/build_data_v7_rejudge.py build), may contain NodeBB GPL code
+datasets/blade/processed/data_v7/rejudge/inputs/
+
+# data-v7: NodeBB GPL + Flowise/unlicensed test code bodies, review xlsx, RunPod bundle
+datasets/blade/processed/train_v7.jsonl
+datasets/blade/processed/val_v7.jsonl
+datasets/blade/processed/data_v7/train_v7_oas_manual_pool.jsonl
+training/lora/data_v7/train_sft_v7.jsonl
+training/lora/data_v7/val_sft_v7.jsonl
+review/data_v7_human_check.xlsx
+export/blade_v7_*.tgz
+export/blade_v7_*.sha256
+review/test_v6_*.xlsx
+export/blade_s9_*
+export/blade_c7_*
+training/lora/Modelfile.blade-qwen-lora-v7.local
+# D2 Seerr run: local Seerr config/db copies (apiKey, session cookie) stay out of git; paths+hashes in EXCLUDED_FROM_GIT.md
+verification/d2_seerr_20261110/seed/settings.json
+verification/d2_seerr_20261110/seed/settings.after_first_start.json
+verification/d2_seerr_20261110/seed/*.sqlite3
+verification/d2_seerr_20261110/snapshot/db.sqlite3*
+verification/d2_seerr_20261110/logs/cookie_admin.txt
+verification/d2_seerr_20261110/blade/admin_8102.pid
+verification/demo_v7_runtime/scenario_run/
+
+# portal demo runtime artifacts (regenerated at each run; the policy YAML source is demo_backend/portal_policies/)
+verification/demo_portal_runtime/public_url.txt
+verification/demo_portal_runtime/qr.png
+verification/demo_portal_runtime/policies/
+verification/demo_portal_runtime/*.db
+verification/demo_portal_runtime/detections.jsonl

@@ -1,0 +1,18 @@
+{
+ "out": "/workspace/blade_lora_v3/runs/lora_v6a_s44/eval/predictions_oas_lora_v6a_s44_final.jsonl",
+ "cond": "oas",
+ "rows_total": 269,
+ "rows_run": 269,
+ "resumed": 0,
+ "inference_wall_s": 116.8,
+ "mean_ms_per_row": 432.7,
+ "parse_errors": 1,
+ "manual": 179,
+ "label_prob_available": 268,
+ "prompt_tokens_max": 4075,
+ "truncated_prompts": 0,
+ "output_tokens_mean": 63.5,
+ "output_tokens_max": 512,
+ "hit_max_new_tokens": 1,
+ "finished": "2026-11-04T01:26:39"
+}

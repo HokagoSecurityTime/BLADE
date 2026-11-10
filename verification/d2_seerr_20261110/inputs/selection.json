@@ -1,0 +1,118 @@
+{
+  "selection": [
+    {
+      "method": "GET",
+      "path": "/api/v1/request/{requestId}",
+      "file": "routes_request.ts",
+      "express_route": "/:requestId",
+      "call_head_original": "requestRoutes.get('/:requestId',",
+      "call_head_flat": "requestRoutes.get('/api/v1/request/{requestId}',",
+      "body_sha256": "79cd863849f02a9d8873f9c10f3166adc9300416e7f4af6037c9999c86fce670"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/request/{requestId}",
+      "file": "routes_request.ts",
+      "express_route": "/:requestId",
+      "call_head_original": "requestRoutes.put<{ requestId: string }>(\n  '/:requestId',",
+      "call_head_flat": "requestRoutes.put('/api/v1/request/{requestId}',",
+      "body_sha256": "0513462f03cf01365dee6aba41c5d95171fa6ea8d396426068668c570fbee713"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/request/{requestId}",
+      "file": "routes_request.ts",
+      "express_route": "/:requestId",
+      "call_head_original": "requestRoutes.delete('/:requestId',",
+      "call_head_flat": "requestRoutes.delete('/api/v1/request/{requestId}',",
+      "body_sha256": "80c3f81888d189b5d33031c577ead722e2225600be343e819ddde1d638220015"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/issue/{issueId}",
+      "file": "routes_issue.ts",
+      "express_route": "/:issueId",
+      "call_head_original": "issueRoutes.get<{ issueId: string }>(\n  '/:issueId',",
+      "call_head_flat": "issueRoutes.get('/api/v1/issue/{issueId}',",
+      "body_sha256": "abb2e3d1f09e868569bed585388a9318f44cd0a3339bb480180642e7b056d66f"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/issue/{issueId}/comment",
+      "file": "routes_issue.ts",
+      "express_route": "/:issueId/comment",
+      "call_head_original": "issueRoutes.post<{ issueId: string }, Issue, { message: string }>(\n  '/:issueId/comment',",
+      "call_head_flat": "issueRoutes.post('/api/v1/issue/{issueId}/comment',",
+      "body_sha256": "9f08638442c8cdb7c9885abdcac2fdc1faeb1c294c8cbfe6d10d3a30f11e8290"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/issue/{issueId}",
+      "file": "routes_issue.ts",
+      "express_route": "/:issueId",
+      "call_head_original": "issueRoutes.delete(\n  '/:issueId',",
+      "call_head_flat": "issueRoutes.delete('/api/v1/issue/{issueId}',",
+      "body_sha256": "614d8e0bd96e55e60d54ddd9663f76d90eba53015b025d60e49b31248a85269d"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/issueComment/{commentId}",
+      "file": "routes_issueComment.ts",
+      "express_route": "/:commentId",
+      "call_head_original": "issueCommentRoutes.put<\n  { commentId: string },\n  IssueComment,\n  { message: string }\n>(\n  '/:commentId',",
+      "call_head_flat": "issueCommentRoutes.put('/api/v1/issueComment/{commentId}',",
+      "body_sha256": "e44cb6590cb70e36799a5f5062824c2a876a3c6eb7e71be32aafcc115b322ae0"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/user/{userId}",
+      "file": "routes_user_index.ts",
+      "express_route": "/:id",
+      "call_head_original": "router.get<{ id: string }>('/:id',",
+      "call_head_flat": "router.get('/api/v1/user/{userId}',",
+      "body_sha256": "470e6e896fe5a6a7c3d6365cdaf0752ab3e63b74af53b3a0174a6a97ce30e13f"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/user/{userId}/quota",
+      "file": "routes_user_index.ts",
+      "express_route": "/:id/quota",
+      "call_head_original": "router.get<{ id: string }, QuotaResponse>(\n  '/:id/quota',",
+      "call_head_flat": "router.get('/api/v1/user/{userId}/quota',",
+      "body_sha256": "06076d719e06787a0f4daeebc0f1746d2eb04308546fd220d05256c93eadd8fb"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/settings/main",
+      "file": "routes_settings_index.ts",
+      "express_route": "/main",
+      "call_head_original": "settingsRoutes.get('/main',",
+      "call_head_flat": "settingsRoutes.get('/api/v1/settings/main',",
+      "body_sha256": "507ae01d8944b8d2605201a097041c58ecd91848da315655b666f4f5ce89d5aa"
+    }
+  ],
+  "upstream_sha256": {
+    "auth.ts": "d449e1c136427b0f4bc1f3fc4e864780fde3cbb08e8bd75f1f1f2d86db44139a",
+    "LICENSE": "0fa8ec7a819fb378982b9175b0aa66f91bc5ea72f828d993413d084ad34e6956",
+    "permissions.ts": "32742d14ef4557f1757dba58216abcb6c0036f86eb914c3ff64b843b49aaaa89",
+    "profileMiddleware.ts": "12d8b069f0b3f1e12f2b5c9be0fcf73b1acfb25e7381f17aec1370ffe2c8488a",
+    "seedTestDb.ts": "3ce54cf4f877aa8feb8ed30ccaa34aa339e500da2426ef0414a82c320ec657b7",
+    "seerr-api.yml": "9533fc4ce04a5e68ef3d7c2deef5a25c43b560dbde07c361eb0f736fce66bf56",
+    "settings.cypress.json": "2fc1c4477de6309c2d9c3748e149831cc07bb65a4e89508ff9b6e6b64b73e70c",
+    "SHA256SUMS_upstream": "643d77caa8388b4d670befc5f8e1f870e0695e21ad7f96844b98641d3e3b3a0b",
+    "User.ts": "729be74aedc73e489e1c359e5cb453cb65d13d4f0fb56589003c5b1b2e1707f6",
+    "routes/entity_Issue.ts": "aba430a0b666e4ea834960d231ac6ae3b8d768725d7dae206bc5df9161e89ea2",
+    "routes/entity_IssueComment.ts": "71f829d377033b01d8e933dd982a6c901fbf3ec0a9dc90f761b129e6f09d0ee1",
+    "routes/entity_MediaRequest.ts": "9358c73fd3bd5222118ff4b3e55f24b69afce9519a00fe5648837adc93333f88",
+    "routes/routes_index.ts": "6b24b8553cccee1dc6aeff71fcdf4e41ef4e2ab9de83510479bcf6f4e91d4582",
+    "routes/routes_issue.ts": "4ab4897d6e9f05a7f35a300435f001d7b3cca2acc9ca1c9206eae8ada9810213",
+    "routes/routes_issueComment.ts": "9ae0f98d2ad13ea989dab9e942783b11716d69a97f2b7fc88bb92802e58753ba",
+    "routes/routes_request.ts": "6b2bd21b66f5f898cf2f617b0e1933df78e3b59ecb2f0fab1b46f6b47f6951c4",
+    "routes/routes_settings_index.ts": "a2063279c6a5cff0648862c303946c2d2d55d5f3364efe4f01a9958301a0b9f2",
+    "routes/routes_user_index.ts": "c84eeaa6fb39ef095fa2a201c4cd02f0b8013449b6ba17438a8e96467a8b94cd"
+  },
+  "outputs_sha256": {
+    "controller_seerr_flat.ts": "5ea09de68d569353850ecc83317576e68869fe456eca11181baca2638d50bb05",
+    "openapi_seerr_subset.json": "a90d79765dd11d1cdd771e4c7f743b84e7548df20b2b1ad797842c6bf247e141"
+  }
+}

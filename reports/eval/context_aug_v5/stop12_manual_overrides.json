@@ -1,0 +1,14 @@
+{
+  "_note": "Claude(AI)가 블록 본문을 읽고 규칙 1차 분류를 수정한 항목. key = ver|id|file:start. 정답 열은 읽지 않았다.",
+  "new|v5t-ghost-a322c4eaaa|ghost/core/server/api/endpoints/authentication.js:143": {"class": "irrelevant", "note": "POST /session 핸들러가 아니라 발췌에 함께 실린 다른 엔드포인트(generateResetToken) 설정"},
+  "new|v5t-umami-ad293dc85a|src/app/api/admin/websites/route.ts:43": {"class": "irrelevant", "note": "prisma include 객체(members where role)이지 인가 검사가 아님"},
+  "new|v5t-umami-6eb1dd711f|src/queries/prisma/website.ts:122": {"class": "indirect", "note": "팀 접근 포함 웹사이트 조회 쿼리 — 데이터 범위이지 결정 조건은 아님"},
+  "new|v5t-umami-640719b3b2|src/lib/auth.ts:71": {"class": "irrelevant", "note": "checkAuth: 토큰·세션 파싱(인증)"},
+  "new|v5t-umami-640719b3b2|src/lib/auth.ts:32": {"class": "irrelevant", "note": "checkApiKeyAuth: API 키 인증"},
+  "new|v5t-ghost-5f25be85a3|ghost/core/server/auth/authorize.js:30": {"class": "irrelevant", "note": "authorizeAdminApi: user/api_key 존재만 확인(인증)"},
+  "new|v5t-ghost-56bc478d48|ghost/core/server/auth/authorize.js:30": {"class": "irrelevant", "note": "authorizeAdminApi: user/api_key 존재만 확인(인증)"},
+  "new|v5t-ghost-0cbaf4100c|ghost/core/server/services/permissions/permissions-data.ts:1": {"class": "irrelevant", "note": "GET /authentication/setup은 permissions: false — 권한표가 적용되지 않음"},
+  "new|v5t-ghost-0cbaf4100c|ghost/core/server/services/permissions/can-this.js:35": {"class": "irrelevant", "note": "permissions: false 엔드포인트"},
+  "new|v5t-ghost-0cbaf4100c|ghost/core/server/api/endpoints/authentication.js:120": {"class": "irrelevant", "note": "핸들러 자신(isSetup) 재수록, 인가 조건 없음"},
+  "old|v5t-ghost-a322c4eaaa|ghost/core/server/models/user.js:371": {"class": "irrelevant", "note": "user.hasLoggedIn(): 핸들러가 실제 호출하는 메서드이나 로그인 여부 플래그(인증)"}
+}

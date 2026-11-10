@@ -1,0 +1,28 @@
+id: pol_api_v1_issue_delete_by_issueId
+endpoint:
+  method: DELETE
+  path: /api/v1/issue/{issueId}
+label: owner_or_admin
+params:
+  object_param: issueId
+  owner_lookup:
+    table: issue
+    id_col: id
+    owner_col: createdById
+    tenant_col: null
+  roles:
+  - owner
+  - admin
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9]
+  description: 핸들러 원문 — 관리자 권한 보유자 또는 객체 생성자 본인만이 요청을 처리할 수 있음; 판단: owner_or_admin
+  | params: object_param issueId -> ERD issue.id; owner_col=modifiedById; tenant_col=None;
+  llm v2.0 filled [''roles''] | human edit E3 (D2 2026-11-10): owner_lookup={"table":
+  "issue", "id_col": "id", "owner_col": "createdById", "tenant_col": null}'
+status: ACTIVE
+created_at: '2026-11-10T11:34:43.043521Z'
+mode: observe
+version: 1
+source: manual
+evidence_refs: []

@@ -1,0 +1,34 @@
+{
+ "rows": 60,
+ "files": {
+  "A": "review/human_agreement_v5_A.xlsx",
+  "B": "review/human_agreement_v5_B.xlsx"
+ },
+ "sha256": {
+  "A": "d36fddd54dc9d512ce96c2b393686310eec4f5331a6fb5f1c8564803755de8ec",
+  "B": "48fd0cf7b921b4cada637ae84f74d4684986d97997931b537d2e244d1b93db44"
+ },
+ "columns": [
+  "id",
+  "검수자",
+  "project",
+  "service",
+  "method",
+  "path",
+  "OAS(oas_snippet)",
+  "controller_text(핸들러 코드)",
+  "source permalink",
+  "label",
+  "확신도(상/중/하)",
+  "근거 메모"
+ ],
+ "excluded_fields": [
+  "label",
+  "meta.draft_*",
+  "meta.auth_summary",
+  "meta.evidence",
+  "meta.final_reason",
+  "meta.review_note",
+  "model predictions"
+ ]
+}

@@ -1,0 +1,19 @@
+{
+ "out": "/workspace/blade_s4_ctx_h100_20261104/out/pred_test_v5_ctx6144_s42.jsonl",
+ "adapter": "/workspace/blade_lora_v3/runs/lora_v5_s42/adapter",
+ "inputs": "/workspace/blade_s4_ctx_h100_20261104/data/test_v5_ctx6144_inputs.jsonl",
+ "max_len": 6144,
+ "loader": "hf",
+ "rows_total": 283,
+ "rows_run": 283,
+ "resumed": 0,
+ "gpu": "NVIDIA H100 80GB HBM3",
+ "model_load_s": 6.8,
+ "inference_wall_s": 228.5,
+ "mean_ms_per_row": 796.9,
+ "parse_errors": 0,
+ "manual": 57,
+ "prompt_tokens_max": 5583,
+ "truncated_prompts": 0,
+ "finished": "2026-11-03T16:49:11"
+}

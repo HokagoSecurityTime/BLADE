@@ -1,0 +1,20 @@
+{
+ "chosen": "ctx4096",
+ "reason": "rule 1: ctx6144 test_v30 concrete precision drop -0.0126 > 0.025 or public misjudge 3 > 2",
+ "s42": {
+  "test_v5_macro_f1": {
+   "ctx4096": 0.5738,
+   "ctx6144": 0.5567
+  },
+  "test_v30_concrete_precision": {
+   "v5": 0.7667,
+   "ctx4096": 0.7793,
+   "ctx6144": 0.7793
+  },
+  "test_v30_public_misjudge": {
+   "v5": 3,
+   "ctx4096": 3,
+   "ctx6144": 3
+  }
+ }
+}

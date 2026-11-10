@@ -1,0 +1,570 @@
+=== 2026-11-10T03:29:39+00:00 run_c7 BASE=/workspace/blade_c7 LOCAL=/root/c7 pod=8ea1olejqfugr2 scripts=/workspace/blade_c7/runpod
+=== 2026-11-10T03:29:39+00:00 -- gates (pod spec, user instruction 2026-11-10)
+               total        used        free      shared  buff/cache   available
+Mem:            2015         108         358          11        1575        1907
+overlay                                                       80G  2.7G   78G   4% /
+overlay                                                       80G  2.7G   78G   4% /
+us-ca-2-vast.runpod.net:/runpodfs/networkvolumes/7alelwqido   47G  372M   47G   1% /workspace
+128
+NVIDIA H100 80GB HBM3, 81559 MiB
+=== 2026-11-10T03:29:39+00:00 volume path ok: /workspace/blade_c7
+data_v7 inputs verified
+=== 2026-11-10T03:29:44+00:00 -- gates passed
+=== 2026-11-10T03:29:44+00:00 a) GGUF merge (work dir on container disk: /root/c7/work)
+=== 2026-11-10T03:29:44+00:00 merge_gguf_v7 seed=42 adapter=/workspace/blade_c7/runs/lora_v7_s42/adapter
+warning: /workspace/blade_c7/runs/lora_v7_s42/logs/train_result.json missing (adapter restored from an archive?)
+adapter_model.safetensors 66c68a58b81a859ea77b9ccfe7d88716c3223f78a8a050754955d70e25184777
+us-ca-2-vast.runpod.net:/runpodfs/networkvolumes/7alelwqido   47G  372M   47G   1% /workspace
+overlay                                                       80G  2.7G   78G   4% /
+== 1/4 llama.cpp b11693 (convert script + llama-quantize)
+Note: switching to 'a30fb4924dcfec81c1b2c20634bd47fa4403061a'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+llama.cpp b11693
+CMAKE_BUILD_TYPE=Release
+== 2/4 fp32 merge -> fp16 HF checkpoint (/root/c7/work/merged)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:19<00:57, 19.03s/it]Fetching 4 files:  50%|█████     | 2/4 [00:20<00:17,  8.85s/it]Fetching 4 files:  75%|███████▌  | 3/4 [00:27<00:07,  7.66s/it]Fetching 4 files: 100%|██████████| 4/4 [00:27<00:00,  4.68s/it]Fetching 4 files: 100%|██████████| 4/4 [00:27<00:00,  6.78s/it]
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:01<08:45,  1.56s/it]Loading weights:   1%|          | 2/339 [00:01<04:49,  1.16it/s]Loading weights:   8%|▊         | 28/339 [00:02<00:15, 20.06it/s]Loading weights:  11%|█         | 38/339 [00:02<00:11, 26.16it/s]Loading weights:  13%|█▎        | 43/339 [00:02<00:14, 20.90it/s]Loading weights:  15%|█▍        | 50/339 [00:03<00:13, 22.11it/s]Loading weights:  16%|█▌        | 54/339 [00:03<00:14, 19.27it/s]Loading weights:  19%|█▉        | 64/339 [00:03<00:13, 20.00it/s]Loading weights:  22%|██▏       | 76/339 [00:04<00:11, 22.32it/s]Loading weights:  26%|██▌       | 88/339 [00:04<00:09, 25.59it/s]Loading weights:  27%|██▋       | 91/339 [00:05<00:11, 21.54it/s]Loading weights:  29%|██▉       | 100/339 [00:05<00:09, 25.79it/s]Loading weights:  32%|███▏      | 108/339 [00:05<00:07, 29.30it/s]Loading weights:  33%|███▎      | 112/339 [00:05<00:08, 26.58it/s]Loading weights:  34%|███▍      | 115/339 [00:05<00:09, 23.88it/s]Loading weights:  37%|███▋      | 124/339 [00:06<00:08, 26.10it/s]Loading weights:  37%|███▋      | 127/339 [00:06<00:09, 23.52it/s]Loading weights:  40%|████      | 136/339 [00:06<00:08, 25.07it/s]Loading weights:  44%|████▎     | 148/339 [00:07<00:07, 24.41it/s]Loading weights:  47%|████▋     | 159/339 [00:07<00:05, 31.79it/s]Loading weights:  48%|████▊     | 163/339 [00:07<00:08, 21.72it/s]Loading weights:  51%|█████     | 172/339 [00:08<00:06, 25.02it/s]Loading weights:  54%|█████▎    | 182/339 [00:08<00:04, 31.74it/s]Loading weights:  55%|█████▌    | 187/339 [00:08<00:06, 22.08it/s]Loading weights:  58%|█████▊    | 196/339 [00:09<00:06, 21.98it/s]Loading weights:  61%|██████    | 206/339 [00:09<00:04, 27.76it/s]Loading weights:  62%|██████▏   | 210/339 [00:09<00:05, 21.75it/s]Loading weights:  64%|██████▎   | 216/339 [00:09<00:04, 25.69it/s]Loading weights:  65%|██████▍   | 220/339 [00:10<00:06, 19.38it/s]Loading weights:  68%|██████▊   | 232/339 [00:10<00:05, 21.10it/s]Loading weights:  72%|███████▏  | 244/339 [00:11<00:03, 25.92it/s]Loading weights:  73%|███████▎  | 248/339 [00:11<00:03, 26.06it/s]Loading weights:  75%|███████▍  | 254/339 [00:11<00:02, 29.22it/s]Loading weights:  76%|███████▌  | 258/339 [00:11<00:04, 18.32it/s]Loading weights:  79%|███████▉  | 268/339 [00:12<00:03, 23.34it/s]Loading weights:  80%|███████▉  | 271/339 [00:12<00:03, 21.89it/s]Loading weights:  82%|████████▏ | 278/339 [00:12<00:02, 25.11it/s]Loading weights:  83%|████████▎ | 281/339 [00:12<00:02, 21.98it/s]Loading weights:  86%|████████▌ | 292/339 [00:13<00:01, 24.36it/s]Loading weights:  87%|████████▋ | 295/339 [00:13<00:02, 20.23it/s]Loading weights:  90%|████████▉ | 304/339 [00:13<00:01, 22.72it/s]Loading weights:  93%|█████████▎| 314/339 [00:13<00:00, 29.51it/s]Loading weights:  94%|█████████▍| 318/339 [00:14<00:01, 19.70it/s]Loading weights:  97%|█████████▋| 328/339 [00:14<00:00, 23.67it/s]Loading weights: 100%|██████████| 339/339 [00:14<00:00, 22.90it/s]
+lora target weights: 196
+Writing model shards:   0%|          | 0/4 [00:00<?, ?it/s]Writing model shards:  25%|██▌       | 1/4 [00:01<00:03,  1.05s/it]Writing model shards:  50%|█████     | 2/4 [00:02<00:02,  1.07s/it]Writing model shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.09s/it]Writing model shards: 100%|██████████| 4/4 [00:03<00:00,  1.20it/s]
+merged fp16 checkpoint written to /root/c7/work/merged
+dropped HF cache of the base (DROP_HF_CACHE=1)
+overlay          80G   18G   63G  22% /
+== 3/4 f16 GGUF
+INFO:hf-to-gguf:Loading model: merged
+INFO:hf-to-gguf:Model architecture: Qwen2ForCausalLM
+INFO:hf-to-gguf:gguf: loading model weight map from 'model.safetensors.index.json'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00001-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00002-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00003-of-00004.safetensors'
+INFO:hf-to-gguf:gguf: indexing model part 'model-00004-of-00004.safetensors'
+INFO:gguf.gguf_writer:gguf: This GGUF file is for Little Endian only
+INFO:hf-to-gguf:Exporting model...
+INFO:hf-to-gguf:output.weight,             torch.float16 --> F16, shape = {3584, 152064}
+INFO:hf-to-gguf:token_embd.weight,         torch.float16 --> F16, shape = {3584, 152064}
+INFO:hf-to-gguf:blk.0.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.0.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.0.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.0.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.0.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.0.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.0.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.0.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.0.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.0.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.0.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.0.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.1.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.1.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.1.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.1.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.1.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.1.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.1.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.1.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.1.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.1.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.1.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.1.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.2.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.2.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.2.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.2.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.2.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.2.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.2.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.2.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.2.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.2.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.2.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.2.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.3.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.3.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.3.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.3.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.3.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.3.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.3.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.3.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.3.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.3.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.3.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.3.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.4.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.4.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.4.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.4.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.4.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.4.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.4.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.4.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.4.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.4.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.4.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.4.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.5.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.5.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.5.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.5.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.5.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.5.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.5.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.5.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.5.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.5.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.5.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.5.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.6.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.10.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.10.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.10.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.10.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.10.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.10.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.10.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.10.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.10.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.10.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.10.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.10.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.11.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.11.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.11.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.11.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.11.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.11.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.11.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.11.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.11.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.11.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.11.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.11.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.12.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.12.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.12.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.12.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.12.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.12.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.12.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.12.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.12.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.12.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.12.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.12.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.13.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.13.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.13.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.13.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.13.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.13.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.13.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.13.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.13.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.13.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.13.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.13.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.14.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.14.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.14.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.14.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.14.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.14.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.14.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.14.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.14.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.14.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.14.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.14.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.15.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.15.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.15.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.15.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.15.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.15.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.15.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.15.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.15.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.15.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.15.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.15.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.16.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.16.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.16.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.6.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.6.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.6.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.6.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.6.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.6.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.6.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.6.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.6.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.6.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.6.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.7.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.7.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.7.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.7.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.7.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.7.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.7.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.7.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.7.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.7.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.7.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.7.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.8.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.8.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.8.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.8.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.8.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.8.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.8.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.8.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.8.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.8.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.8.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.8.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.9.attn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.9.ffn_down.weight,     torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.9.ffn_gate.weight,     torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.9.ffn_up.weight,       torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.9.ffn_norm.weight,     torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.9.attn_k.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.9.attn_k.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.9.attn_output.weight,  torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.9.attn_q.bias,         torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.9.attn_q.weight,       torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.9.attn_v.bias,         torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.9.attn_v.weight,       torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.16.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.16.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.16.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.16.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.16.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.16.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.16.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.16.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.16.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.17.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.17.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.17.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.17.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.17.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.17.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.17.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.17.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.17.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.17.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.17.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.17.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.18.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.18.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.18.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.18.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.18.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.18.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.18.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.18.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.18.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.18.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.18.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.18.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.19.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.19.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.19.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.19.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.19.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.19.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.19.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.19.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.19.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.19.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.19.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.19.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.20.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.20.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.20.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.20.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.20.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.20.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.20.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.20.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.20.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.20.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.20.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.20.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.21.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.21.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.21.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.21.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.21.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.21.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.21.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.21.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.21.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.21.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.21.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.21.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.22.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.22.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.22.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.22.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.22.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.22.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.22.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.22.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.22.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.22.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.22.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.22.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.23.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.23.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.23.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.23.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.23.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.23.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.23.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.23.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.23.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.23.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.23.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.23.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.24.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.24.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.24.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.24.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.24.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.24.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.24.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.24.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.24.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.24.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.24.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.24.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.25.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.25.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.25.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.25.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.25.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.25.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.25.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.25.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.25.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.25.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.25.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.25.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.26.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.26.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.26.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.26.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.26.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.26.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.26.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.26.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.26.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.26.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.26.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.26.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.27.attn_norm.weight,   torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.27.ffn_down.weight,    torch.float16 --> F16, shape = {18944, 3584}
+INFO:hf-to-gguf:blk.27.ffn_gate.weight,    torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.27.ffn_up.weight,      torch.float16 --> F16, shape = {3584, 18944}
+INFO:hf-to-gguf:blk.27.ffn_norm.weight,    torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.27.attn_k.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.27.attn_k.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:blk.27.attn_output.weight, torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.27.attn_q.bias,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:blk.27.attn_q.weight,      torch.float16 --> F16, shape = {3584, 3584}
+INFO:hf-to-gguf:blk.27.attn_v.bias,        torch.float16 --> F32, shape = {512}
+INFO:hf-to-gguf:blk.27.attn_v.weight,      torch.float16 --> F16, shape = {3584, 512}
+INFO:hf-to-gguf:output_norm.weight,        torch.float16 --> F32, shape = {3584}
+INFO:hf-to-gguf:Set meta model
+INFO:hf-to-gguf:Set model parameters
+INFO:hf-to-gguf:gguf: context length = 32768
+INFO:hf-to-gguf:gguf: embedding length = 3584
+INFO:hf-to-gguf:gguf: feed forward length = 18944
+INFO:hf-to-gguf:gguf: head count = 28
+INFO:hf-to-gguf:gguf: key-value head count = 4
+WARNING:hf-to-gguf:Unknown RoPE type: default
+INFO:hf-to-gguf:gguf: rope scaling type = NONE
+INFO:hf-to-gguf:gguf: rope theta = 1000000.0
+INFO:hf-to-gguf:gguf: rms norm epsilon = 1e-06
+INFO:hf-to-gguf:gguf: file type = 1
+INFO:hf-to-gguf:Set model quantization version
+INFO:hf-to-gguf:Set model tokenizer
+INFO:gguf.vocab:Adding 151387 merge(s).
+INFO:gguf.vocab:Setting special token type eos to 151645
+INFO:gguf.vocab:Setting special token type pad to 151654
+INFO:gguf.vocab:Setting special token type bos to 151643
+INFO:gguf.vocab:Setting chat_template to {%- if tools %}
+    {{- '<|im_start|>system\n' }}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- messages[0]['content'] }}
+    {%- else %}
+        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}
+    {%- endif %}
+    {{- "\n\n# Tools\n\nYou may call one or more functions to assist with the user query.\n\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>" }}
+    {%- for tool in tools %}
+        {{- "\n" }}
+        {{- tool | tojson }}
+    {%- endfor %}
+    {{- "\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{\"name\": <function-name>, \"arguments\": <args-json-object>}\n</tool_call><|im_end|>\n" }}
+{%- else %}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- '<|im_start|>system\n' + messages[0]['content'] + '<|im_end|>\n' }}
+    {%- else %}
+        {{- '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n' }}
+    {%- endif %}
+{%- endif %}
+{%- for message in messages %}
+    {%- if (message.role == "user") or (message.role == "system" and not loop.first) or (message.role == "assistant" and not message.tool_calls) %}
+        {{- '<|im_start|>' + message.role + '\n' + message.content + '<|im_end|>' + '\n' }}
+    {%- elif message.role == "assistant" %}
+        {{- '<|im_start|>' + message.role }}
+        {%- if message.content %}
+            {{- '\n' + message.content }}
+        {%- endif %}
+        {%- for tool_call in message.tool_calls %}
+            {%- if tool_call.function is defined %}
+                {%- set tool_call = tool_call.function %}
+            {%- endif %}
+            {{- '\n<tool_call>\n{"name": "' }}
+            {{- tool_call.name }}
+            {{- '", "arguments": ' }}
+            {{- tool_call.arguments | tojson }}
+            {{- '}\n</tool_call>' }}
+        {%- endfor %}
+        {{- '<|im_end|>\n' }}
+    {%- elif message.role == "tool" %}
+        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != "tool") %}
+            {{- '<|im_start|>user' }}
+        {%- endif %}
+        {{- '\n<tool_response>\n' }}
+        {{- message.content }}
+        {{- '\n</tool_response>' }}
+        {%- if loop.last or (messages[loop.index0 + 1].role != "tool") %}
+            {{- '<|im_end|>\n' }}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{%- if add_generation_prompt %}
+    {{- '<|im_start|>assistant\n' }}
+{%- endif %}
+
+INFO:gguf.vocab:Setting normalizer_nfc to True
+INFO:gguf.gguf_writer:Writing the following files:
+INFO:gguf.gguf_writer:/root/c7/work/blade-qwen-lora-v7-s42-f16.gguf: n_tensors = 339, total_size = 15.2G
+Writing:   0%|          | 0.00/15.2G [00:00<?, ?byte/s]Writing:   7%|▋         | 1.09G/15.2G [00:00<00:03, 4.58Gbyte/s]Writing:  14%|█▍        | 2.18G/15.2G [00:00<00:02, 4.47Gbyte/s]Writing:  17%|█▋        | 2.64G/15.2G [00:00<00:03, 3.60Gbyte/s]Writing:  20%|██        | 3.08G/15.2G [00:00<00:03, 3.75Gbyte/s]Writing:  23%|██▎       | 3.52G/15.2G [00:00<00:03, 3.90Gbyte/s]Writing:  26%|██▌       | 3.99G/15.2G [00:00<00:02, 4.05Gbyte/s]Writing:  29%|██▉       | 4.45G/15.2G [00:01<00:02, 4.14Gbyte/s]Writing:  32%|███▏      | 4.92G/15.2G [00:01<00:02, 3.67Gbyte/s]Writing:  35%|███▌      | 5.38G/15.2G [00:01<00:02, 3.40Gbyte/s]Writing:  38%|███▊      | 5.85G/15.2G [00:01<00:02, 3.62Gbyte/s]Writing:  41%|████▏     | 6.32G/15.2G [00:01<00:02, 3.80Gbyte/s]Writing:  45%|████▍     | 6.78G/15.2G [00:01<00:02, 3.96Gbyte/s]Writing:  48%|████▊     | 7.25G/15.2G [00:01<00:01, 4.07Gbyte/s]Writing:  51%|█████     | 7.71G/15.2G [00:02<00:02, 3.22Gbyte/s]Writing:  54%|█████▎    | 8.18G/15.2G [00:02<00:02, 3.06Gbyte/s]Writing:  57%|█████▋    | 8.65G/15.2G [00:02<00:01, 3.33Gbyte/s]Writing:  60%|█████▉    | 9.11G/15.2G [00:02<00:01, 3.58Gbyte/s]Writing:  63%|██████▎   | 9.58G/15.2G [00:02<00:01, 3.73Gbyte/s]Writing:  66%|██████▌   | 10.0G/15.2G [00:02<00:01, 3.90Gbyte/s]Writing:  69%|██████▉   | 10.5G/15.2G [00:02<00:01, 2.77Gbyte/s]Writing:  72%|███████▏  | 11.0G/15.2G [00:03<00:01, 3.09Gbyte/s]Writing:  75%|███████▌  | 11.4G/15.2G [00:03<00:01, 3.39Gbyte/s]Writing:  78%|███████▊  | 11.9G/15.2G [00:03<00:00, 3.63Gbyte/s]Writing:  81%|████████▏ | 12.4G/15.2G [00:03<00:00, 3.81Gbyte/s]Writing:  84%|████████▍ | 12.8G/15.2G [00:03<00:00, 3.95Gbyte/s]Writing:  87%|████████▋ | 13.3G/15.2G [00:03<00:00, 2.77Gbyte/s]Writing:  90%|█████████ | 13.8G/15.2G [00:03<00:00, 3.09Gbyte/s]Writing:  93%|█████████▎| 14.2G/15.2G [00:03<00:00, 3.40Gbyte/s]Writing:  97%|█████████▋| 14.7G/15.2G [00:04<00:00, 3.63Gbyte/s]Writing: 100%|█████████▉| 15.2G/15.2G [00:04<00:00, 3.82Gbyte/s]Writing: 100%|██████████| 15.2G/15.2G [00:04<00:00, 3.60Gbyte/s]
+INFO:hf-to-gguf:Model successfully exported to /root/c7/work/blade-qwen-lora-v7-s42-f16.gguf
+f16 gguf ab60f867f2a542d5183cc3fd18d3007f7bdb292a80d1d09fc44bd7f22ae4b891 15237853152 bytes
+== 4/4 Q4_K_M (128 threads; progress in /workspace/blade_c7/export/gguf/quantize.log)
+Q4_K_M gguf 1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 4683073504 bytes
+manifest /workspace/blade_c7/export/gguf/merge_manifest_v7_s42.json
+1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d  blade-qwen-lora-v7-s42-Q4_K_M.gguf
+7bde3d38c8cd8733be42500ef3a427434b5dca5a382bcbc7f0aa07de65f0688f  merge_manifest_v7_s42.json
+=== 2026-11-10T03:34:48+00:00 merge_gguf_v7 done: /workspace/blade_c7/export/gguf/blade-qwen-lora-v7-s42-Q4_K_M.gguf
+=== 2026-11-10T03:34:48+00:00 a) GGUF ok
+=== 2026-11-10T03:34:48+00:00 ollama serve (models in /root/c7/ollama)
+[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠧ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠇ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠏ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠋ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠙ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠹ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠸ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠼ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠴ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components ⠦ [K[?25h[?2026l[?2026h[?25l[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 1% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 2% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 4% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 7% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 8% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 11% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 13% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 15% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 17% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 20% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 21% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 24% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 26% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 28% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 30% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 33% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 34% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 37% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 39% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 41% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 43% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 46% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 47% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 50% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 53% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 54% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 57% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 59% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 60% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 62% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 65% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 66% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 69% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 72% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 73% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 76% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 78% ⠦ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 80% ⠧ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 82% ⠇ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 85% ⠏ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 86% ⠋ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 89% ⠙ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 92% ⠹ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 93% ⠸ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 96% ⠼ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 98% ⠴ [K[?25h[?2026l[?2026h[?25l[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF ⠹ [K[?25h[?2026l[?2026h[?25l[A[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF [K
+using existing layer sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d [K
+creating new layer sha256:6601c4fe98f45d0bc49d26ed501395d2c9d71ecef93a4dcaa063385dce5a738e [K
+creating new layer sha256:b803e137e341baac237b051f945a0a4ba5f6a9189b20632c450c554811173cff [K
+writing manifest ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF [K
+using existing layer sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d [K
+creating new layer sha256:6601c4fe98f45d0bc49d26ed501395d2c9d71ecef93a4dcaa063385dce5a738e [K
+creating new layer sha256:b803e137e341baac237b051f945a0a4ba5f6a9189b20632c450c554811173cff [K
+writing manifest ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[A[1Ggathering model components [K
+copying file sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d 100% [K
+parsing GGUF [K
+using existing layer sha256:1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d [K
+creating new layer sha256:6601c4fe98f45d0bc49d26ed501395d2c9d71ecef93a4dcaa063385dce5a738e [K
+creating new layer sha256:b803e137e341baac237b051f945a0a4ba5f6a9189b20632c450c554811173cff [K
+writing manifest [K
+success [K[?25h[?2026l
+# Modelfile generated by "ollama show"
+# To build a new Modelfile based on this, replace FROM with:
+# FROM blade-qwen-lora-v7:latest
+
+FROM /root/c7/ollama/blobs/sha256-1dd24dcdff60619d055277591b134f133a24a4cd62a9b51f3cec8abcdc88144d
+=== 2026-11-10T03:35:02+00:00 b) test_v30 oas_code with the GGUF (equivalence input; nothing tuned on it)
+{"id": "b98a2ab3b50a679bfa16", "hf_prompt_tokens": 3060, "raw_prompt_tokens": 3060, "chat_prompt_tokens": 3060, "same_output": false}
+{"id": "a3b2d062cdb1162b5997", "hf_prompt_tokens": 2890, "raw_prompt_tokens": 2890, "chat_prompt_tokens": 2890, "same_output": true}
+{"id": "4af8a0694ed2e327e0db", "hf_prompt_tokens": 3184, "raw_prompt_tokens": 3184, "chat_prompt_tokens": 3184, "same_output": false}
+done 265 rows, parse errors 3, mean 0.9s/row
+=== 2026-11-10T03:39:56+00:00 c) val_sft_v7 with the GGUF (threshold input only)
+done 159 rows, parse errors 0, mean 0.9s/row
+NAME                         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              
+blade-qwen-lora-v7:latest    0ed35e05b8dd    5.1 GB    100% GPU     8192       llamacpp    4 minutes from now    
+=== 2026-11-10T03:42:15+00:00 pack results (GGUF is separate: export/gguf/blade-qwen-lora-v7-s42-Q4_K_M.gguf, 4.7 GB)

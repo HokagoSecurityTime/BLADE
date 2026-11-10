@@ -1,0 +1,22 @@
+{
+ "out": "/workspace/blade_lora_v3/runs/base_qwen14b_runpod/eval/supp_predictions_oas_base_qwen14b_runpod.jsonl",
+ "cond": "oas",
+ "base_model": "unsloth/Qwen2.5-14B-Instruct-bnb-4bit",
+ "rows_total": 222,
+ "rows_run": 222,
+ "resumed": 0,
+ "inference_wall_s": 302.4,
+ "mean_ms_per_row": 1361.8,
+ "parse_errors": 0,
+ "manual": 147,
+ "prompt_tokens_max": 3428,
+ "truncated_prompts": 0,
+ "output_tokens_mean": 82.2,
+ "output_tokens_max": 123,
+ "hit_max_new_tokens": 0,
+ "gpu_memory": {
+  "peak_allocated_gib": 21.57,
+  "peak_reserved_gib": 37.95
+ },
+ "finished": "2026-11-05T00:11:11"
+}

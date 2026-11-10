@@ -1,0 +1,225 @@
+{
+ "gguf": {
+  "f1_207": 0.3705,
+  "p_207": 0.7756,
+  "r_207": 0.5874,
+  "p_265": 0.825,
+  "f1_265": 0.7305,
+  "manual_265": 0.234,
+  "err": 3,
+  "pub_new": 3,
+  "pub_den": 47,
+  "pub_ids": [
+   "acdc8447219278841824",
+   "fc9dac901542ca88d688",
+   "d8c5cf5eb0bfbd488219"
+  ]
+ },
+ "hf_s42": {
+  "f1_207": 0.3775,
+  "p_207": 0.8077,
+  "r_207": 0.6117,
+  "p_265": 0.85,
+  "f1_265": 0.7282,
+  "manual_265": 0.2264,
+  "err": 5,
+  "pub_new": 1,
+  "pub_den": 47,
+  "pub_ids": [
+   "fc9dac901542ca88d688"
+  ]
+ },
+ "f1_207": {
+  "gguf": 0.3705,
+  "hf_s42": 0.3775,
+  "diff": -0.007,
+  "v4_mean": 0.3565,
+  "v4_sd": 0.0454,
+  "within_v4_sd": true,
+  "v5_mean": 0.3744,
+  "v5_sd": 0.0104,
+  "within_v5_sd": true,
+  "v7_mean": 0.3982,
+  "v7_sd": 0.0187,
+  "within_v7_sd": true
+ },
+ "p_207": {
+  "gguf": 0.7756,
+  "hf_s42": 0.8077,
+  "diff": -0.0321,
+  "v4_mean": 0.811,
+  "v4_sd": 0.0255,
+  "within_v4_sd": false,
+  "v5_mean": 0.7958,
+  "v5_sd": 0.0252,
+  "within_v5_sd": false,
+  "v7_mean": 0.8238,
+  "v7_sd": 0.02,
+  "within_v7_sd": false
+ },
+ "r_207": {
+  "gguf": 0.5874,
+  "hf_s42": 0.6117,
+  "diff": -0.0243,
+  "v4_mean": 0.5583,
+  "v4_sd": 0.0654,
+  "within_v4_sd": true,
+  "v5_mean": 0.5664,
+  "v5_sd": 0.0101,
+  "within_v5_sd": false,
+  "v7_mean": 0.6279,
+  "v7_sd": 0.0148,
+  "within_v7_sd": false
+ },
+ "p_265": {
+  "gguf": 0.825,
+  "hf_s42": 0.85,
+  "diff": -0.025,
+  "v4_mean": 0.8554,
+  "v4_sd": 0.0175,
+  "within_v4_sd": false,
+  "v5_mean": 0.8413,
+  "v5_sd": 0.0197,
+  "within_v5_sd": false,
+  "v7_mean": 0.862,
+  "v7_sd": 0.015,
+  "within_v7_sd": false
+ },
+ "f1_265": {
+  "gguf": 0.7305,
+  "hf_s42": 0.7282,
+  "diff": 0.0023,
+  "v4_mean": 0.7157,
+  "v4_sd": 0.0217,
+  "within_v4_sd": true,
+  "v5_mean": 0.7,
+  "v5_sd": 0.0095,
+  "within_v5_sd": true,
+  "v7_mean": 0.7316,
+  "v7_sd": 0.0091,
+  "within_v7_sd": true
+ },
+ "manual_265": {
+  "gguf": 0.234,
+  "hf_s42": 0.2264,
+  "diff": 0.0076,
+  "v4_mean": 0.2855,
+  "v4_sd": 0.0437,
+  "within_v4_sd": true,
+  "v5_mean": 0.2729,
+  "v5_sd": 0.0178,
+  "within_v5_sd": true,
+  "v7_mean": 0.2302,
+  "v7_sd": 0.01,
+  "within_v7_sd": true
+ },
+ "tolerance": {
+  "rule": "pre-registered 2026-11-10: primary width = v4 3-seed sd (the widths applied at the v5 check); v5 sd and v7 sd reported alongside",
+  "primary_metrics": [
+   "f1_207",
+   "p_207",
+   "p_265"
+  ],
+  "primary_width": {
+   "f1_207": 0.0454,
+   "p_207": 0.0255,
+   "p_265": 0.0175
+  },
+  "primary_pass": {
+   "f1_207": true,
+   "p_207": false,
+   "p_265": false
+  },
+  "all_primary_pass": false,
+  "v5_width_pass": {
+   "f1_207": true,
+   "p_207": false,
+   "p_265": false
+  },
+  "v7_width_pass": {
+   "f1_207": true,
+   "p_207": false,
+   "p_265": false
+  }
+ },
+ "rows": {
+  "n": 265,
+  "match": 229,
+  "mismatch": 36,
+  "hf_hold_or_error_to_gguf_concrete": 12,
+  "gguf_hold_or_error_from_hf_concrete": 12,
+  "concrete_to_other_concrete": 10,
+  "mismatch_correct_hf": 14,
+  "mismatch_correct_gguf": 9,
+  "output_errors": {
+   "gguf": 3,
+   "hf": 5
+  },
+  "top_transitions": [
+   [
+    "manual_review_required->public",
+    9
+   ],
+   [
+    "owner_match->manual_review_required",
+    8
+   ],
+   [
+    "owner_match->public",
+    5
+   ],
+   [
+    "membership_required->owner_match",
+    2
+   ],
+   [
+    "output_error->manual_review_required",
+    2
+   ],
+   [
+    "role_required->owner_or_admin",
+    1
+   ],
+   [
+    "role_required->manual_review_required",
+    1
+   ],
+   [
+    "output_error->owner_match",
+    1
+   ],
+   [
+    "owner_match->owner_or_admin",
+    1
+   ],
+   [
+    "owner_match->tenant_match",
+    1
+   ]
+  ],
+  "mean_inference_s_gguf": 0.86
+ },
+ "template_check": [
+  {
+   "id": "b98a2ab3b50a679bfa16",
+   "hf_prompt_tokens": 3060,
+   "raw_prompt_tokens": 3060,
+   "chat_prompt_tokens": 3060,
+   "same_output": false
+  },
+  {
+   "id": "a3b2d062cdb1162b5997",
+   "hf_prompt_tokens": 2890,
+   "raw_prompt_tokens": 2890,
+   "chat_prompt_tokens": 2890,
+   "same_output": true
+  },
+  {
+   "id": "4af8a0694ed2e327e0db",
+   "hf_prompt_tokens": 3184,
+   "raw_prompt_tokens": 3184,
+   "chat_prompt_tokens": 3184,
+   "same_output": false
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+admin start 2026-11-10T11:15:24Z model=blade-qwen-lora-v7 min_conf=0.9
+generate start 2026-11-10T11:15:26Z
+http 200
+generate end 2026-11-10T11:18:43Z elapsed 197s
+approve pol_admin_reports_get 200
+approve pol_orders_delete_by_orderId 200
+approve pol_orders_get_by_orderId 200
+approve pol_orgs_docs_get_by_orgId 200
+approve pol_premium_content_get 200
+approve pol_public_health_get 200
+approve pol_users_get_by_userId 200
+pol_admin_reports_get manual_review_required 0.9 ACTIVE [] {}
+pol_orders_delete_by_orderId owner_match 0.9 ACTIVE [] {'table': 'orders', 'id_col': 'id', 'owner_col': 'user_id', 'tenant_col': None}
+pol_orders_get_by_orderId manual_review_required 0.9 ACTIVE [] {}
+pol_orgs_docs_get_by_orgId tenant_match 0.9 ACTIVE [] {'table': 'orgs', 'id_col': 'id', 'owner_col': None, 'tenant_col': 'id'}
+pol_premium_content_get manual_review_required 0.9 ACTIVE [] {}
+pol_public_health_get public 0.9 ACTIVE [] {}
+pol_users_get_by_userId tenant_match 0.9 ACTIVE [] {'table': 'users', 'id_col': 'id', 'owner_col': 'id', 'tenant_col': 'org_id'}
+done 2026-11-10T11:18:44Z

@@ -1,0 +1,292 @@
+{
+ "rule": "max val precision (7 labels), tie -> lower threshold; existing floor 0.7 applies",
+ "rows": 159,
+ "parse_errors": 0,
+ "confidence_values": {
+  "0.7": 5,
+  "0.85": 24,
+  "0.9": 112,
+  "1.0": 18
+ },
+ "candidates": [
+  {
+   "threshold": 0.0,
+   "macro_f1": 0.779,
+   "accuracy": 0.8239,
+   "concrete_precision": 0.8306,
+   "concrete_recall": 0.8374,
+   "manual_ratio": 0.2201,
+   "per_label": {
+    "public": {
+     "support": 14,
+     "precision": 0.7857,
+     "recall": 0.7857,
+     "f1": 0.7857
+    },
+    "role_required": {
+     "support": 46,
+     "precision": 0.8723,
+     "recall": 0.8913,
+     "f1": 0.8817
+    },
+    "membership_required": {
+     "support": 6,
+     "precision": 0.5714,
+     "recall": 0.6667,
+     "f1": 0.6154
+    },
+    "tenant_match": {
+     "support": 6,
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "owner_match": {
+     "support": 38,
+     "precision": 0.9412,
+     "recall": 0.8421,
+     "f1": 0.8889
+    },
+    "owner_or_admin": {
+     "support": 13,
+     "precision": 0.6923,
+     "recall": 0.6923,
+     "f1": 0.6923
+    },
+    "manual_review_required": {
+     "support": 36,
+     "precision": 0.8,
+     "recall": 0.7778,
+     "f1": 0.7887
+    }
+   }
+  },
+  {
+   "threshold": 0.7,
+   "macro_f1": 0.779,
+   "accuracy": 0.8239,
+   "concrete_precision": 0.8306,
+   "concrete_recall": 0.8374,
+   "manual_ratio": 0.2201,
+   "per_label": {
+    "public": {
+     "support": 14,
+     "precision": 0.7857,
+     "recall": 0.7857,
+     "f1": 0.7857
+    },
+    "role_required": {
+     "support": 46,
+     "precision": 0.8723,
+     "recall": 0.8913,
+     "f1": 0.8817
+    },
+    "membership_required": {
+     "support": 6,
+     "precision": 0.5714,
+     "recall": 0.6667,
+     "f1": 0.6154
+    },
+    "tenant_match": {
+     "support": 6,
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "owner_match": {
+     "support": 38,
+     "precision": 0.9412,
+     "recall": 0.8421,
+     "f1": 0.8889
+    },
+    "owner_or_admin": {
+     "support": 13,
+     "precision": 0.6923,
+     "recall": 0.6923,
+     "f1": 0.6923
+    },
+    "manual_review_required": {
+     "support": 36,
+     "precision": 0.8,
+     "recall": 0.7778,
+     "f1": 0.7887
+    }
+   }
+  },
+  {
+   "threshold": 0.85,
+   "macro_f1": 0.779,
+   "accuracy": 0.8239,
+   "concrete_precision": 0.8306,
+   "concrete_recall": 0.8374,
+   "manual_ratio": 0.2201,
+   "per_label": {
+    "public": {
+     "support": 14,
+     "precision": 0.7857,
+     "recall": 0.7857,
+     "f1": 0.7857
+    },
+    "role_required": {
+     "support": 46,
+     "precision": 0.8723,
+     "recall": 0.8913,
+     "f1": 0.8817
+    },
+    "membership_required": {
+     "support": 6,
+     "precision": 0.5714,
+     "recall": 0.6667,
+     "f1": 0.6154
+    },
+    "tenant_match": {
+     "support": 6,
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "owner_match": {
+     "support": 38,
+     "precision": 0.9412,
+     "recall": 0.8421,
+     "f1": 0.8889
+    },
+    "owner_or_admin": {
+     "support": 13,
+     "precision": 0.6923,
+     "recall": 0.6923,
+     "f1": 0.6923
+    },
+    "manual_review_required": {
+     "support": 36,
+     "precision": 0.8,
+     "recall": 0.7778,
+     "f1": 0.7887
+    }
+   }
+  },
+  {
+   "threshold": 0.9,
+   "macro_f1": 0.7628,
+   "accuracy": 0.8113,
+   "concrete_precision": 0.8347,
+   "concrete_recall": 0.8211,
+   "manual_ratio": 0.239,
+   "per_label": {
+    "public": {
+     "support": 14,
+     "precision": 0.75,
+     "recall": 0.6429,
+     "f1": 0.6923
+    },
+    "role_required": {
+     "support": 46,
+     "precision": 0.8723,
+     "recall": 0.8913,
+     "f1": 0.8817
+    },
+    "membership_required": {
+     "support": 6,
+     "precision": 0.5714,
+     "recall": 0.6667,
+     "f1": 0.6154
+    },
+    "tenant_match": {
+     "support": 6,
+     "precision": 0.6667,
+     "recall": 1.0,
+     "f1": 0.8
+    },
+    "owner_match": {
+     "support": 38,
+     "precision": 0.9697,
+     "recall": 0.8421,
+     "f1": 0.9014
+    },
+    "owner_or_admin": {
+     "support": 13,
+     "precision": 0.6923,
+     "recall": 0.6923,
+     "f1": 0.6923
+    },
+    "manual_review_required": {
+     "support": 36,
+     "precision": 0.7368,
+     "recall": 0.7778,
+     "f1": 0.7568
+    }
+   }
+  },
+  {
+   "threshold": 1.0,
+   "macro_f1": 0.2881,
+   "accuracy": 0.2893,
+   "concrete_precision": 0.6667,
+   "concrete_recall": 0.0976,
+   "manual_ratio": 0.8868,
+   "per_label": {
+    "public": {
+     "support": 14,
+     "precision": 1.0,
+     "recall": 0.1429,
+     "f1": 0.25
+    },
+    "role_required": {
+     "support": 46,
+     "precision": 0.4,
+     "recall": 0.0435,
+     "f1": 0.0784
+    },
+    "membership_required": {
+     "support": 6,
+     "precision": 0.5,
+     "recall": 0.3333,
+     "f1": 0.4
+    },
+    "tenant_match": {
+     "support": 6,
+     "precision": 1.0,
+     "recall": 0.3333,
+     "f1": 0.5
+    },
+    "owner_match": {
+     "support": 38,
+     "precision": 1.0,
+     "recall": 0.0263,
+     "f1": 0.0513
+    },
+    "owner_or_admin": {
+     "support": 13,
+     "precision": 0.75,
+     "recall": 0.2308,
+     "f1": 0.3529
+    },
+    "manual_review_required": {
+     "support": 36,
+     "precision": 0.2411,
+     "recall": 0.9444,
+     "f1": 0.3842
+    }
+   }
+  }
+ ],
+ "chosen": 0.9,
+ "chosen_by_condition": {
+  "oas": {
+   "threshold": 0.9,
+   "macro_f1": 0.8767,
+   "accuracy": 0.9375,
+   "concrete_precision": 0.9048,
+   "concrete_recall": 1.0,
+   "manual_ratio": 0.3438
+  },
+  "oas_code": {
+   "threshold": 0.9,
+   "macro_f1": 0.7451,
+   "accuracy": 0.7795,
+   "concrete_precision": 0.82,
+   "concrete_recall": 0.7885,
+   "manual_ratio": 0.2126
+  }
+ }
+}

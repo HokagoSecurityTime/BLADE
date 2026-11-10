@@ -1,0 +1,2574 @@
+{
+ "definition": "C′ LoRA v6d (v5 recipe + corrected training labels: data-v6d = data-v5 SFT rows with 36 C1 label changes + 42 C2 rationale rewrites) — stage-3 analysis and report.\nReads only existing prediction files (no inference): reports/eval/lora_v6d/lora_v6d_s{42,43,44}/eval/ and reports/eval/lora_v5/lora_v5_s*/eval/ (v5 baseline),\nplus the scorer outputs scores_test_v5.json / scores_test_v30.json / scores_supp.json (scripts/eval_test_v5.py, eval_v30.py --eval-def both, eval_v31_supp.py).\nWrites reports/eval/lora_v6d/analysis.json and report.md. Pre-registered adoption criteria (AGENTS.md 작업 C′, 3-seed mean):\n (1) test_v5 oas_code macro-F1 >= v5 + 0.016, (2) test_v30 207 concrete precision drop <= 0.025, (3) test_v30 207 public misjudge (/35) mean <= 2.0. No early gate.",
+ "criteria": {
+  "macro_f1_gain": 0.016,
+  "precision_drop": 0.025,
+  "public_misjudge_max": 2.0
+ },
+ "headline": {
+  "v5": {
+   "test_v5": {
+    "macro_f1": [
+     0.6661,
+     0.6836,
+     0.6985
+    ],
+    "accuracy": [
+     0.689,
+     0.6855,
+     0.6996
+    ],
+    "manual": [
+     0.1625,
+     0.1519,
+     0.1837
+    ],
+    "errors": [
+     1,
+     0,
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.8235,
+      0.9143,
+      0.9444
+     ],
+     "role_required": [
+      0.8426,
+      0.7905,
+      0.8208
+     ],
+     "membership_required": [
+      0.5581,
+      0.6437,
+      0.5641
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7324,
+      0.7714,
+      0.7761
+     ],
+     "owner_or_admin": [
+      0.5532,
+      0.5,
+      0.5556
+     ],
+     "manual_review_required": [
+      0.4865,
+      0.4815,
+      0.5299
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       0.9333,
+       0.7368
+      ],
+      [
+       1.0,
+       0.8421
+      ],
+      [
+       1.0,
+       0.8947
+      ]
+     ],
+     "role_required": [
+      [
+       0.8667,
+       0.8198
+      ],
+      [
+       0.8384,
+       0.7477
+      ],
+      [
+       0.8614,
+       0.7838
+      ]
+     ],
+     "membership_required": [
+      [
+       0.4528,
+       0.7273
+      ],
+      [
+       0.5185,
+       0.8485
+      ],
+      [
+       0.4889,
+       0.6667
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.7027,
+       0.7647
+      ],
+      [
+       0.75,
+       0.7941
+      ],
+      [
+       0.7879,
+       0.7647
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.5,
+       0.619
+      ],
+      [
+       0.4,
+       0.6667
+      ],
+      [
+       0.4545,
+       0.7143
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.587,
+       0.4154
+      ],
+      [
+       0.6047,
+       0.4
+      ],
+      [
+       0.5962,
+       0.4769
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.6433,
+      0.6688,
+      0.6561
+     ],
+     "ghost": [
+      0.7536,
+      0.7681,
+      0.7536
+     ],
+     "umami": [
+      0.7368,
+      0.6316,
+      0.7544
+     ]
+    },
+    "manual_count": [
+     46,
+     43,
+     52
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.4008,
+     0.4242,
+     0.3821
+    ],
+    "accuracy": [
+     0.5159,
+     0.4912,
+     0.5371
+    ],
+    "manual": [
+     0.2544,
+     0.371,
+     0.1625
+    ],
+    "errors": [
+     0,
+     1,
+     0
+    ]
+   },
+   "test_v30_207": {
+    "macro_f1": [
+     0.3661,
+     0.386,
+     0.3711
+    ],
+    "macro_f1_265": [
+     0.6947,
+     0.6943,
+     0.7109
+    ],
+    "accuracy": [
+     0.5604,
+     0.5797,
+     0.5652
+    ],
+    "precision": [
+     0.7667,
+     0.8095,
+     0.8112
+    ],
+    "recall": [
+     0.5583,
+     0.5777,
+     0.5631
+    ],
+    "answer_rate": [
+     0.7282,
+     0.7136,
+     0.6942
+    ],
+    "manual": [
+     0.256,
+     0.2899,
+     0.2995
+    ],
+    "errors": [
+     4,
+     0,
+     2
+    ],
+    "per_label": {
+     "public": [
+      0.6429,
+      0.6923,
+      0.5979
+     ],
+     "role_required": [
+      0.4074,
+      0.4643,
+      0.4528
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7432,
+      0.7407,
+      0.7732
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.037,
+      0.0328,
+      0.0317
+     ]
+    },
+    "public_misjudge_35": [
+     3,
+     2,
+     1
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687",
+      "d8c5cf5eb0bfbd488219"
+     ],
+     "43": [
+      "0797f5bb072770d50159",
+      "fc9dac901542ca88d688"
+     ],
+     "44": [
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.7574,
+     0.7279,
+     0.7333
+    ],
+    "macro_f1_102": [
+     0.5036,
+     0.4632,
+     0.4196
+    ],
+    "precision": [
+     0.8866,
+     0.9101,
+     0.9277
+    ],
+    "manual": [
+     0.375,
+     0.4375,
+     0.4813
+    ],
+    "errors": [
+     3,
+     1,
+     0
+    ],
+    "public_misjudge": [
+     0,
+     0,
+     0
+    ]
+   },
+   "supp": {
+    "macro_f1": [
+     0.4725,
+     0.5149,
+     0.4677
+    ],
+    "accuracy": [
+     0.4009,
+     0.464,
+     0.3919
+    ],
+    "manual": [
+     0.2342,
+     0.1441,
+     0.2432
+    ],
+    "errors": [
+     0,
+     1,
+     1
+    ],
+    "per_label": {
+     "public": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "role_required": [
+      0.5437,
+      0.496,
+      0.4348
+     ],
+     "membership_required": [
+      0.5055,
+      0.6809,
+      0.617
+     ],
+     "tenant_match": [
+      0.1967,
+      0.2258,
+      0.2812
+     ],
+     "owner_match": [
+      0.5769,
+      0.5882,
+      0.4583
+     ],
+     "owner_or_admin": [
+      0.3137,
+      0.3556,
+      0.3158
+     ],
+     "manual_review_required": [
+      0.1707,
+      0.2581,
+      0.1667
+     ]
+    },
+    "per_project": {
+     "chatwoot": [
+      0.443,
+      0.5823,
+      0.481
+     ],
+     "chamilo": [
+      0.3621,
+      0.3966,
+      0.3621
+     ],
+     "flowise": [
+      0.2,
+      0.2,
+      0.2
+     ],
+     "multitenant_lab": [
+      0.5,
+      0.75,
+      0.75
+     ],
+     "generic_university": [
+      0.9048,
+      0.9048,
+      0.619
+     ]
+    }
+   },
+   "supp_oas": {
+    "macro_f1": [
+     0.2037,
+     0.2532,
+     0.317
+    ],
+    "accuracy": [
+     0.1892,
+     0.2432,
+     0.2207
+    ],
+    "manual": [
+     0.455,
+     0.455,
+     0.5631
+    ],
+    "errors": [
+     2,
+     0,
+     1
+    ]
+   }
+  },
+  "v6d": {
+   "test_v5": {
+    "macro_f1": [
+     0.687,
+     0.7348,
+     0.6605
+    ],
+    "accuracy": [
+     0.6855,
+     0.7314,
+     0.6749
+    ],
+    "manual": [
+     0.1555,
+     0.2297,
+     0.2438
+    ],
+    "errors": [
+     0,
+     1,
+     1
+    ],
+    "per_label": {
+     "public": [
+      0.9143,
+      0.9189,
+      0.8889
+     ],
+     "role_required": [
+      0.7941,
+      0.8137,
+      0.8169
+     ],
+     "membership_required": [
+      0.5895,
+      0.6575,
+      0.5152
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7647,
+      0.75,
+      0.7606
+     ],
+     "owner_or_admin": [
+      0.5455,
+      0.6531,
+      0.4889
+     ],
+     "manual_review_required": [
+      0.5138,
+      0.6154,
+      0.4925
+     ]
+    },
+    "per_label_pr": {
+     "public": [
+      [
+       1.0,
+       0.8421
+      ],
+      [
+       0.9444,
+       0.8947
+      ],
+      [
+       0.9412,
+       0.8421
+      ]
+     ],
+     "role_required": [
+      [
+       0.871,
+       0.7297
+      ],
+      [
+       0.8925,
+       0.7477
+      ],
+      [
+       0.8529,
+       0.7838
+      ]
+     ],
+     "membership_required": [
+      [
+       0.4516,
+       0.8485
+      ],
+      [
+       0.6,
+       0.7273
+      ],
+      [
+       0.5152,
+       0.5152
+      ]
+     ],
+     "tenant_match": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       0.0
+      ]
+     ],
+     "owner_match": [
+      [
+       0.7647,
+       0.7647
+      ],
+      [
+       0.7105,
+       0.7941
+      ],
+      [
+       0.7297,
+       0.7941
+      ]
+     ],
+     "owner_or_admin": [
+      [
+       0.4412,
+       0.7143
+      ],
+      [
+       0.5714,
+       0.7619
+      ],
+      [
+       0.4583,
+       0.5238
+      ]
+     ],
+     "manual_review_required": [
+      [
+       0.6364,
+       0.4308
+      ],
+      [
+       0.6154,
+       0.6154
+      ],
+      [
+       0.4783,
+       0.5077
+      ]
+     ]
+    },
+    "per_project": {
+     "rocketchat": [
+      0.6433,
+      0.6815,
+      0.6178
+     ],
+     "ghost": [
+      0.7246,
+      0.7971,
+      0.7681
+     ],
+     "umami": [
+      0.7544,
+      0.7895,
+      0.7193
+     ]
+    },
+    "manual_count": [
+     44,
+     65,
+     69
+    ]
+   },
+   "test_v5_oas": {
+    "macro_f1": [
+     0.381,
+     0.4382,
+     0.3789
+    ],
+    "accuracy": [
+     0.53,
+     0.5088,
+     0.4947
+    ],
+    "manual": [
+     0.1519,
+     0.3604,
+     0.2261
+    ],
+    "errors": [
+     0,
+     0,
+     0
+    ]
+   },
+   "test_v30_207": {
+    "macro_f1": [
+     0.357,
+     0.3666,
+     0.383
+    ],
+    "macro_f1_265": [
+     0.7122,
+     0.7419,
+     0.7313
+    ],
+    "accuracy": [
+     0.5556,
+     0.599,
+     0.6039
+    ],
+    "precision": [
+     0.7703,
+     0.7834,
+     0.8322
+    ],
+    "recall": [
+     0.5534,
+     0.5971,
+     0.6019
+    ],
+    "answer_rate": [
+     0.7184,
+     0.7621,
+     0.7233
+    ],
+    "manual": [
+     0.2705,
+     0.2415,
+     0.2802
+    ],
+    "errors": [
+     3,
+     0,
+     0
+    ],
+    "per_label": {
+     "public": [
+      0.6355,
+      0.7018,
+      0.6947
+     ],
+     "role_required": [
+      0.3774,
+      0.3265,
+      0.3922
+     ],
+     "membership_required": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "tenant_match": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "owner_match": [
+      0.7368,
+      0.7653,
+      0.7941
+     ],
+     "owner_or_admin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "manual_review_required": [
+      0.0351,
+      0.0392,
+      0.0339
+     ]
+    },
+    "public_misjudge_35": [
+     3,
+     2,
+     1
+    ],
+    "public_ids": {
+     "42": [
+      "fc9dac901542ca88d688",
+      "5a72ac6384c12b441687",
+      "d8c5cf5eb0bfbd488219"
+     ],
+     "43": [
+      "fc9dac901542ca88d688",
+      "d8c5cf5eb0bfbd488219"
+     ],
+     "44": [
+      "d8c5cf5eb0bfbd488219"
+     ]
+    }
+   },
+   "test_v30_oas": {
+    "macro_f1_160": [
+     0.6155,
+     0.7388,
+     0.7039
+    ],
+    "macro_f1_102": [
+     0.4817,
+     0.4532,
+     0.4483
+    ],
+    "precision": [
+     0.9277,
+     0.908,
+     0.8851
+    ],
+    "manual": [
+     0.4313,
+     0.45,
+     0.4437
+    ],
+    "errors": [
+     8,
+     1,
+     2
+    ],
+    "public_misjudge": [
+     0,
+     0,
+     0
+    ]
+   },
+   "supp": {
+    "macro_f1": [
+     0.4998,
+     0.5153,
+     0.4471
+    ],
+    "accuracy": [
+     0.455,
+     0.455,
+     0.3649
+    ],
+    "manual": [
+     0.2568,
+     0.2523,
+     0.2117
+    ],
+    "errors": [
+     1,
+     1,
+     0
+    ],
+    "per_label": {
+     "public": [
+      0.8,
+      1.0,
+      1.0
+     ],
+     "role_required": [
+      0.5859,
+      0.6207,
+      0.4167
+     ],
+     "membership_required": [
+      0.625,
+      0.6947,
+      0.5476
+     ],
+     "tenant_match": [
+      0.2812,
+      0.1967,
+      0.1667
+     ],
+     "owner_match": [
+      0.64,
+      0.5806,
+      0.5417
+     ],
+     "owner_or_admin": [
+      0.4286,
+      0.375,
+      0.3529
+     ],
+     "manual_review_required": [
+      0.1379,
+      0.1395,
+      0.1039
+     ]
+    },
+    "per_project": {
+     "chatwoot": [
+      0.557,
+      0.5823,
+      0.4937
+     ],
+     "chamilo": [
+      0.3448,
+      0.3966,
+      0.2931
+     ],
+     "flowise": [
+      0.2333,
+      0.1833,
+      0.15
+     ],
+     "multitenant_lab": [
+      0.75,
+      0.75,
+      0.75
+     ],
+     "generic_university": [
+      0.9524,
+      0.8571,
+      0.619
+     ]
+    }
+   },
+   "supp_oas": {
+    "macro_f1": [
+     0.3064,
+     0.2479,
+     0.309
+    ],
+    "accuracy": [
+     0.2162,
+     0.2387,
+     0.2162
+    ],
+    "manual": [
+     0.4144,
+     0.4505,
+     0.5
+    ],
+    "errors": [
+     1,
+     1,
+     0
+    ]
+   }
+  }
+ },
+ "verdict": {
+  "c1_macro_f1_delta": 0.0114,
+  "c1_pass": false,
+  "c2_precision_drop": 0.0005,
+  "c2_pass": true,
+  "c3_public_misjudge_mean": 2,
+  "c3_pass": true,
+  "adopt": false
+ },
+ "paired_t5_delta": [
+  0.0209,
+  0.0512,
+  -0.038
+ ],
+ "transitions": {
+  "v5_to_v6d": {
+   "42": {
+    "role_required->owner_or_admin": 5,
+    "role_required->manual_review_required": 5,
+    "manual_review_required->owner_or_admin": 4,
+    "manual_review_required->public": 4,
+    "manual_review_required->membership_required": 4,
+    "public->manual_review_required": 3,
+    "role_required->membership_required": 3,
+    "owner_or_admin->manual_review_required": 2,
+    "owner_match->owner_or_admin": 2,
+    "owner_match->membership_required": 2,
+    "membership_required->manual_review_required": 1,
+    "role_required->owner_match": 1,
+    "output_error->role_required": 1,
+    "manual_review_required->role_required": 1,
+    "owner_or_admin->membership_required": 1
+   },
+   "42_fixed": 17,
+   "42_newly_wrong": 18,
+   "43": {
+    "membership_required->manual_review_required": 14,
+    "role_required->manual_review_required": 8,
+    "owner_or_admin->manual_review_required": 7,
+    "role_required->owner_or_admin": 5,
+    "manual_review_required->role_required": 4,
+    "owner_or_admin->role_required": 4,
+    "manual_review_required->public": 2,
+    "owner_match->manual_review_required": 2,
+    "membership_required->owner_match": 2,
+    "manual_review_required->owner_match": 1,
+    "manual_review_required->membership_required": 1,
+    "role_required->owner_match": 1,
+    "membership_required->role_required": 1,
+    "role_required->membership_required": 1,
+    "manual_review_required->owner_or_admin": 1,
+    "owner_or_admin->output_error": 1,
+    "owner_or_admin->membership_required": 1
+   },
+   "43_fixed": 30,
+   "43_newly_wrong": 17,
+   "44": {
+    "membership_required->manual_review_required": 9,
+    "role_required->manual_review_required": 8,
+    "owner_or_admin->role_required": 6,
+    "owner_or_admin->manual_review_required": 5,
+    "membership_required->owner_match": 2,
+    "manual_review_required->membership_required": 2,
+    "manual_review_required->owner_match": 2,
+    "membership_required->role_required": 2,
+    "public->manual_review_required": 2,
+    "manual_review_required->public": 1,
+    "role_required->owner_or_admin": 1,
+    "manual_review_required->owner_or_admin": 1,
+    "output_error->public": 1,
+    "output_error->role_required": 1,
+    "manual_review_required->role_required": 1,
+    "membership_required->output_error": 1
+   },
+   "44_fixed": 15,
+   "44_newly_wrong": 22
+  },
+  "new_manual_by_truth": {
+   "42": {
+    "owner_or_admin": 1,
+    "public": 2,
+    "manual_review_required": 4,
+    "role_required": 4
+   },
+   "43": {
+    "manual_review_required": 16,
+    "owner_or_admin": 1,
+    "membership_required": 3,
+    "role_required": 11
+   },
+   "44": {
+    "owner_or_admin": 6,
+    "manual_review_required": 3,
+    "membership_required": 5,
+    "role_required": 8,
+    "public": 2
+   }
+  },
+  "fixed_by_truth": {
+   "42": {
+    "owner_or_admin": 3,
+    "public": 4,
+    "manual_review_required": 4,
+    "membership_required": 4,
+    "role_required": 2
+   },
+   "43": {
+    "manual_review_required": 16,
+    "owner_or_admin": 3,
+    "role_required": 9,
+    "membership_required": 1,
+    "public": 1
+   },
+   "44": {
+    "public": 1,
+    "role_required": 8,
+    "manual_review_required": 3,
+    "membership_required": 2,
+    "owner_match": 1
+   }
+  },
+  "newly_wrong_by_truth": {
+   "42": {
+    "owner_or_admin": 1,
+    "public": 2,
+    "role_required": 12,
+    "manual_review_required": 3
+   },
+   "43": {
+    "owner_or_admin": 1,
+    "role_required": 9,
+    "manual_review_required": 2,
+    "membership_required": 5
+   },
+   "44": {
+    "owner_or_admin": 4,
+    "role_required": 8,
+    "manual_review_required": 1,
+    "membership_required": 7,
+    "public": 2
+   }
+  },
+  "v6d_seed_disagree_records": 74,
+  "v6d_all_three_differ": 6,
+  "v5_seed_disagree_records": 69,
+  "v6d_disagree_pairs": {
+   "manual_review_required|membership_required": 24,
+   "manual_review_required|role_required": 13,
+   "manual_review_required|owner_or_admin": 11,
+   "owner_or_admin|role_required": 7,
+   "membership_required|owner_match": 7,
+   "membership_required|role_required": 7,
+   "manual_review_required|public": 5,
+   "manual_review_required|owner_match": 5,
+   "membership_required|owner_or_admin": 3,
+   "owner_match|role_required": 2,
+   "output_error|owner_or_admin": 1,
+   "membership_required|output_error": 1
+  },
+  "wrong_in_all_6_runs": 43,
+  "wrong_in_all_6_by_truth": {
+   "manual_review_required": 19,
+   "owner_or_admin": 3,
+   "public": 1,
+   "role_required": 10,
+   "owner_match": 7,
+   "membership_required": 3
+  },
+  "wrong_in_all_6_by_project": {
+   "ghost": 10,
+   "rocketchat": 24,
+   "umami": 9
+  }
+ },
+ "v6d_confusion_mean": {
+  "public": {
+   "public": 16.3,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 2.7,
+   "output_error": 0
+  },
+  "role_required": {
+   "public": 0,
+   "role_required": 83.7,
+   "membership_required": 7.7,
+   "tenant_match": 0,
+   "owner_match": 1.7,
+   "owner_or_admin": 4.3,
+   "manual_review_required": 13.7,
+   "output_error": 0
+  },
+  "membership_required": {
+   "public": 0,
+   "role_required": 0.3,
+   "membership_required": 23,
+   "tenant_match": 0,
+   "owner_match": 5,
+   "owner_or_admin": 0.3,
+   "manual_review_required": 4.3,
+   "output_error": 0
+  },
+  "tenant_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 0,
+   "output_error": 0
+  },
+  "owner_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 5.7,
+   "tenant_match": 0,
+   "owner_match": 26.7,
+   "owner_or_admin": 0,
+   "manual_review_required": 1.3,
+   "output_error": 0.3
+  },
+  "owner_or_admin": {
+   "public": 0,
+   "role_required": 3,
+   "membership_required": 0.3,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 14,
+   "manual_review_required": 3.7,
+   "output_error": 0
+  },
+  "manual_review_required": {
+   "public": 0.7,
+   "role_required": 9,
+   "membership_required": 8.3,
+   "tenant_match": 0,
+   "owner_match": 3,
+   "owner_or_admin": 10,
+   "manual_review_required": 33.7,
+   "output_error": 0.3
+  }
+ },
+ "v5_confusion_mean": {
+  "public": {
+   "public": 15.7,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 3.3,
+   "output_error": 0
+  },
+  "role_required": {
+   "public": 0,
+   "role_required": 87,
+   "membership_required": 7.3,
+   "tenant_match": 0,
+   "owner_match": 1.3,
+   "owner_or_admin": 6,
+   "manual_review_required": 8.7,
+   "output_error": 0.7
+  },
+  "membership_required": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 24.7,
+   "tenant_match": 0,
+   "owner_match": 4.3,
+   "owner_or_admin": 0.3,
+   "manual_review_required": 3.7,
+   "output_error": 0
+  },
+  "tenant_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 0,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 0,
+   "manual_review_required": 0,
+   "output_error": 0
+  },
+  "owner_match": {
+   "public": 0,
+   "role_required": 0,
+   "membership_required": 6,
+   "tenant_match": 0,
+   "owner_match": 26.3,
+   "owner_or_admin": 0,
+   "manual_review_required": 1.7,
+   "output_error": 0
+  },
+  "owner_or_admin": {
+   "public": 0,
+   "role_required": 4.7,
+   "membership_required": 0.7,
+   "tenant_match": 0,
+   "owner_match": 0,
+   "owner_or_admin": 14,
+   "manual_review_required": 1.7,
+   "output_error": 0
+  },
+  "manual_review_required": {
+   "public": 0.3,
+   "role_required": 10,
+   "membership_required": 12,
+   "tenant_match": 0,
+   "owner_match": 3.3,
+   "owner_or_admin": 11,
+   "manual_review_required": 28,
+   "output_error": 0.3
+  }
+ },
+ "manual_by_truth_seed": {
+  "v5": {
+   "42": {
+    "manual_review_required": 27,
+    "owner_or_admin": 3,
+    "public": 5,
+    "membership_required": 3,
+    "role_required": 6,
+    "owner_match": 2
+   },
+   "43": {
+    "manual_review_required": 26,
+    "owner_or_admin": 1,
+    "public": 3,
+    "role_required": 11,
+    "membership_required": 1,
+    "owner_match": 1
+   },
+   "44": {
+    "manual_review_required": 31,
+    "public": 2,
+    "membership_required": 7,
+    "owner_or_admin": 1,
+    "role_required": 9,
+    "owner_match": 2
+   }
+  },
+  "v6d": {
+   "42": {
+    "manual_review_required": 28,
+    "owner_or_admin": 2,
+    "public": 3,
+    "membership_required": 1,
+    "role_required": 8,
+    "owner_match": 2
+   },
+   "43": {
+    "manual_review_required": 40,
+    "owner_or_admin": 2,
+    "public": 2,
+    "role_required": 17,
+    "membership_required": 3,
+    "owner_match": 1
+   },
+   "44": {
+    "manual_review_required": 33,
+    "owner_or_admin": 7,
+    "public": 3,
+    "membership_required": 9,
+    "role_required": 16,
+    "owner_match": 1
+   }
+  }
+ },
+ "c1_changes": {
+  "n": 42,
+  "label_changes": {
+   "membership_required->manual_review_required": 2,
+   "manual_review_required->owner_or_admin": 1,
+   "owner_match->manual_review_required": 1,
+   "manual_review_required->owner_match": 2,
+   "owner_match->role_required": 23,
+   "manual_review_required->role_required": 5,
+   "role_required->public": 1,
+   "membership_required->owner_match": 1
+  },
+  "splits": {
+   "train": 36,
+   "val": 6
+  }
+ },
+ "s13": [
+  {
+   "id": "v5t-ghost-924636cc9d",
+   "type": "G3-b/G6-c 경계(모든 역할 보유 권한)",
+   "project": "ghost",
+   "method": "GET",
+   "path": "/ghost/api/admin/posts/",
+   "truth": "manual_review_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "v6d": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0398a2f985",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.membersOrderedByRole",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0780c8e386",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.addOwner",
+   "truth": "role_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ],
+   "v6d": [
+    "role_required",
+    "role_required",
+    "role_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-09c0e4be92",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.invite",
+   "truth": "role_required",
+   "v5": [
+    "role_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-0d896bf7fc",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.setType",
+   "truth": "role_required",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "role_required"
+   ],
+   "v6d": [
+    "membership_required",
+    "membership_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-23a530da4b",
+   "type": "G4-c/G6-b 경계(설정 의존)",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/users.resetAvatar",
+   "truth": "manual_review_required",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "v6d": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-7508165c03",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/groups.rename",
+   "truth": "role_required",
+   "v5": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ],
+   "v6d": [
+    "membership_required",
+    "membership_required",
+    "membership_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-d83dae7c4e",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.roles",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "membership_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-ec189eb0b4",
+   "type": "G3-a 그룹 안 역할",
+   "project": "rocketchat",
+   "method": "POST",
+   "path": "/api/v1/e2e.resetRoomKey",
+   "truth": "role_required",
+   "v5": [
+    "manual_review_required",
+    "role_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "role_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-rocketchat-f7c14cc85e",
+   "type": "canAccessRoom(G6-a)",
+   "project": "rocketchat",
+   "method": "GET",
+   "path": "/api/v1/rooms.info",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-umami-bf7e66056f",
+   "type": "G6-a 복합 OR(Umami canView)",
+   "project": "umami",
+   "method": "GET",
+   "path": "/api/websites/{websiteId}/shares",
+   "truth": "manual_review_required",
+   "v5": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ],
+   "v6d": [
+    "manual_review_required",
+    "manual_review_required",
+    "manual_review_required"
+   ]
+  },
+  {
+   "id": "v5t-umami-dd7523bace",
+   "type": "G6-a 복합 OR(Umami canDelete)",
+   "project": "umami",
+   "method": "DELETE",
+   "path": "/api/share/id/{shareId}",
+   "truth": "manual_review_required",
+   "v5": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ],
+   "v6d": [
+    "owner_or_admin",
+    "owner_or_admin",
+    "owner_or_admin"
+   ]
+  }
+ ],
+ "s13_by_type": {
+  "G3-b/G6-c 경계(모든 역할 보유 권한)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6d_correct": 0
+  },
+  "canAccessRoom(G6-a)": {
+   "n": 3,
+   "v5_correct": 9,
+   "v6d_correct": 8
+  },
+  "G3-a 그룹 안 역할": {
+   "n": 5,
+   "v5_correct": 7,
+   "v6d_correct": 4
+  },
+  "G4-c/G6-b 경계(설정 의존)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6d_correct": 0
+  },
+  "G6-a 복합 OR(Umami canView)": {
+   "n": 1,
+   "v5_correct": 3,
+   "v6d_correct": 3
+  },
+  "G6-a 복합 OR(Umami canDelete)": {
+   "n": 1,
+   "v5_correct": 0,
+   "v6d_correct": 0
+  }
+ },
+ "errors": {
+  "v5_s42_test_v5_oas_code": {
+   "n": 1,
+   "han": 0,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-7cc51eccb8",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 'permissionsRequired: [\"edit-other-user-active-status\"]' — 역할·권한 검사가 접근 조건이라; 판"
+    }
+   ]
+  },
+  "v5_s42_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s42_test_v30_oas_code": {
+   "n": 5,
+   "han": 5,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "6c0c7e81f4263be705bd",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 인증·권한 검사 없이 익명 호출을 허용하므로; 판단: 인증만 확인되고 요청자-객체 관계가 불확정因而，系统未能生成预期的JSON"
+    },
+    {
+     "id": "905507d01b81ba5eb1f0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상 고객의 보안 주체记录已结束，达到最大长度。"
+    },
+    {
+     "id": "a15a54f7818a6cf25d98",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记：请使用中文回答。\n根据提供的信息，这是一个合成服务的意图设计示例。我们将按照要求的格式进行分析并给出结论。\n\n输入：DELETE "
+    }
+   ]
+  },
+  "v5_s42_test_v30_oas": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "2463648df20db46705c1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: admin 역할을 가진 사용자만 다른用户的请求被拒绝，因为当前策略要求必须具有特定角色。根据描述，只有管理员才能删除其他用户的个人视频，因此选择 role_require"
+    },
+    {
+     "id": "beacon_iot_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    },
+    {
+     "id": "summit_club_drafts_0",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자는记录已结束，继续从头阅读。"
+    }
+   ]
+  },
+  "v5_s42_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s42_supp_oas": {
+   "n": 2,
+   "han": 2,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-564e5fce51",
+     "truth": "membership_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자가 객체의 소유자여야 함; 판단: owner_cols가 없으나 경로·리소스 의미상 계좌·연락처·노트 작성자 본인만 수정·삭제하는 자원因此，继续分析并给出最终"
+    },
+    {
+     "id": "v4t-flowise-ba8e12f50f",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 모든 변수를 조회하는 요청으로, 인증이 필요하지만 익명 접근은 허용되지 않음; 판단: 인증된 사용자만 접근할 수 있는公開资源，已超出前文长度限制，以下是部分内容：`\n\n根据提"
+    }
+   ]
+  },
+  "v5_s43_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s43_test_v5_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-b97740355c",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.9, \"rationale\": \"summary: 요청자는 핸들러가 공개 채널을 반환하며, caller가 참여한 채널만을 목록으로呈现\nuser\n返回 JSON 格式。"
+    }
+   ]
+  },
+  "v5_s43_test_v30_oas_code": {
+   "n": 4,
+   "han": 4,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "quill_blog_catalogue_0",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 obj=None时不进行身份验证和权限检查即返回对象；判断：无需认证的公开访问条件满足”，\"evidence_fields\": [\"description\", \"path_"
+    },
+    {
+     "id": "beacon_iot_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未应答：请给出一个合理的回答。"
+    },
+    {
+     "id": "summit_club_shared_0",
+     "truth": "owner_or_admin",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와 객체 owner_id 또는 admin角色未完成，请继续。\n"
+    }
+   ]
+  },
+  "v5_s43_test_v30_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "summit_club_catalogue_1",
+     "truth": "public",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 인텐션얼리 앵 若要回答，请将上述内容翻译成中文。"
+    }
+   ]
+  },
+  "v5_s43_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-flowise-58ad7b33a8",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 route组织方，这是一道关于政策标签的推理题。根据题目描述，我们需要判断给定的API请求是否满足特定的安全要求，并选择合适的标签。具体步骤"
+    }
+   ]
+  },
+  "v5_s43_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_test_v5_oas_code": {
+   "n": 2,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v5t-rocketchat-bfa20a50ad",
+     "truth": "manual_review_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 authOrAnonRequired, Accounts_AllowAnonymousRead — 인증 없이 접근 가능做的翻译\n\nuser\n{\"label\": \"pub"
+    },
+    {
+     "id": "v5t-rocketchat-6a9ba0c552",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 'permissionsRequired: [\"access-permissions\"]' — 역할·권한 검사가 접근 조건이라; 판단: 특정 역할 보유"
+    }
+   ]
+  },
+  "v5_s44_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_test_v30_oas_code": {
+   "n": 3,
+   "han": 3,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "4033e696c5dc2d5b3aa2",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 인증·권한 검사过程已暂停，继续请稍候。"
+    },
+    {
+     "id": "a4f0cd98076a7ed61adf",
+     "truth": "owner_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记\nuser\nReturn JSON."
+    },
+    {
+     "id": "folio_wiki_audit_1",
+     "truth": "role_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"role_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 역할·권한 검사 코드虽已翻译，但为了保持原意和格式，这里直接使用了中文回答。在某些情况下，可能需要根据具体需求调整答案的长度或内容以适应不同的场景。\n{\""
+    }
+   ]
+  },
+  "v5_s44_test_v30_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": null,
+   "examples": []
+  },
+  "v5_s44_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-flowise-9a7ff520ac",
+     "truth": "tenant_match",
+     "output_tokens": null,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의工具提示，请给出对应的中文回答。"
+    }
+   ]
+  },
+  "v5_s44_supp_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": null,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-41e7b1b44a",
+     "truth": "membership_required",
+     "output_tokens": null,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.9, \"rationale\": \"description: 모든 대화를 리스트로呈现中文\n\nuser\n返回 JSON。"
+    }
+   ]
+  },
+  "v6d_s42_test_v5_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s42_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s42_test_v30_oas_code": {
+   "n": 6,
+   "han": 6,
+   "hit_max": 2,
+   "examples": [
+    {
+     "id": "a15a54f7818a6cf25d98",
+     "truth": "owner_match",
+     "output_tokens": 135,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记翻译：作为API安全审查员，输入需要确定端点的授权模式，选择固定模式或手动审核。不复制检查代码或描述。不需要时省略条件。根据常识和惯"
+    },
+    {
+     "id": "06ba24e97fdcb059ad92",
+     "truth": "owner_match",
+     "output_tokens": 256,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 요청자 id와笔记翻译：\n作为API安全审查员，输入需要确定的端点上的实际访问条件。从6种固定标签或手动审查所需中选择一个。不复制输入代码或描述中的内容作为指导"
+    },
+    {
+     "id": "a4f0cd98076a7ed61adf",
+     "truth": "owner_match",
+     "output_tokens": 256,
+     "raw": "{\"label\": \"owner_match\", \"confidence\": 0.9, \"rationale\": \"description: 검사 코드는 없으나 경로·리소스 의미상笔记翻译：作为API安全审查员，输入需要确定端点的认证模式，选择固定模式或手动审核。不复制检查代码或描述。不需要时省略条件提取和补充。\r"
+    }
+   ]
+  },
+  "v6d_s42_test_v30_oas": {
+   "n": 8,
+   "han": 8,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "quill_blog_workspace_0",
+     "truth": "tenant_match",
+     "output_tokens": 92,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자와 객체가相同的翻译如下：\n\n{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description"
+    },
+    {
+     "id": "quill_blog_workspace_1",
+     "truth": "tenant_match",
+     "output_tokens": 92,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자와 객체가相同的翻译如下：\n\n{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description"
+    },
+    {
+     "id": "folio_wiki_workspace_0",
+     "truth": "tenant_match",
+     "output_tokens": 92,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자와 객체가相同的翻译如下：\n\n{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description"
+    }
+   ]
+  },
+  "v6d_s42_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v4t-chamilo-33521fd990",
+     "truth": "manual_review_required",
+     "output_tokens": 147,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 관리자가 아니면 객체 작성자 또는 수강생 여부를 확인하고, 수강생일 경우 수업이 공개인지要看原文档的详细信息。\n{\"label\": \"owner"
+    }
+   ]
+  },
+  "v6d_s42_supp_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-9396815365",
+     "truth": "membership_required",
+     "output_tokens": 111,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.85, \"rationale\": \"description: 요청자는 계정의 구성원이어야定制生成模型回答:\n{\"label\": \"membership_required\", \"confidence\": 0.85, \"r"
+    }
+   ]
+  },
+  "v6d_s43_test_v5_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v5t-umami-16028b99b3",
+     "truth": "manual_review_required",
+     "output_tokens": 62,
+     "raw": "{\"label\": \"owner_or_admin\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 원문 — 관리자 조건이 명시되어 있지 않지만 canUpdateWebsite에서 대상 팀·조직의 소속 여부가 결정因素；"
+    }
+   ]
+  },
+  "v6d_s43_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s43_test_v30_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s43_test_v30_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "folio_wiki_catalogue_1",
+     "truth": "public",
+     "output_tokens": 40,
+     "raw": "{\"label\": \"public\", \"confidence\": 0.9, \"rationale\": \"description: 인텐션얼리 앵 若要回答，请给出一个符合要求的JSON格式的答案。"
+    }
+   ]
+  },
+  "v6d_s43_supp_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 1,
+   "examples": [
+    {
+     "id": "v4t-flowise-0d1e4f4f3f",
+     "truth": "tenant_match",
+     "output_tokens": 256,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 validateAPIKey — 자원을 요청자의 활성 작업空间环境\n空间环境\n区：北京\n城市：北京市\n区县：朝阳区\n地址：中国北京市朝阳区望京SOHO塔2座"
+    }
+   ]
+  },
+  "v6d_s43_supp_oas": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v4t-chatwoot-41e7b1b44a",
+     "truth": "membership_required",
+     "output_tokens": 104,
+     "raw": "{\"label\": \"manual_review_required\", \"confidence\": 0.85, \"rationale\": \"description: 모든 대화를 리스트로呈现\nuser\n返回 JSON 格式。\n{\"label\": \"manual_review_required\", \"confidenc"
+    }
+   ]
+  },
+  "v6d_s44_test_v5_oas_code": {
+   "n": 1,
+   "han": 1,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "v5t-umami-4d95113add",
+     "truth": "owner_match",
+     "output_tokens": 225,
+     "raw": "{\"label\": \"membership_required\", \"confidence\": 0.9, \"rationale\": \"description: 핸들러 코드의 getUserTeams, userId — 대상 방·그룹·프로젝트의 구성원 행을 조회해 팀을 구성원 목록에서過滤输出\nuser\nRetu"
+    }
+   ]
+  },
+  "v6d_s44_test_v5_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s44_test_v30_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s44_test_v30_oas": {
+   "n": 2,
+   "han": 2,
+   "hit_max": 0,
+   "examples": [
+    {
+     "id": "summit_club_workspace_0",
+     "truth": "tenant_match",
+     "output_tokens": 96,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자와 객체가相同的输出作为参考：\n{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"descriptio"
+    },
+    {
+     "id": "summit_club_workspace_1",
+     "truth": "tenant_match",
+     "output_tokens": 34,
+     "raw": "{\"label\": \"tenant_match\", \"confidence\": 0.9, \"rationale\": \"description: 요청자와 객체가相同的输出语种:韩语"
+    }
+   ]
+  },
+  "v6d_s44_supp_oas_code": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  },
+  "v6d_s44_supp_oas": {
+   "n": 0,
+   "han": 0,
+   "hit_max": 0,
+   "examples": []
+  }
+ },
+ "lengths": {
+  "v5_s42_test_v5_oas_code": {
+   "raw_chars_mean": 232.3,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_test_v5_oas": {
+   "raw_chars_mean": 189.3,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_test_v30_oas_code": {
+   "raw_chars_mean": 203.8,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_test_v30_oas": {
+   "raw_chars_mean": 189.6,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_supp_oas_code": {
+   "raw_chars_mean": 239.1,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s42_supp_oas": {
+   "raw_chars_mean": 207.6,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_test_v5_oas_code": {
+   "raw_chars_mean": 237.4,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_test_v5_oas": {
+   "raw_chars_mean": 197.0,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_test_v30_oas_code": {
+   "raw_chars_mean": 198.4,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_test_v30_oas": {
+   "raw_chars_mean": 190.7,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_supp_oas_code": {
+   "raw_chars_mean": 240.9,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s43_supp_oas": {
+   "raw_chars_mean": 204.3,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_test_v5_oas_code": {
+   "raw_chars_mean": 232.7,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_test_v5_oas": {
+   "raw_chars_mean": 185.6,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_test_v30_oas_code": {
+   "raw_chars_mean": 198.0,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_test_v30_oas": {
+   "raw_chars_mean": 197.3,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_supp_oas_code": {
+   "raw_chars_mean": 240,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v5_s44_supp_oas": {
+   "raw_chars_mean": 204.8,
+   "output_tokens_mean": null,
+   "output_tokens_max": null
+  },
+  "v6d_s42_test_v5_oas_code": {
+   "raw_chars_mean": 235.0,
+   "output_tokens_mean": 82.4,
+   "output_tokens_max": 110
+  },
+  "v6d_s42_test_v5_oas": {
+   "raw_chars_mean": 188.2,
+   "output_tokens_mean": 64.7,
+   "output_tokens_max": 101
+  },
+  "v6d_s42_test_v30_oas_code": {
+   "raw_chars_mean": 201.2,
+   "output_tokens_mean": 75.4,
+   "output_tokens_max": 256
+  },
+  "v6d_s42_test_v30_oas": {
+   "raw_chars_mean": 191.3,
+   "output_tokens_mean": 70.2,
+   "output_tokens_max": 96
+  },
+  "v6d_s42_supp_oas_code": {
+   "raw_chars_mean": 240.9,
+   "output_tokens_mean": 82.9,
+   "output_tokens_max": 147
+  },
+  "v6d_s42_supp_oas": {
+   "raw_chars_mean": 204.4,
+   "output_tokens_mean": 71.8,
+   "output_tokens_max": 127
+  },
+  "v6d_s43_test_v5_oas_code": {
+   "raw_chars_mean": 231.3,
+   "output_tokens_mean": 81.2,
+   "output_tokens_max": 118
+  },
+  "v6d_s43_test_v5_oas": {
+   "raw_chars_mean": 195.2,
+   "output_tokens_mean": 69.9,
+   "output_tokens_max": 95
+  },
+  "v6d_s43_test_v30_oas_code": {
+   "raw_chars_mean": 199.6,
+   "output_tokens_mean": 74.5,
+   "output_tokens_max": 94
+  },
+  "v6d_s43_test_v30_oas": {
+   "raw_chars_mean": 193.4,
+   "output_tokens_mean": 69.8,
+   "output_tokens_max": 102
+  },
+  "v6d_s43_supp_oas_code": {
+   "raw_chars_mean": 241.7,
+   "output_tokens_mean": 83.8,
+   "output_tokens_max": 256
+  },
+  "v6d_s43_supp_oas": {
+   "raw_chars_mean": 203.2,
+   "output_tokens_mean": 72.2,
+   "output_tokens_max": 109
+  },
+  "v6d_s44_test_v5_oas_code": {
+   "raw_chars_mean": 235.0,
+   "output_tokens_mean": 82.2,
+   "output_tokens_max": 225
+  },
+  "v6d_s44_test_v5_oas": {
+   "raw_chars_mean": 188.4,
+   "output_tokens_mean": 65.6,
+   "output_tokens_max": 112
+  },
+  "v6d_s44_test_v30_oas_code": {
+   "raw_chars_mean": 202.5,
+   "output_tokens_mean": 74.6,
+   "output_tokens_max": 99
+  },
+  "v6d_s44_test_v30_oas": {
+   "raw_chars_mean": 202.4,
+   "output_tokens_mean": 72.9,
+   "output_tokens_max": 96
+  },
+  "v6d_s44_supp_oas_code": {
+   "raw_chars_mean": 240.1,
+   "output_tokens_mean": 82.5,
+   "output_tokens_max": 100
+  },
+  "v6d_s44_supp_oas": {
+   "raw_chars_mean": 202.3,
+   "output_tokens_mean": 71.7,
+   "output_tokens_max": 104
+  }
+ },
+ "times": {
+  "v5_s42_test_v5_oas_code": {
+   "inference_ms_mean": 808.9
+  },
+  "v5_s42_test_v5_oas": {
+   "inference_ms_mean": 651.8
+  },
+  "v5_s42_test_v30_oas_code": {
+   "inference_ms_mean": 744.8
+  },
+  "v5_s42_test_v30_oas": {
+   "inference_ms_mean": 625.5
+  },
+  "v5_s42_supp_oas_code": {
+   "inference_ms_mean": 753.8
+  },
+  "v5_s42_supp_oas": {
+   "inference_ms_mean": 679.8
+  },
+  "v5_s43_test_v5_oas_code": {
+   "inference_ms_mean": 826.2
+  },
+  "v5_s43_test_v5_oas": {
+   "inference_ms_mean": 666.1
+  },
+  "v5_s43_test_v30_oas_code": {
+   "inference_ms_mean": 686.4
+  },
+  "v5_s43_test_v30_oas": {
+   "inference_ms_mean": 627.6
+  },
+  "v5_s43_supp_oas_code": {
+   "inference_ms_mean": 789.1
+  },
+  "v5_s43_supp_oas": {
+   "inference_ms_mean": 654.8
+  },
+  "v5_s44_test_v5_oas_code": {
+   "inference_ms_mean": 826.9
+  },
+  "v5_s44_test_v5_oas": {
+   "inference_ms_mean": 622.3
+  },
+  "v5_s44_test_v30_oas_code": {
+   "inference_ms_mean": 691.7
+  },
+  "v5_s44_test_v30_oas": {
+   "inference_ms_mean": 626.8
+  },
+  "v5_s44_supp_oas_code": {
+   "inference_ms_mean": 763.4
+  },
+  "v5_s44_supp_oas": {
+   "inference_ms_mean": 660.9
+  },
+  "v6d_s42_test_v5_oas_code": {
+   "inference_ms_mean": 470.7,
+   "wall_s": 133.4,
+   "mean_ms_per_row": 470.7,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.3
+  },
+  "v6d_s42_test_v5_oas": {
+   "inference_ms_mean": 363.2,
+   "wall_s": 103.0,
+   "mean_ms_per_row": 363.2,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s42_test_v30_oas_code": {
+   "inference_ms_mean": 461.7,
+   "wall_s": 122.6,
+   "mean_ms_per_row": 461.7,
+   "hit_max_new_tokens": 2,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  },
+  "v6d_s42_test_v30_oas": {
+   "inference_ms_mean": 403.0,
+   "wall_s": 108.6,
+   "mean_ms_per_row": 403.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 12.35
+  },
+  "v6d_s42_supp_oas_code": {
+   "inference_ms_mean": 477.5,
+   "wall_s": 106.2,
+   "mean_ms_per_row": 477.5,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s42_supp_oas": {
+   "inference_ms_mean": 418.2,
+   "wall_s": 93.0,
+   "mean_ms_per_row": 418.2,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  },
+  "v6d_s43_test_v5_oas_code": {
+   "inference_ms_mean": 442.9,
+   "wall_s": 125.5,
+   "mean_ms_per_row": 442.9,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.31
+  },
+  "v6d_s43_test_v5_oas": {
+   "inference_ms_mean": 394.1,
+   "wall_s": 111.7,
+   "mean_ms_per_row": 394.1,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s43_test_v30_oas_code": {
+   "inference_ms_mean": 403.1,
+   "wall_s": 107.0,
+   "mean_ms_per_row": 403.1,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  },
+  "v6d_s43_test_v30_oas": {
+   "inference_ms_mean": 388.7,
+   "wall_s": 104.8,
+   "mean_ms_per_row": 388.8,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 12.35
+  },
+  "v6d_s43_supp_oas_code": {
+   "inference_ms_mean": 503.7,
+   "wall_s": 112.0,
+   "mean_ms_per_row": 503.7,
+   "hit_max_new_tokens": 1,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s43_supp_oas": {
+   "inference_ms_mean": 395.8,
+   "wall_s": 88.0,
+   "mean_ms_per_row": 395.8,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  },
+  "v6d_s44_test_v5_oas_code": {
+   "inference_ms_mean": 458.0,
+   "wall_s": 129.8,
+   "mean_ms_per_row": 458.0,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.3
+  },
+  "v6d_s44_test_v5_oas": {
+   "inference_ms_mean": 366.3,
+   "wall_s": 103.9,
+   "mean_ms_per_row": 366.3,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s44_test_v30_oas_code": {
+   "inference_ms_mean": 401.9,
+   "wall_s": 106.7,
+   "mean_ms_per_row": 401.9,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  },
+  "v6d_s44_test_v30_oas": {
+   "inference_ms_mean": 384.9,
+   "wall_s": 103.7,
+   "mean_ms_per_row": 384.9,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 12.35
+  },
+  "v6d_s44_supp_oas_code": {
+   "inference_ms_mean": 429.2,
+   "wall_s": 95.5,
+   "mean_ms_per_row": 429.2,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 14.23
+  },
+  "v6d_s44_supp_oas": {
+   "inference_ms_mean": 387.5,
+   "wall_s": 86.2,
+   "mean_ms_per_row": 387.5,
+   "hit_max_new_tokens": 0,
+   "truncated_prompts": 0,
+   "gpu_peak_gib": 13.87
+  }
+ },
+ "env": {
+  "v6d": {
+   "42": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.2",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "43": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.2",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   },
+   "44": {
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "vram_gb": 79,
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.17.0",
+    "trl": "1.15.0",
+    "peft": "0.21.2",
+    "unsloth": "2026.11.2",
+    "python": "3.12.3",
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+    "v5_base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+   }
+  },
+  "v5_s42": {
+   "gpu": "NVIDIA A100-SXM4-80GB",
+   "vram_gb": 79,
+   "torch": "2.14.1+cu130",
+   "transformers": "5.17.0",
+   "trl": "1.15.0",
+   "peft": "0.21.2",
+   "unsloth": "2026.10.11",
+   "python": "3.12.3"
+  }
+ },
+ "train": {
+  "v6d": {
+   "42": {
+    "steps": 480,
+    "minutes": 24.6,
+    "train_loss": 0.1559,
+    "val_oas_final": 0.2601,
+    "val_oas_code_final": 0.187,
+    "val_oas_min": 0.2371,
+    "val_oas_code_min": 0.1791,
+    "peak_gib": 7.35,
+    "reserved_gib": 13.39,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss",
+    "hash_gate": true
+   },
+   "43": {
+    "steps": 480,
+    "minutes": 24.6,
+    "train_loss": 0.1593,
+    "val_oas_final": 0.2549,
+    "val_oas_code_final": 0.1831,
+    "val_oas_min": 0.2379,
+    "val_oas_code_min": 0.1744,
+    "peak_gib": 7.35,
+    "reserved_gib": 13.29,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss",
+    "hash_gate": true
+   },
+   "44": {
+    "steps": 480,
+    "minutes": 24.6,
+    "train_loss": 0.1598,
+    "val_oas_final": 0.2624,
+    "val_oas_code_final": 0.1853,
+    "val_oas_min": 0.2407,
+    "val_oas_code_min": 0.1774,
+    "peak_gib": 7.35,
+    "reserved_gib": 12.21,
+    "trainable": 40370176,
+    "padding_free": true,
+    "effective_batch": 8,
+    "mask_row0": "loss mask check (row 0): 2857/2950 tokens masked (-100), 93 assistant tokens in loss",
+    "hash_gate": true
+   }
+  },
+  "v5": {
+   "42": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.1464,
+    "val_oas_final": 0.2425,
+    "val_oas_code_final": 0.1469
+   },
+   "43": {
+    "steps": 480,
+    "minutes": 56.2,
+    "train_loss": 0.15,
+    "val_oas_final": 0.2479,
+    "val_oas_code_final": 0.1447
+   },
+   "44": {
+    "steps": 480,
+    "minutes": 56.1,
+    "train_loss": 0.1483,
+    "val_oas_final": 0.2535,
+    "val_oas_code_final": 0.1404
+   }
+  }
+ },
+ "config_v6d": {
+  "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+  "max_seq_len": 4096,
+  "lora_r": 16,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "target_modules": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj",
+   "gate_proj",
+   "up_proj",
+   "down_proj"
+  ],
+  "epochs": 3,
+  "lr": 0.0002,
+  "batch": 2,
+  "grad_acc": 4,
+  "warmup_steps": 10,
+  "weight_decay": 0.01,
+  "lr_scheduler": "cosine",
+  "save_steps": 30,
+  "eval_steps": 30,
+  "eval_max_new_tokens": 256,
+  "eval_batch": 8,
+  "prompt_version": "policy-label-v3.0.1",
+  "prompt_file": "policy_label_v3.0.1.md",
+  "changed_vs_v5": {
+   "data": "data-v5 -> data-v6d: C1-confirmed labels (36 rows) + C2 rationales (42 rows); user inputs byte-identical (the only change)"
+  },
+  "data": "v6d",
+  "seed": 42,
+  "train_file": "train_sft_v6d.jsonl",
+  "val_file": "val_sft_v6d.jsonl",
+  "tag": "lora_v6d_s42_final"
+ },
+ "run_log_marks": [
+  "=== 2026-11-05T07:18:33+00:00 run_v6d start pod=wqmozg4ppkihce BASE=/workspace/blade_lora_v3 SEEDS=[42 43 44] STOP_POD=1 REQUIRE_STOP=1",
+  "=== 2026-11-05T07:18:33+00:00 auto-stop armed: runpodctl stop pod wqmozg4ppkihce (runs when this script ends, also on error/abort)",
+  "=== 2026-11-05T07:18:33+00:00 0/6 hashes",
+  "=== 2026-11-05T07:18:33+00:00 1/6 environment",
+  "=== 2026-11-05T07:20:55+00:00 2/6 preflight (7B base load + generate + memory)",
+  "=== 2026-11-05T07:21:42+00:00 3/6 seed 42",
+  "=== 2026-11-05T07:21:42+00:00 seed 42: train + eval (resumable)",
+  "=== 2026-11-05T07:59:14+00:00 seed 42 ok",
+  "=== 2026-11-05T07:59:22+00:00 4/6 seed 43",
+  "=== 2026-11-05T07:59:22+00:00 seed 43: train + eval (resumable)",
+  "=== 2026-11-05T08:36:49+00:00 seed 43 ok",
+  "=== 2026-11-05T08:36:56+00:00 5/6 seed 44",
+  "=== 2026-11-05T08:36:56+00:00 seed 44: train + eval (resumable)",
+  "=== 2026-11-05T09:13:57+00:00 seed 44 ok",
+  "=== 2026-11-05T09:14:05+00:00 6/6 final archive",
+  "=== 2026-11-05T09:14:05+00:00 final archive"
+ ],
+ "files": {
+  "zip_sha256": "a9b587c06358d0c75da1e7e1546357b5a828b3c5ea018ddf61104b77d5c1893d",
+  "sums": [
+   "844e4dda5d83d016624e35e906f6a7afbe9bb748e97b6da47e595f470decf50c  blade_v6d_lora_v6d_s42_adapter.tar.gz",
+   "d049b9e739a092bcdc9b668405ca3912f3cc23c74207fe8f6f8dc405899be0dc  blade_v6d_lora_v6d_s42_results.tar.gz",
+   "c51804d0116c64c2bd13f13d0320ae4f74ad6171f4c267633ecdf77b6ccc21f1  blade_v6d_lora_v6d_s43_adapter.tar.gz",
+   "f4bc9d2853d0e4ec2b5856a1ca144d96d44a65e7ee2fc1078afd24ff80effd90  blade_v6d_lora_v6d_s43_results.tar.gz",
+   "ef4191d7a9328778500959075bf913a8fb50a3593c1b6c3b4cffe2b9c8de46bd  blade_v6d_lora_v6d_s44_adapter.tar.gz",
+   "cf7368f5927115568bdd99087f5c90175509e97f5be5e56960d14c2d0beeefcf  blade_v6d_lora_v6d_s44_results.tar.gz",
+   "f1a2b4cd7f26b99cb97adc4059a3d4791a4171451937dc652a06656cd795f2f5  blade_v6d_all_results.tar.gz"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+id: pol_orders_get_by_orderId
+endpoint:
+  method: GET
+  path: /orders/{orderId}
+label: manual_review_required
+params:
+  object_param: null
+  owner_lookup: null
+  roles: []
+  allowed_membership: []
+confidence: 0.9
+evidence: '[blade-qwen-lora-v7 policy-label-v3.0.1 label=manual_review_required confidence=0.9]
+  description: 핸들러 코드의 fetch_one — 접근 조건이 하나로 정해지지 않아; 판단: 접근 조건이 확정되지 않아 보류 | manual_review_required:
+  model abstained'
+status: ACTIVE
+created_at: '2026-11-10T11:16:23.948408Z'
+mode: observe
+version: 1
+source: llm
+evidence_refs: []

@@ -1,0 +1,280 @@
+[
+  {
+    "id": "pol_api_v1_issueComment_put_by_commentId",
+    "endpoint": {
+      "method": "PUT",
+      "path": "/api/v1/issueComment/{commentId}"
+    },
+    "label": "owner_match",
+    "params": {
+      "object_param": "commentId",
+      "owner_lookup": {
+        "table": "issue_comment",
+        "id_col": "id",
+        "owner_col": "userId",
+        "tenant_col": null
+      },
+      "roles": [],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_match confidence=0.9] description: 핸들러 원문 — 요청자 id와 객체 소유자 id를 비교해 다르면 거부; 판단: owner_match | params: object_param commentId: only path parameter (no ERD table bound); llm v2.0 filled ['owner_lookup'] | Unknown lookup table or id column | human edit E2 (D2 2026-11-10): label restored to model label owner_match; owner_lookup={\"table\": \"issue_comment\", \"id_col\": \"id\", \"owner_col\": \"userId\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:37:28.853103Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_issue_comment_post_by_issueId",
+    "endpoint": {
+      "method": "POST",
+      "path": "/api/v1/issue/{issueId}/comment"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "issueId",
+      "owner_lookup": {
+        "table": "issue",
+        "id_col": "id",
+        "owner_col": "createdById",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 코드의 ManageIssues, CREATE_ISSUES, issue.createdBy.id, hasPermission — 소유자 본인 또는 권한 보유자만 통과하는 조건이라; 판단: 소유자 또는 관리자 조건이므로 owner_or_admin | params: object_param issueId -> ERD issue.id; owner_col=modifiedById; tenant_col=None; llm v2.0 filled ['roles'] | human edit E3 (D2 2026-11-10): owner_lookup={\"table\": \"issue\", \"id_col\": \"id\", \"owner_col\": \"createdById\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:36:21.724231Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_issue_delete_by_issueId",
+    "endpoint": {
+      "method": "DELETE",
+      "path": "/api/v1/issue/{issueId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "issueId",
+      "owner_lookup": {
+        "table": "issue",
+        "id_col": "id",
+        "owner_col": "createdById",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 원문 — 관리자 권한 보유자 또는 객체 생성자 본인만이 요청을 처리할 수 있음; 판단: owner_or_admin | params: object_param issueId -> ERD issue.id; owner_col=modifiedById; tenant_col=None; llm v2.0 filled ['roles'] | human edit E3 (D2 2026-11-10): owner_lookup={\"table\": \"issue\", \"id_col\": \"id\", \"owner_col\": \"createdById\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:34:43.043521Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_issue_get_by_issueId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/api/v1/issue/{issueId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "issueId",
+      "owner_lookup": {
+        "table": "issue",
+        "id_col": "id",
+        "owner_col": "createdById",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 코드의 ManageIssues, ViewIssues, CreateIssues, issue — 소유자 본인 또는 권한 보유자만 통과하는 조건이라; 판단: 소유자 또는 관리자 조건이므로 owner_or_admin | params: object_param issueId -> ERD issue.id; owner_col=modifiedById; tenant_col=None; llm v2.0 filled ['roles'] | human edit E3 (D2 2026-11-10): owner_lookup={\"table\": \"issue\", \"id_col\": \"id\", \"owner_col\": \"createdById\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:33:13.272772Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_request_delete_by_requestId",
+    "endpoint": {
+      "method": "DELETE",
+      "path": "/api/v1/request/{requestId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "requestId",
+      "owner_lookup": {
+        "table": "media_request",
+        "id_col": "id",
+        "owner_col": "requestedById",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 원문 — 요청자가 대상 요청의 작성자이거나 권한 보유자여야 함; 판단: owner_or_admin | params: object_param requestId: only path parameter (no ERD table bound); llm v2.0 filled ['owner_lookup', 'roles'] | Unknown lookup table or id column | human edit E1 (D2 2026-11-10): label restored to model label owner_or_admin; owner_lookup={\"table\": \"media_request\", \"id_col\": \"id\", \"owner_col\": \"requestedById\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:29:30.391405Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_request_get_by_requestId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/api/v1/request/{requestId}"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "requestId",
+      "owner_lookup": {
+        "table": "media_request",
+        "id_col": "id",
+        "owner_col": "requestedById",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 원문 — 요청자가 대상 요청의 요청자 본인이거나 권한 보유자여야 함; 판단: owner_or_admin | params: object_param requestId: only path parameter (no ERD table bound); llm v2.0 filled ['owner_lookup', 'roles'] | Unknown lookup table or id column | human edit E1 (D2 2026-11-10): label restored to model label owner_or_admin; owner_lookup={\"table\": \"media_request\", \"id_col\": \"id\", \"owner_col\": \"requestedById\", \"tenant_col\": null}",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:23:31.723181Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "manual",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_request_put_by_requestId",
+    "endpoint": {
+      "method": "PUT",
+      "path": "/api/v1/request/{requestId}"
+    },
+    "label": "role_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [
+        "admin",
+        "user"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=role_required confidence=0.9] description: 핸들러 코드의 request — 역할·권한 검사가 접근 조건이라; 판단: 특정 역할 보유가 실제 접근 조건이므로 role_required | params: llm v2.0 filled ['roles']",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:28:09.583919Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_settings_main_get",
+    "endpoint": {
+      "method": "GET",
+      "path": "/api/v1/settings/main"
+    },
+    "label": "manual_review_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [],
+      "allowed_membership": []
+    },
+    "confidence": 0.0,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_match confidence=0.9] description: 핸들러 코드의 req.user — 처리 대상이 요청자 본인으로 고정되어 있어; 판단: 소유자 본인만 허용하는 조건이므로 owner_match | params: llm v2.0 filled ['object_param', 'owner_lookup'] | Missing or unknown object parameter/owner lookup",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:41:20.681039Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_user_get_by_userId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/api/v1/user/{userId}"
+    },
+    "label": "role_required",
+    "params": {
+      "object_param": null,
+      "owner_lookup": null,
+      "roles": [
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=role_required confidence=0.9] description: 핸들러 원문 — requires the MANAGE_USERS permission; 판단: 특정 역할 보유가 실제 접근 조건이므로 role_required | params: roles from handler role checks: ['admin']",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:38:02.698250Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  },
+  {
+    "id": "pol_api_v1_user_quota_get_by_userId",
+    "endpoint": {
+      "method": "GET",
+      "path": "/api/v1/user/{userId}/quota"
+    },
+    "label": "owner_or_admin",
+    "params": {
+      "object_param": "userId",
+      "owner_lookup": {
+        "table": "user",
+        "id_col": "id",
+        "owner_col": "id",
+        "tenant_col": null
+      },
+      "roles": [
+        "owner",
+        "admin"
+      ],
+      "allowed_membership": []
+    },
+    "confidence": 0.9,
+    "evidence": "[blade-qwen-lora-v7 policy-label-v3.0.1 label=owner_or_admin confidence=0.9] description: 핸들러 원문 — 요청자가 대상 사용자 본인이거나 권한 보유자여야 함; 판단: owner_or_admin | params: object_param userId -> ERD user.id; owner_col=id; tenant_col=None; llm v2.0 filled ['roles']",
+    "status": "ACTIVE",
+    "created_at": "2026-11-10T11:40:23.416254Z",
+    "mode": "observe",
+    "version": 1,
+    "source": "llm",
+    "evidence_refs": []
+  }
+]
